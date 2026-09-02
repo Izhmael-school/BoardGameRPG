@@ -1,0 +1,64 @@
+﻿/*
+ * @brief プレイヤーデータ
+ * @author Sekino
+ */
+
+#ifndef _PLAYERDATA_H_
+#define _PLAYERDATA_H_
+#pragma once
+
+#include <string>
+#include <vector>
+
+class PlayerData{
+private:
+	// 名前
+	std::string playerName;
+	// レベル
+	int level;
+	// 経験値
+	int currentExp;
+	// レベルアップに必要な経験値
+	int levelUpNeedExp;
+	// 最大HP
+	int maxHp;
+	// 現在のHP
+	int currentHp;
+	// 攻撃力
+	int atk;
+	// 防御力
+	int def;
+	// 素早さ
+	int spd;
+	// 魔法攻撃力
+	int mag;
+	// 運
+	int luk;
+	// 生命力
+	int vit;
+	// お金
+	int money;
+	// マップ上のX座標
+	int mapPositionX;
+	// マップ上のY座標
+	int mapPositionY;
+	// 持てるアイテムの数
+	int maxItems;
+	// 持てる魔法の数
+	int maxMagics;
+	// 持っているアイテムのリスト
+	std::vector<int> itemList;
+	// 持っている魔法のリスト
+	std::vector<int> magicList;
+	// 装備のリスト
+	std::vector<int> equipList;
+	// プレイヤーの状態異常のリスト
+	std::vector<int> statusList;
+public:
+	PlayerData();
+	~PlayerData();
+
+public:
+	
+};
+#endif // !_PLAYERDATA_H_

@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "ProjectBGR\\x64\\Debug\\ColliderData.obj",
+            "outputs": [
+                "ProjectBGR\\x64\\Debug\\ColliderData.h.obj.dt.module.json",
+                "ProjectBGR\\x64\\Debug\\ColliderData.h.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}
