@@ -7,6 +7,7 @@
 #define _VECTOR3_H_
 
 #include <array>
+#include <cassert>
 
 class Vector3 {
 public:
@@ -111,6 +112,20 @@ public:
 	 * @brief ベクトルの各要素と乗算
 	 */
 	static Vector3 VScale(Vector3 _vec, float _scale);
+
+	float& operator[](size_t i) {
+		assert(i < 3);
+		if (i == 0) return x;
+		if (i == 1) return y;
+		return z;
+	}
+
+	const float& operator[](size_t i) const {
+		assert(i < 3);
+		if (i == 0) return x;
+		if (i == 1) return y;
+		return z;
+	}
 };
 
 const Vector3 VZero = Vector3(0.0f, 0.0f, 0.0f);	// (0,0,0)

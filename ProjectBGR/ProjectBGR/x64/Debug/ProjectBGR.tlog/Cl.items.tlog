@@ -4,6 +4,7 @@ C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Component\Camera\Mo
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Component\Collider\Collider.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\Collider.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Component\ComponentBase.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\ComponentBase.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Component\Transform\Transform.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\Transform.obj
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Data\Player\PlayerData.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\PlayerData.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Definition\CommonModule\Json\MyJson.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\MyJson.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Definition\CommonModule\Math\MyMath.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\MyMath.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Definition\CommonModule\String\MyString.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\MyString.obj
@@ -25,6 +26,7 @@ C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\main.cpp;C:\Users\s
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Collision\CollisionManager.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\CollisionManager.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Collision\NarrowPhase\NarrowPhase.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\NarrowPhase.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Collision\Octree\Octree.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\Octree.obj
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Data\ElementDataManager.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\ElementDataManager.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Fade\FadeManager.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\FadeManager.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Fade\FadeMode\FadeBase.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\FadeBase.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\GameObject\GameObjectManager.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\GameObjectManager.obj
@@ -39,6 +41,8 @@ C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Instance\Ef
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Instance\Effect\Instance\EffectInstance.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\EffectInstance.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Instance\InstanceBase.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\InstanceBase.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\ManagerBase.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\ManagerBase.obj
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Map\MapManager.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\MapManager.obj
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\PlayerData\PlayerDataManager.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\PlayerDataManager.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Resource\Audio\AudioResourceManager.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\AudioResourceManager.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Resource\Audio\Resource\AudioResource.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\AudioResource.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Resource\Effect\EffectResourceManager.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\EffectResourceManager.obj
@@ -51,3 +55,4 @@ C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Scene\GameS
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Scene\GameScene\Title\TitleScene.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\TitleScene.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Scene\SceneManager.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\SceneManager.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Time\TimeManager.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\TimeManager.obj
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\TurnProcessor.obj

@@ -8,19 +8,29 @@
 #include <filesystem>
 #include <unordered_set>
 
-std::string MyJson::BufferToUtf8String(const std::vector<unsigned char>& buf) {
-    size_t n = buf.size();
-    if (n >= 3 && buf[0] == 0xEF && buf[1] == 0xBB && buf[2] == 0xBF) {
-        // UTF-8 with BOM
-        return std::string(buf.begin() + 3, buf.end());
+namespace {
+    // BOM種別
+    enum class BomType { None, Utf8, Utf16LE, Utf16BE };
+
+    BomType DetectBom(const std::vector<unsigned char>& buf, size_t& bomLen) {
+        if (buf.size() >= 3 && buf[0] == 0xEF && buf[1] == 0xBB && buf[2] == 0xBF) {
+            bomLen = 3;
+            return BomType::Utf8;
+        }
+        if (buf.size() >= 2 && buf[0] == 0xFF && buf[1] == 0xFE) {
+            bomLen = 2;
+            return BomType::Utf16LE;
+        }
+        if (buf.size() >= 2 && buf[0] == 0xFE && buf[1] == 0xFF) {
+            bomLen = 2;
+            return BomType::Utf16BE;
+        }
+        bomLen = 0;
+        return BomType::None;
     }
 
-    if (n >= 2 && buf[0] == 0xFF && buf[1] == 0xFE) {
-        // UTF-16 LE
-        const wchar_t* wptr = reinterpret_cast<const wchar_t*>(buf.data() + 2);
-        size_t wlen = (n - 2) / 2;
-        std::wstring wstr(wptr, wptr + wlen);
-
+    std::string WideToUtf8(const std::wstring& wstr) {
+        if (wstr.empty()) return std::string();
         int size_needed = WideCharToMultiByte(CP_UTF8, 0, wstr.data(), (int)wstr.size(), nullptr, 0, nullptr, nullptr);
         if (size_needed == 0) return std::string();
         std::string out(size_needed, '\0');
@@ -28,24 +38,58 @@ std::string MyJson::BufferToUtf8String(const std::vector<unsigned char>& buf) {
         return out;
     }
 
-    if (n >= 2 && buf[0] == 0xFE && buf[1] == 0xFF) {
-        // UTF-16 BE: 手動でワイド文字へ変換（バイトを入れ替える）
+    // BOM無しバッファがUTF-8として妥当かどうか
+    bool IsValidUtf8(const std::string& raw) {
+        if (raw.empty()) return true;
+        int result = MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, raw.data(), (int)raw.size(), nullptr, 0);
+        return result > 0;
+    }
+
+    // ANSI(CP932など既定のコードページ) -> UTF-8
+    std::string AnsiToUtf8(const std::string& raw) {
+        int wlen = MultiByteToWideChar(CP_ACP, 0, raw.data(), (int)raw.size(), nullptr, 0);
+        if (wlen == 0) return raw; // 変換不能なら諦めて元のまま返す
+        std::wstring wstr(wlen, L'\0');
+        MultiByteToWideChar(CP_ACP, 0, raw.data(), (int)raw.size(), &wstr[0], wlen);
+        return WideToUtf8(wstr);
+    }
+}
+
+std::string MyJson::BufferToUtf8String(const std::vector<unsigned char>& buf) {
+    size_t bomLen = 0;
+    BomType bom = DetectBom(buf, bomLen);
+
+    switch (bom) {
+    case BomType::Utf8:
+        return std::string(buf.begin() + bomLen, buf.end());
+
+    case BomType::Utf16LE:
+    {
+        const wchar_t* wptr = reinterpret_cast<const wchar_t*>(buf.data() + bomLen);
+        size_t wlen = (buf.size() - bomLen) / 2;
+        return WideToUtf8(std::wstring(wptr, wptr + wlen));
+    }
+
+    case BomType::Utf16BE:
+    {
         std::wstring wstr;
-        wstr.reserve((n - 2) / 2);
-        for (size_t i = 2; i + 1 < n; i += 2) {
+        wstr.reserve((buf.size() - bomLen) / 2);
+        for (size_t i = bomLen; i + 1 < buf.size(); i += 2) {
             wchar_t wc = static_cast<wchar_t>((buf[i] << 8) | buf[i + 1]);
             wstr.push_back(wc);
         }
-
-        int size_needed = WideCharToMultiByte(CP_UTF8, 0, wstr.data(), (int)wstr.size(), nullptr, 0, nullptr, nullptr);
-        if (size_needed == 0) return std::string();
-        std::string out(size_needed, '\0');
-        WideCharToMultiByte(CP_UTF8, 0, wstr.data(), (int)wstr.size(), &out[0], size_needed, nullptr, nullptr);
-        return out;
+        return WideToUtf8(wstr);
     }
 
-    // それ以外は UTF-8 と仮定
-    return std::string(buf.begin(), buf.end());
+    case BomType::None:
+    default:
+    {
+        std::string raw(buf.begin(), buf.end());
+        // BOMが無い場合はUTF-8として妥当かをまず検証し、
+        // 不正ならShift-JIS(ANSI)とみなしてUTF-8へ変換する
+        return IsValidUtf8(raw) ? raw : AnsiToUtf8(raw);
+    }
+    }
 }
 
  nlohmann::json_abi_v3_12_0::json MyJson::LoadJsonFile(const std::string& path) {

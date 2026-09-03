@@ -2,6 +2,8 @@
 #include "DxLib.h"
 #include "GameObject/Camera/FreeCamera.h"
 #include "Component/Collider/Collider.h"
+#include "Manager/PlayerData/PlayerDataManager.h"
+#include "Data/Player/PlayerData.h"
 #include "ImGui.h"
 
 MainGameScene::MainGameScene()
@@ -20,6 +22,8 @@ void MainGameScene::Start() {
 	aabb.halfSize = Vector3(Vector3::VScale(VOne,5000));
 	aabb.center = VZero;
 	collisionManager = std::make_unique<CollisionManager>(aabb);
+	mapManager = std::make_unique<MapManager>();
+	turn = std::make_unique<TurnProcessor>(mapManager.get());
 }
 
 /*
@@ -35,9 +39,16 @@ void MainGameScene::Setup() {
 	sphere.sphere.radius = 10;
 	g->AddComponent<Collider>(collisionManager.get(), sphere, CollisionLayer::Default);
 	r->AddComponent<Collider>(collisionManager.get(), sphere, CollisionLayer::Default);
-	//gameObjectManager->UnuseObject(std::move(g));
-	//gameObjectManager->UnuseObject(std::move(r));
-	//gameObjectManager->UnuseObject(std::move(c));
+	mapManager->LoadMap();
+	PlayerDataManager& p = PlayerDataManager::GetInstance();
+	p.CreatePlayer();
+	p.CreatePlayer();
+	p.CreatePlayer();
+	p.CreatePlayer();
+	for(int i = 0; i < p.GetPlayerNum(); i++) {
+		p.GetPlayerData(i)->SetPlayerName("Player" + std::to_string(i + 1));
+	}
+		turn->TurnStart();
 }
 
 /*
@@ -46,7 +57,9 @@ void MainGameScene::Setup() {
 void MainGameScene::Update(float _t) {
 	gameObjectManager->Update(_t);
 	collisionManager->Update(_t);
-
+	mapManager->Update(_t);
+	turn->SearchCanMoveTiles();
+	turn->Move();
 	ImGui::Begin("CameraTransform");
 	ImGui::End();
 }
@@ -54,6 +67,8 @@ void MainGameScene::Update(float _t) {
 void MainGameScene::Render() {
 	gameObjectManager->Render();
 	collisionManager->Render();
+	mapManager->Render();
+	turn->Render();
 	DrawString(100, 100, "MainGame", 0x000000);
 #if _DEBUG 線
 

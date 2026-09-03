@@ -157,7 +157,6 @@
     <ClCompile Include="src\Component\Collider\Collider.cpp" />
     <ClCompile Include="src\Component\ComponentBase.cpp" />
     <ClCompile Include="src\Component\Transform\Transform.cpp" />
-    <ClCompile Include="src\Data\Item\ItemData.cpp" />
     <ClCompile Include="src\Data\Player\PlayerData.cpp" />
     <ClCompile Include="src\Definition\CommonModule\Json\MyJson.cpp" />
     <ClCompile Include="src\Definition\CommonModule\Math\MyMath.cpp" />
@@ -180,6 +179,7 @@
     <ClCompile Include="src\Manager\Collision\CollisionManager.cpp" />
     <ClCompile Include="src\Manager\Collision\NarrowPhase\NarrowPhase.cpp" />
     <ClCompile Include="src\Manager\Collision\Octree\Octree.cpp" />
+    <ClCompile Include="src\Manager\Data\ElementDataManager.cpp" />
     <ClCompile Include="src\Manager\Fade\FadeManager.cpp" />
     <ClCompile Include="src\Manager\Fade\FadeMode\FadeBase.cpp" />
     <ClCompile Include="src\Manager\GameObject\GameObjectManager.cpp" />
@@ -194,6 +194,8 @@
     <ClCompile Include="src\Manager\Instance\Effect\Instance\EffectInstance.cpp" />
     <ClCompile Include="src\Manager\Instance\InstanceBase.cpp" />
     <ClCompile Include="src\Manager\ManagerBase.cpp" />
+    <ClCompile Include="src\Manager\Map\MapManager.cpp" />
+    <ClCompile Include="src\Manager\PlayerData\PlayerDataManager.cpp" />
     <ClCompile Include="src\Manager\Resource\Audio\AudioResourceManager.cpp" />
     <ClCompile Include="src\Manager\Resource\Audio\Resource\AudioResource.cpp" />
     <ClCompile Include="src\Manager\Resource\Effect\EffectResourceManager.cpp" />
@@ -206,6 +208,7 @@
     <ClCompile Include="src\Manager\Scene\GameScene\Title\TitleScene.cpp" />
     <ClCompile Include="src\Manager\Scene\SceneManager.cpp" />
     <ClCompile Include="src\Manager\Time\TimeManager.cpp" />
+    <ClCompile Include="src\Turn\TurnProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
@@ -215,7 +218,6 @@
     <ClInclude Include="src\Component\Collider\Collider.h" />
     <ClInclude Include="src\Component\ComponentBase.h" />
     <ClInclude Include="src\Component\Transform\Transform.h" />
-    <ClInclude Include="src\Data\Item\ItemData.h" />
     <ClInclude Include="src\Data\Player\PlayerData.h" />
     <ClInclude Include="src\Definition\CommonModule\Json\MyJson.h" />
     <ClInclude Include="src\Definition\CommonModule\Math\MyMath.h" />
@@ -242,6 +244,7 @@
     <ClInclude Include="src\Manager\Collision\CollisionManager.h" />
     <ClInclude Include="src\Manager\Collision\NarrowPhase\NarrowPhase.h" />
     <ClInclude Include="src\Manager\Collision\Octree\Octree.h" />
+    <ClInclude Include="src\Manager\Data\ElementDataManager.h" />
     <ClInclude Include="src\Manager\Fade\FadeManager.h" />
     <ClInclude Include="src\Manager\Fade\FadeMode\FadeBase.h" />
     <ClInclude Include="src\Manager\GameObject\GameObjectManager.h" />
@@ -256,6 +259,8 @@
     <ClInclude Include="src\Manager\Instance\Effect\Instance\EffectInstance.h" />
     <ClInclude Include="src\Manager\Instance\InstanceBase.h" />
     <ClInclude Include="src\Manager\ManagerBase.h" />
+    <ClInclude Include="src\Manager\Map\MapManager.h" />
+    <ClInclude Include="src\Manager\PlayerData\PlayerDataManager.h" />
     <ClInclude Include="src\Manager\Resource\Audio\AudioResourceManager.h" />
     <ClInclude Include="src\Manager\Resource\Audio\Resource\AudioResource.h" />
     <ClInclude Include="src\Manager\Resource\Effect\EffectResourceManager.h" />
@@ -268,6 +273,7 @@
     <ClInclude Include="src\Manager\Scene\GameScene\Title\TitleScene.h" />
     <ClInclude Include="src\Manager\Scene\SceneManager.h" />
     <ClInclude Include="src\Manager\Time\TimeManager.h" />
+    <ClInclude Include="src\Turn\TurnProcessor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

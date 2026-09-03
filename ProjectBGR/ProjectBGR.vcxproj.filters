@@ -184,6 +184,21 @@
     <Filter Include="ソース ファイル\Data\Tool\Equipment">
       <UniqueIdentifier>{67da4633-e5a1-4927-955d-6247c2088024}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Manager\Map">
+      <UniqueIdentifier>{161e5030-2f1f-4223-bb90-e19a19b75961}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\Map\Generator">
+      <UniqueIdentifier>{4af5e885-210d-4f61-9f15-1f9050918b1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\PlayerData">
+      <UniqueIdentifier>{4b94bd68-ec69-4857-bdcc-cfcb5b7caf43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn">
+      <UniqueIdentifier>{2ade0b2c-e68b-43a1-99c4-27ef3003cb77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\Data">
+      <UniqueIdentifier>{bf612282-e77d-42af-9fa6-849af3e48697}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -348,8 +363,17 @@
     <ClCompile Include="src\Data\Player\PlayerData.cpp">
       <Filter>ソース ファイル\Data\Player</Filter>
     </ClCompile>
-    <ClCompile Include="src\Data\Item\ItemData.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\Manager\Map\MapManager.cpp">
+      <Filter>ソース ファイル\Manager\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Manager\Data\ElementDataManager.cpp">
+      <Filter>ソース ファイル\Manager\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Manager\PlayerData\PlayerDataManager.cpp">
+      <Filter>ソース ファイル\Manager\PlayerData</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\TurnProcessor.cpp">
+      <Filter>ソース ファイル\Turn</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -530,8 +554,17 @@
     <ClInclude Include="src\Data\Player\PlayerData.h">
       <Filter>ソース ファイル\Data\Player</Filter>
     </ClInclude>
-    <ClInclude Include="src\Data\Item\ItemData.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="src\Manager\Map\MapManager.h">
+      <Filter>ソース ファイル\Manager\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Manager\Data\ElementDataManager.h">
+      <Filter>ソース ファイル\Manager\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Manager\PlayerData\PlayerDataManager.h">
+      <Filter>ソース ファイル\Manager\PlayerData</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\TurnProcessor.h">
+      <Filter>ソース ファイル\Turn</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

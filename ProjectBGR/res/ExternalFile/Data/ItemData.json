@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "name": "テスト",
+    "explanation": "Atkを上げる",
+    "effectID": 1,
+    "effectValue": 10
+  }
+]

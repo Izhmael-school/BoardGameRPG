@@ -1,0 +1,9 @@
+[
+  {
+    "id": 0,
+    "name": "ファイアボール",
+    "explanation": "選んだキャラクターに小ダメージ",
+    "effectID": 0,
+    "effectValue": 10
+  }
+]

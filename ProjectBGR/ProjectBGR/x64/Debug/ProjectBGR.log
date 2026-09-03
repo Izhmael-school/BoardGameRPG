@@ -1,1 +1,93 @@
-﻿  ProjectBGR.vcxproj -> C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\x64\Debug\ProjectBGR.exe
+﻿  TurnProcessor.cpp
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Library\Vector\Vector3.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.h(35,7): error C2039: 'string': 'std' のメンバーではありません
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\array(19,1):
+      'std' の宣言を確認してください
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.h(35,14): error C3646: 'name': 不明なオーバーライド指定子です
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.h(35,7): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.h(36,7): error C2039: 'string': 'std' のメンバーではありません
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\array(19,1):
+      'std' の宣言を確認してください
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.h(36,14): error C3646: 'explanation': 不明なオーバーライド指定子です
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.h(36,7): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\DesignPattern\Singleton\Singleton.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\ManagerBase.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\PlayerData\PlayerDataManager.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Map\MapManager.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Data\Player\PlayerData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Data\Player\PlayerData.h(108,55): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Data\Player\PlayerData.h(108,75): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Data\Player\PlayerData.h(119,49): warning C4267: 'return': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Data\Player\PlayerData.h(125,51): warning C4267: 'return': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Data\ElementDataManager.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Definition\CommonModule\Json\MyJson.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Turn/TurnProcessor.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(31,59): error C3872: 'U+222a': この文字を識別子で使用することはできません
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(31,59): error C3688: リテラル サフィックス '繝励Ξ繧､繝､繝ｼ繧堤ｧｻ蜍輔＆縺帙∪縺・' が無効です。リテラル演算子またはリテラル演算子テンプレート 'operator ""繝励Ξ繧､繝､繝ｼ繧堤ｧｻ蜍輔＆縺帙∪縺・' が見つかりません
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(33,84): error C2001: 文字列リテラル内の改行
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(34,2): error C2143: 構文エラー: ')' が '}' の前にありません。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(33,32): error C2440: '<function-style-cast>': 'initializer list' から 'Command' に変換できません。
+      C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(33,32):
+      'Command::Command': 関数に 3 個の引数を指定できません。
+          C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(33,32):
+          引数リスト '(CommandType, const char [13], const char [35])' を一致させようとしているとき
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(34,2): error C2143: 構文エラー: ';' が '}' の前にありません。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(36,61): error C3872: 'U+222a': この文字を識別子で使用することはできません
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(36,61): error C3688: リテラル サフィックス '鬲疲ｳ輔ｒ蜚ｱ縺医∪縺・' が無効です。リテラル演算子またはリテラル演算子テンプレート 'operator ""鬲疲ｳ輔ｒ蜚ｱ縺医∪縺・' が見つかりません
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(46,8): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(47,8): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(132,9): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(133,9): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(136,35): warning C4244: '引数': 'float' から 'const unsigned __int64' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(136,50): warning C4244: '引数': 'float' から 'const unsigned __int64' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(178,53): warning C4244: '引数': 'float' から 'const unsigned __int64' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(178,70): warning C4244: '引数': 'float' から 'const unsigned __int64' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(250,84): error C2039: 'name': 'Command' のメンバーではありません
+      C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.h(33,8):
+      'Command' の宣言を確認してください
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(250,106): error C2039: 'explanation': 'Command' のメンバーではありません
+      C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.h(33,8):
+      'Command' の宣言を確認してください
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp(250,30): warning C4267: '引数': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
