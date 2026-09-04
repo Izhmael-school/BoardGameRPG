@@ -44,9 +44,13 @@ private:
 	// マップ上の位置
 	Vector3 mapPosition;
 	// 持てるアイテムの数
-	int maxItems;
+	int maxItems = 10;
 	// 持てる魔法の数
-	int maxMagics;
+	int maxMagics = 10;
+	// 1ターンに使えるアイテムの数
+	int oneTurnItemCount = 1;
+	// 1ターンに使えるアイテムの数
+	int oneTurnMagicCount = 1;
 	// 持っているアイテムのリスト
 	std::vector<int> itemList;
 	// 持っている魔法のリスト
@@ -114,6 +118,11 @@ public:
 
 	int GetMaxMagics() const { return maxMagics; }
 	void SetMaxMagics(int v) { maxMagics = v; }
+
+	int GetOneTurnItemCount() const { return oneTurnItemCount; }
+	void SetOneTurnItemCount(int _v) { oneTurnItemCount = _v; }
+	int GetOneTurnMagicCount() const { return oneTurnMagicCount; }
+	void SetOneTurnMagicCount(int _v) { oneTurnMagicCount = _v; }
 
 	const std::vector<int>& GetItemList() const { return itemList; }
 	int GetItemCount() const { return itemList.size(); }

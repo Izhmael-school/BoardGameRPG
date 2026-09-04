@@ -208,6 +208,9 @@
     <ClCompile Include="src\Manager\Scene\GameScene\Title\TitleScene.cpp" />
     <ClCompile Include="src\Manager\Scene\SceneManager.cpp" />
     <ClCompile Include="src\Manager\Time\TimeManager.cpp" />
+    <ClCompile Include="src\Turn\Command\Item\ItemCommand.cpp" />
+    <ClCompile Include="src\Turn\Command\Item\MoveCommand.cpp" />
+    <ClCompile Include="src\Turn\Command\Magic\FieldMagicCommand.cpp" />
     <ClCompile Include="src\Turn\TurnProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +276,9 @@
     <ClInclude Include="src\Manager\Scene\GameScene\Title\TitleScene.h" />
     <ClInclude Include="src\Manager\Scene\SceneManager.h" />
     <ClInclude Include="src\Manager\Time\TimeManager.h" />
+    <ClInclude Include="src\Turn\Command\Item\ItemCommand.h" />
+    <ClInclude Include="src\Turn\Command\Item\MoveCommand.h" />
+    <ClInclude Include="src\Turn\Command\Magic\FieldMagicCommand.h" />
     <ClInclude Include="src\Turn\TurnProcessor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

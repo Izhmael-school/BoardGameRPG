@@ -8,13 +8,10 @@
 #define _TURNPROCESSOR_H_
 #include <vector>
 #include "Vector/Vector3.h"
+#include "Command/Item/ItemCommand.h"
+#include "Command/Magic/FieldMagicCommand.h"
 
-enum MoveDirection {
-	Move_Up,
-	Move_Down,
-	Move_Left,
-	Move_Right
-};
+
 
 enum CommandType {
 	Command_Move,
@@ -30,8 +27,10 @@ enum TurnState {
 	TurnState_End
 };
 
+#include <string>
+
 struct Command {
-	CommandType type;
+	TurnState state;
 	std::string name;
 	std::string explanation;
 };
@@ -48,20 +47,17 @@ private:
 	MapManager* mapManager;
 	// ターン順序
 	std::vector<int> orderList;
-	// 進めるマス
-	std::vector<bool> canMoveTileList;
-	// 進める回数
-	int canMoveCount;
-	// 進んだ回数
-	int currentMoveCount;
-	// 進んだマス
-	std::vector<Vector3> movedTiles;
 	// 選べるコマンドの配列
 	std::vector<Command> commandList;
 	// 選んでいるコマンド
 	int selectCommand;
 	// ターンの状態
 	TurnState turnState;
+
+	// アイテムコマンド
+	ItemCommand itemCommand;
+	// 魔法コマンド
+	FieldMagicCommand magicCommand;
 public:
 	TurnProcessor(MapManager* _mapManager);
 	~TurnProcessor();
@@ -76,21 +72,6 @@ public:
 	 * @brief ターンの開始処理
 	 */
 	void TurnStart();
-
-	/*
-	 * @brief 移動可能なタイルを検索する
-	 */
-	void SearchCanMoveTiles();
-
-	/*
-	 * @brief ターンの移動処理
-	 */
-	void Move();
-
-	/*
-	 * @brief 止まったマスの効果発動
-	 */
-	void TileEffect(Vector3 _tilePosition);
 
 	/*
 	 * @brief 更新

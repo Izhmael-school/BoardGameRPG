@@ -19,7 +19,7 @@ MainGameScene::~MainGameScene() {
 void MainGameScene::Start() {
 	gameObjectManager = std::make_unique<GameObjectManager>(resource);
 	AABB aabb;
-	aabb.halfSize = Vector3(Vector3::VScale(VOne,5000));
+	aabb.halfSize = Vector3(Vector3::VScale(VOne, 5000));
 	aabb.center = VZero;
 	collisionManager = std::make_unique<CollisionManager>(aabb);
 	mapManager = std::make_unique<MapManager>();
@@ -45,10 +45,10 @@ void MainGameScene::Setup() {
 	p.CreatePlayer();
 	p.CreatePlayer();
 	p.CreatePlayer();
-	for(int i = 0; i < p.GetPlayerNum(); i++) {
+	for (int i = 0; i < p.GetPlayerNum(); i++) {
 		p.GetPlayerData(i)->SetPlayerName("Player" + std::to_string(i + 1));
 	}
-		turn->TurnStart();
+	turn->TurnStart();
 }
 
 /*
@@ -58,8 +58,7 @@ void MainGameScene::Update(float _t) {
 	gameObjectManager->Update(_t);
 	collisionManager->Update(_t);
 	mapManager->Update(_t);
-	turn->SearchCanMoveTiles();
-	turn->Move();
+	turn->Update(_t);
 	ImGui::Begin("CameraTransform");
 	ImGui::End();
 }

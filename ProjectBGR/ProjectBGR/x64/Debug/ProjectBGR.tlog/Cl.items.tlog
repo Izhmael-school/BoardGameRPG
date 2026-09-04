@@ -55,4 +55,6 @@ C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Scene\GameS
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Scene\GameScene\Title\TitleScene.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\TitleScene.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Scene\SceneManager.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\SceneManager.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Time\TimeManager.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\TimeManager.obj
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Item\ItemCommand.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\ItemCommand.obj
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\FieldMagicCommand.obj
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\TurnProcessor.cpp;C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\ProjectBGR\x64\Debug\TurnProcessor.obj
