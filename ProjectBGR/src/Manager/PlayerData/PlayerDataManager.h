@@ -21,10 +21,18 @@ public:
 	~PlayerDataManager();
 
 public:
+	/*
+	 * @brief プレイヤーデータの作製
+	 */
 	void CreatePlayer();
 
 	PlayerData* GetPlayerData(int _index);
 
 	int GetPlayerNum();
+
+	/*
+	 * @brief 座標指定でプレイヤーを取得
+	 */
+	std::vector<PlayerData*> GetPlayerDataToMapPos(int _x, int _y);
 };
 

@@ -199,16 +199,25 @@
     <Filter Include="ソース ファイル\Manager\Data">
       <UniqueIdentifier>{bf612282-e77d-42af-9fa6-849af3e48697}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Turn\Command">
+    <Filter Include="ソース ファイル\Turn\Part">
+      <UniqueIdentifier>{679dd574-b042-43ed-a395-e8928741a002}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\Battle">
+      <UniqueIdentifier>{e684bf2b-ef03-4c5f-b02b-69b80ce438ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\BoardGame">
+      <UniqueIdentifier>{2d0e70bd-2470-4b2e-888a-89abb6fcf190}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\BoardGame\Command">
       <UniqueIdentifier>{66165b4a-7953-4b4c-93d6-02edcaad3c85}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Turn\Command\Item">
+    <Filter Include="ソース ファイル\Turn\Part\BoardGame\Command\Item">
       <UniqueIdentifier>{ce5d349e-5f17-4de1-9c11-e193727d1ea2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Turn\Command\Move">
+    <Filter Include="ソース ファイル\Turn\Part\BoardGame\Command\Move">
       <UniqueIdentifier>{37de4ad4-b211-4ada-bb9d-3b41fba6d686}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Turn\Command\Magic">
+    <Filter Include="ソース ファイル\Turn\Part\BoardGame\Command\Magic">
       <UniqueIdentifier>{53856d27-69ed-4b45-b9fa-7b39d3445996}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -387,13 +396,16 @@
     <ClCompile Include="src\Turn\TurnProcessor.cpp">
       <Filter>ソース ファイル\Turn</Filter>
     </ClCompile>
-    <ClCompile Include="src\Turn\Command\Item\ItemCommand.cpp">
-      <Filter>ソース ファイル\Turn\Command\Item</Filter>
+    <ClCompile Include="src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp">
+      <Filter>ソース ファイル\Turn\Part\BoardGame\Command\Move</Filter>
     </ClCompile>
-    <ClCompile Include="src\Turn\Command\Magic\FieldMagicCommand.cpp">
-      <Filter>ソース ファイル\Turn\Command\Magic</Filter>
+    <ClCompile Include="src\Turn\Part\BoardGame\Command\Magic\FieldMagicCommand.cpp">
+      <Filter>ソース ファイル\Turn\Part\BoardGame\Command\Magic</Filter>
     </ClCompile>
-    <ClCompile Include="src\Turn\Command\Item\MoveCommand.cpp">
+    <ClCompile Include="src\Turn\Part\BoardGame\Command\Item\ItemCommand.cpp">
+      <Filter>ソース ファイル\Turn\Part\BoardGame\Command\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\BoardGame\BoardGamePart.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -587,13 +599,16 @@
     <ClInclude Include="src\Turn\TurnProcessor.h">
       <Filter>ソース ファイル\Turn</Filter>
     </ClInclude>
-    <ClInclude Include="src\Turn\Command\Item\ItemCommand.h">
-      <Filter>ソース ファイル\Turn\Command\Item</Filter>
+    <ClInclude Include="src\Turn\Part\BoardGame\Command\Move\MoveCommand.h">
+      <Filter>ソース ファイル\Turn\Part\BoardGame\Command\Move</Filter>
     </ClInclude>
-    <ClInclude Include="src\Turn\Command\Magic\FieldMagicCommand.h">
-      <Filter>ソース ファイル\Turn\Command\Magic</Filter>
+    <ClInclude Include="src\Turn\Part\BoardGame\Command\Magic\FieldMagicCommand.h">
+      <Filter>ソース ファイル\Turn\Part\BoardGame\Command\Magic</Filter>
     </ClInclude>
-    <ClInclude Include="src\Turn\Command\Item\MoveCommand.h">
+    <ClInclude Include="src\Turn\Part\BoardGame\Command\Item\ItemCommand.h">
+      <Filter>ソース ファイル\Turn\Part\BoardGame\Command\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\BoardGame\BoardGamePart.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

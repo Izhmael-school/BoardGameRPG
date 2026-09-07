@@ -8,56 +8,31 @@
 #define _TURNPROCESSOR_H_
 #include <vector>
 #include "Vector/Vector3.h"
-#include "Command/Item/ItemCommand.h"
-#include "Command/Magic/FieldMagicCommand.h"
-
-
-
-enum CommandType {
-	Command_Move,
-	Command_Item,
-	Command_Magic,
-};
-
-enum TurnState {
-	TurnState_CommandSelect,
-	TurnState_Move,
-	TurnState_Item,
-	TurnState_Magic,
-	TurnState_End
-};
-
-#include <string>
-
-struct Command {
-	TurnState state;
-	std::string name;
-	std::string explanation;
-};
+#include "Part/BoardGame/BoardGamePart.h"
 
 class PlayerData;
 class MapManager;
+
+enum GamePart {
+	GamePart_Board,
+	GamePart_Battle
+};
 
 class TurnProcessor {
 private:
 	// ターンの順番
 	int currentTurn;
+	// 今のプレイヤーのデータ
 	PlayerData* currentPlayerData;
 
-	MapManager* mapManager;
 	// ターン順序
 	std::vector<int> orderList;
-	// 選べるコマンドの配列
-	std::vector<Command> commandList;
-	// 選んでいるコマンド
-	int selectCommand;
-	// ターンの状態
-	TurnState turnState;
+	MapManager* mapManager;
+	
+	GamePart gamePart;
 
-	// アイテムコマンド
-	ItemCommand itemCommand;
-	// 魔法コマンド
-	FieldMagicCommand magicCommand;
+	// すごろくパート
+	BoardGamePart boardGamePart;
 public:
 	TurnProcessor(MapManager* _mapManager);
 	~TurnProcessor();
@@ -82,6 +57,8 @@ public:
 	 * @brief ターンの描画
 	 */
 	void Render();
+
+	void TurnEnd();
 };
 
 #endif

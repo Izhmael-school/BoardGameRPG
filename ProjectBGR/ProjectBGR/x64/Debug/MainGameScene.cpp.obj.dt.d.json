@@ -375,6 +375,8 @@
             "c:\\users\\student3\\desktop\\github\\boardgamerpg\\projectbgr\\src\\manager\\map\\mapmanager.h",
             "c:\\users\\student3\\desktop\\github\\boardgamerpg\\projectbgr\\src\\turn\\turnprocessor.h",
             "c:\\users\\student3\\desktop\\github\\boardgamerpg\\projectbgr\\src\\turn\\command\\item\\itemcommand.h",
+            "c:\\users\\student3\\desktop\\github\\boardgamerpg\\projectbgr\\src\\turn\\command\\move\\movecommand.h",
+            "c:\\users\\student3\\desktop\\github\\boardgamerpg\\projectbgr\\src\\turn\\command\\magic\\fieldmagiccommand.h",
             "c:\\users\\student3\\desktop\\github\\boardgamerpg\\projectbgr\\src\\gameobject\\camera\\freecamera.h",
             "c:\\users\\student3\\desktop\\github\\boardgamerpg\\projectbgr\\src\\component\\collider\\collider.h",
             "c:\\users\\student3\\desktop\\github\\boardgamerpg\\projectbgr\\src\\manager\\playerdata\\playerdatamanager.h",

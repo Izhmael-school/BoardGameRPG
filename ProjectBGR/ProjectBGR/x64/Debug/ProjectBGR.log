@@ -1,53 +1,75 @@
-﻿  FieldMagicCommand.cpp
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/Turn/Command/Magic/FieldMagicCommand.cpp' をコンパイルしています)
-  
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\DesignPattern\Singleton\Singleton.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/Turn/Command/Magic/FieldMagicCommand.cpp' をコンパイルしています)
-  
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\ManagerBase.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/Turn/Command/Magic/FieldMagicCommand.cpp' をコンパイルしています)
+﻿  MoveCommand.cpp
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Turn/Part/BoardGame/Command/Move/MoveCommand.cpp' をコンパイルしています)
   
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Library\Vector\Vector3.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/Turn/Command/Magic/FieldMagicCommand.cpp' をコンパイルしています)
+  (ソース ファイル 'src/Turn/Part/BoardGame/Command/Move/MoveCommand.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Map\MapManager.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Turn/Part/BoardGame/Command/Move/MoveCommand.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\ManagerBase.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Turn/Part/BoardGame/Command/Move/MoveCommand.cpp' をコンパイルしています)
   
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Data\Player\PlayerData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/Turn/Command/Magic/FieldMagicCommand.cpp' をコンパイルしています)
+  (ソース ファイル 'src/Turn/Part/BoardGame/Command/Move/MoveCommand.cpp' をコンパイルしています)
   
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Data\Player\PlayerData.h(112,55): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
-  (ソース ファイル 'src/Turn/Command/Magic/FieldMagicCommand.cpp' をコンパイルしています)
+  (ソース ファイル 'src/Turn/Part/BoardGame/Command/Move/MoveCommand.cpp' をコンパイルしています)
   
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Data\Player\PlayerData.h(112,75): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
-  (ソース ファイル 'src/Turn/Command/Magic/FieldMagicCommand.cpp' をコンパイルしています)
+  (ソース ファイル 'src/Turn/Part/BoardGame/Command/Move/MoveCommand.cpp' をコンパイルしています)
   
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Data\Player\PlayerData.h(128,49): warning C4267: 'return': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-  (ソース ファイル 'src/Turn/Command/Magic/FieldMagicCommand.cpp' をコンパイルしています)
+  (ソース ファイル 'src/Turn/Part/BoardGame/Command/Move/MoveCommand.cpp' をコンパイルしています)
   
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Data\Player\PlayerData.h(134,51): warning C4267: 'return': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-  (ソース ファイル 'src/Turn/Command/Magic/FieldMagicCommand.cpp' をコンパイルしています)
+  (ソース ファイル 'src/Turn/Part/BoardGame/Command/Move/MoveCommand.cpp' をコンパイルしています)
   
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\Data\ElementDataManager.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/Turn/Command/Magic/FieldMagicCommand.cpp' をコンパイルしています)
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\DesignPattern\Singleton\Singleton.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Turn/Part/BoardGame/Command/Move/MoveCommand.cpp' をコンパイルしています)
+  
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Manager\PlayerData\PlayerDataManager.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'src/Turn/Part/BoardGame/Command/Move/MoveCommand.cpp' をコンパイルしています)
   
 C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Definition\CommonModule\Json\MyJson.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'src/Turn/Command/Magic/FieldMagicCommand.cpp' をコンパイルしています)
+  (ソース ファイル 'src/Turn/Part/BoardGame/Command/Move/MoveCommand.cpp' をコンパイルしています)
   
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp(48,52): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp(48,41): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp(48,30): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp(48,20): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp(49,52): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp(49,41): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp(49,30): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp(49,20): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp(62,9): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp(63,9): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp(70,8): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp(73,47): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp(73,20): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp(74,22): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp(79,16): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp(80,9): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Command\Magic\FieldMagicCommand.cpp(81,33): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-  ProjectBGR.vcxproj -> C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\x64\Debug\ProjectBGR.exe
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(57,9): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(58,9): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(61,35): warning C4244: '引数': 'float' から 'const unsigned __int64' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(61,50): warning C4244: '引数': 'float' から 'const unsigned __int64' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(111,8): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(112,8): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(154,53): warning C4244: '引数': 'float' から 'const unsigned __int64' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(154,70): warning C4244: '引数': 'float' から 'const unsigned __int64' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(186,101): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(186,84): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(272,52): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(272,41): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(272,30): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(272,20): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(273,52): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(273,41): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(273,30): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(273,20): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(275,13): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(279,8): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(280,8): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(291,21): error C2001: 文字列リテラル内の改行
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(292,7): error C2143: 構文エラー: ';' が 'std::string' の前にありません。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(292,21): error C2001: 文字列リテラル内の改行
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(293,2): error C2146: 構文エラー: ';' が、識別子 'offset' の前に必要です。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(297,52): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(297,41): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(297,30): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(297,20): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(298,52): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(298,41): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(298,30): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(298,20): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(299,29): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(299,19): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(300,32): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\student3\Desktop\GitHub\BoardGameRPG\ProjectBGR\src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp(300,19): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
