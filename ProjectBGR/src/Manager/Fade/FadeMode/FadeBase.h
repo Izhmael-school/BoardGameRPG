@@ -1,12 +1,12 @@
-/*
- * @brief フェードの基底（徐々に暗くなっていくだけのフェード）
+﻿/*
+ * @brief 繝輔ぉ繝ｼ繝峨・蝓ｺ蠎包ｼ亥ｾ舌・↓證励￥縺ｪ縺｣縺ｦ縺・￥縺縺代・繝輔ぉ繝ｼ繝会ｼ・
  * @author Sekino
  */
 #pragma once
 #ifndef _FADEBASE_H_
 #define _FADEBASE_H_
 
- // フェードの状態
+ // 繝輔ぉ繝ｼ繝峨・迥ｶ諷・
 enum FadeState {
 	FadeIn = -1,
 	FadeNone = 0,

@@ -1,5 +1,5 @@
-/*
- * @brief 行列クラス
+﻿/*
+ * @brief 陦悟・繧ｯ繝ｩ繧ｹ
  * @author Sekino
  */
 #pragma once
@@ -23,37 +23,37 @@ public:
 public:
 
 	/*
-	 * @brief 平行移動行列の取得
+	 * @brief 蟷ｳ陦檎ｧｻ蜍戊｡悟・縺ｮ蜿門ｾ・
 	 */
 	static Matrix GetTranslation(Vector3 _pos);
 
 	/*
-	 * @brief 回転Xの取得
+	 * @brief 蝗櫁ｻ｢X縺ｮ蜿門ｾ・
 	 */
 	static Matrix GetRotationX(float xRadian);
 
 	/*
-	 * @brief 回転Yの取得
+	 * @brief 蝗櫁ｻ｢Y縺ｮ蜿門ｾ・
 	 */
 	static Matrix GetRotationY(float yRadian);
 
 	/*
-	 * @brief 回転Zの取得
+	 * @brief 蝗櫁ｻ｢Z縺ｮ蜿門ｾ・
 	 */
 	static Matrix GetRotationZ(float zRadian);
 
 	/*
-	 * @brief 回転行列の合成
+	 * @brief 蝗櫁ｻ｢陦悟・縺ｮ蜷域・
 	 */
 	static Matrix GetRotationXYZ(Matrix _x, Matrix _y, Matrix _z);
 
 	/*
-	 * @brief 拡縮行列の取得
+	 * @brief 諡｡邵ｮ陦悟・縺ｮ蜿門ｾ・
 	 */
 	static Matrix GetScale(Vector3 _scale);
 
 	/*
-	 * @brief 乗算
+	 * @brief 荵礼ｮ・
 	 */
 	static Matrix MMult(Matrix _mat1, Matrix _mat2);
 };

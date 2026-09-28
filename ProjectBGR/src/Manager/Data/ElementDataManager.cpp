@@ -1,4 +1,4 @@
-#include "ElementDataManager.h"
+﻿#include "ElementDataManager.h"
 
 ElementDataManager::ElementDataManager() {
 	LoadElementData();

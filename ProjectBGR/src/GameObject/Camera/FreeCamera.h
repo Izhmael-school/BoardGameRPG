@@ -1,5 +1,5 @@
-/*
- * @brief フリーカメラオブジェクト
+﻿/*
+ * @brief 繝輔Μ繝ｼ繧ｫ繝｡繝ｩ繧ｪ繝悶ず繧ｧ繧ｯ繝・
  * @author Sekino
  */
 #pragma once

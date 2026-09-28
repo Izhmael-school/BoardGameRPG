@@ -1,5 +1,5 @@
-/*
- * @brief エフェクトを読み込むリソースクラス
+﻿/*
+ * @brief 繧ｨ繝輔ぉ繧ｯ繝医ｒ隱ｭ縺ｿ霎ｼ繧繝ｪ繧ｽ繝ｼ繧ｹ繧ｯ繝ｩ繧ｹ
  * @author Sekino
  */
 
@@ -16,7 +16,7 @@ public:
 	~EffectResource() override;
 
 	/*
-	 * @brief 読み込み
+	 * @brief 隱ｭ縺ｿ霎ｼ縺ｿ
 	 */
 	bool Load() override;
 

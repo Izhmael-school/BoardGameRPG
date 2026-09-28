@@ -1,5 +1,5 @@
-/*
- * @brief XInput‚ÌƒRƒ“ƒgƒ[ƒ‰
+ï»¿/*
+ * @brief XInputã®ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©
  * @author Sekino
  */
 #pragma once
@@ -8,7 +8,7 @@
 
 class XInputPad : public PadBase {
 private:
-	// ƒRƒ“ƒgƒ[ƒ‰(XInput)‚Ì“ü—Íó‹µ
+	// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©(XInput)ã®å…¥åŠ›çŠ¶æ³
 	XINPUT_STATE currentPadState{};
 	XINPUT_STATE prevPadState{};
 
@@ -21,17 +21,17 @@ public:
 #pragma region Pad
 
 	/**
-	  ‰Ÿ‚³‚ê‚Ä‚¢‚é‚©
+	  æŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹
 	  XINPUT_BUTTON_##
    */
 	bool IsPad(int _pad) const override;
 	/**
-	  ‰Ÿ‚³‚ê‚½‚©
+	  æŠ¼ã•ã‚ŒãŸã‹
 	  MOUSE_BUTTON_##
 	*/
 	bool IsPadDown(int _pad) const override;
 	/**
-	  —£‚µ‚½‚©
+	  é›¢ã—ãŸã‹
 	  MOUSE_BUTTON_##
 	*/
 	inline bool IsPadUp(int _pad) const override;

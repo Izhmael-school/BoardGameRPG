@@ -1,4 +1,4 @@
-#include "Camera.h"
+﻿#include "Camera.h"
 #include "Library/Vector/Vector3.h"
 #include "Library/Vector/ConversionVECTOR.h"
 #include "Definition/CommonModule/Math/MyMath.h"
@@ -16,11 +16,11 @@ Camera::Camera(GameObject* _attachObject, CameraMovementMode _mode, Projection _
 	, fov(_fov)
 	, near(_near)
 	, far(_far) {
-	// 描画範囲の指定
+	// 謠冗判遽・峇縺ｮ謖・ｮ・
 	SetCameraNearFar(near, far);
-	// 描画方法の指定
+	// 謠冗判譁ｹ豕輔・謖・ｮ・
 	SetProjection(projection, fov);
-	// カメラの移動を生成
+	// 繧ｫ繝｡繝ｩ縺ｮ遘ｻ蜍輔ｒ逕滓・
 	SetMovement(_mode);
 }
 
@@ -79,18 +79,18 @@ void Camera::SetNearFar(float _near, float _far) {
 }
 
 void Camera::DrawGizmo(int _color) {
-	// 画面アスペクト比を取得
+	// 逕ｻ髱｢繧｢繧ｹ繝壹け繝域ｯ斐ｒ蜿門ｾ・
 	int sx = 0, sy = 0;
 	GetScreenState(&sx, &sy, nullptr);
 	float aspect = (sy != 0) ? static_cast<float>(sx) / sy : 1.0f;
 
-	// 現在セットされているカメラの位置・姿勢を取得
+	// 迴ｾ蝨ｨ繧ｻ繝・ヨ縺輔ｌ縺ｦ縺・ｋ繧ｫ繝｡繝ｩ縺ｮ菴咲ｽｮ繝ｻ蟋ｿ蜍｢繧貞叙蠕・
 	VECTOR camPos = GetCameraPosition();
 	VECTOR front = GetCameraFrontVector();
 	VECTOR up = GetCameraUpVector();
 	VECTOR right = GetCameraRightVector();
 
-	// 上下・左右の半幅を求めるラムダ
+	// 荳贋ｸ九・蟾ｦ蜿ｳ縺ｮ蜊雁ｹ・ｒ豎ゅａ繧九Λ繝繝
 	auto drawBox = [&](float halfV_n, float halfH_n, float halfV_f, float halfH_f) {
 		VECTOR nearCenter = VAdd(camPos, VScale(front, near));
 		VECTOR farCenter = VAdd(camPos, VScale(front, far));
@@ -105,17 +105,17 @@ void Camera::DrawGizmo(int _color) {
 		VECTOR fbl = VAdd(VAdd(farCenter, VScale(up, -halfV_f)), VScale(right, -halfH_f));
 		VECTOR fbr = VAdd(VAdd(farCenter, VScale(up, -halfV_f)), VScale(right, halfH_f));
 
-		// near面
+		// near髱｢
 		DrawLine3D(ntl, ntr, _color);
 		DrawLine3D(ntr, nbr, _color);
 		DrawLine3D(nbr, nbl, _color);
 		DrawLine3D(nbl, ntl, _color);
-		// far面
+		// far髱｢
 		DrawLine3D(ftl, ftr, _color);
 		DrawLine3D(ftr, fbr, _color);
 		DrawLine3D(fbr, fbl, _color);
 		DrawLine3D(fbl, ftl, _color);
-		// near-far接続辺
+		// near-far謗･邯夊ｾｺ
 		DrawLine3D(ntl, ftl, _color);
 		DrawLine3D(ntr, ftr, _color);
 		DrawLine3D(nbl, fbl, _color);

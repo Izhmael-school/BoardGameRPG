@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * @file Transform.h
  * @author Sekino
  */
@@ -7,25 +7,25 @@
 #define _TRANSFORM_H_
 
 #include <vector>
-#include "Library/Vector/Vector3.h"
-#include "Library/Matrix/Matrix.h"
+#include "Vector3.h"
+#include "Matrix.h"
 #include "../ComponentBase.h"
 
 class Transform : public ComponentBase{
 protected:
-	// À•W
+	// åº§æ¨™
 	Vector3 position;
-	// ‰ñ“](ƒIƒCƒ‰[Šp)
+	// å›è»¢(ã‚ªã‚¤ãƒ©ãƒ¼è§’)
 	Vector3 rotation;
-	// Šgk
+	// æ‹¡ç¸®
 	Vector3 scale;
-	// s—ñ
+	// è¡Œåˆ—
 	Matrix matrix;
-	// eqŠÖŒW
+	// è¦ªå­é–¢ä¿‚
 	Transform* parent;
 	std::vector<Transform*> children;
 
-	// —LŒø‚©‚Ç‚¤‚©
+	// æœ‰åŠ¹ã‹ã©ã†ã‹
 	bool isActive;
 
 public:
@@ -33,25 +33,25 @@ public:
 	~Transform();
 
 	/*
-	 * @brief XV
+	 * @brief æ›´æ–°
 	 */
 	void Update(float _t) override;
 
-	// À•WŠÖ˜A
+	// åº§æ¨™é–¢é€£
 	inline Vector3 GetPosition() const { return Vector3(matrix.m[3][0], matrix.m[3][1], matrix.m[3][2]); }
 	inline Vector3 GetLocalPosition() const { return position; }
 	inline void SetPosition(Vector3 _pos) { position = _pos; CalcMatrix(); }
 	inline void AddPosition(Vector3 _add) { position = Vector3::VAdd(position, _add); CalcMatrix();}
 	inline void AddPosition(Vector3 _dir, float _add) { position = Vector3::VAdd(position, Vector3::VScale(_dir, _add)); CalcMatrix();}
 
-	// ‰ñ“]ŠÖ˜A
+	// å›è»¢é–¢é€£
 	Vector3 GetRotation();
 	inline Vector3 GetLocalRotation() const { return rotation; }
 	inline void SetRotation(Vector3 _rot) { rotation = _rot;CalcMatrix();}
 	inline void AddRotation(Vector3 _add) { rotation = Vector3::VAdd(rotation, _add); CalcMatrix();}
 	inline void AddRotation(Vector3 _dir, float _add) { rotation = Vector3::VAdd(rotation, Vector3::VScale(_dir, _add));CalcMatrix();}
 
-	// ŠgkŠÖ˜A
+	// æ‹¡ç¸®é–¢é€£
 	Vector3 GetScale() const;
 	inline Vector3 GetLocalScale() const { return scale; }
 	inline void SetScale(Vector3 _sca) { scale = _sca; CalcMatrix(); }
@@ -59,13 +59,13 @@ public:
 	inline void AddScale(Vector3 _add) { scale = Vector3::VAdd(scale, _add); CalcMatrix(); }
 	inline void AddScale(Vector3 _dir, float _add) { scale = Vector3::VAdd(scale, Vector3::VScale(_dir, _add)); CalcMatrix(); }
 
-	// s—ñŠÖ˜A
+	// è¡Œåˆ—é–¢é€£
 	inline Matrix GetMatrix() const { return matrix; }
 	inline void SetMatrix(Matrix _mat) { matrix = _mat; }
 	Matrix CalcMatrix();
 	void CalcTransform();
 
-	// ƒxƒNƒgƒ‹ŠÖ˜A
+	// ãƒ™ã‚¯ãƒˆãƒ«é–¢é€£
 	inline Vector3 GetForward() { return Vector3(matrix.m[2][0], matrix.m[2][1], matrix.m[2][2]).Normalized(); }
 	inline Vector3 GetUp() const { return Vector3(matrix.m[1][0], matrix.m[1][1], matrix.m[1][2]).Normalized(); }
 	inline Vector3 GetRight() const { return Vector3(matrix.m[0][0], matrix.m[0][1], matrix.m[0][2]).Normalized(); }
@@ -73,22 +73,22 @@ public:
 	void LookAtPos(Vector3 targetPos);
 	void LookAtDir(Vector3 dir);
 	/*
-	 *	ƒ^[ƒQƒbƒg‚Ì•û‚ğŒü‚­
+	 *	ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®æ–¹ã‚’å‘ã
 	 *	@author	Riku
 	 */
 	void LookAt(Vector3 targetPos);
 
 	void GraduallyLookAtY(Vector3 targetPos);
 
-	// eqŠÖŒWŠÖ˜A
+	// è¦ªå­é–¢ä¿‚é–¢é€£
 	/*
-	 * @brief eqŠÖŒW‚ğì‚é
-	 * @param _parant e‚É‚È‚éTransform
-	 * @param isHoldWorld Œ»İ‚ÌÀ•W‚ğˆÛ‚·‚é‚©
+	 * @brief è¦ªå­é–¢ä¿‚ã‚’ä½œã‚‹
+	 * @param _parant è¦ªã«ãªã‚‹Transform
+	 * @param isHoldWorld ç¾åœ¨ã®åº§æ¨™ã‚’ç¶­æŒã™ã‚‹ã‹
 	 */
 	void AttachParent(Transform* _parent, bool isHoldWorld = true);
 	/*
-	 * @brief eqŠÖŒW‚ğ‰ğœ‚·‚é
+	 * @brief è¦ªå­é–¢ä¿‚ã‚’è§£é™¤ã™ã‚‹
 	 */
 	void DetachParent();
 
@@ -96,7 +96,7 @@ public:
 	Transform* GetChild(int index) const { if (children.size() <= index) return nullptr; else return children[index]; }
 	int GetChildCount() const { return static_cast<int>(children.size()); }
 	/*
-	 * @brief q‹Ÿ‚Æ‚µ‚Ä‚ÌID‚ğæ“¾‚·‚é
+	 * @brief å­ä¾›ã¨ã—ã¦ã®IDã‚’å–å¾—ã™ã‚‹
 	 */
 	int GetChildID();
 };

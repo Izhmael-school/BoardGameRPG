@@ -1,4 +1,4 @@
-/*
+﻿/*
  * @file XInputPad.cpp
  * @author Sekino
  */

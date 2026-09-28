@@ -1,5 +1,5 @@
-/*
- * @brief カメラコンポーネント
+﻿/*
+ * @brief 繧ｫ繝｡繝ｩ繧ｳ繝ｳ繝昴・繝阪Φ繝・
  * @author Sekino
  */
 #pragma once
@@ -12,8 +12,8 @@
 class CameraMovementBase;
 
 enum Projection {
-	Perspective,	// 立体に写す
-	Orthographic	// 平面に写す
+	Perspective,	// 遶倶ｽ薙↓蜀吶☆
+	Orthographic	// 蟷ｳ髱｢縺ｫ蜀吶☆
 };
 
 enum CameraMovementMode {
@@ -22,10 +22,10 @@ enum CameraMovementMode {
 
 class Camera : public ComponentBase {
 private:
-	Projection projection;	// 描画方法
-	float fov;				// 視野角
-	float near;				// 手前クリップの距離
-	float far;				// 奥グリップの距離
+	Projection projection;	// 謠冗判譁ｹ豕・
+	float fov;				// 隕夜㍽隗・
+	float near;				// 謇句燕繧ｯ繝ｪ繝・・縺ｮ霍晞屬
+	float far;				// 螂･繧ｰ繝ｪ繝・・縺ｮ霍晞屬
 
 	std::unique_ptr<CameraMovementBase> movement;
 

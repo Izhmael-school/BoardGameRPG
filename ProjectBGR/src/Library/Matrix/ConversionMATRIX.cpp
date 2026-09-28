@@ -1,4 +1,4 @@
-#include "ConversionMATRIX.h"
+﻿#include "ConversionMATRIX.h"
 
 MATRIX ConversionMATRIX::MatrixToMATRIX(Matrix _mat) {
     MATRIX mat = MGetIdent();

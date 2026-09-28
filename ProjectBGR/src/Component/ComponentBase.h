@@ -1,5 +1,5 @@
-/*
- * @brief コンポーネントの基底
+﻿/*
+ * @brief 繧ｳ繝ｳ繝昴・繝阪Φ繝医・蝓ｺ蠎・
  * @author Sekino
  */
 #pragma once
@@ -10,40 +10,40 @@ class GameObject;
 
 class ComponentBase {
 protected:
-	GameObject* attachObject;	// コンポーネントがアタッチされたオブジェクト
+	GameObject* attachObject;	// 繧ｳ繝ｳ繝昴・繝阪Φ繝医′繧｢繧ｿ繝・メ縺輔ｌ縺溘が繝悶ず繧ｧ繧ｯ繝・
 
-	bool isActive;	// 有効か
+	bool isActive;	// 譛牙柑縺・
 public:
 	ComponentBase(GameObject* _attachObject);
 	virtual ~ComponentBase() = default;
 
-	// コピー禁止
+	// 繧ｳ繝斐・遖∵ｭ｢
 	ComponentBase(const ComponentBase&) = delete;
 	ComponentBase& operator=(const ComponentBase&) = delete;
 
 public:
 	/*
-	 * @brief 更新
+	 * @brief 譖ｴ譁ｰ
 	 */
 	virtual void Update(float _t);
 
 	/*
-	 * @brief 描画
+	 * @brief 謠冗判
 	 */
 	virtual void Render();
 
 	/*
-	 * @brief isActiveのセッター
+	 * @brief isActive縺ｮ繧ｻ繝・ち繝ｼ
 	 */
 	inline virtual void SetActive(bool _isActive) { isActive = _isActive; }
 
 	/*
-	 * @brief isActiveのゲッター
+	 * @brief isActive縺ｮ繧ｲ繝・ち繝ｼ
 	 */
 	inline virtual bool IsActive() const { return isActive; }
 
 	/*
-	 * @brief attachedObjectのゲッター
+	 * @brief attachedObject縺ｮ繧ｲ繝・ち繝ｼ
 	 */
 	inline GameObject* GetAttachObject() const { return attachObject; }
 };

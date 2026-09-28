@@ -1,4 +1,4 @@
-#include "EffectResource.h"
+﻿#include "EffectResource.h"
 //#include "EffekseerForDXLib.h"
 #include <cassert>
 
@@ -13,14 +13,14 @@ EffectResource::~EffectResource() {
 }
 
 bool EffectResource::Load() {
-	// 二重ロードを防ぐ
+	// 莠碁㍾繝ｭ繝ｼ繝峨ｒ髦ｲ縺・
 	if (IsLoaded()) return false;
 
-	// 読み込み
+	// 隱ｭ縺ｿ霎ｼ縺ｿ
 	//loadHandle = LoadEffekseerEffect(path.c_str(), magnification);
 
 	if (!IsLoaded()) {
-		// 失敗
+		// 螟ｱ謨・
 #if _DEBUG
 		assert(false && "Failed Load Effect");
 #endif // _DEBUG

@@ -1,5 +1,5 @@
-/*
- * @brief DxライブラリのMATRIXとオリジナルのMatrixを変換する
+﻿/*
+ * @brief Dx繝ｩ繧､繝悶Λ繝ｪ縺ｮMATRIX縺ｨ繧ｪ繝ｪ繧ｸ繝翫Ν縺ｮMatrix繧貞､画鋤縺吶ｋ
  * @author Sekino
  */
 #pragma once
@@ -12,12 +12,12 @@
 class ConversionMATRIX {
 public:
 	/*
-	 * @brief MatrixをMATRIXに変換
+	 * @brief Matrix繧樽ATRIX縺ｫ螟画鋤
 	 */
 	static MATRIX MatrixToMATRIX(Matrix _mat);
 
 	/*
-	 * @brief MATRIXをMatrixに変換
+	 * @brief MATRIX繧樽atrix縺ｫ螟画鋤
 	 */
 	static Matrix MATRIXToMatrix(MATRIX _mat);
 };

@@ -1,9 +1,13 @@
-#include "Vector3.h"
+﻿#include "Vector3.h"
+#include "Vector2.h"
 #include <math.h>
-#include "DxLib.h"
 #include <algorithm>
 
-Vector3::Vector3() {
+Vector3::Vector3() 
+	:x(0.0f)
+	,y(0.0f)
+	,z(0.0f)
+{
 }
 
 Vector3::Vector3(float _x, float _y, float _z)
@@ -13,8 +17,7 @@ Vector3::Vector3(float _x, float _y, float _z)
 }
 
 float Vector3::Magnitude() const {
-	float mag = (x * x) + (y * y) + (z * z);
-	return sqrtf(mag);
+	return sqrtf(SqrMagnitude());
 }
 
 float Vector3::SqrMagnitude() const {
@@ -25,7 +28,7 @@ Vector3 Vector3::Normalized() const {
 	float mag = Magnitude();
 	if (mag == 0.0f) return VZero;
 
-	// 0除算対策
+	// 0髯､邂怜ｯｾ遲・
 	float nx = x != 0.0f ? x / mag : 0.0f;
 	float ny = y != 0.0f ? y / mag : 0.0f;
 	float nz = z != 0.0f ? z / mag : 0.0f;
@@ -46,8 +49,7 @@ std::array<float, 3> Vector3::GetArray() const {
 }
 
 Vector3 Vector3::Angle(Vector3 _from, Vector3 _to) {
-	Vector3 angle = Vector3(_from.x - _to.x, _from.y - _to.y, _from.z - _to.z);
-	return angle;
+	return Vector3(_from.x - _to.x, _from.y - _to.y, _from.z - _to.z);
 }
 
 float Vector3::Dot(Vector3 _vec1, Vector3 _vec2) {
@@ -83,16 +85,16 @@ Vector3 Vector3::Lerp(Vector3 _vec1, Vector3 _vec2, float _t) {
 }
 
 Vector3 Vector3::Max(Vector3 _vec1, Vector3 _vec2) {
-	float mx = max(_vec1.x, _vec2.x);
-	float my = max(_vec1.y, _vec2.y);
-	float mz = max(_vec1.z, _vec2.z);
+	float mx = std::max(_vec1.x, _vec2.x);
+	float my = std::max(_vec1.y, _vec2.y);
+	float mz = std::max(_vec1.z, _vec2.z);
 	return Vector3(mx,my,mz);
 }
 
 Vector3 Vector3::Min(Vector3 _vec1, Vector3 _vec2) {
-	float mx = min(_vec1.x, _vec2.x);
-	float my = min(_vec1.y, _vec2.y);
-	float mz = min(_vec1.z, _vec2.z);
+	float mx = std::min(_vec1.x, _vec2.x);
+	float my = std::min(_vec1.y, _vec2.y);
+	float mz = std::min(_vec1.z, _vec2.z);
 	return Vector3(mx, my, mz);
 }
 
@@ -150,3 +152,34 @@ Vector3 Vector3::VScale(Vector3 _vec, float _scale) {
 	return vec;
 }
 
+Vector3 Vector3::operator+(const Vector2& _v) const {
+	return { x + _v.x,y + _v.y,0 };
+}
+
+Vector3 Vector3::operator+=(const Vector2& _v) const {
+	return { x + _v.x,y + _v.y,0 };
+}
+
+Vector3 Vector3::operator-(const Vector2& _v) const {
+	return { x - _v.x,y - _v.y,0 };
+}
+
+Vector3 Vector3::operator-=(const Vector2& _v) const {
+	return { x - _v.x,y - _v.y,0 };
+}
+
+Vector3 Vector3::operator*(const Vector2& _v) const {
+	return { x * _v.x,y * _v.y,0 };
+}
+
+Vector3 Vector3::operator*=(const Vector2& _v) const {
+	return { x * _v.x,y * _v.y,0 };
+}
+
+Vector3 Vector3::operator=(const Vector2& _v) const {
+	return { _v.x, _v.y,0 };
+}
+
+bool Vector3::operator==(const Vector2& _v) const {
+	return { x == _v.x && y == _v.y };
+}

@@ -1,5 +1,5 @@
-/*
- * @brief エフェクトを管理するクラス
+﻿/*
+ * @brief 繧ｨ繝輔ぉ繧ｯ繝医ｒ邂｡逅・☆繧九け繝ｩ繧ｹ
  * @author Sekino
  */
 #pragma once
@@ -19,35 +19,35 @@ class EffectResourceManager;
 
 class EffectManager : public ManagerBase {
 private:
-	std::vector<EffectPtr> instances;	// 管理下にあるインスタンス
+	std::vector<EffectPtr> instances;	// 邂｡逅・ｸ九↓縺ゅｋ繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ
 public:
-	EffectResourceManager& pEffectResourceManager;// 読み込み用
+	EffectResourceManager& pEffectResourceManager;// 隱ｭ縺ｿ霎ｼ縺ｿ逕ｨ
 
 public:
 	EffectManager(EffectResourceManager& _resourceManager);
 
 	/*
-	 * @brief 生成
+	 * @brief 逕滓・
 	 */
 	EffectPtr Play(const std::string& _effectName, const Vector3& _pos, float _scale = 1.0f, const Vector3& _rot = VZero);
 
 	/*
-	 * @brief 更新
+	 * @brief 譖ｴ譁ｰ
 	 */
 	void Update(float _t) override;
 
 	/*
-	 * @brief 描画
+	 * @brief 謠冗判
 	 */
 	void Render() override;
 
 	/*
-	 * @brief インスタンスの全削除
+	 * @brief 繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ縺ｮ蜈ｨ蜑企勁
 	 */
 	void Clean();
 
 	/*
-	 * @brief 管理してるインスタンスの数
+	 * @brief 邂｡逅・＠縺ｦ繧九う繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ縺ｮ謨ｰ
 	 */
 	int GetInstanceCount() const { return instances.size(); }
 };

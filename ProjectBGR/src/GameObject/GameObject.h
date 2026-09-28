@@ -1,5 +1,5 @@
-/*
- * @brief すべてのオブジェクトの基底
+﻿/*
+ * @brief 縺吶∋縺ｦ縺ｮ繧ｪ繝悶ず繧ｧ繧ｯ繝医・蝓ｺ蠎・
  * @author Sekino
  */
 #pragma once
@@ -19,13 +19,13 @@ class ColliderData;
 
 class GameObject {
 protected:
-	int modelHandle;	// モデル番号
+	int modelHandle;	// 繝｢繝・Ν逡ｪ蜿ｷ
 
-	bool isActive;		// 有効か
+	bool isActive;		// 譛牙柑縺・
 
-	bool wantDelete;	// 管理している存在に削除を要請する
+	bool wantDelete;	// 邂｡逅・＠縺ｦ縺・ｋ蟄伜惠縺ｫ蜑企勁繧定ｦ∬ｫ九☆繧・
 
-	Tag tag;			// タグ
+	Tag tag;			// 繧ｿ繧ｰ
 
 	Transform* pTransform;
 
@@ -40,154 +40,160 @@ public:
 
 protected:
 	/*
-	 * @brief 生成時処理
+	 * @brief 逕滓・譎ょ・逅・
 	 */
 	virtual void Start();
 public:
 	/*
-	 * @brief 更新
+	 * @brief 譖ｴ譁ｰ
 	 */
 	virtual void Update(float _t);
 
 	/*
-	 * @brief 描画
+	 * @brief 謠冗判
 	 */
 	virtual void Render();
 
 	/*
-	 * @brief 初期化
+	 * @brief 蛻晄悄蛹・
 	 */
 	virtual void Setup();
 
 	/*
-	 * @brief 使用後処理
+	 * @brief 菴ｿ逕ｨ蠕悟・逅・
 	 */
 	virtual void Cleanup();
 protected:
 	/*
-	 * @brief 有効化時処理
+	 * @brief 譛牙柑蛹匁凾蜃ｦ逅・
 	 */
 	virtual void Enable();
 
 	/*
-	 * @brief 無効化時処理
+	 * @brief 辟｡蜉ｹ蛹匁凾蜃ｦ逅・
 	 */
 	virtual void Disable();
 
 protected:
 	/*
-	 * @brief classIDのセッター
-	 * @brief プーリングするときにクラスのハッシュを使って作るために継承先で宣言必要があるため。
+	 * @brief classID縺ｮ繧ｻ繝・ち繝ｼ
+	 * @brief 繝励・繝ｪ繝ｳ繧ｰ縺吶ｋ縺ｨ縺阪↓繧ｯ繝ｩ繧ｹ縺ｮ繝上ャ繧ｷ繝･繧剃ｽｿ縺｣縺ｦ菴懊ｋ縺溘ａ縺ｫ邯呎価蜈医〒螳｣險蠢・ｦ√′縺ゅｋ縺溘ａ縲・
 	 */
 	virtual void SetClassID();
 
 
-public:	// 衝突判定　基本はColliderコンポーネントがついてるときだけ関数に入る
+public:	// 陦晉ｪ∝愛螳壹蝓ｺ譛ｬ縺ｯCollider繧ｳ繝ｳ繝昴・繝阪Φ繝医′縺､縺・※繧九→縺阪□縺鷹未謨ｰ縺ｫ蜈･繧・
 	/*
-	 * @brief 当たった
+	 * @brief 蠖薙◆縺｣縺・
 	 */
 	virtual void OnTriggerEnter(ColliderData& _pSelf, ColliderData& _pOther);
 
 	/*
-	 * @brief 当たった
+	 * @brief 蠖薙◆縺｣縺・
 	 */
 	virtual void OnTriggerStay(ColliderData& _pSelf, ColliderData& _pOther);
 
 	/*
-	 * @brief 当たった
+	 * @brief 蠖薙◆縺｣縺・
 	 */
 	virtual void OnTriggerExit(ColliderData& _pSelf, ColliderData& _pOther);
 
 	/*
-	 * @brief 当たった
+	 * @brief 蠖薙◆縺｣縺・
 	 */
 	virtual void OnCollisionEnter(ColliderData& _pSelf, ColliderData& _pOther);
 
 	/*
-	 * @brief 当たった
+	 * @brief 蠖薙◆縺｣縺・
 	 */
 	virtual void OnCollisionStay(ColliderData& _pSelf, ColliderData& _pOther);
 
 	/*
-	 * @brief 当たった
+	 * @brief 蠖薙◆縺｣縺・
 	 */
 	virtual void OnCollisionExit(ColliderData& _pSelf, ColliderData& _pOther);
 
 public:
 	/*
-	 * @brief classIDのゲッター
+	 * @brief classID縺ｮ繧ｲ繝・ち繝ｼ
 	 */
 	std::type_index GetClassID() const { return classID; }
 public:
 	/*
-	 * @brief modelHandleのセッター
+	 * @brief modelHandle縺ｮ繧ｻ繝・ち繝ｼ
 	 */
 	inline void SetModelHandle(int _modelHandle) { modelHandle = _modelHandle; }
 
 	/*
-	 * @brief modelHandleのゲッター
+	 * @brief modelHandle縺ｮ繧ｲ繝・ち繝ｼ
 	 */
 	inline int GetModelHandle() const { return modelHandle; }
 
 	/*
-	 * @brief isActiveのセッター
+	 * @brief isActive縺ｮ繧ｻ繝・ち繝ｼ
 	 */
 	void SetActive(bool _isActive);
 
 	/*
-	 * @brief isActiveのゲッター
+	 * @brief isActive縺ｮ繧ｲ繝・ち繝ｼ
 	 */
 	inline bool IsActive() const { return isActive; }
 
 	/*
-	 * @brief wantDeleteのセッター
+	 * @brief wantDelete縺ｮ繧ｻ繝・ち繝ｼ
 	 */
 	inline void SetWantDelete(bool _wantDelete) { wantDelete = _wantDelete; }
 
 	/*
-	 * @brief wantDeleteのゲッター
+	 * @brief wantDelete縺ｮ繧ｲ繝・ち繝ｼ
 	 */
 	inline bool WantDelete() const { return wantDelete; }
 
 	/*
-	 * @brief pTransformのゲッター
+	 * @brief pTransform縺ｮ繧ｲ繝・ち繝ｼ
 	 */
 	inline Transform* GetTransform() const { return pTransform; }
 
 	/*
-	 * @brief tagのセッター
+	 * @brief tag縺ｮ繧ｻ繝・ち繝ｼ
 	 */
 	inline void SetTag(Tag _tag) { tag = _tag; }
 
 	/*
-	 * @brief tagのゲッター
+	 * @brief tag縺ｮ繧ｲ繝・ち繝ｼ
 	 */
 	inline Tag GetTag() const { return tag; }
 
 	/*
-	 * @brief 引数のタグが自身と同じか
-	 * @return 引数が自身のタグと一致してるか
+	 * @brief 蠑墓焚縺ｮ繧ｿ繧ｰ縺瑚・霄ｫ縺ｨ蜷後§縺・
+	 * @return 蠑墓焚縺瑚・霄ｫ縺ｮ繧ｿ繧ｰ縺ｨ荳閾ｴ縺励※繧九°
 	 */
 	bool CompareTag(Tag _tag) const;
 
 	/*
-	 * @brief コンポーネントの追加
+	 * @brief 繧ｳ繝ｳ繝昴・繝阪Φ繝医・霑ｽ蜉
 	 */
 	template<typename T, typename... Args>
 	T* AddComponent(Args&&... args);
 
 	/*
-	 * @brief コンポーネントの取得
+	 * @brief 繧ｳ繝ｳ繝昴・繝阪Φ繝医・蜿門ｾ・
 	 */
 	template<typename T>
 	T* GetComponent();
+
+	inline std::string GetName() const { return name; }
+
+	Vector3 GetFramePos(std::string _frameName);
+
+	void ChangeMaterialColor(std::string _frameName, float _r,float _g,float _b);
 };
 
 template<typename T, typename ...Args>
 inline T* GameObject::AddComponent(Args&&... args) {
-	// コンポーネントで無ければ帰る
+	// 繧ｳ繝ｳ繝昴・繝阪Φ繝医〒辟｡縺代ｌ縺ｰ蟶ｰ繧・
 	if (!std::is_base_of<ComponentBase, T>::value) return nullptr;
-	// 生成
+	// 逕滓・
 	std::unique_ptr<T> component = std::make_unique<T>(this, std::forward<Args>(args)...);
 	components.push_back(std::move(component));
 	return dynamic_cast<T*>(components.back().get());

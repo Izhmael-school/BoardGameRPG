@@ -1,4 +1,4 @@
-/*
+﻿/*
  *	@file	TitleScene.h
  *  @author Sekino
  */
@@ -9,18 +9,18 @@
 #include "../SceneBase.h"
 
 /*
- *	タイトルシーン
+ *	繧ｿ繧､繝医Ν繧ｷ繝ｼ繝ｳ
  */
 class TitleScene : public SceneBase {
 private:
 
 public:
 	/*
-	 *	コンストラクタ
+	 *	繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
 	 */
 	TitleScene();
 	/*
-	 *	デストラクタ
+	 *	繝・せ繝医Λ繧ｯ繧ｿ
 	 */
 	~TitleScene();
 

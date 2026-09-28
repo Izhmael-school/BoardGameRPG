@@ -1,5 +1,5 @@
-/*
- * @brief オーディオを読み込むリソースクラス
+﻿/*
+ * @brief 繧ｪ繝ｼ繝・ぅ繧ｪ繧定ｪｭ縺ｿ霎ｼ繧繝ｪ繧ｽ繝ｼ繧ｹ繧ｯ繝ｩ繧ｹ
  * @author Sekino
  */
 
@@ -17,12 +17,12 @@ public:
 	~AudioResource() override;
 
 	/*
-	 * @brief 読み込み
+	 * @brief 隱ｭ縺ｿ霎ｼ縺ｿ
 	 */
 	bool Load() override;
 
 	/*
-	 * @brief 3D音源かどうか
+	 * @brief 3D髻ｳ貅舌°縺ｩ縺・°
 	 */
 	const bool Is3D() const { return is3D; }
 

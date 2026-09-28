@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Stage",
+    "path": "Stage/Stage.mv1"
+  },
+  {
+    "name": "BattleStage",
+    "path": "Stage/BattleStage.mv1"
+  },
+  {
+    "name": "Player",
+    "path": "Character/Player/PlayerBaseModel.mv1"
+  }
+]

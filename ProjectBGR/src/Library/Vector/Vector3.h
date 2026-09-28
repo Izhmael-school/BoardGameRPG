@@ -1,5 +1,5 @@
-/*
- * @brief ベクトルクラス
+﻿/*
+ * @brief 三方向のベクトルクラス
  * @author Sekino
  */
 #pragma once
@@ -8,6 +8,8 @@
 
 #include <array>
 #include <cassert>
+
+class Vector2;
 
 class Vector3 {
 public:
@@ -23,93 +25,93 @@ public:
 	float Magnitude() const;
 
 	/*
-	 * @brief ベクトルの長さの2乗を返す
+	 * @brief 繝吶け繝医Ν縺ｮ髟ｷ縺輔・2荵励ｒ霑斐☆
 	 */
 	float SqrMagnitude() const;
 
 
 	/*
-	 * @brief 正規化したベクトルを返す
+	 * @brief 豁｣隕丞喧縺励◆繝吶け繝医Ν繧定ｿ斐☆
 	 */
 	Vector3 Normalized() const;
 
 	/*
-	 * @brief ベクトルの長さの2乗を返す
+	 * @brief 繝吶け繝医Ν縺ｮ髟ｷ縺輔・2荵励ｒ霑斐☆
 	 */
 	static float SqrMagnitude(Vector3 _vec);
 
 	/*
-	 * @brief ベクトルの長さの2乗を返す
+	 * @brief 繝吶け繝医Ν縺ｮ髟ｷ縺輔・2荵励ｒ霑斐☆
 	 */
 	static float SqrMagnitude(float _x, float _y, float _z);
 
 	/*
-	 * @brief 要素を配列として返す
+	 * @brief 隕∫ｴ繧帝・蛻励→縺励※霑斐☆
 	 */
 	std::array<float, 3> GetArray() const;
 
 	/*
-	 * @brief 2点間の角度を返す
+	 * @brief 2轤ｹ髢薙・隗貞ｺｦ繧定ｿ斐☆
 	 */
 	static Vector3 Angle(Vector3 _from, Vector3 _to);
 
 	/*
-	 * @brief 2点の内積を返す
+	 * @brief 2轤ｹ縺ｮ蜀・ｩ阪ｒ霑斐☆
 	 */
 	static float Dot(Vector3 _vec1, Vector3 _vec2);
 
 	/*
-	 * @brief 2点の外積を返す
+	 * @brief 2轤ｹ縺ｮ螟也ｩ阪ｒ霑斐☆
 	 */
 	static Vector3 Cross(Vector3 _vec1, Vector3 _vec2);
 
 	/*
-	 * @brief 2点間の距離を返す
+	 * @brief 2轤ｹ髢薙・霍晞屬繧定ｿ斐☆
 	 */
 	static float Distance(Vector3 _vec1, Vector3 _vec2);
 
 	/*
-	 * @brief 直線上にある2点の補間を返す
+	 * @brief 逶ｴ邱壻ｸ翫↓縺ゅｋ2轤ｹ縺ｮ陬憺俣繧定ｿ斐☆
 	 */
 	static Vector3 Lerp(Vector3 _vec1, Vector3 _vec2, float _t);
 
 	/*
-	 * @brief 2点の最大点を取得
+	 * @brief 2轤ｹ縺ｮ譛螟ｧ轤ｹ繧貞叙蠕・
 	 */
 	static Vector3 Max(Vector3 _vec1, Vector3 _vec2);
 
 	/*
-	 * @brief 2点の最大点を取得
+	 * @brief 2轤ｹ縺ｮ譛螟ｧ轤ｹ繧貞叙蠕・
 	 */
 	static Vector3 Min(Vector3 _vec1, Vector3 _vec2);
 
 	/*
-	 * @brief 加算
+	 * @brief 蜉邂・
 	 */
 	static Vector3 VAdd(Vector3 _vec1, Vector3 _vec2);
 
 	/*
-	 * @brief 加算
+	 * @brief 蜉邂・
 	 */
 	static Vector3 VAdd(Vector3 _vec, float _value);
 
 	/*
-	 * @brief 減算
+	 * @brief 貂帷ｮ・
 	 */
 	static Vector3 VSub(Vector3 _vec1, Vector3 _vec2);
 
 	/*
-	 * @brief 減算
+	 * @brief 貂帷ｮ・
 	 */
 	static Vector3 VSub(Vector3 _vec, float _value);
 
 	/*
-	 * @brief 乗算
+	 * @brief 荵礼ｮ・
 	 */
 	static Vector3 VMult(Vector3 _vec1, Vector3 _vec2);
 
 	/*
-	 * @brief ベクトルの各要素と乗算
+	 * @brief 繝吶け繝医Ν縺ｮ蜷・ｦ∫ｴ縺ｨ荵礼ｮ・
 	 */
 	static Vector3 VScale(Vector3 _vec, float _scale);
 
@@ -126,6 +128,23 @@ public:
 		if (i == 1) return y;
 		return z;
 	}
+
+	Vector3 operator+(const Vector3& _v) const { return { x + _v.x,y + _v.y,z + _v.z }; }
+	Vector3 operator+=(const Vector3& _v) const { return { x + _v.x,y + _v.y,z + _v.z }; }
+	Vector3 operator-(const Vector3& _v) const { return { x - _v.x,y - _v.y,z - _v.z }; }
+	Vector3 operator-=(const Vector3& _v) const { return { x - _v.x,y - _v.y,z - _v.z }; }
+	Vector3 operator*(const Vector3& _v) const { return { x * _v.x,y * _v.y,z * _v.z }; }
+	Vector3 operator*=(const Vector3& _v) const { return { x * _v.x,y * _v.y,z * _v.z }; }
+	bool operator==(const Vector3& _v) const { return { x == _v.x && y == _v.y && z == _v.z }; }
+
+	Vector3 operator+(const Vector2& _v) const;
+	Vector3 operator+=(const Vector2& _v) const;
+	Vector3 operator-(const Vector2& _v) const;
+	Vector3 operator-=(const Vector2& _v) const;
+	Vector3 operator*(const Vector2& _v) const;
+	Vector3 operator*=(const Vector2& _v) const;
+	Vector3 operator=(const Vector2& _v) const;
+	bool operator==(const Vector2& _v) const;
 };
 
 const Vector3 VZero = Vector3(0.0f, 0.0f, 0.0f);	// (0,0,0)

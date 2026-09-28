@@ -1,4 +1,4 @@
-#include "AudioInstance.h"
+﻿#include "AudioInstance.h"
 #include "DxLib.h"
 #include "Manager/Resource/ResourceBase.h"
 #include "Library/Vector/ConversionVECTOR.h"
@@ -20,16 +20,16 @@ AudioInstance::~AudioInstance() {
 void AudioInstance::Update(float _t) {
 	GameObject::Update(_t);
 
-	// 音量の設定
+	// 髻ｳ驥上・險ｭ螳・
 	ChangeVolumeSoundMem(static_cast<int>(volume), playHandle);
 
-	// 3D音源の設定
+	// 3D髻ｳ貅舌・險ｭ螳・
 	if (!is3D) return;
 
 	VECTOR pos = ConversionVECTOR::Vector3ToVECTOR(GetTransform()->GetPosition());
-	// 3D音源の位置を設定
+	// 3D髻ｳ貅舌・菴咲ｽｮ繧定ｨｭ螳・
 	Set3DPositionSoundMem(pos, playHandle);
-	// 3D音源の距離を設定
+	// 3D髻ｳ貅舌・霍晞屬繧定ｨｭ螳・
 	Set3DRadiusSoundMem(distance, playHandle);
 }
 
@@ -37,37 +37,37 @@ void AudioInstance::Render() {
 }
 
 bool AudioInstance::Play(Vector3 _pos) {
-	// 二重再生禁止
+	// 莠碁㍾蜀咲函遖∵ｭ｢
 	if (!IsAudioEnd()) return false;
-	// サウンドの複製
+	// 繧ｵ繧ｦ繝ｳ繝峨・隍・｣ｽ
 	playHandle = DuplicateSoundMem(resource->GetHandle());
 
-	// ループ設定
+	// 繝ｫ繝ｼ繝苓ｨｭ螳・
 	int playType = isLoop ? DX_PLAYTYPE_LOOP : DX_PLAYTYPE_BACK;
-	// 再生
+	// 蜀咲函
 	PlaySoundMem(playHandle, playType);
 
 	if (!is3D) return true;
 
-	// 3D音源の位置を設定
+	// 3D髻ｳ貅舌・菴咲ｽｮ繧定ｨｭ螳・
 	VECTOR pos = ConversionVECTOR::Vector3ToVECTOR(_pos);
 	Set3DPositionSoundMem(pos, playHandle);
-	// 3D音源の距離を設定
+	// 3D髻ｳ貅舌・霍晞屬繧定ｨｭ螳・
 	Set3DRadiusSoundMem(distance, playHandle);
 
 	return true;
 }
 
 void AudioInstance::Stop() {
-	// 再生して無ければ帰る
+	// 蜀咲函縺励※辟｡縺代ｌ縺ｰ蟶ｰ繧・
 	if (IsAudioEnd()) return;
-	// 停止
+	// 蛛懈ｭ｢
 	StopSoundMem(playHandle);
 	playHandle = -1;
 }
 
 const bool AudioInstance::IsAudioEnd() const {
-	// 再生していなければ終了
+	// 蜀咲函縺励※縺・↑縺代ｌ縺ｰ邨ゆｺ・
 	if (playHandle == -1) return true;
 	return CheckSoundMem(playHandle) == 0;
 }

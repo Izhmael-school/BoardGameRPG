@@ -1,11 +1,14 @@
-#include "EffectResourceManager.h"
+﻿#include "EffectResourceManager.h"
 #include "Resource/EffectResource.h"
 #include "Definition/CommonModule/Json/MyJson.h"
 #include <cassert>
 #include "Definition/CommonModule/String/MyString.h"
 
+EffectResourceManager::EffectResourceManager() {
+}
+
 bool EffectResourceManager::LoadEffect(const std::string& _name, const std::string& _path) {
-	// 同名の登録禁止
+	// 蜷悟錐縺ｮ逋ｻ骭ｲ遖∵ｭ｢
 	if (!resources.empty())
 		if (resources.contains(_name)) {
 #if _DEBUG
@@ -13,11 +16,11 @@ bool EffectResourceManager::LoadEffect(const std::string& _name, const std::stri
 #endif
 			return false;
 		}
-	// 生成
+	// 逕滓・
 	auto resource = std::make_shared<EffectResource>(_name, _path);
-	// 失敗したら帰る
+	// 螟ｱ謨励＠縺溘ｉ蟶ｰ繧・
 	if (!resource->Load()) return false;
-	// 成功したら配列に
+	// 謌仙粥縺励◆繧蛾・蛻励↓
 	resources.emplace(_name.c_str(), resource);
 	return true;
 }

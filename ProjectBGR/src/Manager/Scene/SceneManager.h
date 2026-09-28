@@ -1,4 +1,4 @@
-/*
+﻿/*
  * @file SceneManager.h
  * @author Sekino
  */
@@ -16,16 +16,19 @@ enum SceneType {
 	Max
 };
 
+class UIManager;
+
 class SceneManager : public ManagerBase, public Singleton<SceneManager>{
 private:
 	std::unique_ptr<SceneBase> scene[static_cast<int>(SceneType::Max)];
+	std::unique_ptr<UIManager> uiManager;
 	SceneType currentSceneType;
 	SceneType nextSceneType;
 	bool isFade;
 
 public:
 	SceneManager();
-	~SceneManager() = default;
+	~SceneManager();
 
 private:
 	void Start() override;
@@ -35,12 +38,12 @@ public:
 	void Render() override;
 
 	/// <summary>
-	/// シーンの変更
+	/// 繧ｷ繝ｼ繝ｳ縺ｮ螟画峩
 	/// </summary>
 	/// <param name="nextSceneType"></param>
 	void ChangeScene(SceneType _nextSceneType);
 
-	// シーンの取得
+	// 繧ｷ繝ｼ繝ｳ縺ｮ蜿門ｾ・
 	inline SceneType GetCurrentSceneType() const { return currentSceneType; }
 };
 

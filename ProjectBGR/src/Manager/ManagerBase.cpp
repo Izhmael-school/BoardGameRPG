@@ -1,4 +1,4 @@
-#include "ManagerBase.h"
+﻿#include "ManagerBase.h"
 
 void ManagerBase::Start(){}
 

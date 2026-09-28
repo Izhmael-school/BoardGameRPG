@@ -1,4 +1,4 @@
-#include "TimeManager.h"
+ï»¿#include "TimeManager.h"
 #include "DxLib.h"
 
 TimeManager::TimeManager() 
@@ -8,18 +8,18 @@ TimeManager::TimeManager()
 { Start(); }
 
 void TimeManager::Start() {
-	// ‹N“®‚ÌŠÔ‚ğæ“¾
+	// èµ·å‹•æ™‚ã®æ™‚é–“ã‚’å–å¾—
 	prevTime = GetNowCount();
 	currentTime = prevTime;
 	Update(0.0f);
 }
 
 void TimeManager::Update(float _t) {
-	// ¡‚ÌŠÔ‚ğæ“¾
+	// ä»Šã®æ™‚é–“ã‚’å–å¾—
 	currentTime = GetNowCount();
-	// ‘OƒtƒŒ[ƒ€‚Æ‚Ì·‚ğŒvZ
+	// å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã¨ã®å·®ã‚’è¨ˆç®—
 	deltaTime = static_cast<float>(currentTime - prevTime);
-	// Unity•—‚É‚·‚é‚½‚ß
+	// Unityé¢¨ã«ã™ã‚‹ãŸã‚
 	deltaTime /= 1000.0f;
 
 	prevTime = currentTime;

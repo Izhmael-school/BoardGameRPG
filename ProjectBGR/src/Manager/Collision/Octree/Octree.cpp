@@ -1,4 +1,4 @@
-#include "Octree.h"
+﻿#include "Octree.h"
 #include "../CollisionManager.h"
 
 OctreeNode::OctreeNode(const AABB& _bounds, int _depth)
@@ -7,7 +7,7 @@ OctreeNode::OctreeNode(const AABB& _bounds, int _depth)
 
 void OctreeNode::Subdivide() {
 	Vector3 quarter = Vector3::VScale(bounds.halfSize, 0.5f);
-	// 子ノードを生成
+	// 蟄舌ヮ繝ｼ繝峨ｒ逕滓・
 	for (int i = 0; i < MAX_OBJECTS; ++i) {
 		Vector3 offset = Vector3(
 			(i & 0b0001 ? quarter.x : -quarter.x),
@@ -20,16 +20,16 @@ void OctreeNode::Subdivide() {
 }
 
 void OctreeNode::Insert(const OctreeObject& _obj) {
-	// オブジェクトがノードの範囲外なら帰る
+	// 繧ｪ繝悶ず繧ｧ繧ｯ繝医′繝弱・繝峨・遽・峇螟悶↑繧牙ｸｰ繧・
 	if (!bounds.Intersects(_obj.bounds)) return;
 
-	// 子ノードがあるか
+	// 蟄舌ヮ繝ｼ繝峨′縺ゅｋ縺・
 	if (IsLeaf()) {
 		objects.push_back(_obj);
-		// 上限なら分割して再配置
+		// 荳企剞縺ｪ繧牙・蜑ｲ縺励※蜀埼・鄂ｮ
 		if (objects.size() > MAX_OBJECTS && depth < MAX_DEPTH) {
 			Subdivide();
-			// 既存のオブジェクトを再配置
+			// 譌｢蟄倥・繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ蜀埼・鄂ｮ
 			for (const auto& obj : objects) {
 				for (const auto& child : children) {
 					child->Insert(obj);
@@ -40,24 +40,24 @@ void OctreeNode::Insert(const OctreeObject& _obj) {
 		return;
 	}
 
-	// 子ノードにオブジェクトを挿入
+	// 蟄舌ヮ繝ｼ繝峨↓繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ謖ｿ蜈･
 	for (const auto& child : children) {
 		child->Insert(_obj);
 	}
 }
 
 void OctreeNode::Query(const AABB& _range, std::vector<OctreeObject>& _result) {
-	// 交差してなければ帰る
+	// 莠､蟾ｮ縺励※縺ｪ縺代ｌ縺ｰ蟶ｰ繧・
 	if (!bounds.Intersects(_range)) return;
-	// 交差しているオブジェクトを追加
+	// 莠､蟾ｮ縺励※縺・ｋ繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ霑ｽ蜉
 	for (const auto& obj : objects) {
 		if (_range.Intersects(obj.bounds)) {
 			_result.push_back(obj);
 		}
 	}
-	// 子ノードがなければ帰る
+	// 蟄舌ヮ繝ｼ繝峨′縺ｪ縺代ｌ縺ｰ蟶ｰ繧・
 	if (IsLeaf()) return;
-	// 子ノードに問い合わせ
+	// 蟄舌ヮ繝ｼ繝峨↓蝠上＞蜷医ｏ縺・
 	for (const auto& child : children) {
 		child->Query(_range, _result);
 	}
@@ -95,7 +95,7 @@ void OctreeWorld::Rebuild(CollisionManager& _pManager) {
 	root->Clear();
 
 	const auto& all = _pManager.GetColliders();
-	// 有効なコライダーをOctreeに挿入
+	// 譛牙柑縺ｪ繧ｳ繝ｩ繧､繝繝ｼ繧丹ctree縺ｫ謖ｿ蜈･
 	for (int i = 0, max = all.size(); i < max; ++i) {
 		const ColliderData& c = all[i];
 		if (!c.isEnable) continue;
@@ -120,18 +120,18 @@ void OctreeWorld::CollectAllPairs(std::vector<std::pair<int, int>>& _outPairs) c
 void OctreeWorld::CollectPairsRecursive(const OctreeNode* _node, const std::vector<OctreeObject> ancestorObjects, std::vector<std::pair<int, int>>& _outPairs) const {
 	if(!_node) return;
 
-	// 同一ノード内のオブジェクト同士の衝突ペアを収集
+	// 蜷御ｸ繝弱・繝牙・縺ｮ繧ｪ繝悶ず繧ｧ繧ｯ繝亥酔螢ｫ縺ｮ陦晉ｪ√・繧｢繧貞庶髮・
 	for (int i = 0, max = _node->objects.size(); i < max; ++i) {
 		for (int j = i + 1; j < max; ++j) {
 			const auto& a = _node->objects[i];
 			const auto& b = _node->objects[j];
-			// 交差していなければ次
+			// 莠､蟾ｮ縺励※縺・↑縺代ｌ縺ｰ谺｡
 			if (!a.bounds.Intersects(b.bounds))continue;
 			_outPairs.emplace_back(a.handle, b.handle);
 		}
 	}
 
-	// 祖先ノードのオブジェクトとの衝突ペアを収集
+	// 逾門・繝弱・繝峨・繧ｪ繝悶ず繧ｧ繧ｯ繝医→縺ｮ陦晉ｪ√・繧｢繧貞庶髮・
 	for(const auto& obj : _node->objects) {
 		for(const auto& ancestorObj : ancestorObjects) {
 			if (!obj.bounds.Intersects(ancestorObj.bounds)) continue;
@@ -140,10 +140,10 @@ void OctreeWorld::CollectPairsRecursive(const OctreeNode* _node, const std::vect
 	}
 
 	if (_node->IsLeaf()) return;
-	// 祖先リストを作る
+	// 逾門・繝ｪ繧ｹ繝医ｒ菴懊ｋ
 	std::vector<OctreeObject> nextAncestorObjects = ancestorObjects;
 	nextAncestorObjects.insert(nextAncestorObjects.end(), _node->objects.begin(), _node->objects.end());
-	// 子ノードに対して再帰的に呼び出す
+	// 蟄舌ヮ繝ｼ繝峨↓蟇ｾ縺励※蜀榊ｸｰ逧・↓蜻ｼ縺ｳ蜃ｺ縺・
 	for (const auto& child : _node->children) {
 		CollectPairsRecursive(child.get(), nextAncestorObjects, _outPairs);
 	}

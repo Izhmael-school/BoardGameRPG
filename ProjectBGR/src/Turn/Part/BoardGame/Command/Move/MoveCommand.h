@@ -1,5 +1,5 @@
-/*
- * @brief 移動を扱うコマンド
+﻿/*
+ * @brief 遘ｻ蜍輔ｒ謇ｱ縺・さ繝槭Φ繝・
  * @author Sekino
  */
 
@@ -7,7 +7,7 @@
 #ifndef _MOVECOMMAND_H_
 #define _MOVECOMMAND_H_
 
-#include "Vector/Vector3.h"
+#include "Vector3.h"
 #include <vector>
 
 class PlayerData;
@@ -31,77 +31,72 @@ enum MoveCommandState {
 class MoveCommand {
 private:
 	MoveCommandState commandState;
-	// コマンド選択に戻れるか
+	// 繧ｳ繝槭Φ繝蛾∈謚槭↓謌ｻ繧後ｋ縺・
 	bool isBack = true;
 
 	PlayerData* currentPlayerData = nullptr;
-	// 進めるマス
+	// 騾ｲ繧√ｋ繝槭せ
 	std::vector<bool> canMoveTileList;
-	// ルーレットの数値
+	// 繝ｫ繝ｼ繝ｬ繝・ヨ縺ｮ謨ｰ蛟､
 	int randCount = -1;
 	// 
 	bool confirmedRoulette = false;
-	// 進める回数
+	// 騾ｲ繧√ｋ蝗樊焚
 	int canMoveCount = -1;
-	// 進んだ回数
+	// 騾ｲ繧薙□蝗樊焚
 	int currentMoveCount = -1;
-	// 進んだマス
+	// 騾ｲ繧薙□繝槭せ
 	std::vector<Vector3> movedTiles;
 
 	MapManager* mapManager = nullptr;
-	// 移動を確定するかのコマンドID
+	// 遘ｻ蜍輔ｒ遒ｺ螳壹☆繧九°縺ｮ繧ｳ繝槭Φ繝迂D
 	int confirmationMove;
 	
 private:
 	/*
-	 * @brief 移動
-	 * @return 移動終了
+	 * @brief 遘ｻ蜍・
+	 * @return 遘ｻ蜍慕ｵゆｺ・
 	 */
 	bool Move();
 
 	/*
-	 * @brief 一マス戻る
+	 * @brief 荳繝槭せ謌ｻ繧・
 	 */
 	void Back();
 
 	/*
-	 * @brief 移動できるマスを検索する
+	 * @brief 遘ｻ蜍輔〒縺阪ｋ繝槭せ繧呈､懃ｴ｢縺吶ｋ
 	 */
 	void SearchCanMoveTiles();
 
 	/*
-	 * @brief 止まったマスの効果発動
-	 */
-	void TileEffect(Vector3 _tilePosition);
-
-	/*
-	 * @brief 進める回数を決める
+	 * @brief 騾ｲ繧√ｋ蝗樊焚繧呈ｱｺ繧√ｋ
 	 */
 	bool Roulette();
 
 	/*
-	 * @brief 移動を確定する
+	 * @brief 遘ｻ蜍輔ｒ遒ｺ螳壹☆繧・
 	 */
 	bool ConfirmationMove();
 
 public:
 	/*
-	 * @brief ルーレットを回して進むまでの一連の実行
+	 * @brief 繝ｫ繝ｼ繝ｬ繝・ヨ繧貞屓縺励※騾ｲ繧縺ｾ縺ｧ縺ｮ荳騾｣縺ｮ螳溯｡・
 	 */
 	MoveCommandState Execute();
 
 	/*
-	 * @brief 初期化
+	 * @brief 蛻晄悄蛹・
 	 */
 	void Setup();
 
 	/*
-	 * @brief 描画
+	 * @brief 謠冗判
 	 */
 	void Render();
 
 	/*
- * @brief ターンの開始時に現在のプレイヤーを渡してもらう
+ * @brief 繧ｿ繝ｼ繝ｳ縺ｮ髢句ｧ区凾縺ｫ迴ｾ蝨ｨ縺ｮ繝励Ξ繧､繝､繝ｼ繧呈ｸ｡縺励※繧ゅｉ縺・
  */
 	void SetCurrentTurnPlayer(PlayerData* _playerData) { currentPlayerData = _playerData; };
 

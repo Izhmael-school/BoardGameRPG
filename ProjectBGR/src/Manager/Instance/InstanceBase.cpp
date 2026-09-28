@@ -1,4 +1,4 @@
-#include "InstanceBase.h"
+﻿#include "InstanceBase.h"
 #include <cassert>
 
 InstanceBase::InstanceBase(ResourcePtr _resource)
@@ -6,7 +6,7 @@ InstanceBase::InstanceBase(ResourcePtr _resource)
 	,wantDelete(false)
 {
 #if _DEBUG
-	// リソースが無ければ警告
+	// 繝ｪ繧ｽ繝ｼ繧ｹ縺檎┌縺代ｌ縺ｰ隴ｦ蜻・
 	assert(resource && "resouce is null");
 #endif
 }

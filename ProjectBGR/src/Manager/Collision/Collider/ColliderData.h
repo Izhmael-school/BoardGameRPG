@@ -1,9 +1,9 @@
-#pragma once
-#include "Vector/Vector3.h"
+﻿#pragma once
+#include "Vector3.h"
 #include "../Octree/Octree.h"
 
 /*
- * @brief 形状
+ * @brief 蠖｢迥ｶ
  */
 enum ColliderType {
 	Sphere,
@@ -14,36 +14,36 @@ enum ColliderType {
 };
 
 /*
- * @brief レイヤー
+ * @brief 繝ｬ繧､繝､繝ｼ
  */
 enum CollisionLayer {
 	Default,
 };
 
 /*
- * @brief AABBのデータ
+ * @brief AABB縺ｮ繝・・繧ｿ
  */
 struct AABBShape {
-	Vector3 halfExtent;	// 中心からの半幅
+	Vector3 halfExtent;	// 荳ｭ蠢・°繧峨・蜊雁ｹ・
 };
 
 /*
- * @brief Sphereのデータ
+ * @brief Sphere縺ｮ繝・・繧ｿ
  */
 struct SphereShape {
-	float radius;	// 半径
+	float radius;	// 蜊雁ｾ・
 };
 
 /*
- * @brief Capsuleのデータ
+ * @brief Capsule縺ｮ繝・・繧ｿ
  */
 struct CapsuleShape {
-	Vector3 localOffset;	// スタートから終わりまでの方向と長さ
-	float radius;	// 半径
+	Vector3 localOffset;	// 繧ｹ繧ｿ繝ｼ繝医°繧臥ｵゅｏ繧翫∪縺ｧ縺ｮ譁ｹ蜷代→髟ｷ縺・
+	float radius;	// 蜊雁ｾ・
 };
 
 /*
- * @brief タグ付きunion本体
+ * @brief 繧ｿ繧ｰ莉倥″union譛ｬ菴・
  */
 struct ColliderShape {
 	ColliderType type;
@@ -64,18 +64,18 @@ class Collider;
 
 class ColliderData {
 public:
-	Vector3 worldPos;		// ワールド座標
-	AABB worldAABB;			// オクタツリー用
-	ColliderShape shape;	// 形状データ
+	Vector3 worldPos;		// 繝ｯ繝ｼ繝ｫ繝牙ｺｧ讓・
+	AABB worldAABB;			// 繧ｪ繧ｯ繧ｿ繝・Μ繝ｼ逕ｨ
+	ColliderShape shape;	// 蠖｢迥ｶ繝・・繧ｿ
 
-	CollisionLayer layer = CollisionLayer::Default;	// レイヤー
-	GameObject* owner = nullptr;		// オーナー
+	CollisionLayer layer = CollisionLayer::Default;	// 繝ｬ繧､繝､繝ｼ
+	GameObject* owner = nullptr;		// 繧ｪ繝ｼ繝翫・
 	Collider* collider = nullptr;
 
 	bool isEnable = true;
 	bool currentHit = true;
 	bool prevHit = true;
-	bool isTrigger = true;			// 押し出すか
-	bool isDirty = true;			// 再計算するか
+	bool isTrigger = true;			// 謚ｼ縺怜・縺吶°
+	bool isDirty = true;			// 蜀崎ｨ育ｮ励☆繧九°
 };
 

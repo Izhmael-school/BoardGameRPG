@@ -1,5 +1,5 @@
-/*
- * @brief DxライブラリのVECTORとオリジナルのVector3を変換する
+﻿/*
+ * @brief Dx繝ｩ繧､繝悶Λ繝ｪ縺ｮVECTOR縺ｨ繧ｪ繝ｪ繧ｸ繝翫Ν縺ｮVector3繧貞､画鋤縺吶ｋ
  * @author Sekino
  */
 #pragma once
@@ -12,12 +12,12 @@
 class ConversionVECTOR {
 public:
 	/*
-	 * @brief Vector3をVECTORに変換
+	 * @brief Vector3繧歎ECTOR縺ｫ螟画鋤
 	 */
 	static VECTOR Vector3ToVECTOR(Vector3 _vec);
 
 	/*
-	 * @brief VECTORをVector3に変換
+	 * @brief VECTOR繧歎ector3縺ｫ螟画鋤
 	 */
 	static Vector3 VECTORToVector3(VECTOR _vec);
 };

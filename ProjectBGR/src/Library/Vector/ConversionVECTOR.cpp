@@ -1,4 +1,4 @@
-#include "ConversionVECTOR.h"
+﻿#include "ConversionVECTOR.h"
 
 VECTOR ConversionVECTOR::Vector3ToVECTOR(Vector3 _vec) {
     VECTOR vec = VGet(0,0,0);

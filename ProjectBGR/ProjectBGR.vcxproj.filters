@@ -220,6 +220,87 @@
     <Filter Include="ソース ファイル\Turn\Part\BoardGame\Command\Magic">
       <UniqueIdentifier>{53856d27-69ed-4b45-b9fa-7b39d3445996}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\Battle\Command">
+      <UniqueIdentifier>{04ae14f9-f3e2-4c5c-ae83-d7a746b7d850}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\Battle\Command\Offense">
+      <UniqueIdentifier>{1429a487-0978-4699-8d15-782effa16b14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\Battle\Command\Defense">
+      <UniqueIdentifier>{d9b12df1-b93f-4db9-9850-8adf595e6b04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Data\Enemy">
+      <UniqueIdentifier>{8b291914-b23f-413c-b847-0005a7b24417}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\CharacterData">
+      <UniqueIdentifier>{00a9beb8-4686-4845-9b2f-d9c93dc9c755}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\BoardGame\Effect">
+      <UniqueIdentifier>{9bb4cda5-7f23-4d7f-af6e-23f3cac9ecf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\BoardGame\Effect\Tile">
+      <UniqueIdentifier>{59ee2cfb-a6f6-44d0-a3d3-13a2ab8ef76b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\BoardGame\Command\SearchTile">
+      <UniqueIdentifier>{46bcce80-e04d-404f-927d-bb7f2b76fda3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\Character">
+      <UniqueIdentifier>{f919261c-729b-4616-a62c-fcbc4a51b80b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\Character\Player">
+      <UniqueIdentifier>{6a086b05-b067-46bc-a68b-4e44181a60e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\Battle\SpecialPhase">
+      <UniqueIdentifier>{8e3b7061-43f5-4fa6-91cc-b9935222fb52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\Battle\SpecialPhase\LevelUp">
+      <UniqueIdentifier>{9d8902dc-f79b-4cc7-ab17-46fcdaa59526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\Battle\SpecialPhase\Robbery">
+      <UniqueIdentifier>{1fce9259-3ee9-4235-89b1-353c90557465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI">
+      <UniqueIdentifier>{3ea52ad5-20c3-445f-9bb5-1aca27c78f51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\UIObject">
+      <UniqueIdentifier>{066b52ce-f588-4926-9b2a-7128ae35dbea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\UIObject\UIText">
+      <UniqueIdentifier>{8f9fd52e-2de4-4e72-a45d-e0e0380b099b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\UIObject\UIText\Style">
+      <UniqueIdentifier>{5cc649bd-1f39-4041-bb57-c4899171c9ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\Font">
+      <UniqueIdentifier>{53707d06-0196-452c-aeec-6b4077d40430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\UIObject\UISprite">
+      <UniqueIdentifier>{4882f3ef-0299-4e11-a8a2-65e583eaf094}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\UIObject\UIButton">
+      <UniqueIdentifier>{4daa05e3-3140-4ec7-bafb-71010607e81b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\UIObject\UIButton\Style">
+      <UniqueIdentifier>{155ada30-a490-473e-a3e6-ca0446a0e7bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\Canvas">
+      <UniqueIdentifier>{cceb5da4-f1a1-409f-8ac1-16ee79d44b1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\UI">
+      <UniqueIdentifier>{e9e566fa-96ca-4514-90b0-b1e3549c27b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\Canvas\SceneCanvas">
+      <UniqueIdentifier>{7cc3d7b5-c513-4498-91f5-959b3b30ee55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\Canvas\SceneCanvas\MainGame">
+      <UniqueIdentifier>{a6061839-a1b2-470f-bdd8-488105da2a61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\Input">
+      <UniqueIdentifier>{f77e757c-1d2c-4807-9552-698e17beb87d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\Canvas\SceneCanvas\BoardGame">
+      <UniqueIdentifier>{c3640219-9341-436d-9e31-7d66e9899d4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -390,9 +471,6 @@
     <ClCompile Include="src\Manager\Data\ElementDataManager.cpp">
       <Filter>ソース ファイル\Manager\Data</Filter>
     </ClCompile>
-    <ClCompile Include="src\Manager\PlayerData\PlayerDataManager.cpp">
-      <Filter>ソース ファイル\Manager\PlayerData</Filter>
-    </ClCompile>
     <ClCompile Include="src\Turn\TurnProcessor.cpp">
       <Filter>ソース ファイル\Turn</Filter>
     </ClCompile>
@@ -406,7 +484,76 @@
       <Filter>ソース ファイル\Turn\Part\BoardGame\Command\Item</Filter>
     </ClCompile>
     <ClCompile Include="src\Turn\Part\BoardGame\BoardGamePart.cpp">
+      <Filter>ソース ファイル\Turn\Part\BoardGame</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\Battle\BattlePart.cpp">
+      <Filter>ソース ファイル\Turn\Part\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\Battle\Command\Offense\OffenseCommand.cpp">
+      <Filter>ソース ファイル\Turn\Part\Battle\Command\Offense</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\Battle\Command\Defense\DefenseCommand.cpp">
+      <Filter>ソース ファイル\Turn\Part\Battle\Command\Defense</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Data\CharacterData.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Data\Enemy\EnemyData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Manager\CharacterData\CharacterDataManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\BoardGame\Effect\Tile\TileEffect.cpp">
+      <Filter>ソース ファイル\Turn\Part\BoardGame\Effect\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\BoardGame\Command\SearchTile\SearchTileCommand.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Character\Character.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\Battle\SpecialPhase\LevelUp\LevelUpPhase.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Library\Vector\Vector2.cpp">
+      <Filter>ソース ファイル\Library\Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Component\Transform\RectTransform.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\UIObject\UIText\Style\UITextStyle.cpp">
+      <Filter>ソース ファイル\UI\UIObject\UIText\Style</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\UIObject\UIObject.cpp">
+      <Filter>ソース ファイル\UI\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\UIObject\UISprite\UISprite.cpp">
+      <Filter>ソース ファイル\UI\UIObject\UISprite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\Canvas\UICanvasBase.cpp">
+      <Filter>ソース ファイル\UI\Canvas</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Manager\UI\UIManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\UIObject\UIButton\UIButton.cpp">
+      <Filter>ソース ファイル\UI\UIObject\UIButton</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\UIObject\UIText\UIText.cpp">
+      <Filter>ソース ファイル\UI\UIObject\UIText</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\Canvas\SceneCanvas\MainGame\MainGameCanvas.cpp">
+      <Filter>ソース ファイル\UI\Canvas\SceneCanvas\MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Manager\Font\FontManager.cpp">
+      <Filter>ソース ファイル\Manager\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\Input\UIInput.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\Canvas\SceneCanvas\BoardGame\BoardGameCanvas.cpp">
+      <Filter>ソース ファイル\UI\Canvas\SceneCanvas\BoardGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -593,9 +740,6 @@
     <ClInclude Include="src\Manager\Data\ElementDataManager.h">
       <Filter>ソース ファイル\Manager\Data</Filter>
     </ClInclude>
-    <ClInclude Include="src\Manager\PlayerData\PlayerDataManager.h">
-      <Filter>ソース ファイル\Manager\PlayerData</Filter>
-    </ClInclude>
     <ClInclude Include="src\Turn\TurnProcessor.h">
       <Filter>ソース ファイル\Turn</Filter>
     </ClInclude>
@@ -609,7 +753,79 @@
       <Filter>ソース ファイル\Turn\Part\BoardGame\Command\Item</Filter>
     </ClInclude>
     <ClInclude Include="src\Turn\Part\BoardGame\BoardGamePart.h">
+      <Filter>ソース ファイル\Turn\Part\BoardGame</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\Battle\BattlePart.h">
+      <Filter>ソース ファイル\Turn\Part\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\Battle\Command\Offense\OffenseCommand.h">
+      <Filter>ソース ファイル\Turn\Part\Battle\Command\Offense</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\Battle\Command\Defense\DefenseCommand.h">
+      <Filter>ソース ファイル\Turn\Part\Battle\Command\Defense</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Data\CharacterData.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Data\Enemy\EnemyData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Manager\CharacterData\CharacterDataManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\BoardGame\Effect\Tile\TileEffect.h">
+      <Filter>ソース ファイル\Turn\Part\BoardGame\Effect\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\BoardGame\Command\SearchTile\SearchTileCommand.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Character\Character.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\Battle\SpecialPhase\LevelUp\LevelUpPhase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Library\Vector\Vector2.h">
+      <Filter>ソース ファイル\Library\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Component\Transform\RectTransform.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\UIObject\UIText\Style\UITextStyle.h">
+      <Filter>ソース ファイル\UI\UIObject\UIText\Style</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\UIObject\UIText\UIText.h">
+      <Filter>ソース ファイル\UI\UIObject\UIText</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\UIObject\UIObject.h">
+      <Filter>ソース ファイル\UI\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Manager\Font\FontManager.h">
+      <Filter>ソース ファイル\Manager\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\UIObject\UISprite\UISprite.h">
+      <Filter>ソース ファイル\UI\UIObject\UISprite</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\UIObject\UIButton\Style\UIButtonStyle.h">
+      <Filter>ソース ファイル\UI\UIObject\UIButton\Style</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\UIObject\UIButton\UIButton.h">
+      <Filter>ソース ファイル\UI\UIObject\UIButton</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\Canvas\UICanvasBase.h">
+      <Filter>ソース ファイル\UI\Canvas</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Manager\UI\UIManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\Input\UIInput.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\Canvas\SceneCanvas\BoardGame\BoardGameCanvas.h">
+      <Filter>ソース ファイル\UI\Canvas\SceneCanvas\BoardGame</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\Canvas\SceneCanvas\MainGame\MainGameCanvas.h">
+      <Filter>ソース ファイル\UI\Canvas\SceneCanvas\MainGame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

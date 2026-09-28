@@ -1,40 +1,40 @@
-/*
- * @brief 精密な判定はここで行う
+﻿/*
+ * @brief 邊ｾ蟇・↑蛻､螳壹・縺薙％縺ｧ陦後≧
  * @author Sekino
  */
 #pragma once
 #ifndef _NARROWPHASE_H_
 #define _NARROWPHASE_H_
 
-#include "Vector/Vector3.h"
+#include "Vector3.h"
 #include "../Collider/ColliderData.h"
 
 /*
- * @brief 衝突判定の結果
+ * @brief 陦晉ｪ∝愛螳壹・邨先棡
  */
 struct HitResult {
-	Vector3 normal;	// 法線
-	Vector3 point;	// 衝突点
-	float penetration = 0.0f;	// めり込み量
+	Vector3 normal;	// 豕慕ｷ・
+	Vector3 point;	// 陦晉ｪ∫せ
+	float penetration = 0.0f;	// 繧√ｊ霎ｼ縺ｿ驥・
 };
 
 /*
- * @brief 衝突判定関数の型
+ * @brief 陦晉ｪ∝愛螳夐未謨ｰ縺ｮ蝙・
  */
 using NarrowPhaseFunc = bool(*)(const ColliderData& _a, const ColliderData& _b, HitResult& _result);
 
 /*
- * @brief 衝突判定の初期化
+ * @brief 陦晉ｪ∝愛螳壹・蛻晄悄蛹・
  */
 void NarrowPhaseInitialize();
 
 /*
- * @brief 衝突判定関数の取得
+ * @brief 陦晉ｪ∝愛螳夐未謨ｰ縺ｮ蜿門ｾ・
  */
 NarrowPhaseFunc GetNarrowPhaseFunc(ColliderType _typeA,ColliderType _typeB);
 
 // ------------------------------------------------------------
-// 衝突判定関数の宣言
+// 陦晉ｪ∝愛螳夐未謨ｰ縺ｮ螳｣險
 // ------------------------------------------------------------
 
 bool TestCollision(const ColliderData& _a, const ColliderData& _b, HitResult& _result);
@@ -47,7 +47,7 @@ bool TestCapsuleAABB(const ColliderData& _capsule, const ColliderData& _aabb, Hi
 bool TestAABBAABB(const ColliderData& _a, const ColliderData& _b, HitResult& _result);
 
 /*
- * @brief レイとコライダーの交差判定
+ * @brief 繝ｬ繧､縺ｨ繧ｳ繝ｩ繧､繝繝ｼ縺ｮ莠､蟾ｮ蛻､螳・
  */
 bool RayVsCollider(const Vector3& _origin, const Vector3& _dir, const ColliderData _collider, float _dist, float& hitDist, Vector3& _hitNormal);
 #endif 

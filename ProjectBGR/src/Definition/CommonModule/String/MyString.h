@@ -1,13 +1,13 @@
-#pragma once
+ï»¿#pragma once
 #include <string>
-#include "DxLib.h"
+
 
 class MyString {
 public:
 
 
 	/// <summary>
-/// •¶š—ñ‚Ì‡‘Ì
+/// æ–‡å­—åˆ—ã®åˆä½“
 /// </summary>
 /// <param name="text"></param>
 /// <param name=""></param>
@@ -23,7 +23,7 @@ public:
 	}
 
 	/// <summary>
-	/// ’†‰›‘µ‚¦‚Ì‚½‚ß‚ÌÀ•WŒvZiQÆj
+	/// ä¸­å¤®æƒãˆã®ãŸã‚ã®åº§æ¨™è¨ˆç®—ï¼ˆå‚ç…§ï¼‰
 	/// </summary>
 	/// <param name="_str"></param>
 	/// <param name="_fontHandle"></param>
@@ -31,15 +31,15 @@ public:
 	/// <param name="posY"></param>
 	/// <param name="exRateX"></param>
 	/// <param name="exRateY"></param>
-	static void StringCenterPos(const TCHAR* _str, int _fontHandle, int* posX, int* posY, int exRateX = 1, int exRateY = 1);
+	static void StringCenterPos(const std::string& _str, int _fontHandle, int* posX, int* posY, int exRateX = 1, int exRateY = 1);
 
 	/// <summary>
-	/// ‰E‹l‚ß‚Ì‚½‚ß‚ÌÀ•WŒvZ
+	/// å³è©°ã‚ã®ãŸã‚ã®åº§æ¨™è¨ˆç®—
 	/// </summary>
 	/// <param name="_str"></param>
 	/// <param name="_fontHandle"></param>
 	/// <param name="posX"></param>
 	/// <param name="exRateX"></param>
 	/// <returns></returns>
-	static int StringRightPos(const TCHAR* _str, int _fontHandle, int posX, int exRateX = 1);
+	static int StringRightPos(const std::string& _str, int _fontHandle, int posX, int exRateX = 1);
 };

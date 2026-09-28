@@ -1,4 +1,4 @@
-#include "AudioResource.h"
+﻿#include "AudioResource.h"
 #include "DxLib.h"
 #include <cassert>
 
@@ -15,14 +15,14 @@ AudioResource::~AudioResource() {
 bool AudioResource::Load() {
 	if (IsLoaded()) return false;
 
-	// 3Dにするか
+	// 3D縺ｫ縺吶ｋ縺・
 	SetCreate3DSoundFlag(static_cast<int>(is3D));
 
-	// 読み込み
+	// 隱ｭ縺ｿ霎ｼ縺ｿ
 	loadHandle = LoadSoundMem(path.c_str());
 
 	if (!IsLoaded()) {
-		// 失敗
+		// 螟ｱ謨・
 #if _DEBUG
 		assert(false && "Failed Load Audio");
 #endif // _DEBUG

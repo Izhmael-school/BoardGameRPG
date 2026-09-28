@@ -1,4 +1,4 @@
-#include "NarrowPhase.h"
+﻿#include "NarrowPhase.h"
 #include <algorithm>
 #include <cmath>
 
@@ -6,65 +6,65 @@ namespace {
 	constexpr float EPSILON = 1e-6f;
 
 	/*
-	 * @brief 衝突判定関数のテーブル
+	 * @brief 陦晉ｪ∝愛螳夐未謨ｰ縺ｮ繝・・繝悶Ν
 	 */
 	NarrowPhaseFunc table[ColliderType::ColliderTypeMax][ColliderType::ColliderTypeMax] = {};
 
 	/*
-	 * @brief 衝突判定関数の引数を入れ替えて呼ぶ
+	 * @brief 陦晉ｪ∝愛螳夐未謨ｰ縺ｮ蠑墓焚繧貞・繧梧崛縺医※蜻ｼ縺ｶ
 	 */
 	template<NarrowPhaseFunc Func>
 	bool Swap(const ColliderData& _a, const ColliderData& _b, HitResult& _result) {
 		if (!Func(_b, _a, _result))
 			return false;
 
-		// 法線の向きを反転させる
+		// 豕慕ｷ壹・蜷代″繧貞渚霆｢縺輔○繧・
 		_result.normal = Vector3(-_result.normal.x, -_result.normal.y, -_result.normal.z);
 
 		return true;
 	}
 
 	/*
-	 * @brief 線分上の最近点を求める
+	 * @brief 邱壼・荳翫・譛霑醍せ繧呈ｱゅａ繧・
 	 */
 	Vector3 ClosestPointOnSegment(const Vector3& _point, const Vector3& _start, const Vector3& _end) {
 		Vector3 segment = Vector3::VSub(_end, _start);
 		float segmentLengthSq = Vector3::SqrMagnitude(segment);
 		if (segmentLengthSq < EPSILON)
-			return _start; // 線分がほぼ点の場合、開始点を返す
+			return _start; // 邱壼・縺後⊇縺ｼ轤ｹ縺ｮ蝣ｴ蜷医・幕蟋狗せ繧定ｿ斐☆
 
 		float t = Vector3::Dot(Vector3::VSub(_point, _start), segment) / segmentLengthSq;
-		t = std::clamp(t, 0.0f, 1.0f); // tを0から1の範囲に制限
+		t = std::clamp(t, 0.0f, 1.0f); // t繧・縺九ｉ1縺ｮ遽・峇縺ｫ蛻ｶ髯・
 		return Vector3::VAdd(_start, Vector3::VScale(segment, t));
 	}
 
 	/*
-	 * @brief 2つの線分の最近点を求める
+	 * @brief 2縺､縺ｮ邱壼・縺ｮ譛霑醍せ繧呈ｱゅａ繧・
 	 */
 	std::pair<Vector3, Vector3> ClosestPointsSegmentSegment(const Vector3& p1, const Vector3& q1, const Vector3& p2, const Vector3& q2) {
-		Vector3 d1 = Vector3::Angle(q1, p1); // 線分1の方向ベクトル
-		Vector3 d2 = Vector3::Angle(q2, p2); // 線分2の方向ベクトル
+		Vector3 d1 = Vector3::Angle(q1, p1); // 邱壼・1縺ｮ譁ｹ蜷代・繧ｯ繝医Ν
+		Vector3 d2 = Vector3::Angle(q2, p2); // 邱壼・2縺ｮ譁ｹ蜷代・繧ｯ繝医Ν
 		Vector3 r = Vector3::Angle(p1, p2);
 
-		float a = Vector3::Dot(d1, d1); // 線分1の長さの2乗
-		float e = Vector3::Dot(d2, d2); // 線分2の長さの2乗
+		float a = Vector3::Dot(d1, d1); // 邱壼・1縺ｮ髟ｷ縺輔・2荵・
+		float e = Vector3::Dot(d2, d2); // 邱壼・2縺ｮ髟ｷ縺輔・2荵・
 		float f = Vector3::Dot(d2, r);
 
 		float s, t;
 
-		// 線分がほぼ点の場合の処理
+		// 邱壼・縺後⊇縺ｼ轤ｹ縺ｮ蝣ｴ蜷医・蜃ｦ逅・
 		if (a <= EPSILON && e <= EPSILON)
 			return { p1, p2 };
 
 		if (a <= EPSILON) {
-			// 線分1がほぼ点の場合
+			// 邱壼・1縺後⊇縺ｼ轤ｹ縺ｮ蝣ｴ蜷・
 			s = 0.0f;
 			t = std::clamp(f / e, 0.0f, 1.0f);
 		}
 		else {
 			float c = Vector3::Dot(d1, r);
 			if (e <= EPSILON) {
-				// 線分2がほぼ点の場合
+				// 邱壼・2縺後⊇縺ｼ轤ｹ縺ｮ蝣ｴ蜷・
 				t = 0.0f;
 				s = std::clamp(-c / a, 0.0f, 1.0f);
 			}
@@ -72,17 +72,17 @@ namespace {
 				float b = Vector3::Dot(d1, d2);
 				float denom = a * e - b * b;
 
-				// 線分が平行でない場合
+				// 邱壼・縺悟ｹｳ陦後〒縺ｪ縺・ｴ蜷・
 				if (denom > EPSILON) {
 					s = std::clamp((b * f - c * e) / denom, 0.0f, 1.0f);
 				}
 				else {
-					s = 0.0f; // 線分が平行の場合、sを0に設定
+					s = 0.0f; // 邱壼・縺悟ｹｳ陦後・蝣ｴ蜷医《繧・縺ｫ險ｭ螳・
 				}
 
 				t = (b * s + f) / e;
 
-				// tを0から1の範囲に制限
+				// t繧・縺九ｉ1縺ｮ遽・峇縺ｫ蛻ｶ髯・
 				if (t < 0.0f) {
 					t = 0.0f;
 					s = std::clamp(-c / a, 0.0f, 1.0f);
@@ -98,7 +98,7 @@ namespace {
 	}
 
 	/*
-	 * @brief pを範囲内に丸める
+	 * @brief p繧堤ｯ・峇蜀・↓荳ｸ繧√ｋ
 	 */
 	Vector3 ClampToBox(const Vector3& _p, const Vector3& _boxCenter, const Vector3& _boxHalfExtent) {
 		return Vector3(
@@ -109,10 +109,10 @@ namespace {
 	}
 
 	/*
-	 * @brief 線分と箱の最近点を求める
+	 * @brief 邱壼・縺ｨ邂ｱ縺ｮ譛霑醍せ繧呈ｱゅａ繧・
 	 */
 	std::pair<Vector3, Vector3> ClosestPointsSegmentBox(const Vector3& _segStart, const Vector3& _segEnd, const Vector3& _boxCenter, const Vector3& _boxHalfExtent) {
-		constexpr int ITERATIONS = 8;	// 丸める回数
+		constexpr int ITERATIONS = 8;	// 荳ｸ繧√ｋ蝗樊焚
 
 		Vector3 p = _segStart;
 		for (int i = 0; i < ITERATIONS; i++) {
@@ -127,13 +127,13 @@ namespace {
 		float b = Vector3::Dot(m, _dir);
 		float c = Vector3::Dot(m, m) - std::pow(_radius, 2);
 
-		// 起点が球の外側にあり、かつ球と逆方向の場合は当たらない
+		// 襍ｷ轤ｹ縺檎帥縺ｮ螟門・縺ｫ縺ゅｊ縲√°縺､逅・→騾・婿蜷代・蝣ｴ蜷医・蠖薙◆繧峨↑縺・
 		if (c > 0.0f && b > 0.0f) return false;
 
 		float discr = b * b - c;
 		if (discr < 0.0f) return 0.0f;
 
-		// 起点が球の中なら当たったことにする
+		// 襍ｷ轤ｹ縺檎帥縺ｮ荳ｭ縺ｪ繧牙ｽ薙◆縺｣縺溘％縺ｨ縺ｫ縺吶ｋ
 		float t = -b - std::sqrtf(discr);
 		if (t < 0.0f) t = 0.0f;
 		if (t > _dist) return false;
@@ -191,7 +191,7 @@ namespace {
 		bool hasHit = false;
 		float best = _dist;
 
-		// 円柱側面
+		// 蜀・浤蛛ｴ髱｢
 		if (dd > EPSILON) {
 			float nd = Vector3::Dot(_dir, d);
 			float mn = Vector3::Dot(m, _dir);
@@ -207,10 +207,10 @@ namespace {
 				if (discr >= 0.0f) {
 					float sqrtDiscr = std::sqrt(discr);
 					float t = (-b - sqrtDiscr) / a;
-					// 起点が円柱内部にある場合は出口を見る
+					// 襍ｷ轤ｹ縺悟・譟ｱ蜀・Κ縺ｫ縺ゅｋ蝣ｴ蜷医・蜃ｺ蜿｣繧定ｦ九ｋ
 					if (t < 0.0f) t = (-b + sqrtDiscr);
 					if (t >= 0.0f && t <= best) {
-						// 軸方向のパラメータ
+						// 霆ｸ譁ｹ蜷代・繝代Λ繝｡繝ｼ繧ｿ
 						float k = md + t * nd;
 						if (k >= 0.0f && k <= dd) {
 							hasHit = true;
@@ -221,7 +221,7 @@ namespace {
 			}
 		}
 
-		// 両端の半球
+		// 荳｡遶ｯ縺ｮ蜊顔帥
 		float cap = 0.0f;
 		if (RayVsSphere(_origin, _dir, _start, _radius, best, cap)) {
 			hasHit = true;
@@ -246,7 +246,7 @@ namespace {
 }
 
 void NarrowPhaseInitialize() {
-	// 衝突判定関数の初期化
+	// 陦晉ｪ∝愛螳夐未謨ｰ縺ｮ蛻晄悄蛹・
 	table[ColliderType::Sphere][ColliderType::Sphere] = TestSphereSphere;
 	table[ColliderType::Sphere][ColliderType::Capsule] = TestSphereCapsule;
 	table[ColliderType::Sphere][ColliderType::BoxAABB] = TestSphereAABB;
@@ -275,13 +275,13 @@ bool TestSphereSphere(const ColliderData& _a, const ColliderData& _b, HitResult&
 	float distSq = Vector3::SqrMagnitude(dx, dy, dz);
 	float radiusSum = sphereA.radius + sphereB.radius;
 
-	// 衝突していなければfalseを返す
+	// 陦晉ｪ√＠縺ｦ縺・↑縺代ｌ縺ｰfalse繧定ｿ斐☆
 	if (distSq > powf(radiusSum, 2)) return false;
 
 	float dist = sqrtf(distSq);
 
-	// 衝突点の計算
-	// 完全一致は法線を適当に設定する
+	// 陦晉ｪ∫せ縺ｮ險育ｮ・
+	// 螳悟・荳閾ｴ縺ｯ豕慕ｷ壹ｒ驕ｩ蠖薙↓險ｭ螳壹☆繧・
 	Vector3 normal = (dist > EPSILON) ? Vector3(dx / dist, dy / dist, dz / dist) : VOne;
 
 	_result.normal = normal;
@@ -300,7 +300,7 @@ bool TestSphereCapsule(const ColliderData& _sphere, const ColliderData& _capsule
 
 	Vector3 closest = ClosestPointOnSegment(_sphere.worldPos, capsuleStart, capsuleEnd);
 
-	// 最近点と球の中心の距離を計算
+	// 譛霑醍せ縺ｨ逅・・荳ｭ蠢・・霍晞屬繧定ｨ育ｮ・
 	Vector3 diff = Vector3::VSub(closest, _sphere.worldPos);
 	float distSq = Vector3::SqrMagnitude(diff);
 
@@ -321,7 +321,7 @@ bool TestSphereAABB(const ColliderData& _sphere, const ColliderData& _aabb, HitR
 	const SphereShape& sphere = _sphere.shape.sphere;
 	const AABBShape& box = _aabb.shape.aabb;
 
-	// AABBの最も近い点を求める
+	// AABB縺ｮ譛繧りｿ代＞轤ｹ繧呈ｱゅａ繧・
 	float closestX = std::clamp(_sphere.worldPos.x, _aabb.worldPos.x - box.halfExtent.x, _aabb.worldPos.x + box.halfExtent.x);
 	float closestY = std::clamp(_sphere.worldPos.y, _aabb.worldPos.y - box.halfExtent.y, _aabb.worldPos.y + box.halfExtent.y);
 	float closestZ = std::clamp(_sphere.worldPos.z, _aabb.worldPos.z - box.halfExtent.z, _aabb.worldPos.z + box.halfExtent.z);
@@ -331,7 +331,7 @@ bool TestSphereAABB(const ColliderData& _sphere, const ColliderData& _aabb, HitR
 	float dz = _sphere.worldPos.z - closestZ;
 	float distSq = Vector3::SqrMagnitude(dx, dy, dz);
 
-	// 衝突していなければfalseを返す
+	// 陦晉ｪ√＠縺ｦ縺・↑縺代ｌ縺ｰfalse繧定ｿ斐☆
 	if (distSq > powf(sphere.radius, 2)) return false;
 
 	float dist = sqrtf(distSq);
@@ -343,7 +343,7 @@ bool TestSphereAABB(const ColliderData& _sphere, const ColliderData& _aabb, HitR
 		return true;
 	}
 
-	// めり込みケース
+	// 繧√ｊ霎ｼ縺ｿ繧ｱ繝ｼ繧ｹ
 	float px = box.halfExtent.x - std::abs(_sphere.worldPos.x - _aabb.worldPos.x);
 	float py = box.halfExtent.y - std::abs(_sphere.worldPos.y - _aabb.worldPos.y);
 	float pz = box.halfExtent.z - std::abs(_sphere.worldPos.z - _aabb.worldPos.z);
@@ -373,7 +373,7 @@ bool TestCapsuleCapsule(const ColliderData& _a, const ColliderData& _b, HitResul
 	Vector3 bStart = _b.worldPos;
 	Vector3 bEnd = Vector3::VAdd(bStart, capB.localOffset);
 
-	// 線分同士の最近点
+	// 邱壼・蜷悟｣ｫ縺ｮ譛霑醍せ
 	Vector3 closestA, closestB;
 	std::pair<Vector3, Vector3> closest = ClosestPointsSegmentSegment(aStart, aEnd, bStart, bEnd);
 
@@ -405,7 +405,7 @@ bool TestCapsuleAABB(const ColliderData& _capsule, const ColliderData& _aabb, Hi
 	const Vector3& boxCenter = _aabb.worldPos;
 	const Vector3& boxHalf = box.halfExtent;
 
-	// カプセルの線分とAABBの最近点
+	// 繧ｫ繝励そ繝ｫ縺ｮ邱壼・縺ｨAABB縺ｮ譛霑醍せ
 	Vector3 onSegment, onBox;
 	std::pair<Vector3, Vector3> pair = ClosestPointsSegmentBox(capStart, capEnd, boxCenter, boxHalf);
 
@@ -415,11 +415,11 @@ bool TestCapsuleAABB(const ColliderData& _capsule, const ColliderData& _aabb, Hi
 	Vector3 diff = Vector3::VSub(onBox, onSegment);
 	float distSq = Vector3::SqrMagnitude(diff);
 
-	// 衝突していなければfalseを返す
+	// 陦晉ｪ√＠縺ｦ縺・↑縺代ｌ縺ｰfalse繧定ｿ斐☆
 	if (distSq > powf(capsule.radius, 2)) return false;
 
 	if (distSq > EPSILON) {
-		// 線分がAABBの外にある場合
+		// 邱壼・縺窟ABB縺ｮ螟悶↓縺ゅｋ蝣ｴ蜷・
 		if (distSq > pow(capsule.radius, 2))return false;
 
 		float dist = sqrtf(distSq);
@@ -429,7 +429,7 @@ bool TestCapsuleAABB(const ColliderData& _capsule, const ColliderData& _aabb, Hi
 		return true;
 	}
 
-	// めり込みケース
+	// 繧√ｊ霎ｼ縺ｿ繧ｱ繝ｼ繧ｹ
 	float px = boxHalf.x - std::abs(onSegment.x - boxCenter.x);
 	float py = boxHalf.y - std::abs(onSegment.y - boxCenter.y);
 	float pz = boxHalf.z - std::abs(onSegment.z - boxCenter.z);
@@ -456,12 +456,12 @@ bool TestAABBAABB(const ColliderData& _a, const ColliderData& _b, HitResult& _re
 
 	Vector3 dir = Vector3::Angle(_b.worldPos, _a.worldPos);
 	Vector3 absDist = Vector3(std::_Float_abs(dir.x), std::_Float_abs(dir.y), std::_Float_abs(dir.z));
-	// めり込み量の計算
+	// 繧√ｊ霎ｼ縺ｿ驥上・險育ｮ・
 	Vector3 overlap = Vector3::VSub(Vector3::VAdd(boxA.halfExtent, boxB.halfExtent), absDist);
-	// 交差していなければfalseを返す
+	// 莠､蟾ｮ縺励※縺・↑縺代ｌ縺ｰfalse繧定ｿ斐☆
 	if (overlap.x <= 0.0f || overlap.y <= 0.0f || overlap.z <= 0.0f) return false;
 
-	// 最小のめり込み量を持つ軸を分離軸として使う
+	// 譛蟆上・繧√ｊ霎ｼ縺ｿ驥上ｒ謖√▽霆ｸ繧貞・髮｢霆ｸ縺ｨ縺励※菴ｿ縺・
 	if (overlap.x < overlap.y && overlap.x < overlap.z) {
 		_result.normal = dir.x >= 0.0f ? VRight : VLeft;
 		_result.penetration = overlap.x;
@@ -475,7 +475,7 @@ bool TestAABBAABB(const ColliderData& _a, const ColliderData& _b, HitResult& _re
 		_result.penetration = overlap.z;
 	}
 
-	// 最近点は中心にする
+	// 譛霑醍せ縺ｯ荳ｭ蠢・↓縺吶ｋ
 	_result.point = Vector3::VScale(Vector3::VAdd(_a.worldPos, _b.worldPos), 0.5f);
 
 	return true;

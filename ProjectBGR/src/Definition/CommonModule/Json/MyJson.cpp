@@ -1,4 +1,4 @@
-#include "MyJson.h"
+ï»¿#include "MyJson.h"
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -9,7 +9,7 @@
 #include <unordered_set>
 
 namespace {
-    // BOMí•Ê
+    // BOMç¨®åˆ¥
     enum class BomType { None, Utf8, Utf16LE, Utf16BE };
 
     BomType DetectBom(const std::vector<unsigned char>& buf, size_t& bomLen) {
@@ -38,17 +38,17 @@ namespace {
         return out;
     }
 
-    // BOM–³‚µƒoƒbƒtƒ@‚ªUTF-8‚Æ‚µ‚Ä‘Ã“–‚©‚Ç‚¤‚©
+    // BOMç„¡ã—ãƒãƒƒãƒ•ã‚¡ãŒUTF-8ã¨ã—ã¦å¦¥å½“ã‹ã©ã†ã‹
     bool IsValidUtf8(const std::string& raw) {
         if (raw.empty()) return true;
         int result = MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, raw.data(), (int)raw.size(), nullptr, 0);
         return result > 0;
     }
 
-    // ANSI(CP932‚È‚ÇŠù’è‚ÌƒR[ƒhƒy[ƒW) -> UTF-8
+    // ANSI(CP932ãªã©æ—¢å®šã®ã‚³ãƒ¼ãƒ‰ãƒšãƒ¼ã‚¸) -> UTF-8
     std::string AnsiToUtf8(const std::string& raw) {
         int wlen = MultiByteToWideChar(CP_ACP, 0, raw.data(), (int)raw.size(), nullptr, 0);
-        if (wlen == 0) return raw; // •ÏŠ·•s”\‚È‚ç’ú‚ß‚ÄŒ³‚Ì‚Ü‚Ü•Ô‚·
+        if (wlen == 0) return raw; // å¤‰æ›ä¸èƒ½ãªã‚‰è«¦ã‚ã¦å…ƒã®ã¾ã¾è¿”ã™
         std::wstring wstr(wlen, L'\0');
         MultiByteToWideChar(CP_ACP, 0, raw.data(), (int)raw.size(), &wstr[0], wlen);
         return WideToUtf8(wstr);
@@ -85,8 +85,8 @@ std::string MyJson::BufferToUtf8String(const std::vector<unsigned char>& buf) {
     default:
     {
         std::string raw(buf.begin(), buf.end());
-        // BOM‚ª–³‚¢ê‡‚ÍUTF-8‚Æ‚µ‚Ä‘Ã“–‚©‚ğ‚Ü‚¸ŒŸØ‚µA
-        // •s³‚È‚çShift-JIS(ANSI)‚Æ‚İ‚È‚µ‚ÄUTF-8‚Ö•ÏŠ·‚·‚é
+        // BOMãŒç„¡ã„å ´åˆã¯UTF-8ã¨ã—ã¦å¦¥å½“ã‹ã‚’ã¾ãšæ¤œè¨¼ã—ã€
+        // ä¸æ­£ãªã‚‰Shift-JIS(ANSI)ã¨ã¿ãªã—ã¦UTF-8ã¸å¤‰æ›ã™ã‚‹
         return IsValidUtf8(raw) ? raw : AnsiToUtf8(raw);
     }
     }
@@ -104,7 +104,7 @@ std::string MyJson::BufferToUtf8String(const std::vector<unsigned char>& buf) {
      std::string utf8 = BufferToUtf8String(buf);
 
      try {
-         nlohmann::json data = nlohmann::json::parse(utf8);
+         nlohmann::json data = nlohmann::json::parse(utf8,nullptr,true,true);
          return data;
      }
      catch (const std::exception& e) {
@@ -113,14 +113,6 @@ std::string MyJson::BufferToUtf8String(const std::vector<unsigned char>& buf) {
      }
  }
 
-std::wstring MyJson::Utf8ToWString(const std::string& utf8) {
-    if (utf8.empty()) return std::wstring();
-    int size_needed = MultiByteToWideChar(CP_UTF8, 0, utf8.data(), (int)utf8.size(), nullptr, 0);
-    if (size_needed == 0) return std::wstring();
-    std::wstring wstr(size_needed, L'\0');
-    MultiByteToWideChar(CP_UTF8, 0, utf8.data(), (int)utf8.size(), &wstr[0], size_needed);
-    return wstr;
-}
 
 std::string MyJson::Utf8ToString(const std::string& utf8) {
     if (utf8.empty()) return std::string();
@@ -138,14 +130,22 @@ std::string MyJson::Utf8ToString(const std::string& utf8) {
     return out;
 }
 
+std::wstring MyJson::Utf8ToWString(const std::string& utf8) {
+    if (utf8.empty()) return std::wstring();
+    int size_needed = MultiByteToWideChar(CP_UTF8, 0, utf8.data(), (int)utf8.size(), nullptr, 0);
+    if (size_needed == 0) return std::wstring();
+    std::wstring wstr(size_needed, L'\0');
+    MultiByteToWideChar(CP_UTF8, 0, utf8.data(), (int)utf8.size(), &wstr[0], size_needed);
+    return wstr;
+}
 
 bool MyJson::CollectFilesToJson(const fs::path& rootDir, const fs::path& outputDir, std::string jsonFileName) {
     if (!fs::exists(rootDir) || !fs::is_directory(rootDir)) {
-        std::cerr << "w’è‚³‚ê‚½ƒtƒHƒ‹ƒ_‚ª‘¶İ‚µ‚Ü‚¹‚ñ: " << rootDir << std::endl;
+        std::cerr << "æŒ‡å®šã•ã‚ŒãŸãƒ•ã‚©ãƒ«ãƒ€ãŒå­˜åœ¨ã—ã¾ã›ã‚“: " << rootDir << std::endl;
         return false;
     }
 
-    // Šg’£q‚ª•t‚¢‚Ä‚¢‚È‚¯‚ê‚Î .json ‚ğ•âŠ®
+    // æ‹¡å¼µå­ãŒä»˜ã„ã¦ã„ãªã‘ã‚Œã° .json ã‚’è£œå®Œ
     if (jsonFileName.size() < 5 ||
         jsonFileName.substr(jsonFileName.size() - 5) != ".json") {
         jsonFileName += ".json";
@@ -153,7 +153,7 @@ bool MyJson::CollectFilesToJson(const fs::path& rootDir, const fs::path& outputD
 
     fs::path outputPath = outputDir / jsonFileName;
 
-    // ---- 1. Šù‘¶‚ÌJSON‚ª‚ ‚ê‚Î“Ç‚İ‚Ş ----
+    // ---- 1. æ—¢å­˜ã®JSONãŒã‚ã‚Œã°èª­ã¿è¾¼ã‚€ ----
     json existingList = json::array();
     if (fs::exists(outputPath)) {
         std::ifstream ifs(outputPath);
@@ -161,19 +161,19 @@ bool MyJson::CollectFilesToJson(const fs::path& rootDir, const fs::path& outputD
             try {
                 ifs >> existingList;
                 if (!existingList.is_array()) {
-                    //std::cerr << "Šù‘¶‚ÌJSON‚ª”z—ñŒ`®‚Å‚Í‚È‚¢‚½‚ßAV‹K‚Æ‚µ‚Äˆµ‚¢‚Ü‚·B" << std::endl;
+                    //std::cerr << "æ—¢å­˜ã®JSONãŒé…åˆ—å½¢å¼ã§ã¯ãªã„ãŸã‚ã€æ–°è¦ã¨ã—ã¦æ‰±ã„ã¾ã™ã€‚" << std::endl;
                     existingList = json::array();
                 }
             }
             catch (const json::parse_error& e) {
-                //std::cerr << "Šù‘¶JSON‚Ì“Ç‚İ‚İ‚É¸”s‚µ‚Ü‚µ‚½: " << e.what() << std::endl;
-                //std::cerr << "V‹K‚Æ‚µ‚Äˆµ‚¢‚Ü‚·B" << std::endl;
+                //std::cerr << "æ—¢å­˜JSONã®èª­ã¿è¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸ: " << e.what() << std::endl;
+                //std::cerr << "æ–°è¦ã¨ã—ã¦æ‰±ã„ã¾ã™ã€‚" << std::endl;
                 existingList = json::array();
             }
         }
     }
 
-    // Šù‘¶ƒGƒ“ƒgƒŠ‚Ì"path"‚¾‚¯‚ğW‚ß‚½W‡‚ğì‚éid•¡ƒ`ƒFƒbƒN—pj
+    // æ—¢å­˜ã‚¨ãƒ³ãƒˆãƒªã®"path"ã ã‘ã‚’é›†ã‚ãŸé›†åˆã‚’ä½œã‚‹ï¼ˆé‡è¤‡ãƒã‚§ãƒƒã‚¯ç”¨ï¼‰
     std::unordered_set<std::string> existingPaths;
     for (const auto& entry : existingList) {
         if (entry.contains("path") && entry["path"].is_string()) {
@@ -181,7 +181,7 @@ bool MyJson::CollectFilesToJson(const fs::path& rootDir, const fs::path& outputD
         }
     }
 
-    // ---- 2. ƒtƒHƒ‹ƒ_‚ğ‘–¸‚µ‚ÄV‹Kƒtƒ@ƒCƒ‹‚ğûW ----
+    // ---- 2. ãƒ•ã‚©ãƒ«ãƒ€ã‚’èµ°æŸ»ã—ã¦æ–°è¦ãƒ•ã‚¡ã‚¤ãƒ«ã‚’åé›† ----
     std::error_code ec;
     for (auto it = fs::recursive_directory_iterator(
         rootDir, fs::directory_options::skip_permission_denied, ec);
@@ -195,25 +195,25 @@ bool MyJson::CollectFilesToJson(const fs::path& rootDir, const fs::path& outputD
             relPath = it->path();
             ec.clear();
         }
-        std::string relPathStr = relPath.generic_string(); // "/"‹æØ‚è‚É“ˆê
+        std::string relPathStr = relPath.generic_string(); // "/"åŒºåˆ‡ã‚Šã«çµ±ä¸€
 
-        // Šù‚É“o˜^Ï‚İ‚Ìpath‚È‚ç‘‚«Š·‚¦‚¸ƒXƒLƒbƒv
+        // æ—¢ã«ç™»éŒ²æ¸ˆã¿ã®pathãªã‚‰æ›¸ãæ›ãˆãšã‚¹ã‚­ãƒƒãƒ—
         if (existingPaths.count(relPathStr) > 0) {
             continue;
         }
 
-        // V‹Kƒtƒ@ƒCƒ‹‚Æ‚µ‚Ä’Ç‰Á
+        // æ–°è¦ãƒ•ã‚¡ã‚¤ãƒ«ã¨ã—ã¦è¿½åŠ 
         existingList.push_back({
             {"name", it->path().stem().string()},
             {"path", relPathStr}
             });
-        existingPaths.insert(relPathStr); // “¯ˆê‘–¸“à‚Å‚Ìd•¡’Ç‰Á–h~
+        existingPaths.insert(relPathStr); // åŒä¸€èµ°æŸ»å†…ã§ã®é‡è¤‡è¿½åŠ é˜²æ­¢
     }
 
-    // ---- 3. ‘‚«‚İ(Šù‘¶•ª{V‹K•ª‚ğ‚Ü‚Æ‚ß‚Äã‘‚«•Û‘¶) ----
+    // ---- 3. æ›¸ãè¾¼ã¿(æ—¢å­˜åˆ†ï¼‹æ–°è¦åˆ†ã‚’ã¾ã¨ã‚ã¦ä¸Šæ›¸ãä¿å­˜) ----
     std::ofstream ofs(outputPath);
     if (!ofs) {
-        std::cerr << "o—Íƒtƒ@ƒCƒ‹‚ğŠJ‚¯‚Ü‚¹‚ñ‚Å‚µ‚½: " << outputPath << std::endl;
+        std::cerr << "å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã‘ã¾ã›ã‚“ã§ã—ãŸ: " << outputPath << std::endl;
         return false;
     }
     ofs << existingList.dump(2);
@@ -221,26 +221,26 @@ bool MyJson::CollectFilesToJson(const fs::path& rootDir, const fs::path& outputD
 }
 
 bool CompileBinary(const json& jsonData, const std::string& outputPath) {
-    // JSON -> MessagePackƒoƒCƒiƒŠ‚Ö•ÏŠ·
+    // JSON -> MessagePackãƒã‚¤ãƒŠãƒªã¸å¤‰æ›
     std::vector<uint8_t> binaryData;
     try {
         binaryData = json::to_msgpack(jsonData);
     }
     catch (const std::exception& e) {
-        std::cerr << "ƒoƒCƒiƒŠ•ÏŠ·‚É¸”s‚µ‚Ü‚µ‚½: " << e.what() << std::endl;
+        std::cerr << "ãƒã‚¤ãƒŠãƒªå¤‰æ›ã«å¤±æ•—ã—ã¾ã—ãŸ: " << e.what() << std::endl;
         return false;
     }
 
-    // ƒoƒCƒiƒŠƒ‚[ƒh‚Å‘‚«‚İ(o—ÍæƒtƒHƒ‹ƒ_‚ª–³‚¢ê‡‚Í‚±‚±‚Å¸”s‚·‚é)
+    // ãƒã‚¤ãƒŠãƒªãƒ¢ãƒ¼ãƒ‰ã§æ›¸ãè¾¼ã¿(å‡ºåŠ›å…ˆãƒ•ã‚©ãƒ«ãƒ€ãŒç„¡ã„å ´åˆã¯ã“ã“ã§å¤±æ•—ã™ã‚‹)
     std::ofstream ofs(outputPath, std::ios::binary);
     if (!ofs) {
-        std::cerr << "o—Íƒtƒ@ƒCƒ‹‚ğŠJ‚¯‚Ü‚¹‚ñ‚Å‚µ‚½: " << outputPath << std::endl;
+        std::cerr << "å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã‘ã¾ã›ã‚“ã§ã—ãŸ: " << outputPath << std::endl;
         return false;
     }
 
     ofs.write(reinterpret_cast<const char*>(binaryData.data()), binaryData.size());
     if (!ofs) {
-        std::cerr << "‘‚«‚İ’†‚ÉƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½: " << outputPath << std::endl;
+        std::cerr << "æ›¸ãè¾¼ã¿ä¸­ã«ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸ: " << outputPath << std::endl;
         return false;
     }
 
@@ -250,8 +250,8 @@ bool CompileBinary(const json& jsonData, const std::string& outputPath) {
 json MyJson::LoadBinary(const std::string& inputPath) {
     std::ifstream ifs(inputPath, std::ios::binary);
     if (!ifs) {
-        std::cerr << "“ü—Íƒtƒ@ƒCƒ‹‚ğŠJ‚¯‚Ü‚¹‚ñ‚Å‚µ‚½: " << inputPath << std::endl;
-        return json::array(); // ¸”s‚Í‹ó”z—ñ‚ğ•Ô‚·
+        std::cerr << "å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã‘ã¾ã›ã‚“ã§ã—ãŸ: " << inputPath << std::endl;
+        return json::array(); // å¤±æ•—æ™‚ã¯ç©ºé…åˆ—ã‚’è¿”ã™
     }
 
     std::vector<uint8_t> buffer(
@@ -263,7 +263,7 @@ json MyJson::LoadBinary(const std::string& inputPath) {
         return json::from_msgpack(buffer);
     }
     catch (const json::parse_error& e) {
-        std::cerr << "ƒoƒCƒiƒŠ‚Ì‰ğÍ‚É¸”s‚µ‚Ü‚µ‚½: " << e.what() << std::endl;
-        return json::array(); // ¸”s‚Í‹ó”z—ñ‚ğ•Ô‚·
+        std::cerr << "ãƒã‚¤ãƒŠãƒªã®è§£æã«å¤±æ•—ã—ã¾ã—ãŸ: " << e.what() << std::endl;
+        return json::array(); // å¤±æ•—æ™‚ã¯ç©ºé…åˆ—ã‚’è¿”ã™
     }
 }

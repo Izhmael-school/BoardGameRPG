@@ -1,11 +1,17 @@
-#include "ModelResourceManager.h"
+﻿#include "ModelResourceManager.h"
 #include <DxLib.h>
 #include "Definition/CommonModule/Json/MyJson.h"
 #include "Definition/CommonModule/String/MyString.h"
 #include <cassert>
 
+ModelResourceManager::ModelResourceManager() {
+}
+
+ModelResourceManager::~ModelResourceManager() {
+}
+
 void ModelResourceManager::LoadModel(const std::string& _name, const std::string& _path){
-	// すでにロード済みなら再利用
+	// 縺吶〒縺ｫ繝ｭ繝ｼ繝画ｸ医∩縺ｪ繧牙・蛻ｩ逕ｨ
 	auto it = models.find(_name);
 
 	if (it != models.end()){
@@ -15,10 +21,10 @@ void ModelResourceManager::LoadModel(const std::string& _name, const std::string
 		return;
 	}
 
-	// モデルロード
+	// 繝｢繝・Ν繝ｭ繝ｼ繝・
 	int handle = MV1LoadModel(_path.c_str());
 
-	// 保存
+	// 菫晏ｭ・
 	models[_name] = handle;
 
 	return;

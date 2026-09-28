@@ -1,20 +1,23 @@
-/*
+﻿/*
  *	@file	MainGameScene.h
  *  @author Sekino
  */
 
+#pragma once
 #ifndef _MAINGAMESCENE_H_
 #define _MAINGAMESCENE_H_
 
 #include "../SceneBase.h"
-#include "Manager/GameObject/GameObjectManager.h"
-#include "Manager/Resource/Model/ModelResourceManager.h" 
-#include "Manager/Collision/CollisionManager.h" 
-#include "Manager/Map/MapManager.h"
-#include "Turn/TurnProcessor.h"
 #include <memory>
 
 class FreeCamera;
+class GameObjectManager;
+class CollisionManager;
+class MapManager;
+class TurnProcessor;
+class CharacterDataManager;
+class ModelResourceManager;
+class UIManager;
 
 class MainGameScene :public SceneBase {
 private:
@@ -28,9 +31,13 @@ private:
 
 	std::unique_ptr<TurnProcessor> turn;
 
+	std::unique_ptr<CharacterDataManager> characterDataManager;
+
 	ModelResourceManager* resource;
+
+	UIManager* uiManager;
 public:
-	MainGameScene();
+	MainGameScene(UIManager* _uiManager);
 	~MainGameScene();
 
 private:

@@ -1,4 +1,4 @@
-#include "DirectInputPad.h"
+ï»¿#include "DirectInputPad.h"
 
 DirectInputPad::DirectInputPad(int _portNum)
 	:PadBase(_portNum) {
@@ -12,7 +12,7 @@ void DirectInputPad::Start() {
 float DirectInputPad::StickNorm(int _v) {
 	float f = _v / 1000.0f;
 
-	// â‘Î’l
+	// çµ¶å¯¾å€¤
 	if (fabs(f) < DEADZONE)
 		return 0.0f;
 
@@ -29,7 +29,7 @@ void DirectInputPad::Update() {
 
 		lx = StickNorm(currentPadState.X);
 		ly = StickNorm(currentPadState.Y);
-		// ƒRƒ“ƒgƒ[ƒ‰‚É‚æ‚Á‚Ä‰EƒXƒeƒBƒbƒN‚Ìæ“¾‚ªˆá‚¤‚½‚ß•ª‚¯‚é
+		// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã«ã‚ˆã£ã¦å³ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å–å¾—ãŒé•ã†ãŸã‚åˆ†ã‘ã‚‹
 		switch (padType) {
 		case DX_PADTYPE_SWITCH_PRO_CTRL:
 			rx = StickNorm(currentPadState.Rx);
@@ -45,7 +45,7 @@ void DirectInputPad::Update() {
 			break;
 		}
 
-		// Œü‚«‚ğ•Ï‚¦‚é
+		// å‘ãã‚’å¤‰ãˆã‚‹
 		ly *= -1;
 		ry *= -1;
 	}

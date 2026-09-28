@@ -1,73 +1,75 @@
-/*
- * @brief “ü—ÍŠÇ—ƒNƒ‰ƒX
+ï»¿/*
+ * @brief å…¥åŠ›ç®¡ç†ã‚¯ãƒ©ã‚¹
  * @author Sekino
  */
 #pragma once
 #include "DesignPattern/Singleton/Singleton.h"	
+#include "Definition/Const/KeyInputConst.h"
 #include "../ManagerBase.h"
-#include "../../Library/Vector/Vector3.h"
+#include "Vector2.h"
 #include <array>
 #include <memory>
 
 class PadBase;
+class UIInput;
 
 constexpr int KEY_NUM = 256;
 constexpr int MAX_PORT_NUM = 4;
 
 class InputManager : public ManagerBase, public Singleton<InputManager> {
 private:
-	// ƒL[ƒ{[ƒh‚Ì“ü—Íó‹µ
+	// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®å…¥åŠ›çŠ¶æ³
 	char currentKeyState[KEY_NUM];
 	char prevKeyState[KEY_NUM];
 
-	// ƒ}ƒEƒX‚Ì“ü—Íó‹µ
+	// ãƒã‚¦ã‚¹ã®å…¥åŠ›çŠ¶æ³
 	int currentMouseState;
 	int prevMouseState;
-	int nowMousePosX;		// Œ»İ‚Ìƒ}ƒEƒXˆÊ’uX
-	int prevMousePosX;		// ’¼‘O‚Ìƒ}ƒEƒXˆÊ’uX
-	int nowMousePosY;		// Œ»İ‚Ìƒ}ƒEƒXˆÊ’uY
-	int prevMousePosY;		// ’¼‘O‚Ìƒ}ƒEƒXˆÊ’uY
-	bool mouseVisible = true;		// ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚Ì•\¦”ñ•\¦ƒtƒ‰ƒO
-	bool prevInputMouse;	// ’¼‘O‚Ì“ü—Í‚ªƒ}ƒEƒX‚©‚Ç‚¤‚©
-	bool mouseMoveSkip;		// ƒ}ƒEƒX‚Ì’†‰›ŒÅ’è‚ğ1ƒtƒŒ[ƒ€ƒXƒLƒbƒv‚·‚é‚½‚ß‚Ìƒtƒ‰ƒO
+	int nowMousePosX;		// ç¾åœ¨ã®ãƒã‚¦ã‚¹ä½ç½®X
+	int prevMousePosX;		// ç›´å‰ã®ãƒã‚¦ã‚¹ä½ç½®X
+	int nowMousePosY;		// ç¾åœ¨ã®ãƒã‚¦ã‚¹ä½ç½®Y
+	int prevMousePosY;		// ç›´å‰ã®ãƒã‚¦ã‚¹ä½ç½®Y
+	bool mouseVisible = true;		// ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã®è¡¨ç¤ºéè¡¨ç¤ºãƒ•ãƒ©ã‚°
+	bool prevInputMouse;	// ç›´å‰ã®å…¥åŠ›ãŒãƒã‚¦ã‚¹ã‹ã©ã†ã‹
+	bool mouseMoveSkip;		// ãƒã‚¦ã‚¹ã®ä¸­å¤®å›ºå®šã‚’1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹ãŸã‚ã®ãƒ•ãƒ©ã‚°
 
-	// ƒRƒ“ƒgƒ[ƒ‰ŠÇ—”z—ñ
+	// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ç®¡ç†é…åˆ—
 	std::array<std::unique_ptr<PadBase>, MAX_PORT_NUM> pads;
 
 private:
-	// ‰Šú‰»ˆ—
+	// åˆæœŸåŒ–å‡¦ç†
 	void Start() override;
 public:
 	InputManager();
 	~InputManager();
 
-	// XVˆ—
+	// æ›´æ–°å‡¦ç†
 	void Update(float _t) override;
 
 private:
 	/*
-	 * @brief ƒRƒ“ƒgƒ[ƒ‰‚ÌXV
+	 * @brief ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã®æ›´æ–°
 	 */
 	void UpdatePad();
 
 	/*
-	 * @brief ƒ}ƒEƒX‚ÌXV
+	 * @brief ãƒã‚¦ã‚¹ã®æ›´æ–°
 	 */
 	void UpdateMousePointer();
 public:
 #pragma region KeyBoard
 	/**
-	‰Ÿ‚³‚ê‚Ä‚¢‚é‚©
+	æŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹
 	KEY_INPUT_##
 	*/
 	inline bool IsKey(int _key) const { return currentKeyState[_key]; }
 	/**
-	‰Ÿ‚³‚ê‚½‚©
+	æŠ¼ã•ã‚ŒãŸã‹
 	KEY_INPUT_##
 	*/
 	inline bool IsKeyDown(int _key) const { return currentKeyState[_key] && !prevKeyState[_key]; }
 	/**
-	—£‚µ‚½‚©
+	é›¢ã—ãŸã‹
 	KEY_INPUT_##
 	*/
 	inline bool IsKeyUp(int _key) const { return  !currentKeyState[_key] && prevKeyState[_key]; }
@@ -76,36 +78,39 @@ public:
 #pragma region Mouse
 
 	/**
-	  ‰Ÿ‚³‚ê‚Ä‚¢‚é‚©
+	  æŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹
 	  MOUSE_INPUT_##
 	*/
 	inline bool IsMouse(int _mouse) const { return currentMouseState & _mouse; }
 	/**
-	  ‰Ÿ‚³‚ê‚½‚©
+	  æŠ¼ã•ã‚ŒãŸã‹
 	  MOUSE_INPUT_##
 	*/
 	inline bool IsMouseDown(int _mouse) const { return (currentMouseState & _mouse) && !(prevMouseState & _mouse); }
 	/**
-	  —£‚µ‚½‚©
+	  é›¢ã—ãŸã‹
 	  MOUSE_INPUT_##
 	*/
 	inline bool IsMouseUp(int _mouse) const { return !(currentMouseState & _mouse) && (prevMouseState & _mouse); }
 
 	/*
-	 * @brief ƒ}ƒEƒX‚ÌˆÚ“®—Ê
+	 * @brief ãƒã‚¦ã‚¹ã®ç§»å‹•é‡
 	 */
-	Vector3 GetMouseMove() const;
+	Vector2 GetMouseMove() const;
 
 	/*
-	 * @brief ƒ}ƒEƒX‚ÌˆÊ’uæ“¾
+	 * @brief ãƒã‚¦ã‚¹ã®ä½ç½®å–å¾—
 	 */
-	Vector3 GetMousePos() const;
+	Vector2 GetMousePos() const;
 
 #pragma endregion
 
-	// ƒRƒ“ƒgƒ[ƒ‰‚Ìæ“¾
+	// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã®å–å¾—
 	PadBase* GetPad(int _index) const { return pads[_index].get(); }
 
-	// XINPUT‚Ìƒ{ƒ^ƒ“”Ô†‚ğDirectInput‚Ìƒ{ƒ^ƒ“”Ô†‚É•ÏŠ·
+	// XINPUTã®ãƒœã‚¿ãƒ³ç•ªå·ã‚’DirectInputã®ãƒœã‚¿ãƒ³ç•ªå·ã«å¤‰æ›
 	int ExchangeXInputButton(int _XINPUT, int _padNum);
+
+	// UIç”¨ã®å…¥åŠ›ã®æ›´æ–°
+	void UpdateUIInput(UIInput& _input);
 };

@@ -1,4 +1,4 @@
-#include "CollisionManager.h"
+﻿#include "CollisionManager.h"
 #include "NarrowPhase/NarrowPhase.h"
 #include "DxLib.h"
 #include "Library/Vector/ConversionVECTOR.h"
@@ -7,7 +7,7 @@
 
 namespace {
 	/*
-	 * @brief ２つのハンドルから順序に依存しないペアキーを作る
+	 * @brief ・偵▽縺ｮ繝上Φ繝峨Ν縺九ｉ鬆・ｺ上↓萓晏ｭ倥＠縺ｪ縺・・繧｢繧ｭ繝ｼ繧剃ｽ懊ｋ
 	 */
 	uint64_t MakePairKey(int _handleA, int _handleB) {
 		uint32_t low = static_cast<uint32_t>(min(_handleA, _handleB));
@@ -28,7 +28,7 @@ CollisionManager::CollisionManager(const AABB& _worldBounds)
 
 int CollisionManager::Create(const ColliderShape& _shape, CollisionLayer _layer, Collider* _colliderComponent) {
 	int handle;
-	// 再利用できるハンドルがあればそれを使う
+	// 蜀榊茜逕ｨ縺ｧ縺阪ｋ繝上Φ繝峨Ν縺後≠繧後・縺昴ｌ繧剃ｽｿ縺・
 	if (!freeHandle.empty()) {
 		handle = freeHandle.back();
 		freeHandle.pop_back();
@@ -37,7 +37,7 @@ int CollisionManager::Create(const ColliderShape& _shape, CollisionLayer _layer,
 		handle = (int)handleToIndex.size();
 		handleToIndex.emplace_back(-1);
 	}
-	// 新しいコライダーを追加
+	// 譁ｰ縺励＞繧ｳ繝ｩ繧､繝繝ｼ繧定ｿｽ蜉
 	int newHandle = (int)colliders.size();
 	ColliderData data;
 	data.shape = _shape;
@@ -54,7 +54,7 @@ void CollisionManager::Destroy(int _handle) {
 	if (handleToIndex.empty()) return;
 
 	int index = handleToIndex[_handle];
-	// ハンドルが無効なら帰る
+	// 繝上Φ繝峨Ν縺檎┌蜉ｹ縺ｪ繧牙ｸｰ繧・
 	if (index < 0) return;
 
 	NotifyDestroyExit(_handle);
@@ -62,7 +62,7 @@ void CollisionManager::Destroy(int _handle) {
 	int lastIndex = (int)colliders.size() - 1;
 	int lastHandle = collidersToHandle[lastIndex];
 
-	// 末尾の要素を削除位置に持ってきて詰める
+	// 譛ｫ蟆ｾ縺ｮ隕∫ｴ繧貞炎髯､菴咲ｽｮ縺ｫ謖√▲縺ｦ縺阪※隧ｰ繧√ｋ
 	colliders[index] = colliders[lastIndex];
 	collidersToHandle[index] = lastHandle;
 	handleToIndex[lastHandle] = index;
@@ -76,27 +76,27 @@ void CollisionManager::Update(float _t) {
 	if (!octreeWorld) return;
 
 	for (auto& c : colliders) {
-		// 再計算が必要でない場合はスキップ
+		// 蜀崎ｨ育ｮ励′蠢・ｦ√〒縺ｪ縺・ｴ蜷医・繧ｹ繧ｭ繝・・
 		if (!c.isDirty || !c.isEnable) continue;
-		// 形状に応じてAABBを計算
+		// 蠖｢迥ｶ縺ｫ蠢懊§縺ｦAABB繧定ｨ育ｮ・
 		c.worldAABB = CalculateAABB(c.worldPos, c.shape);
 		c.isDirty = false;
 	}
 
-	// 前フレームのヒット状態を変更
+	// 蜑阪ヵ繝ｬ繝ｼ繝縺ｮ繝偵ャ繝育憾諷九ｒ螟画峩
 	for (auto& c : colliders) {
 		c.prevHit = c.currentHit;
 		c.currentHit = false;
 	}
 
-	// オクツリーを再構築
+	// 繧ｪ繧ｯ繝・Μ繝ｼ繧貞・讒狗ｯ・
 	octreeWorld->Rebuild(*this);
 
-	// ブロードフェーズ
+	// 繝悶Ο繝ｼ繝峨ヵ繧ｧ繝ｼ繧ｺ
 	std::vector<std::pair<int, int>> pairs;
 	octreeWorld->CollectAllPairs(pairs);
 
-	// ナローフェーズ
+	// 繝翫Ο繝ｼ繝輔ぉ繝ｼ繧ｺ
 	std::unordered_set<uint64_t> newHitPairs;
 	for (auto& pair : pairs) {
 		ColliderData& a = GetCollider(pair.first);
@@ -111,10 +111,10 @@ void CollisionManager::Update(float _t) {
 		b.currentHit = true;
 		newHitPairs.insert(MakePairKey(pair.first, pair.second));
 
-		// 押し出し
+		// 謚ｼ縺怜・縺・
 	}
 
-	// 前フレームとの差分からイベント発火
+	// 蜑阪ヵ繝ｬ繝ｼ繝縺ｨ縺ｮ蟾ｮ蛻・°繧峨う繝吶Φ繝育匱轣ｫ
 	for (uint64_t key : newHitPairs) {
 		int handleA = (int)(key >> 32);
 		int handleB = (int)(key & 0xFFFFFFFFu);
@@ -136,9 +136,9 @@ void CollisionManager::Update(float _t) {
 		}
 	}
 
-	// 今のフレームになくなったペアはExit発火
+	// 莉翫・繝輔Ξ繝ｼ繝縺ｫ縺ｪ縺上↑縺｣縺溘・繧｢縺ｯExit逋ｺ轣ｫ
 	for (uint64_t key : hitPairs) {
-		// まだ衝突しているか
+		// 縺ｾ縺陦晉ｪ√＠縺ｦ縺・ｋ縺・
 		if (newHitPairs.count(key) > 0) continue;
 
 		int handleA = (int)(key >> 32);
@@ -217,13 +217,13 @@ void CollisionManager::Initialize(const AABB& _worldBounds) {
 AABB CollisionManager::CalculateAABB(const Vector3& _worldPos, const ColliderShape& _shape) {
 	switch (_shape.type) {
 	case ColliderType::BoxAABB:
-		// BoxのAABBを計算
+		// Box縺ｮAABB繧定ｨ育ｮ・
 		return AABB(_worldPos, _shape.aabb.halfExtent);
 	case ColliderType::Sphere:
-		// SphereのAABBを計算
+		// Sphere縺ｮAABB繧定ｨ育ｮ・
 		return AABB(_worldPos, Vector3::VScale(VOne, _shape.sphere.radius));
 	case ColliderType::Capsule:
-		// CapsuleのAABBを計算
+		// Capsule縺ｮAABB繧定ｨ育ｮ・
 		const Vector3& offset = _shape.capsule.localOffset;
 		float radius = _shape.capsule.radius;
 
@@ -252,7 +252,7 @@ void CollisionManager::NotifyDestroyExit(int _handle) {
 		int handleA = (int)(*itr >> 32);
 		int handleB = (int)(*itr & 0xFFFFFFFFu);
 
-		// 関係ないペアはスキップ
+		// 髢｢菫ゅ↑縺・・繧｢縺ｯ繧ｹ繧ｭ繝・・
 		if (handleA != _handle && handleB != _handle) {
 			itr++;
 			continue;
@@ -261,7 +261,7 @@ void CollisionManager::NotifyDestroyExit(int _handle) {
 		int otherHandle = (handleA == _handle) ? handleB : handleA;
 		Collider* otherComponent = (handleToIndex[otherHandle] >= 0) ? GetCollider(otherHandle).collider : nullptr;
 
-		// 相手がまだいればExitに入る
+		// 逶ｸ謇九′縺ｾ縺縺・ｌ縺ｰExit縺ｫ蜈･繧・
 		otherComponent->Exit(otherComponent->GetColliderData(), selfComponent->GetColliderData());
 		selfComponent->Exit(selfComponent->GetColliderData(), otherComponent->GetColliderData());
 

@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "ProjectBGR\\x64\\Debug\\UIButton.obj",
+            "outputs": [
+                "ProjectBGR\\x64\\Debug\\UIButton.h.obj.dt.module.json",
+                "ProjectBGR\\x64\\Debug\\UIButton.h.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}

@@ -1,4 +1,4 @@
-#include "PadBase.h"
+﻿#include "PadBase.h"
 #include <cmath>
 
 PadBase::PadBase(int _connectIndex)
@@ -11,7 +11,7 @@ PadBase::PadBase(int _connectIndex)
 float PadBase::StickNorm(float _v) {
 	float f = _v / SHRT_MAX;
 
-	// ��Βl
+	// 絶対値
 	if (fabs(f) < DEADZONE)
 		return 0.0f;
 

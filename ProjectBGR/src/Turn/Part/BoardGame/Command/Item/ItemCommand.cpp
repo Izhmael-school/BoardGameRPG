@@ -1,12 +1,12 @@
-#include "ItemCommand.h"
+﻿#include "ItemCommand.h"
 #include "Manager/Input/InputManager.h"
 #include "Data/Player/PlayerData.h"
 #include "Manager/Data/ElementDataManager.h"
 #include "DxLib.h"
 
 bool ItemCommand::SelectItem() {
-	// プレイヤーが渡されてないかこのターンすでアイテムを使っていたら帰る
-	if (!currentSelectPlayer || currentSelectPlayer->GetOneTurnItemCount() <= useItemCount) return Return();
+	// データがないかこのターンすでにアイテムを使っていたら帰る
+	if (!currentSelectPlayer || !currentSelectPlayer->IsUseItem()) return Return();
 
 	int itemNum = static_cast<int>(currentSelectPlayer->GetItemList().size()) - 1;
 
@@ -25,7 +25,7 @@ bool ItemCommand::SelectItem() {
 		return Return();
 
 	if (input.IsKeyDown(KEY_INPUT_RETURN)) {
-		// アイテムの使用処理を描く
+		// アイテムを使う
 		UseItem(currentSelectPlayer->GetItemList()[selectItemIndex]);
 		return Return();
 	}
@@ -33,52 +33,52 @@ bool ItemCommand::SelectItem() {
 }
 
 void ItemCommand::UseItem(int _effectID) {
-	// アイテムを使った回数を増やす
-	useItemCount++;
+	// 繧｢繧､繝・Β繧剃ｽｿ縺｣縺溷屓謨ｰ繧貞｢励ｄ縺・
+	currentSelectPlayer->AddUsedItemCount();
 
-	// アイテムを消す
+	// 繧｢繧､繝・Β繧呈ｶ医☆
 	currentSelectPlayer->RemoveItem(selectItemIndex);
 }
 
 void ItemCommand::Render() {
-	VECTOR offset = VGet(400, 200, 0);
-	VECTOR offset2 = VGet(700, 400, 0);
-	int stringSize = 20;
-	// ウィンドウ
-	DrawFillBox(offset.x, offset.y, offset2.x, offset2.y, 0x000000);
-	DrawLineBox(offset.x, offset.y, offset2.x, offset2.y, 0xffffff);
+	//VECTOR offset = VGet(400, 200, 0);
+	//VECTOR offset2 = VGet(700, 400, 0);
+	//int stringSize = 20;
+	//// 繧ｦ繧｣繝ｳ繝峨え
+	//DrawFillBox(offset.x, offset.y, offset2.x, offset2.y, 0x000000);
+	//DrawLineBox(offset.x, offset.y, offset2.x, offset2.y, 0xffffff);
 
-	// アイテム名
-	int i = 0;
-	unsigned int color = 0xffffff;
-	std::string explanation;
-	for (auto& item : currentSelectPlayer->GetItemList()) {
-		color = (i == selectItemIndex) ? 0xffff00 : 0xffffff;
-		ItemData itemData = ElementDataManager::GetInstance().GetItemData(item);
-		// 説明文だけもらう
-		if (i == selectItemIndex)
-			explanation = itemData.explanation;
+	//// 繧｢繧､繝・Β蜷・
+	//int i = 0;
+	//unsigned int color = 0xffffff;
+	//std::string explanation;
+	//for (auto& item : currentSelectPlayer->GetItemList()) {
+	//	color = (i == selectItemIndex) ? 0xffff00 : 0xffffff;
+	//	ItemData itemData = ElementDataManager::GetInstance().GetItemData(item);
+	//	// 隱ｬ譏取枚縺縺代ｂ繧峨≧
+	//	if (i == selectItemIndex)
+	//		explanation = itemData.explanation;
 
-		int x = (offset.x + (stringSize * ((i + 1) % 2))) + (((offset2.x - offset.x) / 2) * (i % 2));
-		int y = (offset.y + stringSize) + (stringSize * (i / 2));
-		DrawFormatString(x, y, color, "%s", MyJson::Utf8ToString(itemData.name).c_str());
-		i++;
-	}
+	//	int x = (offset.x + (stringSize * ((i + 1) % 2))) + (((offset2.x - offset.x) / 2) * (i % 2));
+	//	int y = (offset.y + stringSize) + (stringSize * (i / 2));
+	//	DrawFormatString(x, y, color, "%s",itemData.name.c_str());
+	//	i++;
+	//}
 
-	int row = currentSelectPlayer->GetMaxItems() / 2;
+	//int row = currentSelectPlayer->GetMaxItems() / 2;
 
-	int y = offset.y + (stringSize * (row + 2));
+	//int y = offset.y + (stringSize * (row + 2));
 
-	// 選択中のアイテムの説明
-	DrawLine(offset.x + stringSize, y, offset2.x - stringSize, y, 0xffffff);
-	DrawString(offset.x + stringSize, y + stringSize, MyJson::Utf8ToString(explanation).c_str(), 0xffffff);
+	//// 驕ｸ謚樔ｸｭ縺ｮ繧｢繧､繝・Β縺ｮ隱ｬ譏・
+	//DrawLine(offset.x + stringSize, y, offset2.x - stringSize, y, 0xffffff);
+	//DrawString(offset.x + stringSize, y + stringSize, explanation.c_str(), 0xffffff);
 
-	// 操作のアシスト
-	float ex = 0.8f;
-	std::string assist = MyJson::Utf8ToString("決定：Enter/戻る：B");
-	int stringNum = assist.length();
-	int sx = offset2.x - (stringSize * ex) * (stringNum / 2) + (stringNum % 2);
-	DrawExtendString(sx, offset2.y - (stringSize * ex), ex, ex, assist.c_str(), 0x808080);
+	//// 謫堺ｽ懊・繧｢繧ｷ繧ｹ繝・
+	//float ex = 0.8f;
+	//std::string assist = "決定:Enter/戻る:B";
+	//int stringNum = assist.length();
+	//int sx = offset2.x - (stringSize * ex) * (stringNum / 2) + (stringNum % 2);
+	//DrawExtendString(sx, offset2.y - (stringSize * ex), ex, ex, assist.c_str(), 0x808080);
 }
 
 bool ItemCommand::Return() {

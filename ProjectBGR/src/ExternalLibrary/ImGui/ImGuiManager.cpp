@@ -1,4 +1,4 @@
-#include "ImGuiManager.h"
+ï»¿#include "ImGuiManager.h"
 
 #include <imgui.h>
 
@@ -11,18 +11,18 @@
 void ImGuiManager::Init()
 {
 
-	// ImGui–{‘Ì‚ğ¶¬
+	// ImGuiæœ¬ä½“ã‚’ç”Ÿæˆ
 	ImGui::CreateContext();
 
-	// ƒ_[ƒNİ’è
+	// ãƒ€ãƒ¼ã‚¯è¨­å®š
 	ImGui::StyleColorsDark();
 
 	HWND hwnd = GetMainWindowHandle();
 
-	// Windows‚Ì“ü—Í‚ğæ“¾
+	// Windowsã®å…¥åŠ›ã‚’å–å¾—
 	ImGui_ImplWin32_Init(hwnd);
 
-	// DirectX11‚ğ‰Šú‰»
+	// DirectX11ã‚’åˆæœŸåŒ–
 	auto* device = (ID3D11Device *)GetUseDirect3D11Device();
 	auto* context = (ID3D11DeviceContext*)GetUseDirect3D11DeviceContext();
 
@@ -39,7 +39,7 @@ void ImGuiManager::BeginFrame()
 
 	ImGui_ImplWin32_NewFrame();
 
-	// UI¶¬‚ğ’Ê’m
+	// UIç”Ÿæˆã‚’é€šçŸ¥
 	ImGui::NewFrame();
 
 }
@@ -67,11 +67,11 @@ void ImGuiManager::UpdateMouseInput()
 
 	ImGuiIO& io = ImGui::GetIO();
 
-	// DXƒ‰ƒCƒuƒ‰ƒŠ‚©‚çƒ}ƒEƒXî•ñ‚ğæ“¾
+	// DXãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‹ã‚‰ãƒã‚¦ã‚¹æƒ…å ±ã‚’å–å¾—
 	int mouse = DxLib::GetMouseInput();
 	int wheel = DxLib::GetMouseWheelRotVol();
 
-	// æ“¾‚µ‚½î•ñ‚ğInGui‚Ö“n‚·
+	// å–å¾—ã—ãŸæƒ…å ±ã‚’InGuiã¸æ¸¡ã™
 	io.AddMouseButtonEvent(0, (mouse & MOUSE_INPUT_LEFT) != 0);
 	io.AddMouseButtonEvent(1, (mouse & MOUSE_INPUT_RIGHT) != 0);
 	io.AddMouseButtonEvent(2, (mouse & MOUSE_INPUT_MIDDLE) != 0);

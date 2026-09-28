@@ -1,5 +1,5 @@
-/*
- * @brief DirectInput‚ÌƒRƒ“ƒgƒ[ƒ‰
+ï»¿/*
+ * @brief DirectInputã®ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©
  * @author Sekino
  */
 #pragma once
@@ -13,11 +13,11 @@ constexpr int DI_PUSH_NUM = 128;
 
 class DirectInputPad : public PadBase {
 private:
-	// ƒRƒ“ƒgƒ[ƒ‰(XInput)‚Ì“ü—Íó‹µ
+	// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©(XInput)ã®å…¥åŠ›çŠ¶æ³
 	DINPUT_JOYSTATE currentPadState{};
 	DINPUT_JOYSTATE prevPadState{};
 
-	int padType;	// ƒRƒ“ƒgƒ[ƒ‰[‚Ìí—Ş(Switch‚Æ‚©XBox‚Æ‚©)
+	int padType;	// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã®ç¨®é¡(Switchã¨ã‹XBoxã¨ã‹)
 
 private:
 	void Start();
@@ -33,17 +33,17 @@ public:
 #pragma region Pad
 
 	/**
-	  ‰Ÿ‚³‚ê‚Ä‚¢‚é‚©
+	  æŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹
 	  XINPUT_BUTTON_##
    */
 	bool IsPad(int _pad) const override;
 	/**
-	  ‰Ÿ‚³‚ê‚½‚©
+	  æŠ¼ã•ã‚ŒãŸã‹
 	  MOUSE_BUTTON_##
 	*/
 	bool IsPadDown(int _pad) const override;
 	/**
-	  —£‚µ‚½‚©
+	  é›¢ã—ãŸã‹
 	  MOUSE_BUTTON_##
 	*/
 	inline bool IsPadUp(int _pad) const override;

@@ -1,5 +1,5 @@
-/*
- * @brief カメラの動きの基底
+﻿/*
+ * @brief 繧ｫ繝｡繝ｩ縺ｮ蜍輔″縺ｮ蝓ｺ蠎・
  * @author Sekino
  */
 #pragma once

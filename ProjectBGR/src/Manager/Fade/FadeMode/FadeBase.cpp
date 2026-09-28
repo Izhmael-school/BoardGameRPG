@@ -1,10 +1,10 @@
-#include "FadeBase.h"
+﻿#include "FadeBase.h"
 #include "DxLib.h"
 
 void FadeBase::Update(float _t) {
 	if (currentState == FadeNone)return;
 
-	// アルファの増減
+	// 繧｢繝ｫ繝輔ぃ縺ｮ蠅玲ｸ・
 	alpha += (BLEND_MAX * _t / time) * static_cast<int>(currentState);
 
 	switch (currentState) {
@@ -23,10 +23,10 @@ void FadeBase::Update(float _t) {
 
 void FadeBase::Render() {
 
-	// 描画をアルファモードにする
+	// 謠冗判繧偵い繝ｫ繝輔ぃ繝｢繝ｼ繝峨↓縺吶ｋ
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)alpha);
 	DrawFillBox(0, 0, 1920, 1080, color);
-	// 戻す
+	// 謌ｻ縺・
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, -1);
 }
 

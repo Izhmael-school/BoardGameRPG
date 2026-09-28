@@ -1,4 +1,4 @@
-#include "FadeManager.h"
+﻿#include "FadeManager.h"
 
 FadeManager::FadeManager() 
 { Start(); }
@@ -9,16 +9,16 @@ void FadeManager::Start() {
 }
 
 void FadeManager::Update(float _t) {
-	// フェードが無ければ帰る
+	// 繝輔ぉ繝ｼ繝峨′辟｡縺代ｌ縺ｰ蟶ｰ繧・
 	if (!currentFade) return;
 
-	// フェードの更新
+	// 繝輔ぉ繝ｼ繝峨・譖ｴ譁ｰ
 	currentFade->Update(_t);
 
 	prevFadeState = currentFadeState;
 	currentFadeState = currentFade->GetCurrentState();
 
-	// フェードインが終わったら終了宣言
+	// 繝輔ぉ繝ｼ繝峨う繝ｳ縺檎ｵゅｏ縺｣縺溘ｉ邨ゆｺ・ｮ｣險
 	if (currentFade->GetCurrentState() == FadeNone)
 		FadeEnd();
 }

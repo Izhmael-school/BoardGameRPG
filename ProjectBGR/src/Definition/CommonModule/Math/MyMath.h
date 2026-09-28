@@ -1,5 +1,5 @@
-/*
- * @brief ŒvZŠÖ”‚ÌŠñ‚¹W‚ß
+ï»¿/*
+ * @brief è¨ˆç®—é–¢æ•°ã®å¯„ã›é›†ã‚
  * @author Sekino
  */
 #pragma once
@@ -9,18 +9,28 @@
 class MyMath {
 public:
 	/*
-	 * @brief ŒÊ“x–@‚©‚ç“x”–@
+	 * @brief å¼§åº¦æ³•ã‹ã‚‰åº¦æ•°æ³•
 	 */
 	static float Rad2Deg(float _degree);
 
 	/*
-	 * @brief “x”–@‚©‚çŒÊ“x–@
+	 * @brief åº¦æ•°æ³•ã‹ã‚‰å¼§åº¦æ³•
 	 */
 	static float Deg2Rad(float _radian);
 
 	/*
-	 * @brief ®”‚Ì—”
+	 * @brief æ•´æ•°ã®ä¹±æ•°
 	 */
 	static int Random(int min, int max);
+
+	/*
+	 * @brief å¤§ãã„ã»ã†ã‚’ã¨ã‚‹
+	 */
+	static int Max(int _v1, int _v2);
+
+	/*
+	 * @brief å°ã•ã„ã»ã†ã‚’ã¨ã‚‹
+	 */
+	static int Min(int _v1, int _v2);
 };
 #endif

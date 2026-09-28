@@ -1,4 +1,4 @@
-#include "GameObjectManager.h"
+﻿#include "GameObjectManager.h"
 
 GameObjectManager::GameObjectManager(ModelResourceManager* _modelResourceManager)
 	:generator() 
@@ -8,12 +8,21 @@ GameObjectManager::GameObjectManager(ModelResourceManager* _modelResourceManager
 }
 
 void GameObjectManager::UnuseObject(GameObjectPtr _gameObject) {
-	// 型からIDを作る
+	// 蝙九°繧迂D繧剃ｽ懊ｋ
 	std::type_index classID = _gameObject->GetClassID();
-	// 後処理
+	// 蠕悟・逅・
 	_gameObject->Cleanup();
-	// 配列に入れる
+	// 驟榊・縺ｫ蜈･繧後ｋ
 	objectPool[classID].push_back(std::move(_gameObject));
+}
+
+GameObject* GameObjectManager::Find(const std::string& _name) {
+	for (auto& obj : useObject) {
+		if (obj->GetName() != _name) continue;
+
+		return obj.get();
+	}
+	return nullptr;
 }
 
 void GameObjectManager::Update(float _t) {

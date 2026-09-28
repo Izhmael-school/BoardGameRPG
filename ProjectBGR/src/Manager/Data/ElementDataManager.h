@@ -1,5 +1,5 @@
-/*
- * @brief アイテム、魔法、装備の情報を管理する
+﻿/*
+ * @brief 繧｢繧､繝・Β縲・ｭ疲ｳ輔∬｣・ｙ縺ｮ諠・ｱ繧堤ｮ｡逅・☆繧・
  */
 
 #pragma once
@@ -36,9 +36,9 @@ struct EquipData {
 
 class ElementDataManager : public ManagerBase, public Singleton<ElementDataManager> {
 private:
-	json itemData;  // アイテムのデータ
-	json magicData; // 魔法のデータ
-	json equipData; // 装備のデータ
+	json itemData;  // 繧｢繧､繝・Β縺ｮ繝・・繧ｿ
+	json magicData; // 鬲疲ｳ輔・繝・・繧ｿ
+	json equipData; // 陬・ｙ縺ｮ繝・・繧ｿ
 
 public:
 	ElementDataManager();
@@ -46,24 +46,30 @@ public:
 
 public:
 	/*
-	 * @brief アイテムのデータを読み込む
+	 * @brief 繧｢繧､繝・Β縺ｮ繝・・繧ｿ繧定ｪｭ縺ｿ霎ｼ繧
 	 */
 	void LoadElementData();
 
 	/*
-	 * @brief アイテムのデータを取得する
+	 * @brief 繧｢繧､繝・Β縺ｮ繝・・繧ｿ繧貞叙蠕励☆繧・
 	 */
 	ItemData GetItemData(int _id);
 
+	int GetItemDataNum() const { return itemData.size(); }
+
 	/*
-	 * @brief 魔法のデータを取得する
+	 * @brief 鬲疲ｳ輔・繝・・繧ｿ繧貞叙蠕励☆繧・
 	 */
 	MagicData GetMagicData(int _id);
 
+	int GetMagicDataNum() const { return magicData.size(); }
+
 	/*
-	 * @brief 装備のデータを取得する
+	 * @brief 陬・ｙ縺ｮ繝・・繧ｿ繧貞叙蠕励☆繧・
 	 */
 	EquipData GetEquipData(int _id);
+
+	int GetEquipDataNum() const { return equipData.size(); }
 };
 
 #endif // !_ELEMENTDATAMANAGER_H_

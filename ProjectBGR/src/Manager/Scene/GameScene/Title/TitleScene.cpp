@@ -1,4 +1,4 @@
-#include "TitleScene.h"
+﻿#include "TitleScene.h"
 #include <DxLib.h>
 
 TitleScene::TitleScene(){
@@ -21,13 +21,13 @@ void TitleScene::Update(float _t) {
 
 void TitleScene::Render() {
 	DrawString(940, 600, "Start", 0xffff00);
-#if _DEBUG 線
+#if _DEBUG 邱・
 
-	// オブジェクトの位置関係がわかるように地面にラインを描画する
+	// 繧ｪ繝悶ず繧ｧ繧ｯ繝医・菴咲ｽｮ髢｢菫ゅ′繧上°繧九ｈ縺・↓蝨ｰ髱｢縺ｫ繝ｩ繧､繝ｳ繧呈緒逕ｻ縺吶ｋ
 	{
 		VECTOR pos1, pos2;
 
-		// XZ平面 100.0f毎に1本ライン引き
+		// XZ蟷ｳ髱｢ 100.0f豈弱↓1譛ｬ繝ｩ繧､繝ｳ蠑輔″
 		{
 			pos1 = VGet(-5000.0f, 0, -5000.0f);
 			pos2 = VGet(-5000.0f, 0, 5000.0f);
@@ -49,24 +49,24 @@ void TitleScene::Render() {
 			}
 		}
 
-		// X軸
+		// X霆ｸ
 		{
 			pos1 = VGet(0,0,0);
-			pos2 = VScale(VGet(1,0,0), 5000);	// VRight * 5000 をしてる
+			pos2 = VScale(VGet(1,0,0), 5000);	// VRight * 5000 繧偵＠縺ｦ繧・
 			DrawLine3D(pos1, pos2, 0xff0000);
 		}
 
-		// Y軸
+		// Y霆ｸ
 		{
 			pos1 = VGet(0,0,0);
-			pos2 = VScale(VGet(0,1,0), 5000);	    // VUp * 5000 をしてる
+			pos2 = VScale(VGet(0,1,0), 5000);	    // VUp * 5000 繧偵＠縺ｦ繧・
 			DrawLine3D(pos1, pos2, 0x00ff00);
 		}
 
-		// Z軸
+		// Z霆ｸ
 		{
 			pos1 = VGet(0,0,0);
-			pos2 = VScale(VGet(0,0,1), 5000);	// VRight * 5000 をしてる
+			pos2 = VScale(VGet(0,0,1), 5000);	// VRight * 5000 繧偵＠縺ｦ繧・
 			DrawLine3D(pos1, pos2, 0x0000ff);
 		}
 	}

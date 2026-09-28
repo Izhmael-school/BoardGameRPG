@@ -1,5 +1,5 @@
-/*
- * @brief ŠÔŠÇ—ƒNƒ‰ƒX
+ï»¿/*
+ * @brief æ™‚é–“ç®¡ç†ã‚¯ãƒ©ã‚¹
  * @author Sekino
  */
 
@@ -12,14 +12,14 @@
 
 class TimeManager : public Singleton<TimeManager> ,public ManagerBase{
 private:
-	// ‰Šú‰»ˆ—
+	// åˆæœŸåŒ–å‡¦ç†
 	void Start() override;
 public:
 	TimeManager();
 	~TimeManager() = default;
-	// XVˆ—
+	// æ›´æ–°å‡¦ç†
 	void Update(float _t) override;
-	// ŠÔ‚Ìæ“¾
+	// æ™‚é–“ã®å–å¾—
 	float GetDeltaTime() const { return deltaTime; }
 
 private:

@@ -1,5 +1,5 @@
-/*
- * @brief ƒRƒ“ƒgƒ[ƒ‰[‚ÌŠî’ê
+ï»¿/*
+ * @brief ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã®åŸºåº•
  * @author Sekino
  */
 #pragma once
@@ -11,25 +11,25 @@
 constexpr float DEADZONE = 0.15f;
 class PadBase {
 protected:
-	// ƒ|[ƒg”Ô†
+	// ãƒãƒ¼ãƒˆç•ªå·
 	int connectIndex;
-	// Ú‘±‚³‚ê‚Ä‚é‚©
+	// æ¥ç¶šã•ã‚Œã¦ã‚‹ã‹
 	bool isConnect;
 
-	// ƒXƒeƒBƒbƒN‚ÌˆÊ’u
+	// ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®ä½ç½®
 	float lx, ly, rx, ry;
-	// ƒgƒŠƒK[
+	// ãƒˆãƒªã‚¬ãƒ¼
 	float lt, rt;
 
 protected:
-	// ƒXƒeƒBƒbƒN‚Ì³‹K‰»
+	// ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®æ­£è¦åŒ–
 	virtual float StickNorm(float _v);
 
 public:
 	PadBase(int _connectIndex);
-	// XVˆ—
+	// æ›´æ–°å‡¦ç†
 	virtual void Update() = 0;
-	// Ú‘±‚³‚ê‚Ä‚¢‚é‚©
+	// æ¥ç¶šã•ã‚Œã¦ã„ã‚‹ã‹
 	bool IsConnect() const { return isConnect; }
 
 #pragma region Stick
@@ -45,17 +45,17 @@ public:
 #pragma region Pad
 
 	/**
-	  ‰Ÿ‚³‚ê‚Ä‚¢‚é‚©
+	  æŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹
 	  XINPUT_BUTTON_##
    */
 	virtual bool IsPad(int _pad) const = 0;
 	/**
-	  ‰Ÿ‚³‚ê‚½‚©
+	  æŠ¼ã•ã‚ŒãŸã‹
 	  MOUSE_BUTTON_##
 	*/
 	virtual bool IsPadDown(int _pad) const = 0;
 	/**
-	  —£‚µ‚½‚©
+	  é›¢ã—ãŸã‹
 	  MOUSE_BUTTON_##
 	*/
 	virtual bool IsPadUp(int _pad) const = 0;

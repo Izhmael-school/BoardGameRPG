@@ -1,5 +1,5 @@
-/*
- * @brief オーディオのインスタンスを管理するクラス
+﻿/*
+ * @brief 繧ｪ繝ｼ繝・ぅ繧ｪ縺ｮ繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ繧堤ｮ｡逅・☆繧九け繝ｩ繧ｹ
  * @author Sekino
  */
 #pragma once
@@ -12,39 +12,39 @@
 
 class AudioInstance : public InstanceBase {
 private:
-	int playHandle;	// リソースが持っているハンドル
-	float volume;	// 音量
-	float distance;	// 3D音源の距離
-	bool isLoop;	// ループ再生するか
-	bool is3D;		// 3D音源かどうか
+	int playHandle;	// 繝ｪ繧ｽ繝ｼ繧ｹ縺梧戟縺｣縺ｦ縺・ｋ繝上Φ繝峨Ν
+	float volume;	// 髻ｳ驥・
+	float distance;	// 3D髻ｳ貅舌・霍晞屬
+	bool isLoop;	// 繝ｫ繝ｼ繝怜・逕溘☆繧九°
+	bool is3D;		// 3D髻ｳ貅舌°縺ｩ縺・°
 
 public:
 	AudioInstance(AudioResourcePtr _audioResource, float _volume = 255.0f, bool _isLoop = false, float _distance = 10.0f);
 	~AudioInstance();
 
 	/*
-	 * @brief 更新
+	 * @brief 譖ｴ譁ｰ
 	 */
 	void Update(float _t) override;
 
 	/*
-	 * @brief 描画
+	 * @brief 謠冗判
 	 */
 	void Render() override;
 
 	/*
-	 * @brief 再生
-	 * @param _pos 再生する座標(is3D音源の場合のみ使用)
+	 * @brief 蜀咲函
+	 * @param _pos 蜀咲函縺吶ｋ蠎ｧ讓・is3D髻ｳ貅舌・蝣ｴ蜷医・縺ｿ菴ｿ逕ｨ)
 	 */
 	bool Play(Vector3 _pos = VZero);
 
 	/*
-	 * @brief 停止
+	 * @brief 蛛懈ｭ｢
 	 */
 	void Stop();
 
 	/*
-	 * @brief 再生が終わってるか
+	 * @brief 蜀咲函縺檎ｵゅｏ縺｣縺ｦ繧九°
 	 */
 	const bool IsAudioEnd() const;
 

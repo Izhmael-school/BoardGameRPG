@@ -1,6 +1,6 @@
-/*
- * @brief DXライブラリを使って読み込むリソース基底クラス
- * @brief 1ファイルにつき1インスタンス
+﻿/*
+ * @brief DX繝ｩ繧､繝悶Λ繝ｪ繧剃ｽｿ縺｣縺ｦ隱ｭ縺ｿ霎ｼ繧繝ｪ繧ｽ繝ｼ繧ｹ蝓ｺ蠎輔け繝ｩ繧ｹ
+ * @brief 1繝輔ぃ繧､繝ｫ縺ｫ縺､縺・繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ
  * @author Sekino
  */
 
@@ -12,11 +12,11 @@
 
 class ResourceBase {
 protected:
-	// 名前
+	// 蜷榊燕
 	std::string name;
-	// ファイルパス
+	// 繝輔ぃ繧､繝ｫ繝代せ
 	std::string path;
-	// 読み込んだハンドル
+	// 隱ｭ縺ｿ霎ｼ繧薙□繝上Φ繝峨Ν
 	int loadHandle;
 
 public:
@@ -24,17 +24,17 @@ public:
 	virtual ~ResourceBase() = default;
 
 	/*
-	 * @brief 読み込み
+	 * @brief 隱ｭ縺ｿ霎ｼ縺ｿ
 	 */
 	virtual bool Load() = 0;
 
 	/*
-	 * @brief 読み込めたか
+	 * @brief 隱ｭ縺ｿ霎ｼ繧√◆縺・
 	 */
 	bool IsLoaded() const { return loadHandle != -1; }
 
 	/*
-	 * @brief ハンドルの取得
+	 * @brief 繝上Φ繝峨Ν縺ｮ蜿門ｾ・
 	 */
 	int GetHandle() const { return loadHandle; }
 
@@ -42,10 +42,10 @@ public:
 	const std::string GetPath() const { return path; }
 
 public:
-	// コピー禁止
+	// 繧ｳ繝斐・遖∵ｭ｢
 	ResourceBase(const ResourceBase&) = delete;
 	ResourceBase& operator = (const ResourceBase&) = delete;
-	// 移動禁止
+	// 遘ｻ蜍慕ｦ∵ｭ｢
 	ResourceBase(ResourceBase&&) = delete;
 	ResourceBase& operator = (ResourceBase&&) = delete;
 

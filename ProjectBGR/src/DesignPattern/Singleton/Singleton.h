@@ -1,5 +1,5 @@
-/*
- * @brief シングルトン
+﻿/*
+ * @brief シングルトンクラス
  * @author Sekino
  */
 #pragma once
@@ -11,7 +11,7 @@ class Singleton {
 public:
 
 	/// <summary>
-	/// インスタンスの取得
+	/// 参照
 	/// </summary>
 	/// <returns></returns>
 	inline static T& GetInstance() {
@@ -19,7 +19,7 @@ public:
 		return instance;
 	}
 
-	// 複製・代入の禁止
+	// コピーの制限
 	Singleton(const Singleton&) = delete;
 	Singleton& operator=(const Singleton&) = delete;
 

@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * @file InputManager.cpp
  * @author Sekino
  */
@@ -8,6 +8,7 @@
 #include "Pad/PadBase.h"
 #include "DxLib.h"
 #include <imgui.h>
+#include "UI/Input/UIInput.h"
 
 InputManager::InputManager()
 	:currentKeyState{}
@@ -28,51 +29,46 @@ void InputManager::Start() {
 }
 
 void InputManager::Update(float _t) {
-	// ƒL[‚ÌXV
+	// ã‚­ãƒ¼ã®æ›´æ–°
 	memcpy_s(prevKeyState, KEY_NUM, currentKeyState, KEY_NUM);
 	GetHitKeyStateAll(currentKeyState);
 
-	// ƒ}ƒEƒX‚ÌXV
+	// ãƒã‚¦ã‚¹ã®æ›´æ–°
 	prevMouseState = currentMouseState;
 	currentMouseState = GetMouseInput();
 
-	// ƒRƒ“ƒgƒ[ƒ‰‚ÌXV
+	// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã®æ›´æ–°
 	UpdatePad();
 
-	// ƒ}ƒEƒXƒ|ƒCƒ“ƒ^[‚ÌXV
+	// ãƒã‚¦ã‚¹ãƒã‚¤ãƒ³ã‚¿ãƒ¼ã®æ›´æ–°
 	UpdateMousePointer();
-
-	ImGui::Begin("MousePointerMove");
-	Vector3 move = GetMouseMove();
-	ImGui::Text("x:%03f | y:%03f", move.x, move.y);
-	ImGui::End();
 
 }
 
 void InputManager::UpdatePad() {
 	for (int i = 0; i < MAX_PORT_NUM; i++) {
-		// ƒpƒbƒh‚ª‘¶İ‚µ‚È‚¢ê‡‚Íì¬
+		// ãƒ‘ãƒƒãƒ‰ãŒå­˜åœ¨ã—ãªã„å ´åˆã¯ä½œæˆ
 		if (!pads[i]) {
 			int index = DX_INPUT_PAD1 + i;
 			XINPUT_STATE xi;
-			// -1‚¶‚á‚È‚¯‚ê‚ÎXInput‚Æ‚µ‚Äˆµ‚¤
+			// -1ã˜ã‚ƒãªã‘ã‚Œã°XInputã¨ã—ã¦æ‰±ã†
 			int result = GetJoypadXInputState(index, &xi);
 			if (result != -1)
 				pads[i] = std::make_unique<XInputPad>(index);
 			else {
 				DINPUT_JOYSTATE di;
 				result = GetJoypadDirectInputState(index, &di);
-				// -1‚¶‚á‚È‚¯‚ê‚ÎDirectInput‚Æ‚µ‚Äˆµ‚¤
+				// -1ã˜ã‚ƒãªã‘ã‚Œã°DirectInputã¨ã—ã¦æ‰±ã†
 				if(result != -1)
 					pads[i] = std::make_unique<DirectInputPad>(index);
 			}
 		}
 
-		// ƒpƒbƒh‚ğXV
+		// ãƒ‘ãƒƒãƒ‰ã‚’æ›´æ–°
 		if (pads[i]) {
 			pads[i]->Update();
 
-			// Ú‘±‚µ‚Ä‚¢‚È‚¢ê‡‚ÍƒŠƒZƒbƒg
+			// æ¥ç¶šã—ã¦ã„ãªã„å ´åˆã¯ãƒªã‚»ãƒƒãƒˆ
 			if (!pads[i]->IsConnect()) {
 				pads[i].reset();
 			}
@@ -81,33 +77,33 @@ void InputManager::UpdatePad() {
 }
 
 void InputManager::UpdateMousePointer() {
-	// ƒ}ƒEƒX‚Ì•\¦”ñ•\¦Ø‚è‘Ö‚¦
+	// ãƒã‚¦ã‚¹ã®è¡¨ç¤ºéè¡¨ç¤ºåˆ‡ã‚Šæ›¿ãˆ
 	SetMouseDispFlag(mouseVisible);
 
-	// 1ƒtƒŒ[ƒ€‘O‚Ìƒ}ƒEƒX‚ÌˆÊ’u‚ğ•Û‘¶
+	// 1ãƒ•ãƒ¬ãƒ¼ãƒ å‰ã®ãƒã‚¦ã‚¹ã®ä½ç½®ã‚’ä¿å­˜
 	prevMousePosX = nowMousePosX;
 	prevMousePosY = nowMousePosY;
-	// Œ»İ‚Ìƒ}ƒEƒX‚ÌˆÊ’u‚ğ•Û‘¶
+	// ç¾åœ¨ã®ãƒã‚¦ã‚¹ã®ä½ç½®ã‚’ä¿å­˜
 	GetMousePoint(&nowMousePosX, &nowMousePosY);
-	// ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ª”ñ•\¦‚È‚çƒJ[ƒ\ƒ‹‚Í’†‰›ŒÅ’è
+	// ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ãŒéè¡¨ç¤ºãªã‚‰ã‚«ãƒ¼ã‚½ãƒ«ã¯ä¸­å¤®å›ºå®š
 	if (!mouseVisible) {
-		// 1ƒtƒŒ[ƒ€–Ú‚ÍƒXƒLƒbƒv
+		// 1ãƒ•ãƒ¬ãƒ¼ãƒ ç›®ã¯ã‚¹ã‚­ãƒƒãƒ—
 		if (mouseMoveSkip) {
 			mouseMoveSkip = false;
 		}
 		else {
-			// ‰æ–Ê’†‰›
+			// ç”»é¢ä¸­å¤®
 			int windowWidthCenter = 1920 / 2;
 			int windowHeightCenter = 1080 / 2;
-			// ƒ}ƒEƒX‚ğ‰æ–Ê’†‰›‚ÉŒÅ’è
+			// ãƒã‚¦ã‚¹ã‚’ç”»é¢ä¸­å¤®ã«å›ºå®š
 			SetMousePoint(windowWidthCenter, windowHeightCenter);
-			// 1ƒtƒŒ[ƒ€‘OˆÊ’u‚Í‰æ–Ê’†‰›‚Æ‚·‚é
+			// 1ãƒ•ãƒ¬ãƒ¼ãƒ å‰ä½ç½®ã¯ç”»é¢ä¸­å¤®ã¨ã™ã‚‹
 			prevMousePosX = windowWidthCenter;
 			prevMousePosY = windowHeightCenter;
 		}
 	}
 
-	// ’¼‘O‚Ì“ü—Í‚ªƒ}ƒEƒX‚©‚Ç‚¤‚©ŠÇ—
+	// ç›´å‰ã®å…¥åŠ›ãŒãƒã‚¦ã‚¹ã‹ã©ã†ã‹ç®¡ç†
 	for (auto key : currentKeyState) {
 		if (key == 1) {
 			prevInputMouse = false;
@@ -122,15 +118,15 @@ void InputManager::UpdateMousePointer() {
 	}
 }
 
-Vector3 InputManager::GetMouseMove() const {
-	Vector3 move = VZero;
+Vector2 InputManager::GetMouseMove() const {
+	Vector2 move = VZero_2;
 	move.x = prevMousePosX - nowMousePosX;
 	move.y = prevMousePosY - nowMousePosY;
 	return move;
 }
 
-Vector3 InputManager::GetMousePos() const {
-	Vector3 pos = VZero;
+Vector2 InputManager::GetMousePos() const {
+	Vector2 pos = VZero_2;
 	if (!mouseVisible) {
 		pos.x = -1;
 		pos.y = -1;
@@ -181,4 +177,27 @@ int InputManager::ExchangeXInputButton(int _XINPUT, int _padNum) {
 	}
 
 	return buttonNum;
+}
+
+void InputManager::UpdateUIInput(UIInput& _input) {
+	// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®å‡¦ç†
+	for (int i = 0x01, max = 0xDC + 1; i < max;i++) {
+		for (auto& k : _input.key) {
+			if (k.first != i) continue;
+
+			k.second.press = { currentKeyState[i],prevKeyState[i] };
+		}
+	}
+
+	// ãƒã‚¦ã‚¹ã®å‡¦ç†
+	for (int i = 0x01, max = 0x04 + 1; i < max; i++) {
+		for (auto& m : _input.mouse) {
+			if (m.first != i) continue;
+
+			m.second.press = { currentMouseState & i,prevMouseState & i };
+		}
+	}
+
+	// ãƒã‚¦ã‚¹ã®åº§æ¨™
+	_input.mousePos = GetMousePos();
 }

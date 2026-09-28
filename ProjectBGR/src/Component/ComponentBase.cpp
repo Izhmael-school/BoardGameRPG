@@ -1,4 +1,4 @@
-#include "ComponentBase.h"
+﻿#include "ComponentBase.h"
 
 ComponentBase::ComponentBase(GameObject* _attachObject) 
 	:attachObject(_attachObject)

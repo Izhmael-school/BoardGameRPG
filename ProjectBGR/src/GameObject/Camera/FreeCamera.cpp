@@ -1,4 +1,4 @@
-#include "FreeCamera.h"
+﻿#include "FreeCamera.h"
 #include "Component/Camera/Camera.h"
 
 FreeCamera::FreeCamera(int _modelHandle, const std::string& _name, Vector3 _pos, Vector3 _rot, Tag _tag)

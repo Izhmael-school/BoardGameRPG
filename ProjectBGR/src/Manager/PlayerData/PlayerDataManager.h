@@ -1,5 +1,5 @@
-/*
- * @brief ゲーム中のプレイヤーのデータを管理する
+﻿/*
+ * @brief 繧ｲ繝ｼ繝荳ｭ縺ｮ繝励Ξ繧､繝､繝ｼ縺ｮ繝・・繧ｿ繧堤ｮ｡逅・☆繧・
  * @author Sekino
  */
 #pragma once
@@ -22,7 +22,7 @@ public:
 
 public:
 	/*
-	 * @brief プレイヤーデータの作製
+	 * @brief 繝励Ξ繧､繝､繝ｼ繝・・繧ｿ縺ｮ菴懆｣ｽ
 	 */
 	void CreatePlayer();
 
@@ -31,7 +31,7 @@ public:
 	int GetPlayerNum();
 
 	/*
-	 * @brief 座標指定でプレイヤーを取得
+	 * @brief 蠎ｧ讓呎欠螳壹〒繝励Ξ繧､繝､繝ｼ繧貞叙蠕・
 	 */
 	std::vector<PlayerData*> GetPlayerDataToMapPos(int _x, int _y);
 };

@@ -1,4 +1,4 @@
-#include "Matrix.h"
+﻿#include "Matrix.h"
 
 Matrix::Matrix(float _0x0, float _0x1, float _0x2, float _0x3, float _1x0, float _1x1, float _1x2, float _1x3, float _2x0, float _2x1, float _2x2, float _2x3, float _3x0, float _3x1, float _3x2, float _3x3)
 	:m() {
@@ -30,8 +30,8 @@ Matrix Matrix::GetRotationX(float xRadian) {
 	mat.m[2][2] = c;
 
 	//| 1     0     0     0 |
-	//| 0   cosθ  sinθ  0 |
-	//| 0  -sinθ  cosθ  0 |
+	//| 0   cosﾎｸ  sinﾎｸ  0 |
+	//| 0  -sinﾎｸ  cosﾎｸ  0 |
 	//| 0     0     0     1 |
 
 	return mat;
@@ -48,9 +48,9 @@ Matrix Matrix::GetRotationY(float yRadian) {
 	mat.m[2][0] = s;
 	mat.m[2][2] = c;
 
-	//| cosθ  0  -sinθ  0 |
+	//| cosﾎｸ  0  -sinﾎｸ  0 |
 	//|   0    1    0     0 |
-	//| sinθ  0   cosθ  0 |
+	//| sinﾎｸ  0   cosﾎｸ  0 |
 	//|   0    0    0     1 |
 
 	return mat;
@@ -67,8 +67,8 @@ Matrix Matrix::GetRotationZ(float zRadian) {
 	mat.m[1][0] = -s;
 	mat.m[1][1] = c;
 
-	//| cosθ  sinθ  0   0 |
-	//|-sinθ  cosθ  0   0 |
+	//| cosﾎｸ  sinﾎｸ  0   0 |
+	//|-sinﾎｸ  cosﾎｸ  0   0 |
 	//|   0     0     1   0 |
 	//|   0     0     0   1 |
 

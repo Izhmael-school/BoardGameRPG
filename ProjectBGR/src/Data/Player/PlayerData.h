@@ -1,48 +1,20 @@
-/*
+﻿/*
  * @brief プレイヤーデータ
  * @author Sekino
  */
 
-#ifndef _PLAYERDATA_H_
+#ifndef _PLAYERDATA_H_ 
 #define _PLAYERDATA_H_
-#pragma once
 
-#include <string>
-#include <vector>
-#include "Vector/Vector3.h"
+#include "../CharacterData.h"
 
-class PlayerData{
+
+class PlayerData : public CharacterData {
 private:
-	// 名前
-	std::string playerName;
-	// レベル
-	int level;
-	// 経験値
-	int currentExp;
 	// レベルアップに必要な経験値
-	int levelUpNeedExp;
-	// 最大HP
-	int maxHp;
-	// 現在のHP
-	int currentHp;
-	// 攻撃力
-	int atk;
-	// 防御力
-	int def;
-	// 素早さ
-	int spd;
-	// 魔法攻撃力
-	int mag;
-	// 運
-	int luk;
-	// 生命力
-	int vit;
-	// お金
-	int money;
+	int levelUpNeedExp = 100;
 	// 色
 	unsigned int color;
-	// マップ上の位置
-	Vector3 mapPosition;
 	// 持てるアイテムの数
 	int maxItems = 10;
 	// 持てる魔法の数
@@ -51,67 +23,42 @@ private:
 	int oneTurnItemCount = 1;
 	// 1ターンに使えるアイテムの数
 	int oneTurnMagicCount = 1;
+	// ターンに使ったアイテムの数
+	int usedItemCount = 0;
+	// ターンに使った魔法の数
+	int usedMagicCount = 0;
 	// 持っているアイテムのリスト
 	std::vector<int> itemList;
 	// 持っている魔法のリスト
 	std::vector<int> magicList;
-	// 装備のリスト
-	std::vector<int> equipList;
-	// プレイヤーの状態異常のリスト
-	std::vector<int> statusList;
+	// コントローラ番号(-1ならキーボード)
+	int controllerNum = -1;
+	// ステ振りの回数
+	int statusPoint = 0;
+	// 動けないターン数
+	int dontMoveTurnNum = 0;
+
 public:
 	PlayerData();
-	~PlayerData();
+	~PlayerData() override;
 
 public:
 	// --- getter / setter ---
-	const std::string& GetPlayerName() const { return playerName; }
-	void SetPlayerName(const std::string& name) { playerName = name; }
-
-	int GetLevel() const { return level; }
-	void SetLevel(int v) { level = v; }
-
-	int GetCurrentExp() const { return currentExp; }
-	void SetCurrentExp(int v) { currentExp = v; }
-
+	bool IsLevelUp() const { return currentExp >= levelUpNeedExp; }
+	bool LevelUp();
 	int GetLevelUpNeedExp() const { return levelUpNeedExp; }
 	void SetLevelUpNeedExp(int v) { levelUpNeedExp = v; }
-
-	int GetMaxHp() const { return maxHp; }
-	void SetMaxHp(int v) { maxHp = v; }
-
-	int GetCurrentHp() const { return currentHp; }
-	void SetCurrentHp(int v) { currentHp = v; }
-
-	int GetAtk() const { return atk; }
-	void SetAtk(int v) { atk = v; }
-
-	int GetDef() const { return def; }
-	void SetDef(int v) { def = v; }
-
-	int GetSpd() const { return spd; }
-	void SetSpd(int v) { spd = v; }
-
-	int GetMag() const { return mag; }
-	void SetMag(int v) { mag = v; }
-
-	int GetLuk() const { return luk; }
-	void SetLuk(int v) { luk = v; }
-
-	int GetVit() const { return vit; }
-	void SetVit(int v) { vit = v; }
-
-	int GetMoney() const { return money; }
-	void SetMoney(int v) { money = v; }
+	
+	int GetStatusPoint() const const { return statusPoint; }
+	void SetStatusPoint(int _v) { statusPoint = _v; }
+	void SubStatusPoint(int _v) { statusPoint -= _v; }
+	void AddStatusPoint(int _v) { statusPoint += _v; }
 
 	unsigned int GetColor() const { return color; }
 	void SetColor(unsigned int v) { color = v; }
 
-	const Vector3& GetMapPosition() const { return mapPosition; }
-	void SetMapPosition(const Vector3& v) { mapPosition = v; }
-	void SetMapPosition(int _x,int _y) { mapPosition.x = _x; mapPosition.y = _y; }
-	void AddMapPosition(const Vector3& v) { mapPosition = Vector3::VAdd(mapPosition, v); }
-	void AddMapPosition(int _x,int _y) { mapPosition.x += _x; mapPosition.y += _y; }
+	int GetControllerNum() const { return controllerNum; }
+	int SetControllerNum(int _controllerNum) { controllerNum = _controllerNum; }
 
 	int GetMaxItems() const { return maxItems; }
 	void SetMaxItems(int v) { maxItems = v; }
@@ -124,11 +71,20 @@ public:
 	int GetOneTurnMagicCount() const { return oneTurnMagicCount; }
 	void SetOneTurnMagicCount(int _v) { oneTurnMagicCount = _v; }
 
+	int GetUsedItemCount() const { return usedItemCount; }
+	void AddUsedItemCount() { usedItemCount++; }
+	void ResetUsedItemCount() { usedItemCount = 0; }
+	int GetUsedMagicCount() const { return usedMagicCount; }
+	void AddUsedMagicCount() { usedMagicCount++; }
+	void ResetUsedMagicCount() { usedMagicCount = 0; }
+
 	const std::vector<int>& GetItemList() const { return itemList; }
 	int GetItemCount() const { return itemList.size(); }
 	void AddItem(int itemId) { itemList.push_back(itemId); }
 	void RemoveItem(int arrayIndex) { itemList.erase(itemList.begin() + arrayIndex); }
 	void ClearItemList() { itemList.clear(); }
+	bool IsUseItem() const { return itemList.size() > 0 && usedItemCount < oneTurnItemCount; }
+	bool IsUseMagic() const { return magicList.size() > 0 && usedMagicCount < oneTurnMagicCount; }
 
 	const std::vector<int>& GetMagicList() const { return magicList; }
 	int GetMagicCount() const { return magicList.size(); }
@@ -136,12 +92,11 @@ public:
 	void RemoveMagic(int arrayIndex) { magicList.erase(magicList.begin() + arrayIndex); }
 	void ClearMagicList() { magicList.clear(); }
 
-	const std::vector<int>& GetEquipList() const { return equipList; }
-	void AddEquip(int equipId) { equipList.push_back(equipId); }
-	void RemoveEquip(int arrayIndex) { equipList.erase(equipList.begin() + arrayIndex); }
-	void ClearEquipList() { equipList.clear(); }
+	int GetDontMoveTurnNum() const { return dontMoveTurnNum; }
+	void SetDontMoveTurnNum(int _v) { dontMoveTurnNum = _v; }
+	void SubDontMoveTurnNum(int _v = 1) { dontMoveTurnNum -= _v; }
+	bool IsMove() const { return dontMoveTurnNum <= 0; }
 
-	const std::vector<int>& GetStatusList() const { return statusList; }
-
+	bool CanBattling() const { return dontMoveTurnNum <= 0; }
 };
 #endif // !_PLAYERDATA_H_

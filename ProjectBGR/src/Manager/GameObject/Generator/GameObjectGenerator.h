@@ -1,5 +1,5 @@
-/*
- * @brief インスタンスを持ったオブジェクトを生成する
+﻿/*
+ * @brief 繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ繧呈戟縺｣縺溘が繝悶ず繧ｧ繧ｯ繝医ｒ逕滓・縺吶ｋ
  * @author Sekino
  */
 #pragma once
@@ -26,7 +26,7 @@ public:
 
 public:
 	/*
-	 * @brief GameObjectを継承したオブジェクトの生成
+	 * @brief GameObject繧堤ｶ呎価縺励◆繧ｪ繝悶ず繧ｧ繧ｯ繝医・逕滓・
 	 */
 	template<typename T, typename... Args>
 	std::unique_ptr<T> CreateGameObject(std::string _modelName = "", Args&&... args);
@@ -35,18 +35,18 @@ public:
 #include "Manager/Resource/Model/ModelResourceManager.h" 
 template<typename T, typename... Args>
 inline std::unique_ptr<T> GameObjectGenerator::CreateGameObject(std::string _modelName,Args&&... args ) {
-	// GameObjectを継承していなければ帰る
+	// GameObject繧堤ｶ呎価縺励※縺・↑縺代ｌ縺ｰ蟶ｰ繧・
 	if (!std::is_base_of<GameObject, T>::value)
 		return nullptr;
 
 	int modelHandle = -1;
 
 	if (!_modelName.empty()) {
-		// モデルハンドルの取得
+		// 繝｢繝・Ν繝上Φ繝峨Ν縺ｮ蜿門ｾ・
 		modelHandle = modelResourceManager.GetDupModelHandle(_modelName);
 	}
 
-	// 生成
+	// 逕滓・
 	std::unique_ptr<T> object = std::make_unique<T>(modelHandle,std::forward<Args>(args)...);
 
 	return std::move(object);

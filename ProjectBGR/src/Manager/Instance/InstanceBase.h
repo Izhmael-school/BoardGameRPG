@@ -1,5 +1,5 @@
-/*
- * @brief 使用中のインスタンスを管理する基底クラス
+﻿/*
+ * @brief 菴ｿ逕ｨ荳ｭ縺ｮ繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ繧堤ｮ｡逅・☆繧句渕蠎輔け繝ｩ繧ｹ
  * @author Sekino
  */
 #pragma once
@@ -15,37 +15,37 @@ using ResourcePtr = std::shared_ptr<ResourceBase>;
 
 class InstanceBase : public GameObject {
 protected:
-	ResourcePtr resource;	// 素材
-	bool wantDelete;	// 削除してほしいか
+	ResourcePtr resource;	// 邏譚・
+	bool wantDelete;	// 蜑企勁縺励※縺ｻ縺励＞縺・
 
 public:
 	InstanceBase(ResourcePtr _resource);
 	~InstanceBase() = default;
 
-	// コピー禁止
+	// 繧ｳ繝斐・遖∵ｭ｢
 	InstanceBase(const InstanceBase&) = delete;
 	InstanceBase& operator=(const InstanceBase&) = delete;
-	// 移動禁止
+	// 遘ｻ蜍慕ｦ∵ｭ｢
 	InstanceBase(InstanceBase&&) = delete;
 	InstanceBase& operator=(InstanceBase&&) = delete;
 
 	/*
-	 * @brief 更新
+	 * @brief 譖ｴ譁ｰ
 	 */
 	virtual void Update(float _t) override = 0;
 
 	/*
-	 * @brief 描画
+	 * @brief 謠冗判
 	 */
 	virtual void Render() override = 0;
 
 	/*
-	 * @brief 削除要請
+	 * @brief 蜑企勁隕∬ｫ・
 	 */
 	inline bool WantDelete() const { return wantDelete; }
 
 	/*
-	 * @brief 削除可否
+	 * @brief 蜑企勁蜿ｯ蜷ｦ
 	 */
 	inline void SetDelete(bool _fact) { wantDelete = _fact; }
 };

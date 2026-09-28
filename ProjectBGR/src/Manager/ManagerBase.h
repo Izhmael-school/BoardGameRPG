@@ -1,5 +1,5 @@
-/*
- * @brief 管理クラスの基底
+﻿/*
+ * @brief 邂｡逅・け繝ｩ繧ｹ縺ｮ蝓ｺ蠎・
  * @author Sekino
  */
 #pragma once
@@ -13,29 +13,29 @@ public:
 
 protected:
 	/*
-	 * @brief 生成時に入る（リソースロード等）
+	 * @brief 逕滓・譎ゅ↓蜈･繧具ｼ医Μ繧ｽ繝ｼ繧ｹ繝ｭ繝ｼ繝臥ｭ会ｼ・
 	 */
 	virtual void Start();
 
 public:
 	
 	/*
-	 * @brief 更新
+	 * @brief 譖ｴ譁ｰ
 	 */
 	virtual void Update(float _t);
 
 	/*
-	 * @brief 描画
+	 * @brief 謠冗判
 	 */
 	virtual void Render();
 
 	/*
-	 * @brief 初期化
+	 * @brief 蛻晄悄蛹・
 	 */
 	virtual void Setup();
 
 	/*
-	 * @brief 後処理
+	 * @brief 蠕悟・逅・
 	 */
 	virtual void Cleanup();
 };

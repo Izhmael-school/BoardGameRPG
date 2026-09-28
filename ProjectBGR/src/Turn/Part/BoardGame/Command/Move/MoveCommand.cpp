@@ -1,8 +1,7 @@
-#include "MoveCommand.h"
+﻿#include "MoveCommand.h"
 #include "Manager/Map/MapManager.h"
 #include "Data/Player/PlayerData.h"
 #include "Manager/Input/InputManager.h"
-#include "Manager/PlayerData/PlayerDataManager.h"
 #include "Definition/CommonModule/Json/MyJson.h"
 #include "DxLib.h"
 #include <string>
@@ -87,7 +86,6 @@ bool MoveCommand::Move() {
 
 	// 進める回数を超えたらターン終了
 	if (currentMoveCount >= canMoveCount) {
-		TileEffect(currentPos);
 		return true;
 	}
 
@@ -150,52 +148,6 @@ void MoveCommand::SearchCanMoveTiles() {
 	canMoveTileList = canMoveList;
 }
 
-void MoveCommand::TileEffect(Vector3 _tilePosition) {
-	int tileId = mapManager->GetMapList()[_tilePosition.x][_tilePosition.y];
-	switch (static_cast<MapTileType>(tileId)) {
-	case MapTileType::Tile_Item:
-		currentPlayerData->AddItem(0);
-		currentPlayerData->AddItem(0);
-		currentPlayerData->AddItem(0);
-		currentPlayerData->AddItem(0);
-		currentPlayerData->AddItem(0);
-		currentPlayerData->AddItem(0);
-		currentPlayerData->AddItem(0);
-		currentPlayerData->AddItem(0);
-		currentPlayerData->AddItem(0);
-		break;
-	case MapTileType::Tile_Magic:
-		currentPlayerData->AddMagic(0);
-		currentPlayerData->AddMagic(0);
-		currentPlayerData->AddMagic(0);
-		currentPlayerData->AddMagic(0);
-		currentPlayerData->AddMagic(0);
-		break;
-	case MapTileType::Tile_ItemShop:
-		break;
-	case MapTileType::Tile_MagicShop:
-		break;
-	case MapTileType::Tile_EquipShop:
-		break;
-	case MapTileType::Tile_Village:
-		break;
-	case MapTileType::Tile_Church:
-		break;
-	case MapTileType::Tile_Empty:
-		// 同じマスにプレイヤーがいれば戦闘に入る
-		auto array = PlayerDataManager::GetInstance().GetPlayerDataToMapPos(_tilePosition.x, _tilePosition.y);
-		if (array.empty()) break;
-
-		std::vector<PlayerData*> canBattlePlayer;
-
-		// バトルできるプレイヤーを分ける
-		for (auto& p : array) {
-			if (currentPlayerData != p)
-				canBattlePlayer.push_back(p);
-		}
-		break;
-	}
-}
 
 bool MoveCommand::Roulette() {
 
@@ -210,6 +162,9 @@ bool MoveCommand::Roulette() {
 }
 
 bool MoveCommand::ConfirmationMove() {
+	// 進める回数まで進み切っていなければ戻る
+	if (canMoveCount - currentMoveCount != 0) return false;
+
 	// 戻る
 	if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_UP))
 		confirmationMove = 0;
@@ -239,6 +194,8 @@ MoveCommandState MoveCommand::Execute() {
 	// 確定したらコマンド選択に戻れないようにする
 	if (isBack && Roulette()) {
 		isBack = false;
+		Vector3 pos = currentPlayerData->GetMapPosition();
+		mapManager->GetCanMoveTile(pos.x, pos.y, canMoveCount);
 		return	commandState = MoveCommand_Move;
 	}
 
@@ -296,6 +253,6 @@ void MoveCommand::Render() {
 	DrawLineBox(offset.x, offset.y, offset2.x, offset2.y, 0xffffff);
 	std::string back = "戻る";
 	std::string stop = "止まる";
-	DrawString(offset.x, offset.y, MyJson::Utf8ToString(back).c_str(), confirmationMove == 0 ? 0xffff00 : 0xffffff);
-	DrawString(offset.x, offset.y + stringSize, MyJson::Utf8ToString(stop).c_str(), confirmationMove == 1 ? 0xffff00 : 0xffffff);
+	DrawString(offset.x, offset.y, back.c_str(), confirmationMove == 0 ? 0xffff00 : 0xffffff);
+	DrawString(offset.x, offset.y + stringSize, stop.c_str(), confirmationMove == 1 ? 0xffff00 : 0xffffff);
 }
