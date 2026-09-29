@@ -230,7 +230,7 @@ void BoardGamePart::BattleCommand() {
 void BoardGamePart::SearchTileCommand() {
 	searchTileCommand.SearchTile();
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_SPACE))
+	if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_B))
 		turnState = TurnState_CommandSelect;
 }
 

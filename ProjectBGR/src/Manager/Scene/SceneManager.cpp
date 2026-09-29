@@ -10,7 +10,7 @@
 SceneManager::~SceneManager() = default;
 
 SceneManager::SceneManager() 
-	: currentSceneType(SceneType::DebugSceneSelect)
+	: currentSceneType(SceneType::MainGame)
 	, nextSceneType(SceneType::Invalid)
 	,isFade(false)
 { Start(); }

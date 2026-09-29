@@ -23,7 +23,7 @@ TurnProcessor::TurnProcessor(MapManager* _mapManager, CharacterDataManager* _cha
 	// バトルの初期化
 	battlePart.Init([this]() {this->TurnEndFunc(); character->DeleteEnemyData(); }, _gameObjectManager);
 	// テスト：ボスをスポーンさせる
-	character->CreateEnemyData(-1, 8, 9);
+	character->CreateEnemyData(999, 8, 9);
 }
 
 TurnProcessor::~TurnProcessor() {

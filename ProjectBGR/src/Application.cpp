@@ -22,6 +22,12 @@ int Application::Init() {
 	// ImGui縺ｮ蛻晄悄蛹・
 	imgui.Init();
 
+#if !_DEBUG
+	ImGuiIO& io = ImGui::GetIO();
+	if (&io)
+		io.IniFilename = NULL;
+#endif
+
 	// 荵ｱ謨ｰ隱ｿ遽
 	std::random_device rd;
 	std::mt19937_64 mt(rd());
@@ -32,6 +38,11 @@ int Application::Init() {
 
 int Application::DxLibInit() {
 #pragma region // DxLib縺ｮ蛻晄悄蛹門・逅・隗ｦ繧九∋縺九ｉ縺・
+#if _DEBUG
+	SetOutApplicationLogValidFlag(TRUE);
+#else
+	SetOutApplicationLogValidFlag(FALSE);
+#endif
 	// 繧ｿ繧､繝医Ν縺ｮ螟画峩
 	SetWindowText("ExHand");
 	// XInput蟇ｾ蠢懊ご繝ｼ繝繝代ャ繝芽ｨｭ螳・
@@ -45,11 +56,6 @@ int Application::DxLibInit() {
 	// 文字コードをUTF-8に変更
 	SetUseCharCodeFormat(DX_CHARCODEFORMAT_UTF8);
 	// 繝ｭ繧ｰ繝輔ぃ繧､繝ｫ繧呈ｮ九＆縺ｪ縺・
-#if _DEBUG
-	SetOutApplicationLogValidFlag(TRUE);
-#else
-	SetOutApplicationLogValidFlag(FALSE);
-#endif
 
 	// 襍ｷ蜍墓凾縺ｮ繧ｦ繧｣繝ｳ繝峨え縺ｮ繝｢繝ｼ繝峨・險ｭ螳・
 #if _DEBUG
