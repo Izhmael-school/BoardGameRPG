@@ -3,14 +3,28 @@
     "spawnArea": [ 0, 0, 100, 100 ],
     "enemyID": 0,
     "enemyName": "テスト君",
-    "atk" : 6,
-    "def" : 6,
-    "mag" : 6,
-    "spd" : 6,
-    "luk" : 6,
+    "atk": 6,
+    "def": 6,
+    "mag": 6,
+    "spd": 6,
+    "luk": 6,
     "vit": 6,
     "money": 100,
     "exp": 20,
-    "dropItemID" : 0
+    "dropItemID": 0
+  },
+  {
+    "spawnArea": [ 0, 0, 100, 100 ],
+    "enemyID": 999,
+    "enemyName": "めっちゃ強いマン",
+    "atk": 666,
+    "def": 666,
+    "mag": 666,
+    "spd": 666,
+    "luk": 666,
+    "vit": 666,
+    "money": 66666,
+    "exp": 66666,
+    "dropItemID": 0
   }
 ]
