@@ -1,0 +1,107 @@
+﻿[
+  // 初期ステータスは合計30
+  {
+    "jobID": 0,
+    "jobName": "Fighter",
+    "level": 1,
+    "atk": 8,
+    "def": 6,
+    "mag": 1,
+    "spd": 5,
+    "luk": 2,
+    "vit": 8,
+    "firstGrowStatusID": 0,
+    "secontGrowStatusID": 5
+  },
+  {
+    "jobID": 1,
+    "jobName": "Wizard",
+    "level": 1,
+    "atk": 1,
+    "def": 2,
+    "mag": 10,
+    "spd": 5,
+    "luk": 4,
+    "vit": 8,
+    "firstGrowStatusID": 2,
+    "secontGrowStatusID": 3
+  },
+  {
+    "jobID": 2,
+    "jobName": "Thief",
+    "level": 1,
+    "atk": 5,
+    "def": 2,
+    "mag": 1,
+    "spd": 10,
+    "luk": 7,
+    "vit": 5,
+    "firstGrowStatusID": 3,
+    "secontGrowStatusID": 4
+  },
+  {
+    "jobID": 3,
+    "jobName": "HeavyFighter",
+    "level": 1,
+    "atk": 6,
+    "def": 10,
+    "mag": 1,
+    "spd": 2,
+    "luk": 3,
+    "vit": 8,
+    "firstGrowStatusID": 1,
+    "secontGrowStatusID": 5
+  },
+  {
+    "jobID": 4,
+    "jobName": "Monk",
+    "level": 1,
+    "atk": 2,
+    "def": 4,
+    "mag": 8,
+    "spd": 4,
+    "luk": 4,
+    "vit": 8,
+    "firstGrowStatusID": 2,
+    "secontGrowStatusID": 1
+  },
+  {
+    "jobID": 5,
+    "jobName": "MagicFencer",
+    "level": 1,
+    "atk": 7,
+    "def": 4,
+    "mag": 7,
+    "spd": 5,
+    "luk": 2,
+    "vit": 5,
+    "firstGrowStatusID": 0,
+    "secontGrowStatusID": 2
+  },
+  {
+    "jobID": 6,
+    "jobName": "Assassin",
+    "level": 1,
+    "atk": 10,
+    "def": 2,
+    "mag": 2,
+    "spd": 9,
+    "luk": 3,
+    "vit": 4,
+    "firstGrowStatusID": 0,
+    "secontGrowStatusID": 3
+  },
+  {
+    "jobID": 7,
+    "jobName": "OrdinaryPeople",
+    "level": 1,
+    "atk": 6,
+    "def": 6,
+    "mag": 6,
+    "spd": 6,
+    "luk": 6,
+    "vit": 6,
+    "firstGrowStatusID": -1,
+    "secontGrowStatusID": -1
+  }
+]
