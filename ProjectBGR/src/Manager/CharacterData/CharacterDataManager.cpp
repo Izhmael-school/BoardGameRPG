@@ -29,7 +29,8 @@ PlayerData* CharacterDataManager::CreatePlayerData(Job _job) {
 	// 最大値の更新に合わせて体力を回復
 	newPlayerData->Heal(newPlayerData->GetMaxHp());
 	// 初期スタート地点にセット
-	newPlayerData->SetMapPosition(3, 9);
+	newPlayerData->SetMapPosition(18, 8);
+	newPlayerData->SetMapPosition(33, 10);
 
 	playerDataArray.emplace_back(std::move(newPlayerData));
 	return playerDataArray.back().get();
@@ -40,13 +41,13 @@ std::vector<CharacterData*> CharacterDataManager::GetCharacterDataToMapPos(int _
 
 	// プレイヤーの捜索
 	for (auto& p : playerDataArray) {
-		Vector3 pos = p->GetMapPosition();
+		Vector2 pos = p->GetMapPosition();
 		if (pos.x == _x && pos.y == _y)
 			characterList.emplace_back(p.get());
 	}
 	// 敵の捜索
 	for (auto& e : enemyDataArray) {
-		Vector3 pos = e->GetMapPosition();
+		Vector2 pos = e->GetMapPosition();
 		if (pos.x == _x && pos.y == _y)
 			characterList.emplace_back(e.get());
 	}
@@ -84,6 +85,22 @@ EnemyData* CharacterDataManager::CreateEnemyData(int _enemyID, int _x, int _y, b
 	return enemyDataArray.back().get();
 }
 
+void CharacterDataManager::CreateEnemyDataToAllVillage() {
+	auto villageData = MyJson::LoadJsonFile("res/ExternalFile/Data/OriginVillageData.json");
+
+	for (const auto& data : villageData) {
+		bool isKill = data["bossKill"];
+
+		if (isKill) continue;
+
+		int posX = data["pos"][0];
+		int posY = data["pos"][1];
+		int enemyID = data["bossID"];
+		// 生成
+		CreateEnemyData(enemyID, posX, posY, true);
+	}
+}
+
 void CharacterDataManager::DeleteEnemyData() {
 	std::erase_if(enemyDataArray,
 		[](std::unique_ptr<EnemyData>& enemyData) {
@@ -102,6 +119,7 @@ void CharacterDataManager::DebugCreatePlayerData(Job _p1, Job _p2, Job _p3, Job 
 	p1->AddItem(0);
 	p1->AddItem(0);
 	p1->AddMagic(0);
+	p1->SetMoney(10000);
 	auto p2 = CreatePlayerData(_p2);
 	p2->SetColor(0xff0000);
 	p2->AddItem(0);
@@ -121,7 +139,7 @@ void CharacterDataManager::DebugRender() {
 	int playerNum = GetPlayerNum();
 	for (int i = 0; i < playerNum; i++) {
 		PlayerData* data = GetPlayerData(i);
-		Vector3 mapPos = data->GetMapPosition();
+		Vector2 mapPos = data->GetMapPosition();
 		int x = mapPos.x;
 		int y = mapPos.y;
 
@@ -131,7 +149,7 @@ void CharacterDataManager::DebugRender() {
 	int enemyNum = GetEnemyNum();
 	for (int i = 0; i < enemyNum; i++) {
 		EnemyData* data = GetEnemyData(i);
-		Vector3 mapPos = data->GetMapPosition();
+		Vector2 mapPos = data->GetMapPosition();
 		int x = mapPos.x;
 		int y = mapPos.y;
 

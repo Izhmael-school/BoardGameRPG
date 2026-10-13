@@ -71,6 +71,11 @@ public:
 	EnemyData* CreateEnemyData(int _enemyID, int _x, int _y, bool _isBoss = false);
 
 	/*
+	 * @brief ゲーム開始時にすべての村にボスをスポーンさせる用
+	 */
+	void CreateEnemyDataToAllVillage();
+
+	/*
 	 * @brief 削除フラグが立っている敵データを消す
 	 */
 	void DeleteEnemyData();

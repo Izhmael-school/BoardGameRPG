@@ -47,6 +47,7 @@ void UIButton::OnUpdate(float _t, UIInput& _input) {
 	// マウスが押されたら
 	if (_input.IsMouseDown(MOUSE_LEFT))
 		OnClick();
+
 }
 
 void UIButton::OnRender() {

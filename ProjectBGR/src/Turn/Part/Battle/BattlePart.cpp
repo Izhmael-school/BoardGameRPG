@@ -330,7 +330,7 @@ BattleState BattlePart::Result() {
 	// 敗者のプレイヤーは初期地点に戻って１～３ターンランダムで動けなくなる
 	if (pLoser && !isSurrender) {
 		pLoser->SetDontMoveTurnNum(MyMath::Random(1, 3));
-		pLoser->SetMapPosition(Vector3(3, 9));
+		pLoser->SetMapPosition(pLoser->GetRespawnPoint());
 		pLoser->Heal(10000000);
 	}
 

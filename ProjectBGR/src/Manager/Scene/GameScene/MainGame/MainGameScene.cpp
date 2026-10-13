@@ -70,7 +70,7 @@ void MainGameScene::Setup() {
 	turn->TurnStart();
 
 	// ステージの生成
-	gameObjectManager->UseObject<GameObject>("Stage", VZero, VZero, VOne, "BoardGameStage");
+	gameObjectManager->UseObject<GameObject>("Stage", VZero, Vector3(0, -90, 0), VOne, "BoardGameStage");
 	// バトルステージの生成
 	gameObjectManager->UseObject<GameObject>("BattleStage", Vector3(10000, 0, 10000), VZero, VOne, "BattleStage");
 }
@@ -90,7 +90,7 @@ void MainGameScene::Render() {
 	collisionManager->Render();
 	mapManager->Render();
 	turn->Render();
-	DrawString(100, 100, "MainGame", 0x000000);
+	//DrawString(100, 100, "MainGame", 0x000000);
 #if _DEBUG 邱・
 
 	// 繧ｪ繝悶ず繧ｧ繧ｯ繝医・菴咲ｽｮ髢｢菫ゅ′繧上°繧九ｈ縺・↓蝨ｰ髱｢縺ｫ繝ｩ繧､繝ｳ繧呈緒逕ｻ縺吶ｋ

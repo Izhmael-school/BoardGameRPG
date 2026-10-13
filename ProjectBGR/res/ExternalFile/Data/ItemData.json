@@ -3,7 +3,168 @@
     "id": 0,
     "name": "テスト",
     "explanation": "Atkを上げる",
+    "value": 50,
     "effectID": 1,
     "effectValue": 10
+  },
+  {
+    "id": 1,
+    "name": "ツヴァイン",
+    "explanation": "次のルーレットの値が2倍になる。",
+    "value": 1000,
+    "effectID": 1,
+    "effectValue": 10
+  },
+  {
+    "id": 2,
+    "name": "トライン",
+    "explanation": "次のルーレットの値が3倍になる。",
+    "value": 3000,
+    "effectID": 1,
+    "effectValue": 10
+  },
+  {
+    "id": 3,
+    "name": "回復薬",
+    "explanation": "体力を最大値の半分回復する。",
+    "value": 500,
+    "effectID": 2,
+    "effectValue": 50
+  },
+  {
+    "id": 4,
+    "name": "たっぷり回復薬",
+    "explanation": "体力を全回復する。質より量。",
+    "value": 1500,
+    "effectID": 2,
+    "effectValue": 50
+  },
+  {
+    "id": 5,
+    "name": "1マス通行券",
+    "explanation": "1マスだけ進める。",
+    "value": 3500,
+    "effectID": 2,
+    "effectValue": 50
+  },
+  {
+    "id": 6,
+    "name": "2マス通行券",
+    "explanation": "2マスだけ進める。",
+    "value": 3500,
+    "effectID": 2,
+    "effectValue": 50
+  },
+  {
+    "id": 7,
+    "name": "3マス通行券",
+    "explanation": "3マスだけ進める。",
+    "value": 3500,
+    "effectID": 2,
+    "effectValue": 50
+  },
+  {
+    "id": 8,
+    "name": "4マス通行券",
+    "explanation": "4マスだけ進める。",
+    "value": 3500,
+    "effectID": 2,
+    "effectValue": 50
+  },
+  {
+    "id": 9,
+    "name": "5マス通行券",
+    "explanation": "5マスだけ進める。",
+    "value": 3500,
+    "effectID": 2,
+    "effectValue": 50
+  },
+  {
+    "id": 10,
+    "name": "6マス通行券",
+    "explanation": "6マスだけ進める。",
+    "value": 3500,
+    "effectID": 2,
+    "effectValue": 50
+  },
+  {
+    "id": 11,
+    "name": "滞在許可証",
+    "explanation": "そのまま留まる。",
+    "value": 3500,
+    "effectID": 2,
+    "effectValue": 50
+  },
+  {
+    "id": 12,
+    "name": "ムキムッキ",
+    "explanation": "Atkが一定ターン2倍になる。",
+    "value": 500,
+    "effectID": 2,
+    "effectValue": 50
+  },
+  {
+    "id": 13,
+    "name": "カチカッチ",
+    "explanation": "Defが一定ターン2倍になる。",
+    "value": 500,
+    "effectID": 2,
+    "effectValue": 50
+  },
+  {
+    "id": 14,
+    "name": "マジマッジ",
+    "explanation": "Magが一定ターン2倍になる。",
+    "value": 500,
+    "effectID": 2,
+    "effectValue": 50
+  },
+  {
+    "id": 15,
+    "name": "ラクラック",
+    "explanation": "Spdが一定ターン2倍になる。",
+    "value": 500,
+    "effectID": 2,
+    "effectValue": 50
+  },
+  {
+    "id": 16,
+    "name": "ラキラッキ",
+    "explanation": "Lukが一定ターン2倍になる。",
+    "value": 500,
+    "effectID": 2,
+    "effectValue": 50
+  },
+  {
+    "id": 17,
+    "name": "バクチ",
+    "explanation": "確率で所持金が2倍になる。外れると0Gになる。",
+    "value": 20000,
+    "effectID": 2,
+    "effectValue": 50
+  },
+  {
+    "id": 18,
+    "name": "カエリッタイ",
+    "explanation": "自身の復活地点に戻る。",
+    "value": 2000,
+    "effectID": 2,
+    "effectValue": 50
+  },
+  {
+    "id": 19,
+    "name": "ドッカトブ",
+    "explanation": "マップ上のランダムな地点に移動する。",
+    "value": 1000,
+    "effectID": 2,
+    "effectValue": 50
+  },
+  {
+    "id": 20,
+    "name": "ドバクチ",
+    "explanation": "かなり低い確率で所持金が10倍になる。外れると所持金が0になる。",
+    "value": 10000,
+    "effectID": 2,
+    "effectValue": 50
   }
 ]

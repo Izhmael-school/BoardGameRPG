@@ -11,6 +11,7 @@
 #include <string>
 
 class UIText;
+class UITextDialog;
 class PlayerData;
 
 struct PlayerUIInfo {
@@ -34,7 +35,7 @@ private:
 	int selectIndex;
 	UIText* playerNameUI;
 	UIText* moneyUI;
-	UIText* explanationUI;
+	UITextDialog* explanationUI;
 	UIObject* itemListUI;
 	UIObject* magicListUI;
 

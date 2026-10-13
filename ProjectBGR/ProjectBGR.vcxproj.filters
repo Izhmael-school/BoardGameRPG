@@ -301,6 +301,30 @@
     <Filter Include="ソース ファイル\UI\Canvas\SceneCanvas\BoardGame">
       <UniqueIdentifier>{c3640219-9341-436d-9e31-7d66e9899d4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\UI\UIObject\UIText\UITextDialog">
+      <UniqueIdentifier>{17ecc540-e478-4be7-a6a2-59b729bb49f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\MapArrow">
+      <UniqueIdentifier>{70b969a3-43a1-4546-a995-b301c7171718}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\BoardGame\Shop">
+      <UniqueIdentifier>{a4c9a153-6ef4-4f39-957e-e0f015a83d7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\Canvas\SceneCanvas\Shop">
+      <UniqueIdentifier>{75a46382-8ce6-4b7e-8767-22c2166e744e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\BoardGame\Church">
+      <UniqueIdentifier>{a5e775b9-03c6-491c-974b-97d9588c8389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\Canvas\SceneCanvas\Church">
+      <UniqueIdentifier>{908f4b58-edb2-4900-8b34-3ac2506e74b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\BoardGame\Village">
+      <UniqueIdentifier>{cdd28ffb-c7b2-48af-bb4e-748322469fed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\Canvas\SceneCanvas\Village">
+      <UniqueIdentifier>{386b417a-c128-430a-b68a-1409328b142c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -554,6 +578,33 @@
     </ClCompile>
     <ClCompile Include="src\UI\Canvas\SceneCanvas\BoardGame\BoardGameCanvas.cpp">
       <Filter>ソース ファイル\UI\Canvas\SceneCanvas\BoardGame</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\UIObject\UIText\UITextDialog\UITextDialog.cpp">
+      <Filter>ソース ファイル\UI\UIObject\UIText\UITextDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\MapArrow\MapArrow.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\BoardGame\Shop\ShopPart.cpp">
+      <Filter>ソース ファイル\Turn\Part\BoardGame\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\BoardGame\Shop\ShopElement.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\BoardGame\Church\ChurchPart.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\Canvas\SceneCanvas\Shop\ShopCanvas.cpp">
+      <Filter>ソース ファイル\UI\Canvas\SceneCanvas\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\BoardGame\Village\VillagePart.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\Canvas\SceneCanvas\Church\ChurchCanvas.cpp">
+      <Filter>ソース ファイル\UI\Canvas\SceneCanvas\Church</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\Canvas\SceneCanvas\Village\VillageCanvas.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -827,5 +878,88 @@
     <ClInclude Include="src\UI\Canvas\SceneCanvas\MainGame\MainGameCanvas.h">
       <Filter>ソース ファイル\UI\Canvas\SceneCanvas\MainGame</Filter>
     </ClInclude>
+    <ClInclude Include="src\UI\UIObject\UIText\UITextDialog\UITextDialog.h">
+      <Filter>ソース ファイル\UI\UIObject\UIText\UITextDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\MapArrow\MapArrow.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\BoardGame\Shop\ShopPart.h">
+      <Filter>ソース ファイル\Turn\Part\BoardGame\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\BoardGame\Shop\ShopElement.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\BoardGame\Church\ChurchPart.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\BoardGame\Church\ChurchInfo.h">
+      <Filter>ソース ファイル\Turn\Part\BoardGame\Church</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\BoardGame\BoardGameElement.h">
+      <Filter>ソース ファイル\Turn\Part\BoardGame</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\Canvas\SceneCanvas\Shop\ShopCanvas.h">
+      <Filter>ソース ファイル\UI\Canvas\SceneCanvas\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\BoardGame\Village\VillagePart.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\BoardGame\Village\VillageInfo.h">
+      <Filter>ソース ファイル\Turn\Part\BoardGame\Village</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\Canvas\SceneCanvas\Church\ChurchCanvas.h">
+      <Filter>ソース ファイル\UI\Canvas\SceneCanvas\Church</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\Canvas\SceneCanvas\Village\VillageCanvas.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\ExternalFile\Resource\ModelData.json">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_2_6.json">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_4_4.json">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_7_13.json">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_9_2.json">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_10_12.json">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_14_8.json">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_15_16.json">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_18_5.json">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_25_1.json">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_25_10.json">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_30_5.json">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_31_13.json">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_33_8.json">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_34_15.json">
+      <Filter>リソース ファイル</Filter>
+    </None>
   </ItemGroup>
 </Project>

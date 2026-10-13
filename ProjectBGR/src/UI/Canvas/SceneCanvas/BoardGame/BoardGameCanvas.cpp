@@ -1,5 +1,6 @@
 #include "BoardGameCanvas.h"
 #include "UI/UIObject/UIText/UIText.h"
+#include "UI/UIObject/UIText/UITextDialog/UITextDialog.h"
 #include "UI/UIObject/UIButton/UIButton.h"
 #include "UI/UIObject/UISprite/UISprite.h"
 #include "Data/Player/PlayerData.h"
@@ -9,12 +10,9 @@
 
 void BoardGameCanvas::Init() {
 	UITextStyle explanation;
-	explanation.normalColor = 0x000000;
+	explanation.normalColor = 0xffffff;
 	explanation.fontSize = 50;
-	auto e = UniqueInstantiate<UIText>("説明とかが\n入るところ", explanation, Vector2(10, 20));
-	explanationUI = e.get();
-	auto back = Instantiate<UISprite>(-1, Vector2(250, 700), 1420, 320);
-	back->AddChild(std::move(e));
+	explanationUI = Instantiate<UITextDialog>(explanation, Vector2(250, 700));
 	UITextStyle playerName;
 	playerName.fontSize = 50;
 	playerNameUI = Instantiate<UIText>("PlayerName", playerName, Vector2(50, 100));
@@ -25,7 +23,7 @@ void BoardGameCanvas::Update(float _t, UIInput& _input) {
 	explanationUI->SetText("");
 
 	playerNameUI->SetText(info.playerName);
-	moneyUI->SetText(std::format("所持金  {}Ｇ", info.money));
+	moneyUI->SetText(std::format("所持金  {0}Ｇ", info.money));
 
 	// アイテムリストの描画更新
 	UpdateItemListUI();

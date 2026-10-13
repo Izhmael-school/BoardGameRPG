@@ -10,40 +10,20 @@
 #include "Command/Move/MoveCommand.h"
 #include "Command/SearchTile/SearchTileCommand.h"
 #include "Command/Magic/FieldMagicCommand.h"
-
-enum CommandType {
-	Command_Move,
-	Command_Item,
-	Command_Magic,
-	Command_SearchTile
-};
-
-enum TurnState {
-	TurnState_CommandSelect,
-	TurnState_Move,
-	TurnState_Item,
-	TurnState_Magic,
-	TurnState_SearchTile,
-	TurnState_TileEffect,
-	TurnState_BattleIn,
-	TurnState_End
-};
-
+#include "Shop/ShopPart.h"
+#include "Church/ChurchPart.h"
+#include "Village/VillagePart.h"
+#include "BoardGameElement.h"
 #include <string>
-
-struct Command {
-	TurnState state;
-	std::string name;
-	std::string explanation;
-};
+#include <functional>
 
 class CharacterData;
 class CharacterDataManager;
 class GameObject;
 class GameObjectManager;
 class BoardGameCanvas;
+class UIManager;
 
-#include <functional>
 class BoardGamePart {
 private:
 	// 迴ｾ蝨ｨ縺ｮ繝励Ξ繧､繝､繝ｼ縺ｮ繝・・繧ｿ
@@ -91,12 +71,18 @@ private:
 	GameObject* currentTurnPlayerObject;
 	// キャンバス
 	BoardGameCanvas* canvas;
+	// ショップ
+	ShopPart shopPart;
+	// 教会
+	ChurchPart churchPart;
+	// 村
+	VillagePart villagePart;
 
 public:
 	/*
 	 * @brief 生成時に初期化
 	 */
-	void Init(MapManager* _map,CharacterDataManager* _characterDataManager,std::function<void()> _turnEndFunc,std::function<void(CharacterData*, CharacterData*)> _battleStartFunc, GameObjectManager* _gameObjectManager,BoardGameCanvas* _canvas);
+	void Init(UIManager* _uiManager,MapManager* _map,CharacterDataManager* _characterDataManager,std::function<void()> _turnEndFunc,std::function<void(CharacterData*, CharacterData*)> _battleStartFunc, GameObjectManager* _gameObjectManager,BoardGameCanvas* _canvas);
 
 	/*
 	 * @brief 更新
@@ -117,6 +103,16 @@ public:
 	 * @brief ターン開始時処理
 	 */
 	void Setup();
+
+	/*
+	 * @brief 現在ターン中のプレイヤーの現在のタイルの列挙体を返す
+	 */
+	MapTileType GetCurrentPlayerMapTileType();
+
+	/*
+	 * @brief 外部から状態を変更する
+	 */
+	void SetTurnState(TurnState _state) { turnState = _state; }
 private:
 
 	/*
@@ -168,6 +164,16 @@ private:
 	 * @brief 選べるコマンドを探す
 	 */
 	void PickUpCommand();
+
+	/*
+	 * @brief ショップに入る
+	 */
+	void ShopIn();
+
+	/*
+	 * @brief ショップから出る
+	 */
+	void ShopOut();
 };
 
 #endif

@@ -10,5 +10,9 @@
   {
     "name": "Player",
     "path": "Character/Player/PlayerBaseModel.mv1"
+  },
+  {
+    "name": "MapArrow",
+    "path": "Other/Arrow.mv1"
   }
 ]

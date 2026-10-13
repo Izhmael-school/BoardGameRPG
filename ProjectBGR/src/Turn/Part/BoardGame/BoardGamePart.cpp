@@ -11,17 +11,24 @@
 #include "Manager/GameObject/GameObjectManager.h"
 #include "UI/Canvas/SceneCanvas/BoardGame/BoardGameCanvas.h"
 
-void BoardGamePart::Init(MapManager* _map, CharacterDataManager* _characterDataManager, std::function<void()> _turnEndFunc, std::function<void(CharacterData*, CharacterData*)> _battleStartFunc, GameObjectManager* _gameObjectManager, BoardGameCanvas* _canvas)
+void BoardGamePart::Init(UIManager* _uiManager, MapManager* _map, CharacterDataManager* _characterDataManager, std::function<void()> _turnEndFunc, std::function<void(CharacterData*, CharacterData*)> _battleStartFunc, GameObjectManager* _gameObjectManager, BoardGameCanvas* _canvas)
 {
 	canvas = _canvas;
 	moveCommand.SetMapManager(_map);
-	searchTileCommand.Init(_map, _characterDataManager);
 	map = _map;
 	turnEndFunc = _turnEndFunc;
 	battleStartFunc = _battleStartFunc;
 	character = _characterDataManager;
 	gameObjectManager = _gameObjectManager;
+	searchTileCommand.Init(_map, _characterDataManager,gameObjectManager->UseObject<GameObject>("MapArrow",VZero,VZero,VOne,"MapArrow"));
 	isFirstTurn = true;
+	TileEffect::SetChangeTurnStateFunc([this](TurnState _changeTurnState) {turnState = _changeTurnState; });
+	shopPart.Init(_uiManager, [this]() { ShopOut(); });
+	churchPart.Init(_uiManager, [this]() { ShopOut(); });
+	villagePart.Init(_uiManager);
+
+	// 最初にすべての村に敵を配置する
+	character->CreateEnemyDataToAllVillage();
 }
 
 void BoardGamePart::Setup() {
@@ -30,6 +37,8 @@ void BoardGamePart::Setup() {
 
 	if (!camera)
 		camera = gameObjectManager->Find("Camera");
+
+	auto a = gameObjectManager->Find("MapArrow");
 
 	// 現在のターンのプレイヤーを取得
 	currentTurnPlayerObject = gameObjectManager->Find(currentPlayerData->GetPlayerName());
@@ -63,15 +72,27 @@ void BoardGamePart::Setup() {
 		InBattle();
 }
 
+MapTileType BoardGamePart::GetCurrentPlayerMapTileType() {
+	Vector2 pos = currentPlayerData->GetMapPosition();
+	return map->GetMapTileType(pos.x,pos.y);
+}
+
 
 void BoardGamePart::Update(float _t) {
 	// カメラの更新
 	if (camera) {
-		Vector3 playerPos = currentTurnPlayerObject->GetTransform()->GetPosition();
-		Vector3 cameraPos = Vector3::VAdd(playerPos, Vector3::VScale(VUp, 1000));
+		Vector3 lookPos = currentTurnPlayerObject->GetTransform()->GetPosition();
+		Vector3 cameraPos = Vector3::VAdd(lookPos, Vector3::VScale(VUp, 1000));
+
+		if (turnState == TurnState_SearchTile) {
+			Vector2 pos = searchTileCommand.GetCurrentPosition();
+			lookPos =Vector3(pos.x * 200,0,pos.y * -200 );
+			cameraPos = Vector3::VAdd(lookPos, Vector3::VScale(VUp, 1000));
+		}
 		cameraPos.z -= 500;
+
 		camera->GetTransform()->SetPosition(cameraPos);
-		camera->GetTransform()->LookAt(playerPos);
+		camera->GetTransform()->LookAt(lookPos);
 	}
 
 	switch (turnState) {
@@ -96,6 +117,15 @@ void BoardGamePart::Update(float _t) {
 	case TurnState_BattleIn:
 		BattleCommand();
 		break;
+	case TurnState_ShopIn:
+		shopPart.Update(_t);
+		break;
+	case TurnState_ChurchIn:
+		churchPart.Update(_t);
+		break;
+	case TurnState_VillageIn:
+		villagePart.Update(_t);
+		break;
 	case TurnState_End:
 		TurnEnd();
 		break;
@@ -103,6 +133,10 @@ void BoardGamePart::Update(float _t) {
 		break;
 	}
 
+	if (InputManager::GetInstance().IsKeyDown(KEY_C)) {
+		turnState = TurnState_VillageIn;
+		villagePart.Enter(currentPlayerData);
+	}
 }
 
 void BoardGamePart::Render() {
@@ -251,7 +285,7 @@ void BoardGamePart::SetCurrentPlayerData(PlayerData* _currentPlayerData) {
 }
 
 void BoardGamePart::TileEffectExecute() {
-	Vector3 pos = currentPlayerData->GetMapPosition();
+	Vector2 pos = currentPlayerData->GetMapPosition();
 	bool isGoNext = false;
 	std::vector<CharacterData*> characters = character->GetCharacterDataToMapPos(pos.x, pos.y);
 	TileEffectEnum effect = TileEffect::Effect(map->GetMapTileType(pos.x, pos.y), characters, isGoNext);
@@ -280,10 +314,12 @@ void BoardGamePart::TileEffectExecute() {
 }
 
 void BoardGamePart::InBattle() {
-	Vector3 pos = currentPlayerData->GetMapPosition();
+	Vector2 pos = currentPlayerData->GetMapPosition();
+
+	MapTileType tileEffect = map->GetMapTileType(pos.x, pos.y);
 
 	// バトルできる場所であればバトルする
-	if (map->GetMapTileType(pos.x, pos.y) != Tile_Empty)
+	if ( tileEffect != Tile_Empty && tileEffect != Tile_Village)
 		return;
 
 	// 同じマスにプレイヤーがいれば戦闘に入る
@@ -324,4 +360,14 @@ void BoardGamePart::PickUpCommand() {
 	commandList.push_back(Command(TurnState::TurnState_SearchTile, "確認", "マスを確認する"));
 
 	selectCommand = 0;
+}
+
+void BoardGamePart::ShopIn() {
+	turnState = TurnState_ShopIn;
+	shopPart.Open(currentPlayerData->GetMapPosition().x, currentPlayerData->GetMapPosition().y, currentPlayerData);
+}
+
+void BoardGamePart::ShopOut() {
+	// ショップを出たらそのままターンエンド 
+	turnState = TurnState_End;
 }

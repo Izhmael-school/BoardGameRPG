@@ -183,6 +183,7 @@
     <ClCompile Include="src\GameObject\Camera\FreeCamera.cpp" />
     <ClCompile Include="src\GameObject\Character\Character.cpp" />
     <ClCompile Include="src\GameObject\GameObject.cpp" />
+    <ClCompile Include="src\GameObject\MapArrow\MapArrow.cpp" />
     <ClCompile Include="src\Library\Matrix\ConversionMATRIX.cpp" />
     <ClCompile Include="src\Library\Matrix\Matrix.cpp" />
     <ClCompile Include="src\Library\Vector\ConversionVECTOR.cpp" />
@@ -228,14 +229,21 @@
     <ClCompile Include="src\Turn\Part\Battle\Command\Offense\OffenseCommand.cpp" />
     <ClCompile Include="src\Turn\Part\Battle\SpecialPhase\LevelUp\LevelUpPhase.cpp" />
     <ClCompile Include="src\Turn\Part\BoardGame\BoardGamePart.cpp" />
+    <ClCompile Include="src\Turn\Part\BoardGame\Church\ChurchPart.cpp" />
     <ClCompile Include="src\Turn\Part\BoardGame\Command\Item\ItemCommand.cpp" />
     <ClCompile Include="src\Turn\Part\BoardGame\Command\Magic\FieldMagicCommand.cpp" />
     <ClCompile Include="src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp" />
     <ClCompile Include="src\Turn\Part\BoardGame\Command\SearchTile\SearchTileCommand.cpp" />
     <ClCompile Include="src\Turn\Part\BoardGame\Effect\Tile\TileEffect.cpp" />
+    <ClCompile Include="src\Turn\Part\BoardGame\Shop\ShopElement.cpp" />
+    <ClCompile Include="src\Turn\Part\BoardGame\Shop\ShopPart.cpp" />
+    <ClCompile Include="src\Turn\Part\BoardGame\Village\VillagePart.cpp" />
     <ClCompile Include="src\Turn\TurnProcessor.cpp" />
     <ClCompile Include="src\UI\Canvas\SceneCanvas\BoardGame\BoardGameCanvas.cpp" />
+    <ClCompile Include="src\UI\Canvas\SceneCanvas\Church\ChurchCanvas.cpp" />
     <ClCompile Include="src\UI\Canvas\SceneCanvas\MainGame\MainGameCanvas.cpp" />
+    <ClCompile Include="src\UI\Canvas\SceneCanvas\Shop\ShopCanvas.cpp" />
+    <ClCompile Include="src\UI\Canvas\SceneCanvas\Village\VillageCanvas.cpp" />
     <ClCompile Include="src\UI\Canvas\UICanvasBase.cpp" />
     <ClCompile Include="src\UI\Input\UIInput.cpp" />
     <ClCompile Include="src\UI\UIObject\UIButton\UIButton.cpp" />
@@ -243,6 +251,7 @@
     <ClCompile Include="src\UI\UIObject\UISprite\UISprite.cpp" />
     <ClCompile Include="src\UI\UIObject\UIText\Style\UITextStyle.cpp" />
     <ClCompile Include="src\UI\UIObject\UIText\UIText.cpp" />
+    <ClCompile Include="src\UI\UIObject\UIText\UITextDialog\UITextDialog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
@@ -274,6 +283,7 @@
     <ClInclude Include="src\GameObject\Camera\FreeCamera.h" />
     <ClInclude Include="src\GameObject\Character\Character.h" />
     <ClInclude Include="src\GameObject\GameObject.h" />
+    <ClInclude Include="src\GameObject\MapArrow\MapArrow.h" />
     <ClInclude Include="src\Library\Matrix\ConversionMATRIX.h" />
     <ClInclude Include="src\Library\Matrix\Matrix.h" />
     <ClInclude Include="src\Library\Vector\ConversionVECTOR.h" />
@@ -318,15 +328,25 @@
     <ClInclude Include="src\Turn\Part\Battle\Command\Defense\DefenseCommand.h" />
     <ClInclude Include="src\Turn\Part\Battle\Command\Offense\OffenseCommand.h" />
     <ClInclude Include="src\Turn\Part\Battle\SpecialPhase\LevelUp\LevelUpPhase.h" />
+    <ClInclude Include="src\Turn\Part\BoardGame\BoardGameElement.h" />
     <ClInclude Include="src\Turn\Part\BoardGame\BoardGamePart.h" />
+    <ClInclude Include="src\Turn\Part\BoardGame\Church\ChurchInfo.h" />
+    <ClInclude Include="src\Turn\Part\BoardGame\Church\ChurchPart.h" />
     <ClInclude Include="src\Turn\Part\BoardGame\Command\Item\ItemCommand.h" />
     <ClInclude Include="src\Turn\Part\BoardGame\Command\Magic\FieldMagicCommand.h" />
     <ClInclude Include="src\Turn\Part\BoardGame\Command\Move\MoveCommand.h" />
     <ClInclude Include="src\Turn\Part\BoardGame\Command\SearchTile\SearchTileCommand.h" />
     <ClInclude Include="src\Turn\Part\BoardGame\Effect\Tile\TileEffect.h" />
+    <ClInclude Include="src\Turn\Part\BoardGame\Shop\ShopElement.h" />
+    <ClInclude Include="src\Turn\Part\BoardGame\Shop\ShopPart.h" />
+    <ClInclude Include="src\Turn\Part\BoardGame\Village\VillageInfo.h" />
+    <ClInclude Include="src\Turn\Part\BoardGame\Village\VillagePart.h" />
     <ClInclude Include="src\Turn\TurnProcessor.h" />
     <ClInclude Include="src\UI\Canvas\SceneCanvas\BoardGame\BoardGameCanvas.h" />
+    <ClInclude Include="src\UI\Canvas\SceneCanvas\Church\ChurchCanvas.h" />
     <ClInclude Include="src\UI\Canvas\SceneCanvas\MainGame\MainGameCanvas.h" />
+    <ClInclude Include="src\UI\Canvas\SceneCanvas\Shop\ShopCanvas.h" />
+    <ClInclude Include="src\UI\Canvas\SceneCanvas\Village\VillageCanvas.h" />
     <ClInclude Include="src\UI\Canvas\UICanvasBase.h" />
     <ClInclude Include="src\UI\Input\UIInput.h" />
     <ClInclude Include="src\UI\UIObject\UIButton\Style\UIButtonStyle.h" />
@@ -335,6 +355,24 @@
     <ClInclude Include="src\UI\UIObject\UISprite\UISprite.h" />
     <ClInclude Include="src\UI\UIObject\UIText\Style\UITextStyle.h" />
     <ClInclude Include="src\UI\UIObject\UIText\UIText.h" />
+    <ClInclude Include="src\UI\UIObject\UIText\UITextDialog\UITextDialog.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_10_12.json" />
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_14_8.json" />
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_15_16.json" />
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_18_5.json" />
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_25_1.json" />
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_25_10.json" />
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_2_6.json" />
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_30_5.json" />
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_31_13.json" />
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_33_8.json" />
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_34_15.json" />
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_4_4.json" />
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_7_13.json" />
+    <None Include="res\ExternalFile\Data\ShopData\ShopData_9_2.json" />
+    <None Include="res\ExternalFile\Resource\ModelData.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

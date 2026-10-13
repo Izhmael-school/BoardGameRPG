@@ -7,6 +7,7 @@
 #ifndef _MOVECOMMAND_H_
 #define _MOVECOMMAND_H_
 
+#include "Vector2.h"
 #include "Vector3.h"
 #include <vector>
 
@@ -46,7 +47,7 @@ private:
 	// 騾ｲ繧薙□蝗樊焚
 	int currentMoveCount = -1;
 	// 騾ｲ繧薙□繝槭せ
-	std::vector<Vector3> movedTiles;
+	std::vector<Vector2> movedTiles;
 
 	MapManager* mapManager = nullptr;
 	// 遘ｻ蜍輔ｒ遒ｺ螳壹☆繧九°縺ｮ繧ｳ繝槭Φ繝迂D

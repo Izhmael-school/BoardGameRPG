@@ -54,6 +54,11 @@ public:
 	 * @brief テキストの変更
 	 */
 	inline void SetText(const std::string& _text) { text = _text; }
+
+	/*
+	 * @brief テキストの取得
+	 */
+	inline const std::string& GetText() const { return text; }
 };
 
 #endif // !_UITEXT_H_

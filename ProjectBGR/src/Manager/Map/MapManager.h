@@ -21,7 +21,8 @@ enum MapTileType {
 	Tile_MagicShop = 6,
 	Tile_EquipShop = 7,
 	Tile_Village = 8,
-	Tile_Church = 9
+	Tile_Church = 9,
+	Tile_Castle = 10,
 };
 
 using MapTileArray = std::vector<std::vector<int>>;

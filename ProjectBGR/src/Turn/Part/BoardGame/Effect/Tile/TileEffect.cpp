@@ -7,6 +7,7 @@
 #include "DxLib.h"
 
 PlayerData* TileEffect::currentTurnPlayer = nullptr;
+std::function<void(TurnState)> TileEffect::changeBoardGameState;
 
 TileEffectEnum TileEffect::Effect(MapTileType _type, std::vector<CharacterData*> _characters, bool& isGoNext) {
 	isGoNext = false;
@@ -49,16 +50,38 @@ TileEffectEnum TileEffect::Effect(MapTileType _type, std::vector<CharacterData*>
 		isGoNext = MagicGet();
 		return TileEffectEnum::TileEffect_Magic;
 	case Tile_ItemShop:
+		isGoNext = true;
+		changeBoardGameState(TurnState_ShopIn);
 		return TileEffectEnum::TileEffect_ItemShop;
 	case Tile_MagicShop:
+		isGoNext = true;
+		changeBoardGameState(TurnState_ShopIn);
 		return TileEffectEnum::TileEffect_MagicShop;
 	case Tile_EquipShop:
+		isGoNext = true;
+		changeBoardGameState(TurnState_ShopIn);
 		return TileEffectEnum::TileEffect_EquipShop;
 	case Tile_Village:
-		return TileEffectEnum::TileEffect_Village;
+	{
+
+		// 止まったマスにキャラクターがいれば戦闘に入る
+		// 自身も含まれてる配列のためサイズは１より上の指定
+		if (_characters.size() > 1) {
+			isGoNext = true;
+			return TileEffect_Battle;
+		}
+		// いなければそのまま村に入る
+		else {
+			isGoNext = true;
+			return TileEffect_Village;
+		}
+	}
 	case Tile_Church:
+		isGoNext = true;
+		changeBoardGameState(TurnState_ChurchIn);
 		return TileEffectEnum::TileEffect_Church;
 	default:
+		isGoNext = true;
 		return TileEffectEnum::TileEffect_Nothing;
 	}
 

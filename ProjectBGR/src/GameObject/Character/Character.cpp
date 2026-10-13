@@ -16,7 +16,7 @@ void Character::Update(float _t) {
 	
 	if (myData->IsBattling()) return;
 	// データ上の座標をもらう
-	Vector3 mapPos = myData->GetMapPosition();
+	Vector2 mapPos = myData->GetMapPosition();
 	// オブジェクト上の座標に変換
 	GetTransform()->SetPosition(Vector3(mapPos.x * 200, 100, mapPos.y * -200));
 }

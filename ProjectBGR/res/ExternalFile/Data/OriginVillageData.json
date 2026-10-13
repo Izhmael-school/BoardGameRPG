@@ -1,0 +1,192 @@
+[
+  {
+    "pos": [ 2, 3 ],
+    "name": "サイ",
+    "owner": -1,
+    "rewardValue": 50000,
+    "receiveReward": false,
+    "tax": 1300,
+    "bossID": -1,
+    "bossKill": false
+  },
+  {
+    "pos": [ 4, 13 ],
+    "name": "ウイング",
+    "owner": -1,
+    "rewardValue": 50000,
+    "receiveReward": false,
+    "tax": 1300,
+    "bossID": -1,
+    "bossKill": false
+  },
+  {
+    "pos": [ 7, 6 ],
+    "name": "キール",
+    "owner": -1,
+    "rewardValue": 40000,
+    "receiveReward": false,
+    "tax": 1300,
+    "bossID": -1,
+    "bossKill": false
+  },
+  {
+    "pos": [ 7, 15 ],
+    "name": "リブ",
+    "owner": -1,
+    "rewardValue": 40000,
+    "receiveReward": false,
+    "tax": 1300,
+    "bossID": -1,
+    "bossKill": false
+  },
+  {
+    "pos": [ 11, 2 ],
+    "name": "ドラム",
+    "owner": -1,
+    "rewardValue": 30000,
+    "receiveReward": false,
+    "tax": 1300,
+    "bossID": -1,
+    "bossKill": false
+  },
+  {
+    "pos": [ 13, 15 ],
+    "name": "ドゥーベ",
+    "owner": -1,
+    "rewardValue": 10000,
+    "receiveReward": false,
+    "tax": 800,
+    "bossID": -1,
+    "bossKill": false
+  },
+  {
+    "pos": [ 14, 5 ],
+    "name": "メラク",
+    "owner": -1,
+    "rewardValue": 15000,
+    "receiveReward": false,
+    "tax": 800,
+    "bossID": -1,
+    "bossKill": false
+  },
+  {
+    "pos": [ 16, 12 ],
+    "name": "フェクダ",
+    "owner": -1,
+    "rewardValue": 10000,
+    "receiveReward": false,
+    "tax": 800,
+    "bossID": -1,
+    "bossKill": false
+  },
+  {
+    "pos": [ 17, 3 ],
+    "name": "メグレズ",
+    "owner": -1,
+    "rewardValue": 20000,
+    "receiveReward": false,
+    "tax": 800,
+    "bossID": -1,
+    "bossKill": false
+  },
+  {
+    "pos": [ 18, 16 ],
+    "name": "アリオト",
+    "owner": -1,
+    "rewardValue": 15000,
+    "receiveReward": false,
+    "tax": 800,
+    "bossID": -1,
+    "bossKill": false
+  },
+  {
+    "pos": [ 20, 12 ],
+    "name": "ミザール",
+    "owner": -1,
+    "rewardValue": 10000,
+    "receiveReward": false,
+    "tax": 800,
+    "bossID": -1,
+    "bossKill": false
+  },
+  {
+    "pos": [ 21, 5 ],
+    "name": "アルカイド",
+    "owner": -1,
+    "rewardValue": 15000,
+    "receiveReward": false,
+    "tax": 800,
+    "bossID": -1,
+    "bossKill": false
+  },
+  {
+    "pos": [ 27, 5 ],
+    "name": "エース",
+    "owner": -1,
+    "rewardValue": 100000,
+    "receiveReward": false,
+    "tax": 5000,
+    "bossID": -1,
+    "bossKill": false
+  },
+  {
+    "pos": [ 27, 11 ],
+    "name": "ダーコク",
+    "owner": -1,
+    "rewardValue": 100000,
+    "receiveReward": false,
+    "tax": 5000,
+    "bossID": -1,
+    "bossKill": false
+  },
+  {
+    "pos": [ 29, 3 ],
+    "name": "ビシャ",
+    "owner": -1,
+    "rewardValue": 100000,
+    "receiveReward": false,
+    "tax": 5000,
+    "bossID": -1,
+    "bossKill": false
+  },
+  {
+    "pos": [ 30, 11 ],
+    "name": "ベザイ",
+    "owner": -1,
+    "rewardValue": 150000,
+    "receiveReward": false,
+    "tax": 5000,
+    "bossID": -1,
+    "bossKill": false
+  },
+  {
+    "pos": [ 31, 15 ],
+    "name": "クロクジ",
+    "owner": -1,
+    "rewardValue": 150000,
+    "receiveReward": false,
+    "tax": 5000,
+    "bossID": -1,
+    "bossKill": false
+  },
+  {
+    "pos": [ 33, 5 ],
+    "name": "ジュロン",
+    "owner": -1,
+    "rewardValue": 200000,
+    "receiveReward": false,
+    "tax": -1,
+    "bossID": -1,
+    "bossKill": false
+  },
+  {
+    "pos": [ 33, 10 ],
+    "name": "ホテー",
+    "owner": -1,
+    "rewardValue": 200000,
+    "receiveReward": false,
+    "tax": -1,
+    "bossID": -1,
+    "bossKill": false
+  }
+]

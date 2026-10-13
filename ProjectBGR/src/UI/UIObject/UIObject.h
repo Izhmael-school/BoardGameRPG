@@ -11,7 +11,7 @@
 #include <vector>
 #include <memory>
 
-class UIInput;
+struct UIInput;
 
 class UIObject {
 protected:

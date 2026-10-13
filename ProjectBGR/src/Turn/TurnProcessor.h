@@ -91,6 +91,8 @@ public:
 	 * @brief 外部からバトルパートに遷移する
 	 */
 	void StartBattle(CharacterData* _p1, CharacterData* _p2);
+
+	void BattleEndInVillage();
 };
 
 #endif

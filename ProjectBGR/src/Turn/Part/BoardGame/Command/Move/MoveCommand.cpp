@@ -20,24 +20,24 @@ bool MoveCommand::Move() {
 	if (canMoveTileList.empty()) return true;
 
 	bool ismoved = false;
-	Vector3 movedDir = Vector3(0, 0);
-	Vector3 beforeMoveTile = Vector3(-1, -1);
-	Vector3 movedir = Vector3(0, 0);
+	Vector2 movedDir = Vector2(0, 0);
+	Vector2 beforeMoveTile = Vector2(-1, -1);
+	Vector2 movedir = Vector2(0, 0);
 
 	if (canMoveTileList[Move_Down] && inputManager.IsKeyDown(KEY_INPUT_DOWN)) {
-		movedir = Vector3(0, 1);
+		movedir = Vector2(0, 1);
 		ismoved = true;
 	}
 	if (canMoveTileList[Move_Up] && inputManager.IsKeyDown(KEY_INPUT_UP)) {
-		movedir = Vector3(0, -1);
+		movedir = Vector2(0, -1);
 		ismoved = true;
 	}
 	if (canMoveTileList[Move_Left] && inputManager.IsKeyDown(KEY_INPUT_LEFT)) {
-		movedir = Vector3(-1, 0);
+		movedir = Vector2(-1, 0);
 		ismoved = true;
 	}
 	if (canMoveTileList[Move_Right] && inputManager.IsKeyDown(KEY_INPUT_RIGHT)) {
-		movedir = Vector3(1, 0);
+		movedir = Vector2(1, 0);
 		ismoved = true;
 	}
 
@@ -52,7 +52,7 @@ bool MoveCommand::Move() {
 	bool isMovedAgain = false;
 	do {
 		isMovedAgain = false;
-		Vector3 mapPos = currentPlayerData->GetMapPosition();
+		Vector2 mapPos = currentPlayerData->GetMapPosition();
 		int x = mapPos.x;
 		int y = mapPos.y;
 		if (mapManager->GetMapList()[x][y] == static_cast<int>(MapTileType::Tile_Road)) {
@@ -68,10 +68,10 @@ bool MoveCommand::Move() {
 	} while (isMovedAgain);
 
 	// 道を戻っていたら戻ったことにする
-	Vector3 prevPos = Vector3(-1, -1);
+	Vector2 prevPos = Vector2(-1, -1);
 	if (!movedTiles.empty())
 		prevPos = movedTiles.back();
-	Vector3 currentPos = currentPlayerData->GetMapPosition();
+	Vector2 currentPos = currentPlayerData->GetMapPosition();
 	// 戻っていない
 	if (prevPos.x != currentPos.x || prevPos.y != currentPos.y) {
 		//進んだマスを記録
@@ -95,7 +95,7 @@ bool MoveCommand::Move() {
 void MoveCommand::Back() {
 	if (movedTiles.empty()) return;
 
-	Vector3 back = movedTiles.back();
+	Vector2 back = movedTiles.back();
 	movedTiles.pop_back();
 
 	currentPlayerData->SetMapPosition(back);
@@ -105,7 +105,7 @@ void MoveCommand::Back() {
 void MoveCommand::SearchCanMoveTiles() {
 	if (!currentPlayerData || !mapManager) return;
 
-	Vector3 mapPos = currentPlayerData->GetMapPosition();
+	Vector2 mapPos = currentPlayerData->GetMapPosition();
 	int x = mapPos.x;
 	int y = mapPos.y;
 
@@ -122,7 +122,7 @@ void MoveCommand::SearchCanMoveTiles() {
 	}
 
 	// 下
-	if (y < static_cast<int>(mapList.size()) - 1 && mapList[x][y + 1] != static_cast<int>(MapTileType::Tile_Wall)) {
+	if (y < static_cast<int>(mapList[y].size()) - 1 && mapList[x][y + 1] != static_cast<int>(MapTileType::Tile_Wall)) {
 		canMoveList.push_back(true);
 	}
 	else {
@@ -138,7 +138,7 @@ void MoveCommand::SearchCanMoveTiles() {
 	}
 
 	// 右
-	if (x < static_cast<int>(mapList[y].size()) - 1 && mapList[x + 1][y] != static_cast<int>(MapTileType::Tile_Wall)) {
+	if (x < static_cast<int>(mapList.size()) - 1 && mapList[x + 1][y] != static_cast<int>(MapTileType::Tile_Wall)) {
 		canMoveList.push_back(true);
 	}
 	else {
@@ -194,7 +194,7 @@ MoveCommandState MoveCommand::Execute() {
 	// 確定したらコマンド選択に戻れないようにする
 	if (isBack && Roulette()) {
 		isBack = false;
-		Vector3 pos = currentPlayerData->GetMapPosition();
+		Vector2 pos = currentPlayerData->GetMapPosition();
 		mapManager->GetCanMoveTile(pos.x, pos.y, canMoveCount);
 		return	commandState = MoveCommand_Move;
 	}

@@ -9,6 +9,9 @@
 
 class MapManager;
 class CharacterDataManager;
+class GameObject;
+
+#include "Vector2.h"
 
 class SearchTileCommand {
 private:
@@ -17,8 +20,10 @@ private:
 	MapManager* map;
 	CharacterDataManager* character;
 
+	GameObject* mapArrow;
+
 public:
-	void Init(MapManager* _map,CharacterDataManager* _character);
+	void Init(MapManager* _map,CharacterDataManager* _character,GameObject* _mapArrow);
 
 	/*
 	 * @brief 情報を確認するマスを決める
@@ -26,6 +31,8 @@ public:
 	void SearchTile();
 
 	void Render();
+
+	Vector2 GetCurrentPosition() const { return Vector2(currentX, currentY); }
 private:
 };
 

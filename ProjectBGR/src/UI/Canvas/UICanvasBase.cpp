@@ -13,3 +13,12 @@ void UICanvasBase::Render() {
 		ui->Render();
 	}
 }
+
+void UICanvasBase::DeleteUI(UIObject*& _ui) {
+	auto itr = std::find_if(uiArray.begin(), uiArray.end(),
+		[&](const auto& p) { return p.get() == _ui; });
+	if (itr == uiArray.end())return;
+	(*itr).reset();
+	uiArray.erase(itr);
+	_ui = nullptr;
+}

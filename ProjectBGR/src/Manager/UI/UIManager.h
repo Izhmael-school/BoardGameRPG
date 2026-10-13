@@ -11,7 +11,7 @@
 #include <vector>
 
 class UICanvasBase;
-class UIInput;
+struct UIInput;
 
 class UIManager : public ManagerBase {
 private:

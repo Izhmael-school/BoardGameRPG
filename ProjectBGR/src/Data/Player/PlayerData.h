@@ -11,6 +11,8 @@
 
 class PlayerData : public CharacterData {
 private:
+	// プレイヤーとしての番号
+	int playerNum = -1;
 	// レベルアップに必要な経験値
 	int levelUpNeedExp = 100;
 	// 色
@@ -44,6 +46,8 @@ public:
 
 public:
 	// --- getter / setter ---
+	int GetPlayerNum() const { return playerNum; }
+	void SetPlayerNum(int _playerNum) { playerNum = _playerNum; }
 	bool IsLevelUp() const { return currentExp >= levelUpNeedExp; }
 	bool LevelUp();
 	int GetLevelUpNeedExp() const { return levelUpNeedExp; }
@@ -85,6 +89,10 @@ public:
 	void ClearItemList() { itemList.clear(); }
 	bool IsUseItem() const { return itemList.size() > 0 && usedItemCount < oneTurnItemCount; }
 	bool IsUseMagic() const { return magicList.size() > 0 && usedMagicCount < oneTurnMagicCount; }
+	// アイテムを買えるスペースがあるか
+	bool IsAddItem() const { return itemList.size() < maxItems; }
+	// 魔法を買えるスペースがあるか
+	bool IsAddMagic() const {return  magicList.size() < maxMagics;}
 
 	const std::vector<int>& GetMagicList() const { return magicList; }
 	int GetMagicCount() const { return magicList.size(); }

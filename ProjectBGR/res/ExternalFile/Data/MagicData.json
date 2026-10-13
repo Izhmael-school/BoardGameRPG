@@ -1,9 +1,154 @@
 [
   {
     "id": 0,
-    "name": "ファイアボール",
+    "name": "モエ",
     "explanation": "選んだキャラクターに小ダメージ",
+    "value": 1500,
     "effectID": 0,
-    "effectValue": 10
+    "effectValue": 1.5
+  },
+  {
+    "id": 1,
+    "name": "モエル",
+    "explanation": "選んだキャラクターに中ダメージ",
+    "value": 3500,
+    "effectID": 0,
+    "effectValue": 3.0
+  },
+  {
+    "id": 2,
+    "name": "モエテル",
+    "explanation": "選んだキャラクターに大ダメージ",
+    "value": 10000,
+    "effectID": 0,
+    "effectValue": 5.0
+  },
+  {
+    "id": 3,
+    "name": "ヒエ",
+    "explanation": "選んだキャラクターとその周囲1マスにいる相手に小ダメージ",
+    "value": 1500,
+    "effectID": 0,
+    "effectValue": 1.0
+  },
+  {
+    "id": 4,
+    "name": "ヒエル",
+    "explanation": "選んだキャラクターとその周囲1マスにいる相手に中ダメージ",
+    "value": 3500,
+    "effectID": 0,
+    "effectValue": 2.0
+  },
+  {
+    "id": 5,
+    "name": "ヒエテル",
+    "explanation": "選んだキャラクターとその周囲1マスにいる相手に大ダメージ",
+    "value": 10000,
+    "effectID": 0,
+    "effectValue": 3.0
+  },
+  {
+    "id": 6,
+    "name": "ヨワヨワン",
+    "explanation": "選んだキャラクターのAtkを一定ターン半減",
+    "value": 1000,
+    "effectID": 0,
+    "effectValue": 0.5
+  },
+  {
+    "id": 7,
+    "name": "ガリガリン",
+    "explanation": "選んだキャラクターのDefを一定ターン半減",
+    "value": 1000,
+    "effectID": 0,
+    "effectValue": 0.5
+  },
+  {
+    "id": 8,
+    "name": "ボケボケン",
+    "explanation": "選んだキャラクターのMagを一定ターン半減",
+    "value": 1000,
+    "effectID": 0,
+    "effectValue": 0.5
+  },
+  {
+    "id": 9,
+    "name": "フラフラン",
+    "explanation": "選んだキャラクターのSpdを一定ターン半減",
+    "value": 1000,
+    "effectID": 0,
+    "effectValue": 0.5
+  },
+  {
+    "id": 10,
+    "name": "ナシナシン",
+    "explanation": "選んだキャラクターのLukを一定ターン半減",
+    "value": 1000,
+    "effectID": 0,
+    "effectValue": 0.5
+  },
+  {
+    "id": 11,
+    "name": "オルダメン",
+    "explanation": "選んだキャラクターのVit以外のステータスを一定ターン半減",
+    "value": 5000,
+    "effectID": 0,
+    "effectValue": 0.5
+  },
+  {
+    "id": 12,
+    "name": "ドカイケ",
+    "explanation": "選んだキャラクターマップ上のランダムな場所にワープさせる。",
+    "value": 3000,
+    "effectID": 0,
+    "effectValue": 0.5
+  },
+  {
+    "id": 13,
+    "name": "バショヨコセ",
+    "explanation": "選んだキャラクターと場所を入れ替える",
+    "value": 30000,
+    "effectID": 0,
+    "effectValue": 0.0
+  },
+  {
+    "id": 14,
+    "name": "コチキテ",
+    "explanation": "選んだキャラクターを自分と同じ場所に呼び寄せる。",
+    "value": 5000,
+    "effectID": 0,
+    "effectValue": 0.0
+  },
+  {
+    "id": 15,
+    "name": "ソチイク",
+    "explanation": "選んだキャラクターと同じ場所にワープする",
+    "value": 3000,
+    "effectID": 0,
+    "effectValue": 0.0
+  },
+  {
+    "id": 16,
+    "name": "ボロ",
+    "explanation": "選んだキャラクターの持ち物のいずれか1つを消す。",
+    "value": 5000,
+    "effectID": 0,
+    "effectValue": 0.0
+  },
+  {
+    "id": 17,
+    "name": "ワレル",
+    "explanation": "自分以外の全キャラクターに中ダメージ。",
+    "value": 50000,
+    "effectID": 0,
+    "effectValue": 5.0
+  },
+  {
+    "id": 18,
+    "name": "ワレテル",
+    "explanation": "自分以外の全キャラクターに大ダメージ。",
+    "value": 100000,
+    "effectID": 0,
+    "effectValue": 7.0
   }
 ]

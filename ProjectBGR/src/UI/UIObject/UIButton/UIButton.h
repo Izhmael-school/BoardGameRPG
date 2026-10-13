@@ -11,7 +11,7 @@
 #include <string>
 #include <functional>
 
-class UIInput;
+struct UIInput;
 
 class UIButton : public UIObject {
 protected:
@@ -65,6 +65,8 @@ public:
 	void SetCanSelect(bool _canSelect) { canSelect = _canSelect; }
 
 	void SetClickEvent(std::function<void()> _func) { onClick = _func; }
+
+	UIButtonStyle GetButtonStyle() const {return style;}
 
 };
 

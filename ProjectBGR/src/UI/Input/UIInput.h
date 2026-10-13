@@ -27,6 +27,7 @@ struct UIInput {
 		key.emplace_back(std::pair( KEY_LEFT,UIInputPress()));
 		key.emplace_back(std::pair( KEY_ESCAPE,UIInputPress()));
 		key.emplace_back(std::pair( KEY_SPACE,UIInputPress()));
+		key.emplace_back(std::pair( KEY_B,UIInputPress()));
 		mouse.emplace_back(std::pair(MOUSE_LEFT, UIInputPress()));
 		mouse.emplace_back(std::pair(MOUSE_RIGHT, UIInputPress()));
 		mouse.emplace_back(std::pair(MOUSE_MIDDLE, UIInputPress()));

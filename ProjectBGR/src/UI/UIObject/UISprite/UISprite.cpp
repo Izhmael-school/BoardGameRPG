@@ -22,8 +22,11 @@ UISprite::UISprite(int _handle, Vector2 _pos, float _ex, float _ey, float _rot)
 	, ey(_ey)
 	, cx(_pos.x)
 	, cy(_pos.y) {
-	//position = GetCenterPos(_handle, _pos, _ex, _ey);
-	position = _pos;
+	if (_handle != -1) {
+		position = GetCenterPos(_handle, _pos, _ex, _ey);
+	} else {
+		position = _pos;
+	}
 	angle = MyMath::Deg2Rad(_rot);
 }
 

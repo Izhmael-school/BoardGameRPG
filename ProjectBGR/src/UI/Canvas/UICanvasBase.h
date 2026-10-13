@@ -10,7 +10,7 @@
 #include <vector>
 
 class UIObject;
-class UIInput;
+struct UIInput;
 
 using UIPtr = std::unique_ptr<UIObject>;
 
@@ -22,9 +22,11 @@ public:
 	UICanvasBase() = default;
 	virtual ~UICanvasBase() = default;
 
-	virtual void Init() = 0;
+	virtual void Init() {};
 	virtual void Update(float _t,UIInput& _input);
 	virtual void Render();
+
+	void DeleteUI(UIObject*& _ui);
 
 	/*
 	 * @brief UIオブジェクトの生成

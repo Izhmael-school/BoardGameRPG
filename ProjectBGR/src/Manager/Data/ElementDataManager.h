@@ -10,28 +10,54 @@
 #include "DesignPattern/Singleton/Singleton.h"
 #include "Definition/CommonModule/Json/MyJson.h"
 
-struct ItemData {
+struct ElementDataBase {
 	int id = -1;
 	std::string name = "error";
 	std::string explanation = "error";
-	int effectValue = -1;
-	int effectID = -1;
-};
-
-struct MagicData {
-	int id = -1;
-	std::string name = "error";
-	std::string explanation = "error";
-	int effectValue = -1;
-	int effectID = -1;
-};
-
-struct EquipData {
-	int id = -1;
-	std::string name = "error";
-	std::string explanation = "error";
-	int equipSection = -1;
 	int value = -1;
+	int effectValue = -1;
+	int effectID = -1;
+};
+
+struct ItemData :public ElementDataBase {
+	ItemData(int _id, std::string _name, std::string _explanation, int _value, int _effectValue, int _effectID){
+		id = _id;
+		name = _name;
+		explanation = _explanation;
+		value = _value;
+		effectValue = _effectValue;
+		effectID = _effectID;
+	}
+
+	ItemData() = default;
+};
+
+struct MagicData :public ElementDataBase {
+	MagicData(int _id, std::string _name, std::string _explanation, int _value, int _effectValue, int _effectID) {
+		id = _id;
+		name = _name;
+		explanation = _explanation;
+		value = _value;
+		effectValue = _effectValue;
+		effectID = _effectID;
+	}
+
+	MagicData() = default;
+};
+
+struct EquipData :public ElementDataBase {
+	int equipSection = -1;
+
+	EquipData(int _id, std::string _name, std::string _explanation, int _value, int _effectValue, int _equipSection) {
+		id = _id;
+		name = _name;
+		explanation = _explanation;
+		value = _value;
+		effectValue = _effectValue;
+		equipSection = _equipSection;
+	}
+
+	EquipData() = default;
 };
 
 class ElementDataManager : public ManagerBase, public Singleton<ElementDataManager> {

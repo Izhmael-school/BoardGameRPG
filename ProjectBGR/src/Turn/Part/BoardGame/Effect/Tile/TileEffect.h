@@ -21,6 +21,7 @@ enum TileEffectEnum {
 };
 
 #include "Manager/Map/MapManager.h"
+#include "../../BoardGameElement.h"
 #include <functional>
 #include <vector>
 #include "Data/CharacterData.h"
@@ -34,7 +35,7 @@ class TileEffect {
 private:
 	static PlayerData* currentTurnPlayer;
 	static std::function<std::vector<CharacterData*>(int, int)> getTilePosCharacter;
-
+	static std::function<void(TurnState)> changeBoardGameState;
 public:
 	/*
 	 * @biref 効果発動
@@ -45,6 +46,8 @@ public:
 	static void SetCurrentTurnPlayer(PlayerData* _currentTurnPlayer) { currentTurnPlayer = _currentTurnPlayer; }
 
 	static void Render();
+
+	static void SetChangeTurnStateFunc(std::function<void(TurnState)> _changeFunc) { changeBoardGameState = _changeFunc; }
 private:
 	/*
 	 * @brief　全アイテムの中から10個重複ありでピックアップしてランダムで一つ入手

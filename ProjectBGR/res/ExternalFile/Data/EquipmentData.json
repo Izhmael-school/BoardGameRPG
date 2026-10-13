@@ -2,8 +2,376 @@
   {
     "id": 0,
     "name": "木の枝",
-    "explanation": "攻撃力を上げる",
+    "explanation": "木の枝にこの値段？",
     "equipSection": 0,
-    "value": 5
+    "value": 500,
+    "effectValue": 3
+  },
+  {
+    "id": 1,
+    "name": "木の剣",
+    "explanation": "冒険の必需品。これがあればひとまず安心。",
+    "equipSection": 0,
+    "value": 1000,
+    "effectValue": 7
+  },
+  {
+    "id": 2,
+    "name": "木こりの斧",
+    "explanation": "鋭くはないが、力は十分にある。",
+    "equipSection": 0,
+    "value": 3000,
+    "effectValue": 10
+  },
+  {
+    "id": 3,
+    "name": "金属の剣",
+    "explanation": "もっとも一般的な剣。普通過ぎて魅力がない。",
+    "equipSection": 0,
+    "value": 5000,
+    "effectValue": 15
+  },
+  {
+    "id": 4,
+    "name": "赤いハンマー",
+    "explanation": "ポップな見た目。過去に一世を風靡したことがある。",
+    "equipSection": 0,
+    "value": 20000,
+    "effectValue": 22
+  },
+  {
+    "id": 5,
+    "name": "マジックワンド",
+    "explanation": "両手で握って振りかぶるとスカッとする。",
+    "equipSection": 0,
+    "value": 40000,
+    "effectValue": 33
+  },
+  {
+    "id": 6,
+    "name": "ニギリコブシ",
+    "explanation": "信じられるのは己の拳。",
+    "equipSection": 0,
+    "value": 75000,
+    "effectValue": 45
+  },
+  {
+    "id": 7,
+    "name": "ヨーヨー",
+    "explanation": "金属製で50kgの重さを持つ。電気を流したら強そう。",
+    "equipSection": 0,
+    "value": 100000,
+    "effectValue": 54
+  },
+  {
+    "id": 8,
+    "name": "グレートソード",
+    "explanation": "体よりも大きい剣。重さで叩き切る。",
+    "equipSection": 0,
+    "value": 300000,
+    "effectValue": 70
+  },
+  {
+    "id": 9,
+    "name": "ようなもの",
+    "explanation": "上は2つに割れており、赤色に塗られている。杖のようなもの。",
+    "equipSection": 0,
+    "value": 500000,
+    "effectValue": 93
+  },
+  {
+    "id": 10,
+    "name": "勇者の剣",
+    "explanation": "この剣で、魔王を倒したとか倒してないとか。",
+    "equipSection": 0,
+    "value": 750000,
+    "effectValue": 127
+  },
+  {
+    "id": 11,
+    "name": "シキソクゼクウ",
+    "explanation": "実体のない剣。あらゆるものを無に帰す。",
+    "equipSection": 0,
+    "value": 1500000,
+    "effectValue": 268
+  },
+  {
+    "id": 12,
+    "name": "はやりの服",
+    "explanation": "巷で話題の服。正直ダサい。",
+    "equipSection": 1,
+    "value": 500,
+    "effectValue": 5
+  },
+  {
+    "id": 13,
+    "name": "木の胸当て",
+    "explanation": "木製の胸当て。特筆すべきことはない。",
+    "equipSection": 1,
+    "value": 1300,
+    "effectValue": 8
+  },
+  {
+    "id": 14,
+    "name": "金属製の鎧",
+    "explanation": "王国の兵士がよく着ている鎧。",
+    "equipSection": 1,
+    "value": 2700,
+    "effectValue": 13
+  },
+  {
+    "id": 15,
+    "name": "もこもこパジャマ",
+    "explanation": "もこもこの布がダメージを軽減する。暗いところで蛍光色に光る。",
+    "equipSection": 1,
+    "value": 16000,
+    "effectValue": 21
+  },
+  {
+    "id": 16,
+    "name": "魔術師のローブ",
+    "explanation": "魔法の力が上がる気がするし、賢く見える。",
+    "equipSection": 1,
+    "value": 28000,
+    "effectValue": 34
+  },
+  {
+    "id": 17,
+    "name": "ダイキョウキン",
+    "explanation": "己の肉体こそが、真の鎧である。",
+    "equipSection": 1,
+    "value": 41000,
+    "effectValue": 44
+  },
+  {
+    "id": 18,
+    "name": "鎧のフルグラTシャツ",
+    "explanation": "まるで鎧を着ているような見た目の服。鎧のような硬さ。",
+    "equipSection": 1,
+    "value": 150000,
+    "effectValue": 78
+  },
+  {
+    "id": 19,
+    "name": "勇者の鎧",
+    "explanation": "ギラギラ光っている。勇者は成金だったのかもしれない。",
+    "equipSection": 1,
+    "value": 370000,
+    "effectValue": 149
+  },
+  {
+    "id": 20,
+    "name": "スイホウ",
+    "explanation": "ダメージを極限まで抑える。まるで攻撃することに意味がないかのように。",
+    "equipSection": 1,
+    "value": 500000,
+    "effectValue": 255
+  },
+  {
+    "id": 21,
+    "name": "シュンソク",
+    "explanation": "かっこいい靴。コーナーで差をつけられそう。",
+    "equipSection": 2,
+    "value": 300,
+    "effectValue": 4
+  },
+  {
+    "id": 22,
+    "name": "ロケットペンダント",
+    "explanation": "楕円形のペンダント。中には誰かの写真が入っている。",
+    "equipSection": 2,
+    "value": 900,
+    "effectValue": 7
+  },
+  {
+    "id": 23,
+    "name": "木の盾",
+    "explanation": "木の剣と一緒に持つことで、いっぱしの剣士に見えるようになる。",
+    "equipSection": 2,
+    "value": 1500,
+    "effectValue": 11
+  },
+  {
+    "id": 24,
+    "name": "魔導書",
+    "explanation": "何やら難しい呪文が書いてある。-すべてを消す魔法- Alt+F4 ",
+    "equipSection": 2,
+    "value": 9000,
+    "effectValue": 18
+  },
+  {
+    "id": 25,
+    "name": "プロテイン",
+    "explanation": "筋肉は友であり、尊敬すべき相手である。",
+    "equipSection": 2,
+    "value": 17000,
+    "effectValue": 27
+  },
+  {
+    "id": 26,
+    "name": "ヨーヨー",
+    "explanation": "実は2つで1つ。巻きつけて拘束もできそう。",
+    "equipSection": 2,
+    "value": 34000,
+    "effectValue": 38
+  },
+  {
+    "id": 27,
+    "name": "兜風ヘルメット",
+    "explanation": "兜を模したヘルメット。上からの衝撃ならば最強。",
+    "equipSection": 2,
+    "value": 130000,
+    "effectValue": 56
+  },
+  {
+    "id": 28,
+    "name": "勇者の盾",
+    "explanation": "勇者はこれをサーフボードにしていたという。",
+    "equipSection": 2,
+    "value": 270000,
+    "effectValue": 79
+  },
+  {
+    "id": 29,
+    "name": "14章13節",
+    "explanation": "これに願えばすべてが叶う。",
+    "equipSection": 2,
+    "value": 430000,
+    "effectValue": 123
+  },
+  {
+    "id": 30,
+    "name": "カネクレー",
+    "explanation": "当たれば、相手のお金を1/3貰える。",
+    "equipSection": 3,
+    "value": 30000,
+    "effectValue": 0,
+    "effectID": 3
+  },
+  {
+    "id": 31,
+    "name": "マネクレー",
+    "explanation": "当たれば、相手のお金を半分貰える。",
+    "equipSection": 3,
+    "value": 100000,
+    "effectValue": 0,
+    "effectID": 4
+  },
+  {
+    "id": 32,
+    "name": "マホインパクト",
+    "explanation": "魔法使いならだれでも使える。基本的な攻撃魔法。",
+    "equipSection": 3,
+    "value": 10000,
+    "effectValue": 1.2,
+    "effectID": 2
+  },
+  {
+    "id": 33,
+    "name": "マホロック",
+    "explanation": "当たれば相手の魔法攻撃を封じることができる。",
+    "equipSection": 3,
+    "value": 50000,
+    "effectValue": 1.0,
+    "effectID": 2
+  },
+  {
+    "id": 34,
+    "name": "マホパンチ",
+    "explanation": "拳に魔力を込めて殴る。Atkを参照する",
+    "equipSection": 3,
+    "value": 150000,
+    "effectValue": 1.5,
+    "effectID": 2
+  },
+  {
+    "id": 35,
+    "name": "ドレイン",
+    "explanation": "当たれば、ダメージの半分の値で回復する",
+    "equipSection": 3,
+    "value": 25000,
+    "effectValue": 1.1,
+    "effectID": 2
+  },
+  {
+    "id": 36,
+    "name": "ミラクル",
+    "explanation": "何が起こるかわからない",
+    "equipSection": 3,
+    "value": 200000,
+    "effectValue": 1.0,
+    "effectID": 2
+  },
+  {
+    "id": 37,
+    "name": "コワース",
+    "explanation": "相手の装備を一つ壊す",
+    "equipSection": 3,
+    "value": 150000,
+    "effectValue": 0,
+    "effectID": 2
+  },
+  {
+    "id": 38,
+    "name": "エクリプス",
+    "explanation": "体力を交換する",
+    "equipSection": 3,
+    "value": 150000,
+    "effectValue": 0,
+    "effectID": 2
+  },
+  {
+    "id": 39,
+    "name": "マフォース",
+    "explanation": "魔法を極めたものが使える究極の攻撃魔法。",
+    "equipSection": 3,
+    "value": 250000,
+    "effectValue": 5.0,
+    "effectID": 2
+  },
+  {
+    "id": 40,
+    "name": "マホガード",
+    "explanation": "基本の防御魔法。",
+    "equipSection": 3,
+    "value": 10000,
+    "effectValue": 0.3,
+    "effectID": 2
+  },
+  {
+    "id": 41,
+    "name": "マホミラー",
+    "explanation": "魔法を極めたものが使える究極の防御魔法。魔法を跳ね返す。",
+    "equipSection": 3,
+    "value": 500000,
+    "effectValue": 1,
+    "effectID": 2
+  },
+  {
+    "id": 42,
+    "name": "マホトラン",
+    "explanation": "魔法によるダメージを0にする。",
+    "equipSection": 3,
+    "value": 300000,
+    "effectValue": 0,
+    "effectID": 2
+  },
+  {
+    "id": 43,
+    "name": "マホバリア",
+    "explanation": "魔法のダメージをそこそこ減らす。",
+    "equipSection": 3,
+    "value": 75000,
+    "effectValue": 0.6,
+    "effectID": 2
+  },
+  {
+    "id": 44,
+    "name": "マホパワー",
+    "explanation": "魔法のダメージの1/3の値で回復する",
+    "equipSection": 3,
+    "value": 50000,
+    "effectValue": 0.9,
+    "effectID": 2
   }
 ]

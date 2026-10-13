@@ -138,6 +138,24 @@ Vector2 InputManager::GetMousePos() const {
 	return pos;
 }
 
+bool InputManager::IsButton(int _padIndex, int _button) const {
+	auto pad = GetPad(_padIndex);
+	if (!pad) return false;
+	return pad->IsPad(_button);
+}
+
+bool InputManager::IsButtonDown(int _padIndex, int _button) const {
+	auto pad = GetPad(_padIndex);
+	if (!pad) return false;
+	return pad->IsPadDown(_button);
+}
+
+bool InputManager::IsButtonUp(int _padIndex, int _button) const {
+	auto pad = GetPad(_padIndex);
+	if (!pad) return false;
+	return pad->IsPadUp(_button);
+}
+
 int InputManager::ExchangeXInputButton(int _XINPUT, int _padNum) {
 	int padType = GetJoypadType(_padNum);
 

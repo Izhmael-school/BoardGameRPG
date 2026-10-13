@@ -10,19 +10,21 @@ ElementDataManager::~ElementDataManager() {
 void ElementDataManager::LoadElementData() {
 	itemData = MyJson::LoadJsonFile("res/ExternalFile/Data/ItemData.json");
 	magicData = MyJson::LoadJsonFile("res/ExternalFile/Data/MagicData.json");
-	equipData = MyJson::LoadJsonFile("res/ExternalFile/Data/EquipData.json");
+	equipData = MyJson::LoadJsonFile("res/ExternalFile/Data/EquipmentData.json");
 }
 
 ItemData ElementDataManager::GetItemData(int _id) {
 	for (const auto& item : itemData) {
 		if (item["id"] == _id) {
-			return ItemData{
-				item["id"],
-				item["name"],
-				item["explanation"],
-				item["effectValue"],
-				item["effectID"]
-			};
+			ItemData id;
+
+			id.id = item["id"];
+			id.name = item["name"];
+			id.explanation = item["explanation"];
+			id.value = item["value"];
+			id.effectValue = item["effectValue"];
+			id.effectID = item["effectID"];
+			return id;
 		}
 	}
 	return ItemData();
@@ -31,13 +33,15 @@ ItemData ElementDataManager::GetItemData(int _id) {
 MagicData ElementDataManager::GetMagicData(int _id) {
 	for (const auto& magic : magicData) {
 		if (magic["id"] == _id) {
-			return MagicData{
-				magic["id"],
-				magic["name"],
-				magic["explanation"],
-				magic["effectValue"],
-				magic["effectID"]
-			};
+			MagicData md;
+
+			md.id = magic["id"];
+			md.name = magic["name"];
+			md.explanation = magic["explanation"];
+			md.value = magic["value"];
+			md.effectValue = magic["effectValue"];
+			md.effectID = magic["effectID"];
+			return md;
 		}
 	}
 	return MagicData();
@@ -46,13 +50,15 @@ MagicData ElementDataManager::GetMagicData(int _id) {
 EquipData ElementDataManager::GetEquipData(int _id) {
 	for (const auto& equip : equipData) {
 		if (equip["id"] == _id) {
-			return EquipData{
-				equip["id"],
-				equip["name"],
-				equip["explanation"],
-				equip["equipSection"],
-				equip["value"]
-			};
+			EquipData ed;
+
+			ed.id = equip["id"];
+			ed.name = equip["name"];
+			ed.explanation = equip["explanation"];
+			ed.value = equip["value"];
+			ed.effectValue = equip["effectValue"];
+			return ed;
+
 		}
 	}
 	return EquipData();

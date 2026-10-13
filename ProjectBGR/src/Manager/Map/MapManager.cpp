@@ -18,6 +18,8 @@ void MapManager::Update(float _t)
 }
 
 void MapManager::Render() {
+	return;
+
 	for (int i = 0; i < mapList.size(); ++i) {
 		for (int j = 0; j < mapList[i].size(); ++j) {
 			switch (static_cast<MapTileType>(mapList[i][j])){

@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include "Vector3.h"
+#include "Vector2.h"
 #include "Definition/CommonModule/Math/MyMath.h"
 
 enum EquipPosition {
@@ -47,7 +48,7 @@ protected:
 	// 経験値
 	int currentExp;
 	// マップ上の位置
-	Vector3 mapPosition;
+	Vector2 mapPosition;
 	// 状態異常のリスト
 	std::vector<int> statusList;
 	// 戦い途中の相手
@@ -58,6 +59,9 @@ protected:
 	bool isCpu = false;
 	// 装備のリスト
 	std::vector<int> equipList;
+	// 復活地点
+	Vector2 respawnPoint;
+
 public:
 	CharacterData();
 	virtual ~CharacterData();
@@ -117,10 +121,10 @@ public:
 	bool IsBattling() const { return isBattling; }
 	void SetBattling(bool _isBattling) { isBattling = _isBattling; }
 
-	const Vector3& GetMapPosition() const { return mapPosition; }
-	void SetMapPosition(const Vector3& v) { mapPosition = v; }
+	const Vector2& GetMapPosition() const { return mapPosition; }
+	void SetMapPosition(const Vector2& v) { mapPosition = v; }
 	void SetMapPosition(int _x, int _y) { mapPosition.x = _x; mapPosition.y = _y; }
-	void AddMapPosition(const Vector3& v) { mapPosition = Vector3::VAdd(mapPosition, v); }
+	void AddMapPosition(const Vector2& v) { mapPosition = Vector2::VAdd(mapPosition, v); }
 	void AddMapPosition(int _x, int _y) { mapPosition.x += _x; mapPosition.y += _y; }
 
 	const std::vector<int>& GetStatusList() const { return statusList; }
@@ -132,9 +136,14 @@ public:
 	bool IsUseMagicAttack() { return equipList[EquipPosition_AttackMagic] != -1; }
 	bool IsUseMagicDefense() { return equipList[EquipPosition_DefenseMagic] != -1; }
 	const std::vector<int>& GetEquipList() const { return equipList; }
+	void SetEquip(int _equipID, int _equipSection) { equipList[_equipSection] = _equipID; }
 	void AddEquip(int equipId) { equipList.push_back(equipId); }
 	void RemoveEquip(int arrayIndex) { equipList.erase(equipList.begin() + arrayIndex); }
 	void ClearEquipList() { equipList.clear(); }
+
+	const Vector2& GetRespawnPoint() const { return respawnPoint; }
+	void SetRespawnPoint(const Vector2& _point) { respawnPoint = _point; }
+
 };
 
 #endif // !_CHARACTERDATA_H_

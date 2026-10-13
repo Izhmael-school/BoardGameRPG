@@ -11,7 +11,7 @@
 #include <memory>
 
 class PadBase;
-class UIInput;
+struct UIInput;
 
 constexpr int KEY_NUM = 256;
 constexpr int MAX_PORT_NUM = 4;
@@ -106,7 +106,11 @@ public:
 #pragma endregion
 
 	// コントローラの取得
-	PadBase* GetPad(int _index) const { return pads[_index].get(); }
+	PadBase* GetPad(int _index) const { if (_index < 0 || _index >= pads.size()) return nullptr; pads[_index].get(); }
+
+	bool IsButton(int _padIndex, int _button) const;
+	bool IsButtonDown(int _padIndex, int _button) const;
+	bool IsButtonUp(int _padIndex, int _button) const;
 
 	// XINPUTのボタン番号をDirectInputのボタン番号に変換
 	int ExchangeXInputButton(int _XINPUT, int _padNum);

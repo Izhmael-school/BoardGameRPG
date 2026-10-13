@@ -1,6 +1,7 @@
 ﻿#include "TurnProcessor.h"
 #include "Manager/CharacterData/CharacterDataManager.h"
 #include "Manager/GameObject/GameObjectManager.h"
+#include "Manager/Map/MapManager.h"
 #include "Data/Player/PlayerData.h"
 #include "Manager/UI/UIManager.h"
 #include "UI/Canvas/SceneCanvas/BoardGame/BoardGameCanvas.h"
@@ -19,7 +20,7 @@ TurnProcessor::TurnProcessor(MapManager* _mapManager, CharacterDataManager* _cha
 	boardGameCanvas = std::make_unique<BoardGameCanvas>();
 	boardGameCanvas->Init();
 	// ボードゲームの初期化
-	boardGamePart.Init(_mapManager,character, [this]() {this->TurnEndFunc(); }, [this](CharacterData* _p1, CharacterData* _p2) {StartBattle(_p1, _p2); },_gameObjectManager,boardGameCanvas.get());
+	boardGamePart.Init(uiManager,_mapManager,character, [this]() {this->TurnEndFunc(); }, [this](CharacterData* _p1, CharacterData* _p2) {StartBattle(_p1, _p2); },_gameObjectManager,boardGameCanvas.get());
 	// バトルの初期化
 	battlePart.Init([this]() {this->TurnEndFunc(); character->DeleteEnemyData(); }, _gameObjectManager);
 	// テスト：ボスをスポーンさせる
@@ -91,5 +92,16 @@ void TurnProcessor::StartBattle(CharacterData* _p1, CharacterData* _p2) {
 
 	battlePart.BattleStart(_p1, _p2);
 	gamePart = GamePart_Battle;
+}
+
+void TurnProcessor::BattleEndInVillage() {
+	MapTileType type = boardGamePart.GetCurrentPlayerMapTileType();
+
+	// 村じゃなければそのまま終わる
+	if (type != Tile_Village) {
+		TurnEnd();
+	}
+
+	boardGamePart.SetTurnState(TurnState_End);
 }
 
