@@ -13,6 +13,16 @@ struct VillageData {
 	int taxValue = -1;
 	int rewardTax;
 	int villageLevel = 1;
+
+	/*
+	 * @brief 村の改修に必要なコストを取得
+	 */
+	int GetUpgradeCost() const {return (taxValue * 5) * 1.2f;}
+
+	/*
+	 * @brief 村の買収に費用なコストを取得
+	 */
+	int GetAcquisitionCost() const { return (5000 * villageLevel * 5) * 1.5; }
 };
 
 enum VillageState {
@@ -32,7 +42,7 @@ enum CantActReason {
 };
 
 struct VillageNeedUIInfo {
-	VillageData villageData;
+	VillageData* villageData;
 	VillageState villageState = VillageState_Select;
 	CantActReason reason = CantActReason_Invalid;
 	int selectionIndex = -1;

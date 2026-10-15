@@ -60,7 +60,7 @@ protected:
 	// 装備のリスト
 	std::vector<int> equipList;
 	// 復活地点
-	Vector2 respawnPoint;
+	Vector2 respawnPoint = Vector2(18,8);
 
 public:
 	CharacterData();

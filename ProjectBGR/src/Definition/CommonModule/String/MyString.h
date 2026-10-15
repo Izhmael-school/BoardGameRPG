@@ -31,7 +31,7 @@ public:
 	/// <param name="posY"></param>
 	/// <param name="exRateX"></param>
 	/// <param name="exRateY"></param>
-	static void StringCenterPos(const std::string& _str, int _fontHandle, int* posX, int* posY, int exRateX = 1, int exRateY = 1);
+	static void StringCenterPos(const std::string& _str, int _fontHandle, int* posX, int* posY, float exRateX = 1, float exRateY = 1);
 
 	/// <summary>
 	/// 右詰めのための座標計算
@@ -41,5 +41,5 @@ public:
 	/// <param name="posX"></param>
 	/// <param name="exRateX"></param>
 	/// <returns></returns>
-	static int StringRightPos(const std::string& _str, int _fontHandle, int posX, int exRateX = 1);
+	static int StringRightPos(const std::string& _str, int _fontHandle, int posX, float exRateX = 1);
 };

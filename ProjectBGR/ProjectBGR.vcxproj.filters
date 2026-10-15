@@ -325,6 +325,21 @@
     <Filter Include="ソース ファイル\UI\Canvas\SceneCanvas\Village">
       <UniqueIdentifier>{386b417a-c128-430a-b68a-1409328b142c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Manager\Scene\GameScene\PlayerSetting">
+      <UniqueIdentifier>{c37a6fcb-7646-4a1c-8d3f-d10198ab4aa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\PlayerSetting">
+      <UniqueIdentifier>{546f50f5-cebe-42a1-a000-0092165bf7c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\PlayerSetting\PlayerNum">
+      <UniqueIdentifier>{0074e1a0-93c2-4d0d-9f2e-454d83f05811}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\Canvas\SceneCanvas\PlayerSetting">
+      <UniqueIdentifier>{1bdb0390-2650-46a3-bb55-275465b83537}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\PlayerSetting\PlayerName">
+      <UniqueIdentifier>{aae96978-a7cb-4909-9503-88b36e938deb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -605,6 +620,21 @@
     </ClCompile>
     <ClCompile Include="src\UI\Canvas\SceneCanvas\Village\VillageCanvas.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Manager\Scene\GameScene\PlayerSetting\PlayerSettingScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\PlayerSetting\PlayerNum\DecidePlayerNumPart.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\PlayerSetting\PlayerSettingBase.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\Canvas\SceneCanvas\PlayerSetting\PlayerSettingCanvas.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\PlayerSetting\PlayerName\DecidePlayerNamePart.cpp">
+      <Filter>ソース ファイル\Turn\Part\PlayerSetting\PlayerName</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -913,6 +943,27 @@
     </ClInclude>
     <ClInclude Include="src\UI\Canvas\SceneCanvas\Village\VillageCanvas.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Manager\Map\MapInfo.h">
+      <Filter>ソース ファイル\Manager\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Manager\Scene\GameScene\PlayerSetting\PlayerSettingScene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\PlayerSetting\PlayerNum\DecidePlayerNumPart.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\PlayerSetting\PlayerSettingInfo.h">
+      <Filter>ソース ファイル\Turn\Part\PlayerSetting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\PlayerSetting\PlayerSettingBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\Canvas\SceneCanvas\PlayerSetting\PlayerSettingCanvas.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\PlayerSetting\PlayerName\DecidePlayerNamePart.h">
+      <Filter>ソース ファイル\Turn\Part\PlayerSetting\PlayerName</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -4,13 +4,14 @@
 #include "GameScene/Title/TitleScene.h"
 #include "GameScene/MainGame/MainGameScene.h"
 #include "GameScene/Debug/DebugSelectScene.h"
+#include "GameScene/PlayerSetting/PlayerSettingScene.h"
 #include "Manager/UI/UIManager.h"
 #include "UI/Input/UIInput.h"
 
 SceneManager::~SceneManager() = default;
 
 SceneManager::SceneManager() 
-	: currentSceneType(SceneType::MainGame)
+	: currentSceneType(SceneType::PlayerSetting)
 	, nextSceneType(SceneType::Invalid)
 	,isFade(false)
 { Start(); }
@@ -23,10 +24,12 @@ void SceneManager::Start(){
 	// 繧ｷ繝ｼ繝ｳ縺ｮ逕滓・
 	scene[static_cast<int>(SceneType::DebugSceneSelect)] = std::make_unique<DebugSceneSelectScene>();
 	scene[static_cast<int>(SceneType::Title)] = std::make_unique<TitleScene>();
+	scene[static_cast<int>(SceneType::PlayerSetting)] = std::make_unique<PlayerSettingScene>(uiManager.get());
 	scene[static_cast<int>(SceneType::MainGame)] = std::make_unique<MainGameScene>(uiManager.get());
 
 	// 蛻晄悄繧ｷ繝ｼ繝ｳ縺ｮ貅門ｙ
 	scene[static_cast<int>(currentSceneType)]->Setup();
+	
 }
 
 void SceneManager::Update(float _t){

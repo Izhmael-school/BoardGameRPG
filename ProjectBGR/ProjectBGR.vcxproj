@@ -219,6 +219,7 @@
     <ClCompile Include="src\Manager\Resource\ResourceBase.cpp" />
     <ClCompile Include="src\Manager\Scene\GameScene\Debug\DebugSelectScene.cpp" />
     <ClCompile Include="src\Manager\Scene\GameScene\MainGame\MainGameScene.cpp" />
+    <ClCompile Include="src\Manager\Scene\GameScene\PlayerSetting\PlayerSettingScene.cpp" />
     <ClCompile Include="src\Manager\Scene\GameScene\SceneBase.cpp" />
     <ClCompile Include="src\Manager\Scene\GameScene\Title\TitleScene.cpp" />
     <ClCompile Include="src\Manager\Scene\SceneManager.cpp" />
@@ -238,10 +239,14 @@
     <ClCompile Include="src\Turn\Part\BoardGame\Shop\ShopElement.cpp" />
     <ClCompile Include="src\Turn\Part\BoardGame\Shop\ShopPart.cpp" />
     <ClCompile Include="src\Turn\Part\BoardGame\Village\VillagePart.cpp" />
+    <ClCompile Include="src\Turn\Part\PlayerSetting\PlayerName\DecidePlayerNamePart.cpp" />
+    <ClCompile Include="src\Turn\Part\PlayerSetting\PlayerNum\DecidePlayerNumPart.cpp" />
+    <ClCompile Include="src\Turn\Part\PlayerSetting\PlayerSettingBase.cpp" />
     <ClCompile Include="src\Turn\TurnProcessor.cpp" />
     <ClCompile Include="src\UI\Canvas\SceneCanvas\BoardGame\BoardGameCanvas.cpp" />
     <ClCompile Include="src\UI\Canvas\SceneCanvas\Church\ChurchCanvas.cpp" />
     <ClCompile Include="src\UI\Canvas\SceneCanvas\MainGame\MainGameCanvas.cpp" />
+    <ClCompile Include="src\UI\Canvas\SceneCanvas\PlayerSetting\PlayerSettingCanvas.cpp" />
     <ClCompile Include="src\UI\Canvas\SceneCanvas\Shop\ShopCanvas.cpp" />
     <ClCompile Include="src\UI\Canvas\SceneCanvas\Village\VillageCanvas.cpp" />
     <ClCompile Include="src\UI\Canvas\UICanvasBase.cpp" />
@@ -310,6 +315,7 @@
     <ClInclude Include="src\Manager\Instance\Effect\Instance\EffectInstance.h" />
     <ClInclude Include="src\Manager\Instance\InstanceBase.h" />
     <ClInclude Include="src\Manager\ManagerBase.h" />
+    <ClInclude Include="src\Manager\Map\MapInfo.h" />
     <ClInclude Include="src\Manager\Map\MapManager.h" />
     <ClInclude Include="src\Manager\Resource\Audio\AudioResourceManager.h" />
     <ClInclude Include="src\Manager\Resource\Audio\Resource\AudioResource.h" />
@@ -319,6 +325,7 @@
     <ClInclude Include="src\Manager\Resource\ResourceBase.h" />
     <ClInclude Include="src\Manager\Scene\GameScene\Debug\DebugSelectScene.h" />
     <ClInclude Include="src\Manager\Scene\GameScene\MainGame\MainGameScene.h" />
+    <ClInclude Include="src\Manager\Scene\GameScene\PlayerSetting\PlayerSettingScene.h" />
     <ClInclude Include="src\Manager\Scene\GameScene\SceneBase.h" />
     <ClInclude Include="src\Manager\Scene\GameScene\Title\TitleScene.h" />
     <ClInclude Include="src\Manager\Scene\SceneManager.h" />
@@ -341,10 +348,15 @@
     <ClInclude Include="src\Turn\Part\BoardGame\Shop\ShopPart.h" />
     <ClInclude Include="src\Turn\Part\BoardGame\Village\VillageInfo.h" />
     <ClInclude Include="src\Turn\Part\BoardGame\Village\VillagePart.h" />
+    <ClInclude Include="src\Turn\Part\PlayerSetting\PlayerName\DecidePlayerNamePart.h" />
+    <ClInclude Include="src\Turn\Part\PlayerSetting\PlayerNum\DecidePlayerNumPart.h" />
+    <ClInclude Include="src\Turn\Part\PlayerSetting\PlayerSettingBase.h" />
+    <ClInclude Include="src\Turn\Part\PlayerSetting\PlayerSettingInfo.h" />
     <ClInclude Include="src\Turn\TurnProcessor.h" />
     <ClInclude Include="src\UI\Canvas\SceneCanvas\BoardGame\BoardGameCanvas.h" />
     <ClInclude Include="src\UI\Canvas\SceneCanvas\Church\ChurchCanvas.h" />
     <ClInclude Include="src\UI\Canvas\SceneCanvas\MainGame\MainGameCanvas.h" />
+    <ClInclude Include="src\UI\Canvas\SceneCanvas\PlayerSetting\PlayerSettingCanvas.h" />
     <ClInclude Include="src\UI\Canvas\SceneCanvas\Shop\ShopCanvas.h" />
     <ClInclude Include="src\UI\Canvas\SceneCanvas\Village\VillageCanvas.h" />
     <ClInclude Include="src\UI\Canvas\UICanvasBase.h" />

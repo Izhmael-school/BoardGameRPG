@@ -16,8 +16,10 @@
 #include "BoardGameElement.h"
 #include <string>
 #include <functional>
+#include "Manager/Map/MapInfo.h"
 
 class CharacterData;
+class PlayerData;
 class CharacterDataManager;
 class GameObject;
 class GameObjectManager;

@@ -1,15 +1,16 @@
 #include "VillagePart.h"
-#include "Data/Player/PlayerData.h";
+#include "Data/Player/PlayerData.h"
 #include "Manager/Input/InputManager.h"
 #include "Definition/CommonModule/Json/MyJson.h"
 #include "UI/Canvas/SceneCanvas/Village/VillageCanvas.h"
 #include "UI/Canvas/UICanvasBase.h"
 #include "Manager/UI/UImanager.h"
 
-void VillagePart::Init(UIManager* _uiManager) {
+void VillagePart::Init(UIManager* _uiManager, std::function<void()> _leaveFunc) {
 	uiManager = _uiManager;
+	leaveFunc = _leaveFunc;
 
-	auto data = MyJson::LoadJsonFile("res/Data/OriginVillageData.json");
+	auto data = MyJson::LoadJsonFile("res/ExternalFile/Data/OriginVillageData.json");
 
 	for (auto& d : data) {
 		VillageData v;
@@ -19,7 +20,14 @@ void VillagePart::Init(UIManager* _uiManager) {
 		v.taxValue = d["tax"];
 		v.villageLevel = 1;
 
-		villageDataArray.emplace_back(v);
+		int posX = d["pos"][0];
+		int posY = d["pos"][1];
+
+		std::pair<int, int> pos = { posX,posY };
+
+		std::pair<std::pair<int, int>, VillageData> addData = { pos,v };
+
+		villageDataArray.emplace_back(addData);
 	}
 
 	villageCanvas = std::make_unique<VillageCanvas>();
@@ -27,15 +35,19 @@ void VillagePart::Init(UIManager* _uiManager) {
 }
 
 void VillagePart::Update(float _t) {
+	VillageNeedUIInfo info;
+
+	reason = CantActReason_Invalid;
+
 	switch (villageState) {
-	case VillageState_Select:		
+	case VillageState_Select:
 		if (InputManager::GetInstance().IsKeyDown(KEY_LEFT))
-		modeSelection = std::max(0, modeSelection - 1);
+			elementSelection = std::max(0, elementSelection - 1);
 		if (InputManager::GetInstance().IsKeyDown(KEY_RIGHT))
-			modeSelection = std::min(modeSelection + 1, static_cast<int>(VillageState_Max) - 1);
+			elementSelection = std::min(elementSelection + 1, static_cast<int>(VillageState_Max) - 1);
 		if (InputManager::GetInstance().IsKeyDown(KEY_RETURN)) {
-			villageState = static_cast<VillageState>(modeSelection);
-			elementSelection = 0;
+			villageState = static_cast<VillageState>(elementSelection);
+			modeSelection = 0;
 		}
 		break;
 	case VillageState_GetTax:
@@ -50,9 +62,15 @@ void VillagePart::Update(float _t) {
 	case VillageState_Leave:
 		Leave();
 		break;
-	default:
-		break;
 	}
+
+	info.modeSelectionIndex = modeSelection;
+	info.selectionIndex = elementSelection;
+	info.villageData = currentVillage;
+	info.villageState = villageState;
+	info.reason = reason;
+
+	static_cast<VillageCanvas*>(villageCanvas.get())->SetVillageNeedUIInfo(info);
 }
 
 void VillagePart::Enter(PlayerData* _currentTurnPlayer) {
@@ -72,7 +90,7 @@ void VillagePart::Enter(PlayerData* _currentTurnPlayer) {
 
 		if (x != pos.x || y != pos.y) continue;
 		isReturn = false;
-		currentVillage = v.second;
+		currentVillage = &v.second;
 		break;
 	}
 
@@ -84,26 +102,42 @@ void VillagePart::Enter(PlayerData* _currentTurnPlayer) {
 
 	uiManager->PushCanvas(villageCanvas.get());
 
+	villageState = VillageState_Select;
+
 	// 誰も来たことがない村ならプレイヤーをオーナーにする
-	if (currentVillage.ownerPlayerNum != -1)
+	if (currentVillage->ownerPlayerNum != -1)
 		return;
 
-	currentVillage.ownerPlayerNum = currentTurnPlayer->GetPlayerNum();
+	currentVillage->ownerPlayerNum = currentTurnPlayer->GetPlayerNum();
 	// 税を貯めるようにする
 	isSaveTax = true;
 }
 
 void VillagePart::Leave() {
+	currentTurnPlayer = nullptr;
+	currentVillage = nullptr;
+	villageState = VillageState_Select;
 	uiManager->PopCanvas(villageCanvas.get());
+	leaveFunc();
 }
 
 void VillagePart::Update_GetTax(float _t) {
-	if (!IsOwner()) {
+	static bool isBack = false;
+	static CantActReason keepReason = CantActReason_Invalid;
+
+	if (isBack && InputManager::GetInstance().IsKeyDown(KEY_RETURN)) {
 		villageState = VillageState_Select;
+		isBack = false;
+		keepReason = CantActReason_Invalid;
 		return;
 	}
 
-	if (currentVillage.rewardTax <= 0) {
+	if (isBack) {
+		reason = keepReason;
+		return;
+	}
+
+	if (InputManager::GetInstance().IsKeyDown(KEY_B)) {
 		villageState = VillageState_Select;
 		return;
 	}
@@ -113,63 +147,130 @@ void VillagePart::Update_GetTax(float _t) {
 
 	if (InputManager::GetInstance().IsKeyDown(KEY_RETURN) && modeSelection == 0) {
 		GetTax();
+		keepReason = reason;
+		isBack = true;
+	}
+
+	if (InputManager::GetInstance().IsKeyDown(KEY_RETURN) && modeSelection == 1) {
 		villageState = VillageState_Select;
 	}
 }
 
 constexpr int VILLAGE_LEVEL_MAX = 3;
 void VillagePart::Update_Upgrade(float _t) {
-	// レベルが3なら最大のため帰る
-	if (currentVillage.villageLevel == VILLAGE_LEVEL_MAX) {
+	static bool isBack = false;
+	static CantActReason keepReason = CantActReason_Invalid;
+
+	if (isBack && InputManager::GetInstance().IsKeyDown(KEY_RETURN)) {
 		villageState = VillageState_Select;
+		isBack = false;
+		keepReason = CantActReason_Invalid;
+		return;
+	}
+
+	if (isBack) {
+		reason = keepReason;
 		return;
 	}
 
 	if (InputManager::GetInstance().IsKeyDown(KEY_UP) || InputManager::GetInstance().IsKeyDown(KEY_DOWN))
 		modeSelection ^= 1;
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_RETURN) && modeSelection == 0) {
-		Upgrade();
-		villageState = VillageState_Select;
+	if (InputManager::GetInstance().IsKeyDown(KEY_RETURN)) {
+		if (modeSelection == 0) {
+			Upgrade();
+			isBack = true;
+			keepReason = reason;
+		}
+		else {
+			villageState = VillageState_Select;
+		}
 	}
 }
 
 void VillagePart::Update_Acquisition(float _t) {
-	// 自分がオーナーなら帰る
-	if (IsOwner()) return;
+	static bool isBack = false;
+	static CantActReason keepReason = CantActReason_Invalid;
+
+	if (isBack && InputManager::GetInstance().IsKeyDown(KEY_RETURN)) {
+		villageState = VillageState_Select;
+		isBack = false;
+		keepReason = CantActReason_Invalid;
+		return;
+	}
+
+	if (isBack) {
+		reason = keepReason;
+		return;
+	}
 
 	if (InputManager::GetInstance().IsKeyDown(KEY_UP) || InputManager::GetInstance().IsKeyDown(KEY_DOWN))
 		modeSelection ^= 1;
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_RETURN) && modeSelection == 0) {
-		Acquisition();
-		villageState = VillageState_Select;
+	if (InputManager::GetInstance().IsKeyDown(KEY_RETURN)) {
+		if (modeSelection == 0) {
+			Acquisition();
+			isBack = true;
+			keepReason = reason;
+		}
+		else {
+			villageState = VillageState_Select;
+		}
 	}
 }
 
 void VillagePart::GetTax() {
+	if (!IsOwner()) {
+		reason = CantActReason_DontOwner;
+		return;
+	}
+
+	if (currentVillage->rewardTax <= 0) {
+		reason = CantActReason_NotEnoughMoney;
+		return;
+	}
+
 	// オーナーなら税を受け取る
-	currentTurnPlayer->AddMoney(currentVillage.rewardTax);
+	currentTurnPlayer->AddMoney(currentVillage->rewardTax);
 	// 税をゼロにする
-	currentVillage.rewardTax = 0;
+	currentVillage->rewardTax = 0;
 }
 
 void VillagePart::Upgrade() {
+	// レベルが3なら最大のため帰る
+	if (currentVillage->villageLevel == VILLAGE_LEVEL_MAX) {
+		reason = CantActReason_DontNeed;
+		return;
+	}
+
 	// 税5回分×1.2をアップグレード費用とする
-	int upgradeCost = (currentVillage.taxValue * 5) * 1.2f;
+	int upgradeCost = currentVillage->GetUpgradeCost();
 	// お金が足りていればアップグレードする
 	if (currentTurnPlayer->GetMoney() >= upgradeCost) {
-		currentVillage.villageLevel += 1;
+		currentVillage->villageLevel += 1;
 		// 1回で貯まる税が3倍になる
-		currentVillage.taxValue *= 3;
+		currentVillage->taxValue *= 3;
+	}
+	else {
+		reason = CantActReason_NotEnoughMoney;
 	}
 }
 
 void VillagePart::Acquisition() {
+	// 自分がオーナーなら帰る
+	if (IsOwner()) {
+		reason = CantActReason_DontNeed;
+		return;
+	}
+
 	// 基本5000に村のレベル×5したものに1.5を掛ける
-	int acquisitionCost = (5000 * (currentVillage.villageLevel * 5)) * 1.5;
+	int acquisitionCost = currentVillage->GetAcquisitionCost();
 
 	// お金が足りていれば買収する
 	if (currentTurnPlayer->GetMoney() >= acquisitionCost)
-		currentVillage.ownerPlayerNum = currentTurnPlayer->GetPlayerNum();
+		currentVillage->ownerPlayerNum = currentTurnPlayer->GetPlayerNum();
+	else
+		reason = CantActReason_NotEnoughMoney;
 }
+
+bool VillagePart::IsOwner() { return currentTurnPlayer->GetPlayerNum() == currentVillage->ownerPlayerNum; }

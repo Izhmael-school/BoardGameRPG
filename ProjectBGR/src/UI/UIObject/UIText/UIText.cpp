@@ -28,22 +28,23 @@ void UIText::OnInit() {
 	// テキストスタイルからテキストの位置をもらう
 	TextDrawPosition drawPos = style.textDrawPosition;
 	int x = position.x, y = position.y;
+	float extend = 1.0f;//(float)style.fontSize / (float)D_FONT_SIZE;
 	switch (drawPos) {
 	case TextDrawPosition_Left:
-		MyString::StringCenterPos(text, fontHandle, &x, &y,D_FONT_SIZE / style.fontSize, D_FONT_SIZE / style.fontSize);
+		MyString::StringCenterPos(text, fontHandle, &x, &y, extend, extend);
 		position.y = y;
 		// 左端揃え
 		break;
 	case TextDrawPosition_Center:
 		// 中央揃え
-		MyString::StringCenterPos(text, fontHandle, &x, &y, D_FONT_SIZE / style.fontSize, D_FONT_SIZE / style.fontSize);
+		MyString::StringCenterPos(text, fontHandle, &x, &y, extend, extend);
 		position = Vector2(x, y);
 		break;
 	case TextDrawPosition_Right:
 		// 右端揃え
 		int sx;
-		MyString::StringCenterPos(text, fontHandle, &sx, &y, D_FONT_SIZE / style.fontSize, D_FONT_SIZE / style.fontSize);
-		x = MyString::StringRightPos(text, fontHandle, x, D_FONT_SIZE / style.fontSize);
+		MyString::StringCenterPos(text, fontHandle, &sx, &y, extend, extend);
+		x = MyString::StringRightPos(text, fontHandle, x, extend);
 		position = Vector2(x, y);
 		break;
 	}

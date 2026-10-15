@@ -68,22 +68,28 @@ void VillageCanvas::Update(float _t, UIInput& _input) {
 			text->SetSelect(true);
 		}
 	}
-		break;
+	break;
 	case VillageState_GetTax:
-		if (!tax)
+		if (!tax) {
 			OpenGetTaxUI();
+			return;
+		}
 
 		UpdateGetTaxUI();
 		break;
 	case VillageState_Upgrade:
-		if (!upgrade)
+		if (!upgrade) {
 			OpenUpgradeUI();
+			return;
+		}
 
 		UpdateUpgradeUI();
 		break;
 	case VillageState_Acquisition:
-		if (!acquisition)
+		if (!acquisition) {
 			OpenAcquisitionUI();
+			return;
+		}
 
 		UpdateAcquisitionUI();
 		break;
@@ -129,19 +135,32 @@ void VillageCanvas::UpdateGetTaxUI() {
 
 		text->SetSelect(info.modeSelectionIndex == i);
 	}
+
+	std::string drawText = "";
+
+	switch (info.reason) {
+	case CantActReason_DontOwner:
+		drawText = "領主じゃないため受け取れません。";
+		break;
+	case CantActReason_NotEnoughMoney:
+		drawText = "お金が貯まっていません。";
+		break;
+	}
+
+	dialog->SetText(drawText);
 }
 
 void VillageCanvas::OpenUpgradeUI() {
-	if (tax) return;
+	if (upgrade) return;
 
 	select->SetActive(false);
 
-	tax = Instantiate<UIObject>();
+	upgrade = Instantiate<UIObject>();
 	UITextStyle style;
 	auto textYes = UniqueInstantiate<UIText>("出資する", style, Vector2(300, 300));
 	auto textNo = UniqueInstantiate<UIText>("出資しない", style, Vector2(300, 320));
-	tax->AddChild(std::move(textYes));
-	tax->AddChild(std::move(textNo));
+	upgrade->AddChild(std::move(textYes));
+	upgrade->AddChild(std::move(textNo));
 }
 
 void VillageCanvas::CloseUpgradeUI() {
@@ -168,19 +187,32 @@ void VillageCanvas::UpdateUpgradeUI() {
 
 		text->SetSelect(info.modeSelectionIndex == i);
 	}
+
+	std::string drawText = "";
+
+	switch (info.reason) {
+	case CantActReason_DontNeed:
+		drawText = "最大まで大きくなりました。";
+		break;
+	case CantActReason_NotEnoughMoney:
+		drawText = "お金が足りません。";
+		break;
+	}
+
+	dialog->SetText(drawText);
 }
 
 void VillageCanvas::OpenAcquisitionUI() {
-	if (tax) return;
+	if (acquisition) return;
 
 	select->SetActive(false);
 
-	tax = Instantiate<UIObject>();
+	acquisition = Instantiate<UIObject>();
 	UITextStyle style;
 	auto textYes = UniqueInstantiate<UIText>("買収する", style, Vector2(300, 300));
 	auto textNo = UniqueInstantiate<UIText>("買収しない", style, Vector2(300, 320));
-	tax->AddChild(std::move(textYes));
-	tax->AddChild(std::move(textNo));
+	acquisition->AddChild(std::move(textYes));
+	acquisition->AddChild(std::move(textNo));
 }
 
 void VillageCanvas::CloseAcquisitionUI() {
@@ -207,4 +239,17 @@ void VillageCanvas::UpdateAcquisitionUI() {
 
 		text->SetSelect(info.modeSelectionIndex == i);
 	}
+
+	std::string drawText = "";
+
+	switch (info.reason) {
+	case CantActReason_DontNeed:
+		drawText = "すでにあなたの村です。";
+		break;
+	case CantActReason_NotEnoughMoney:
+		drawText = "お金が足りません。";
+		break;
+	}
+
+	dialog->SetText(drawText);
 }

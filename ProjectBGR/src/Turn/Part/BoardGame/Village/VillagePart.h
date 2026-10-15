@@ -9,6 +9,8 @@
 #include "VillageInfo.h"
 #include <vector>
 #include <utility>
+#include <memory>
+#include <functional>
 
 class PlayerData;
 class UICanvasBase;
@@ -24,7 +26,7 @@ private:
 
 	bool isSaveTax = false;
 
-	VillageData& currentVillage;
+	VillageData* currentVillage = nullptr;
 
 	VillageState villageState;
 
@@ -36,8 +38,11 @@ private:
 
 	std::unique_ptr<UICanvasBase> villageCanvas = nullptr;
 
+	CantActReason reason;
+
+	std::function<void()> leaveFunc;
 public:
-	void Init(UIManager* _uiManager);
+	void Init(UIManager* _uiManager,std::function<void()> _leaveFunc);
 
 	/*
 	 * @brief 更新
@@ -75,7 +80,7 @@ private:
 	/*
 	 * @brief 現在村にいるプレイヤーがオーナーか
 	 */
-	bool IsOwner() { return currentTurnPlayer->GetPlayerNum() == currentVillage.ownerPlayerNum; }
+	bool IsOwner();
 };
 
 #endif // !_VILLAGEPART_H_

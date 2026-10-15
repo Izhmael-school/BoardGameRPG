@@ -30,7 +30,6 @@ PlayerData* CharacterDataManager::CreatePlayerData(Job _job) {
 	newPlayerData->Heal(newPlayerData->GetMaxHp());
 	// 初期スタート地点にセット
 	newPlayerData->SetMapPosition(18, 8);
-	newPlayerData->SetMapPosition(33, 10);
 
 	playerDataArray.emplace_back(std::move(newPlayerData));
 	return playerDataArray.back().get();
@@ -120,18 +119,22 @@ void CharacterDataManager::DebugCreatePlayerData(Job _p1, Job _p2, Job _p3, Job 
 	p1->AddItem(0);
 	p1->AddMagic(0);
 	p1->SetMoney(10000);
+	p1->SetPlayerNum(0);
 	auto p2 = CreatePlayerData(_p2);
 	p2->SetColor(0xff0000);
 	p2->AddItem(0);
 	p2->AddMagic(0);
+	p2->SetPlayerNum(1);
 	auto p3 = CreatePlayerData(_p3);
 	p3->SetColor(0xffff00);
 	p3->AddItem(0);
 	p3->AddMagic(0);
+	p3->SetPlayerNum(2);
 	auto p4 = CreatePlayerData(_p4);
 	p4->SetColor(0x008000);
 	p4->AddItem(0);
 	p4->AddMagic(0);
+	p4->SetPlayerNum(3);
 }
 
 #include "DxLib.h"

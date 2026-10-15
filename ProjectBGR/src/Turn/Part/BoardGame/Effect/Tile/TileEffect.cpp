@@ -50,16 +50,16 @@ TileEffectEnum TileEffect::Effect(MapTileType _type, std::vector<CharacterData*>
 		isGoNext = MagicGet();
 		return TileEffectEnum::TileEffect_Magic;
 	case Tile_ItemShop:
-		isGoNext = true;
 		changeBoardGameState(TurnState_ShopIn);
+		isGoNext = true;
 		return TileEffectEnum::TileEffect_ItemShop;
 	case Tile_MagicShop:
-		isGoNext = true;
 		changeBoardGameState(TurnState_ShopIn);
+		isGoNext = true;
 		return TileEffectEnum::TileEffect_MagicShop;
 	case Tile_EquipShop:
-		isGoNext = true;
 		changeBoardGameState(TurnState_ShopIn);
+		isGoNext = true;
 		return TileEffectEnum::TileEffect_EquipShop;
 	case Tile_Village:
 	{
@@ -72,13 +72,14 @@ TileEffectEnum TileEffect::Effect(MapTileType _type, std::vector<CharacterData*>
 		}
 		// いなければそのまま村に入る
 		else {
+			changeBoardGameState(TurnState_VillageIn);
 			isGoNext = true;
 			return TileEffect_Village;
 		}
 	}
 	case Tile_Church:
-		isGoNext = true;
 		changeBoardGameState(TurnState_ChurchIn);
+		isGoNext = true;
 		return TileEffectEnum::TileEffect_Church;
 	default:
 		isGoNext = true;

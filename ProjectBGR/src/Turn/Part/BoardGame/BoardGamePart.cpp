@@ -25,10 +25,10 @@ void BoardGamePart::Init(UIManager* _uiManager, MapManager* _map, CharacterDataM
 	TileEffect::SetChangeTurnStateFunc([this](TurnState _changeTurnState) {turnState = _changeTurnState; });
 	shopPart.Init(_uiManager, [this]() { ShopOut(); });
 	churchPart.Init(_uiManager, [this]() { ShopOut(); });
-	villagePart.Init(_uiManager);
+	villagePart.Init(_uiManager, [this]() { ShopOut(); });
 
 	// 最初にすべての村に敵を配置する
-	character->CreateEnemyDataToAllVillage();
+	//character->CreateEnemyDataToAllVillage();
 }
 
 void BoardGamePart::Setup() {
@@ -290,8 +290,10 @@ void BoardGamePart::TileEffectExecute() {
 	std::vector<CharacterData*> characters = character->GetCharacterDataToMapPos(pos.x, pos.y);
 	TileEffectEnum effect = TileEffect::Effect(map->GetMapTileType(pos.x, pos.y), characters, isGoNext);
 
-	// バトル
-	if (isGoNext && effect == TileEffect_Battle) {
+	if (!isGoNext) return;
+
+	switch (effect) {
+	case TileEffect_Battle:
 		// 今いるマスに自分しかいないなら敵を生成する
 		if (characters.size() == 1)
 			CharacterData* enemy = character->CreateEnemyData(0, pos.x, pos.y);
@@ -307,10 +309,23 @@ void BoardGamePart::TileEffectExecute() {
 		// バトルに入ったら帰る
 		if (turnState == TurnState_BattleIn)
 			return;
-	}
-
-	if (isGoNext/* && InputManager::GetInstance().IsKeyDown(KEY_INPUT_RETURN)*/)
+	case TileEffect_ItemShop:
+	case TileEffect_EquipShop:
+	case TileEffect_MagicShop:
+		shopPart.Open(pos.x, pos.y, currentPlayerData);
+		return;
+	case TileEffect_Village:
+		villagePart.Enter(currentPlayerData);
+		return;
+	case TileEffect_Church:
+		churchPart.Open(currentPlayerData);
+		return;
+	case TileEffect_Magic:
+	case TileEffect_Item:
+	default:
 		turnState = TurnState_End;
+		break;
+	}
 }
 
 void BoardGamePart::InBattle() {

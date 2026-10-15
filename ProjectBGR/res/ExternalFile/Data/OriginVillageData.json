@@ -175,7 +175,7 @@
     "owner": -1,
     "rewardValue": 200000,
     "receiveReward": false,
-    "tax": -1,
+    "tax": 5000,
     "bossID": -1,
     "bossKill": false
   },
@@ -185,7 +185,7 @@
     "owner": -1,
     "rewardValue": 200000,
     "receiveReward": false,
-    "tax": -1,
+    "tax": 5000,
     "bossID": -1,
     "bossKill": false
   }
