@@ -4,34 +4,34 @@
 void DecidePlayerNumPart::Update(float _t) {
 	PlayerSettingBase::Update(_t);
 
-	if(input->IsKeyDown(KEY_UP))
+	if(input->IsButtonDown(XINPUT_DPAD_UP))
 		currentSelect = std::max(0, currentSelect - 1);
 
-	if (input->IsKeyDown(KEY_DOWN))
+	if (input->IsButtonDown(XINPUT_DPAD_DOWN))
 		currentSelect = std::min(currentSelect + 1, static_cast<int>(CanSelect_Max) - 1);
 	
 	switch (static_cast<CanSelect_DecidePlayerNumPart>(currentSelect)) {
 	case CanSelect_Player:
-		if (input->IsKeyDown(KEY_LEFT))
+		if (input->IsButtonDown(XINPUT_DPAD_LEFT))
 			playerNum = std::max(1, playerNum - 1);
 		// CPUの数に応じて上限を下げる
-		if (input->IsKeyDown(KEY_RIGHT))
+		if (input->IsButtonDown(XINPUT_DPAD_RIGHT))
 			playerNum = std::min(playerNum + 1, PLAYER_MAX - cpuNum);
 
 		break;
 	case CanSelect_NPC:
 
-		if (input->IsKeyDown(KEY_LEFT))
+		if (input->IsButtonDown(XINPUT_DPAD_LEFT))
 			cpuNum = std::max(0, cpuNum - 1);
 		// プレイヤーの数に応じて上限を下げる
-		if (input->IsKeyDown(KEY_RIGHT))
+		if (input->IsButtonDown(XINPUT_DPAD_RIGHT))
 			cpuNum = std::min(cpuNum + 1, PLAYER_MAX - playerNum);
 
 		break;
 	case CanSelect_Next:
 		// 参加人数が2人以上ならコントローラー設定に行く
-		if (input->IsKeyDown(KEY_RETURN) && playerNum + cpuNum >= 2)
-			changePartFunc(PlayerSettingPart_UsePortNum);
+		if (input->IsButtonDown(XINPUT_A) && playerNum + cpuNum >= 2)
+			onGoNextFunc();
 
 		break;
 	}

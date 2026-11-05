@@ -1,10 +1,11 @@
 #include "UITextDialog.h"
 #include "UI/Input/UIInput.h"
 #include "DxLib.h"
+#include "String/MyString.h"
 
-UITextDialog::UITextDialog(UITextStyle _style, const Vector2& _pos, int backImage)
-	:UIText("", _style, _pos)
-	, nextCharTime(0.1f)
+UITextDialog::UITextDialog(UITextStyle _style, const Vector2& _pos, int backImage, std::string _uiName)
+	:UIText("", _style, _pos, _uiName)
+	, nextCharTime(0.05f)
 	, currentTime(nextCharTime)
 	, currentCharIndex(0)
 	, drawString("")
@@ -25,22 +26,17 @@ void UITextDialog::OnUpdate(float _t, UIInput& _input) {
 
 	if (currentTime >= nextCharTime && !isAllDraw) {
 		currentTime = 0;
-		std::string text = waitStrings.front();
+		std::string drawText = waitStrings.front();
+		std::string currentText = MyString::GetUTF8Char(drawText, currentCharIndex);
 		// 一文字ずつ描画
-		drawString.push_back(text[currentCharIndex]);
-		currentCharIndex++;
-		// すべて描画し終わった
-		if (text.size() - 1 <= currentCharIndex)
+		drawString = MyString::MergeString(drawString, currentText);
+		if (drawText.size() - 1 <= currentCharIndex)
 			isAllDraw = true;
 	}
 
-
-	if (isAllDraw && _input.IsKeyDown(KEY_RETURN)) {
-		isAllDraw = false;
-		currentCharIndex = 0;
-		currentTime = nextCharTime;
-		waitStrings.erase(waitStrings.begin());
-		drawString.clear();
+	// 条件を満たしたら次の文字列に進む
+	if (nextTextFlags.front()()) {
+		DeleteFrontText();
 		return;
 	}
 
@@ -70,4 +66,17 @@ void UITextDialog::OnRender() {
 		DrawStringToHandle(pos.x + 10, pos.y + 20, text.c_str(), color, fontHandle, style.outlineColor);
 		text.clear();
 	}
+}
+
+void UITextDialog::DeleteFrontText() {
+	if (!waitStrings.empty())
+		waitStrings.erase(waitStrings.begin());
+
+	if (!nextTextFlags.empty())
+		nextTextFlags.erase(nextTextFlags.begin());
+
+	isAllDraw = false;
+	currentCharIndex = 0;
+	currentTime = nextCharTime;
+	drawString.clear();
 }

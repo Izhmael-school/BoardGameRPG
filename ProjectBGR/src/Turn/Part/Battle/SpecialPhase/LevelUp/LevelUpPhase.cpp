@@ -39,19 +39,21 @@ bool LevelUpPhase::LevelUp() {
 	if (remainingStatusPoint == -1)
 		remainingStatusPoint = levelUpPlayer->GetStatusPoint();
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_UP))
+	int port = levelUpPlayer->GetControllerNum();
+
+	if (InputManager::GetInstance().IsButtonDown(port,XINPUT_DPAD_UP))
 		currentSelectStatus = max(0, currentSelectStatus - 1);
-	if (InputManager::GetInstance().IsKeyDown(KEY_DOWN))
+	if (InputManager::GetInstance().IsButtonDown(port,XINPUT_DPAD_DOWN))
 		currentSelectStatus = min(canUpStatus - 1, currentSelectStatus + 1);
 
 	// ステータスを増やす
-	if (remainingStatusPoint > 0 && InputManager::GetInstance().IsKeyDown(KEY_RIGHT)) {
+	if (remainingStatusPoint > 0 && InputManager::GetInstance().IsButtonDown(port,XINPUT_DPAD_RIGHT)) {
 		upStatus[currentSelectStatus]++;
 		remainingStatusPoint--;
 	}
 
 	// ステータスを減らす
-	if (InputManager::GetInstance().IsKeyDown(KEY_LEFT)) {
+	if (InputManager::GetInstance().IsButtonDown(port,XINPUT_DPAD_LEFT)) {
 		if (upStatus[currentSelectStatus] > 0) {
 			upStatus[currentSelectStatus]--;
 			remainingStatusPoint++;
@@ -59,7 +61,7 @@ bool LevelUpPhase::LevelUp() {
 	}
 
 	// 確定
-	if (InputManager::GetInstance().IsKeyDown(KEY_RETURN)) {
+	if (InputManager::GetInstance().IsButtonDown(port,XINPUT_A)) {
 
 		levelUpPlayer->AddAtk(upStatus[0]);
 		levelUpPlayer->AddDef(upStatus[1]);

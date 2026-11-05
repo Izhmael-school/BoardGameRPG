@@ -8,7 +8,7 @@
 
 #include "../UIObject.h"
 class UISprite : public UIObject {
-private:
+protected:
 	int graphHandle;
 	// 回転位置
 	int cx, cy;
@@ -18,7 +18,7 @@ private:
 	int ex, ey;
 
 public:
-	UISprite(int _handle, Vector2 _pos,float _ex = 1.0f,float _ey = 1.0f, float _rot = 0);
+	UISprite(int _handle, Vector2 _pos,float _ex = 1.0f,float _ey = 1.0f, float _rot = 0,std::string _name = "");
 	virtual ~UISprite() override = default;
 
 protected:

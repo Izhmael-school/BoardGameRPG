@@ -14,8 +14,6 @@ TurnProcessor::TurnProcessor(MapManager* _mapManager, CharacterDataManager* _cha
 	,gameObjectManager(_gameObjectManager)
 	,uiManager(_uiManager)
 {
-	std::vector<int> defaultOrderList = { 0, 1, 2, 3 };
-	OrderSet(defaultOrderList);
 	// キャンバスの生成
 	boardGameCanvas = std::make_unique<BoardGameCanvas>();
 	boardGameCanvas->Init();
@@ -88,7 +86,7 @@ void TurnProcessor::TurnEnd() {
 void TurnProcessor::StartBattle(CharacterData* _p1, CharacterData* _p2) {
 	// キャンバスの準備
 	uiManager->PopCanvas(boardGameCanvas.get());
-	uiManager->PushCanvas(nullptr);
+	//uiManager->PushCanvas(nullptr);
 
 	battlePart.BattleStart(_p1, _p2);
 	gamePart = GamePart_Battle;

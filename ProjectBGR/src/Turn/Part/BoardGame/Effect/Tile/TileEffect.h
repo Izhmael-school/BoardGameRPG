@@ -21,7 +21,7 @@ enum TileEffectEnum {
 };
 
 #include "Manager/Map/MapManager.h"
-#include "../../BoardGameElement.h"
+#include "../../BoardGameInfo.h"
 #include <functional>
 #include <vector>
 #include "Data/CharacterData.h"
@@ -33,9 +33,11 @@ constexpr int EVENT_IN_PERCENTAGE = 15;
 
 class TileEffect {
 private:
+	static bool isStop;
 	static PlayerData* currentTurnPlayer;
 	static std::function<std::vector<CharacterData*>(int, int)> getTilePosCharacter;
 	static std::function<void(TurnState)> changeBoardGameState;
+	static std::function<void(BoardGameUINeedInfo)> setBoardGameUINeedInfo;
 public:
 	/*
 	 * @biref 効果発動
@@ -48,6 +50,10 @@ public:
 	static void Render();
 
 	static void SetChangeTurnStateFunc(std::function<void(TurnState)> _changeFunc) { changeBoardGameState = _changeFunc; }
+
+	static void SetSetBoardGameUINeedInfoFunc(std::function<void(BoardGameUINeedInfo)> _setFunc) { setBoardGameUINeedInfo = _setFunc; }
+
+	static bool IsStop() { return isStop; }
 private:
 	/*
 	 * @brief　全アイテムの中から10個重複ありでピックアップしてランダムで一つ入手

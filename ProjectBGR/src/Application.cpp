@@ -11,6 +11,7 @@
 #include "Manager/Resource/Model/ModelResourceManager.h"
 #include "Manager/Resource/Effect/EffectResourceManager.h"
 #include "Manager/Resource/Audio/AudioResourceManager.h"
+#include "Manager/Resource/Sprite/SpriteResourceManager.h"
 #include "ImGui.h"
 
 Application::~Application() = default;
@@ -140,6 +141,7 @@ void Application::Render() {
 	ImGui::Text("Model:%d\n", modelResourceManager->GetModelNum());
 	ImGui::Text("Effect:%d\n", effectResourceManager->GetEffectResourceCount());
 	ImGui::Text("Audio:%d\n", audioResourceManager->GetAudioResourceCount());
+	ImGui::Text("Sprite:%d\n", spriteResourceManager->GetLoadedSpriteNum());
 	ImGui::End();
 }
 
@@ -148,10 +150,7 @@ void Application::ResourceLoad() {
 	modelResourceManager = std::make_unique<ModelResourceManager>();
 	effectResourceManager = std::make_unique<EffectResourceManager>();
 	audioResourceManager = std::make_unique<AudioResourceManager>();
-	// ロード
-	modelResourceManager->LoadModelFromExternalFile();
-	effectResourceManager->LoadEffectFromExternalFile();
-	audioResourceManager->LoadAudioFromExternalFile();
+	spriteResourceManager = std::make_unique<SpriteResourceManager>();
 }
 
 void Application::ResourceDelete() {

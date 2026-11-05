@@ -17,15 +17,16 @@ public:
 	~AudioResource() override;
 
 	/*
-	 * @brief 隱ｭ縺ｿ霎ｼ縺ｿ
+	 * @brief 再生
 	 */
 	bool Load() override;
 
 	/*
-	 * @brief 3D髻ｳ貅舌°縺ｩ縺・°
+	 * @brief 3D音源か
 	 */
 	const bool Is3D() const { return is3D; }
 
+	void Set3D(bool _is3D);
 };
 #endif
 

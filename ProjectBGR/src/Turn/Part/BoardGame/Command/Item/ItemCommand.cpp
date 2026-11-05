@@ -2,7 +2,6 @@
 #include "Manager/Input/InputManager.h"
 #include "Data/Player/PlayerData.h"
 #include "Manager/Data/ElementDataManager.h"
-#include "DxLib.h"
 
 bool ItemCommand::SelectItem() {
 	// データがないかこのターンすでにアイテムを使っていたら帰る
@@ -11,20 +10,22 @@ bool ItemCommand::SelectItem() {
 	int itemNum = static_cast<int>(currentSelectPlayer->GetItemList().size()) - 1;
 
 	InputManager& input = InputManager::GetInstance();
+	int port = currentSelectPlayer->GetControllerNum();
 
-	if (input.IsKeyDown(KEY_INPUT_UP))
-		selectItemIndex = max(0, selectItemIndex - 2);
-	if (input.IsKeyDown(KEY_INPUT_DOWN))
-		selectItemIndex = min(itemNum, selectItemIndex + 2);
-	if (input.IsKeyDown(KEY_INPUT_RIGHT))
-		selectItemIndex = min(itemNum,(selectItemIndex % 2 == 0) ? selectItemIndex + 1 : selectItemIndex);
-	if (input.IsKeyDown(KEY_INPUT_LEFT))
+
+	if (input.IsButtonDown(port,XINPUT_DPAD_UP))
+		selectItemIndex = std::max(0, selectItemIndex - 2);
+	if (input.IsButtonDown(port,XINPUT_DPAD_DOWN))
+		selectItemIndex = std::min(itemNum, selectItemIndex + 2);
+	if (input.IsButtonDown(port,XINPUT_DPAD_RIGHT))
+		selectItemIndex = std::min(itemNum,(selectItemIndex % 2 == 0) ? selectItemIndex + 1 : selectItemIndex);
+	if (input.IsButtonDown(port,XINPUT_DPAD_LEFT))
 		selectItemIndex = (selectItemIndex % 2 == 1) ? selectItemIndex - 1 : selectItemIndex;
 
-	if (input.IsKeyDown(KEY_INPUT_B))
+	if (input.IsButtonDown(port, XINPUT_B))
 		return Return();
 
-	if (input.IsKeyDown(KEY_INPUT_RETURN)) {
+	if (input.IsButtonDown(port, XINPUT_A)) {
 		// アイテムを使う
 		UseItem(currentSelectPlayer->GetItemList()[selectItemIndex]);
 		return Return();

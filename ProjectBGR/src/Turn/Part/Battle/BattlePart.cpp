@@ -252,11 +252,53 @@ void BattlePart::AttackOrder() {
 }
 
 void BattlePart::SelectCommand() {
-	offense.SelectCommand();
-	defence.SelectCommand();
+	// 両者の使っているコントローラのポート番号が同じなら攻撃側から選択させる
+	static bool isPortCheck = false;
+	static bool samePort = false;
+
+	if (!isPortCheck) {
+
+		PlayerData* ofPD = static_cast<PlayerData*>(players[attackPlayer]);
+		PlayerData* dePD = static_cast<PlayerData*>(players[attackPlayer ^ 1]);
+
+		int ofPort = -1;
+		int dePort = -2;
+
+		if (ofPD)
+			ofPort = ofPD->GetControllerNum();
+		if (dePort)
+			dePort = dePD->GetControllerNum();
+
+		samePort = ofPort == dePort;
+
+		isPortCheck = true;
+	}
+
+	if (samePort) {
+		static bool isSkipedOneFrame = false;
+		offense.SelectCommand();
+		// 攻撃側選択後にそのまま防御側の選択に入らないように1フレ飛ばす
+		if (offense.IsSelect() && !isSkipedOneFrame) {
+			isSkipedOneFrame = true;
+			return;
+		}
+
+		if (isSkipedOneFrame)
+			defence.SelectCommand();
+
+		if (defence.IsSelect())
+			isSkipedOneFrame = false;
+	}
+	else {
+		offense.SelectCommand();
+		defence.SelectCommand();
+	}
+
 	// 両者コマンドを選択したらバトルに移る
-	if (offense.IsSelect() && defence.IsSelect())
+	if (offense.IsSelect() && defence.IsSelect()) {
 		canPhaseMove = true;
+		isPortCheck = false;
+	}
 }
 
 BattleState BattlePart::Battle() {
@@ -401,14 +443,14 @@ void BattlePart::ResolveAction(OffenseSelectCommand _oc, DefenseSelectCommand _d
 		if (_dc == DefenseCommand_MagicGuard)
 			isGuard = true;
 
-		damage = CalcDamage(atkP->GetAtk(), defP->GetDef(), isGuard);
+		damage = CalcDamage(atkP->GetMag(), defP->GetDef(), isGuard);
 		break;
 	case OffenseCommand_FatalAttack:
 		// ガードならダメージを減らす
 		if (_dc == DefenseCommand_Guard)
 			isGuard = true;
 
-		damage = CalcDamage(atkP->GetAtk(), defP->GetDef(), isGuard);
+		damage = CalcDamage(atkP->GetAtk() * 5, defP->GetDef(), isGuard);
 		break;
 	}
 	// ダメージを与える
@@ -436,7 +478,22 @@ int BattlePart::CalcDamage(int _atk, int _def, bool isGuard) {
 void BattlePart::AddDamage(int _dmg, CharacterData* _target) { _target->Damage(_dmg); }
 
 bool BattlePart::MovePhase(BattleState _nextState) {
-	if (canPhaseMove && InputManager::GetInstance().IsKeyDown(KEY_INPUT_RETURN)) {
+	InputManager* input = &InputManager::GetInstance();
+
+	bool isNext = false;
+
+	// プレイヤーの入力確認
+	for (auto chara : players) {
+		PlayerData* p = static_cast<PlayerData*>(chara);
+
+		if (!p) continue;
+
+		if (input->IsButtonDown(p->GetControllerNum(), XINPUT_A))
+			isNext = true;
+	}
+
+	// キーボードのEnterか操作プレイヤーの指定コントローラのAボタンで次
+	if (canPhaseMove && (input->IsKeyDown(KEY_INPUT_RETURN) || isNext)) {
 		canPhaseMove = false;
 		currentState = _nextState;
 		return true;

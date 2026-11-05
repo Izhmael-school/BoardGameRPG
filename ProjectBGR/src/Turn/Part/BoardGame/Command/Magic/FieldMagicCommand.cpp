@@ -11,20 +11,21 @@ bool FieldMagicCommand::SelectMagic() {
 	int magicNum = static_cast<int>(currentSelectPlayer->GetMagicList().size()) - 1;
 
 	InputManager& input = InputManager::GetInstance();
+	int port = currentSelectPlayer->GetControllerNum();
 
-	if (input.IsKeyDown(KEY_INPUT_UP))
+	if (input.IsButtonDown(port,XINPUT_DPAD_UP))
 		selectMagicIndex = max(0, selectMagicIndex - 2);
-	if (input.IsKeyDown(KEY_INPUT_DOWN))
+	if (input.IsButtonDown(port,XINPUT_DPAD_DOWN))
 		selectMagicIndex = min(magicNum, selectMagicIndex + 2);
-	if (input.IsKeyDown(KEY_INPUT_RIGHT))
+	if (input.IsButtonDown(port,XINPUT_DPAD_RIGHT))
 		selectMagicIndex = min(magicNum, (selectMagicIndex % 2 == 0) ? selectMagicIndex + 1 : selectMagicIndex);
-	if (input.IsKeyDown(KEY_INPUT_LEFT))
+	if (input.IsButtonDown(port,XINPUT_DPAD_LEFT))
 		selectMagicIndex = (selectMagicIndex % 2 == 1) ? selectMagicIndex - 1 : selectMagicIndex;
 
-	if (input.IsKeyDown(KEY_INPUT_B))
+	if (input.IsButtonDown(port,XINPUT_B))
 		return Return();
 
-	if (input.IsKeyDown(KEY_INPUT_RETURN)) {
+	if (input.IsButtonDown(port,XINPUT_A)) {
 		// 繧｢繧､繝・Β縺ｮ菴ｿ逕ｨ蜃ｦ逅・ｒ謠上￥
 		UseMagic(currentSelectPlayer->GetMagicList()[selectMagicIndex]);
 		return Return();

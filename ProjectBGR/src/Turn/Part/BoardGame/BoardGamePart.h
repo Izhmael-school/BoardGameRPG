@@ -13,7 +13,7 @@
 #include "Shop/ShopPart.h"
 #include "Church/ChurchPart.h"
 #include "Village/VillagePart.h"
-#include "BoardGameElement.h"
+#include "BoardGameInfo.h"
 #include <string>
 #include <functional>
 #include "Manager/Map/MapInfo.h"

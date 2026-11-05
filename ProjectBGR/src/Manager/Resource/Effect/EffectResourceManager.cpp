@@ -1,39 +1,33 @@
 ﻿#include "EffectResourceManager.h"
 #include "Resource/EffectResource.h"
-#include "Definition/CommonModule/Json/MyJson.h"
-#include <cassert>
-#include "Definition/CommonModule/String/MyString.h"
+#include "File/MyFile.h"
+#include "Assert/MyAssert.h"
 
 EffectResourceManager::EffectResourceManager() {
+	LoadAllEffect();
 }
 
 bool EffectResourceManager::LoadEffect(const std::string& _name, const std::string& _path) {
-	// 蜷悟錐縺ｮ逋ｻ骭ｲ遖∵ｭ｢
+	// 中身がなければ無視
 	if (!resources.empty())
 		if (resources.contains(_name)) {
-#if _DEBUG
-			assert(false && "Effect Loaded");
-#endif
 			return false;
 		}
-	// 逕滓・
+	// 生成
 	auto resource = std::make_shared<EffectResource>(_name, _path);
-	// 螟ｱ謨励＠縺溘ｉ蟶ｰ繧・
+	// 再生できなければ生成失敗
 	if (!resource->Load()) return false;
-	// 謌仙粥縺励◆繧蛾・蛻励↓
+	// 配列に入れる
 	resources.emplace(_name.c_str(), resource);
 	return true;
 }
 
-void EffectResourceManager::LoadEffectFromExternalFile() {
-	auto data = MyJson::LoadJsonFile(EFFECTDATA_FILEPATH);
+void EffectResourceManager::LoadAllEffect() {
+	// ファイルの読み込み
+	auto data = MyFile::GetFileData(EFFECT_FILEPATH, "");
 
 	for (auto& d : data) {
-		std::string name = d["name"];
-		std::string fileName = d["path"];
-		std::string path = MyString::MergeString(EFFECT_FILEPATH, fileName);
-
-		LoadEffect(name, path);
+		LoadEffect(d.fileName, d.filePath);
 	}
 }
 
@@ -41,9 +35,9 @@ EffectResourcePtr EffectResourceManager::GetResource(const std::string& _name) c
 	auto itr = resources.find(_name);
 
 	if (itr == resources.end()) {
-#if _DEBUG
-		assert(false && "Nothing Effect");
-#endif 
+
+		MyAssert::DebugAssert("Nothing Effect : " + _name);
+
 		return nullptr;
 	}
 

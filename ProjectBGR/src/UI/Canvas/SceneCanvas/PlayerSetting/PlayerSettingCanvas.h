@@ -7,6 +7,7 @@
 
 #include "../../UICanvasBase.h"
 #include "Turn/Part/PlayerSetting/PlayerSettingInfo.h"
+#include "ExternalLibrary/Json/Json.hpp"
 
 class UIObject;
 
@@ -15,9 +16,14 @@ private:
 	PlayerSettingUINeedInfo info;
 	UIObject* playerNum = nullptr;
 	UIObject* playerName = nullptr;
+	UIObject* usePortSet = nullptr;
+	UIObject* playerJob = nullptr;
+	UIObject* turnOrder = nullptr;
 
-	PlayerSettingPart prevPart;
+	PlayerSettingPart prevPart = PlayerSettingPart_Invalid;
 	
+	nlohmann::json jobData;
+
 public:
 	PlayerSettingCanvas() = default;
 	~PlayerSettingCanvas() = default;
@@ -41,6 +47,23 @@ private:
 
 	void UpdatePlayerName();
 
+	void OpenUsePortSet();
+
+	void CloseUsePortSet();
+
+	void UpdateUsePortSet();
+
+	void OpenJobSelectSet();
+
+	void CloseJobSelectSet();
+
+	void UpdateJobSelectSet();
+
+	void OpenTurnOrderSet();
+
+	void CloseTurnOrderSet();
+
+	void UpdateTurnOrderSet();
 };
 
 #endif

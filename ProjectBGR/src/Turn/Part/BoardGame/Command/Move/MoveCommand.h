@@ -9,31 +9,20 @@
 
 #include "Vector2.h"
 #include "Vector3.h"
+#include "../../BoardGameInfo.h"
 #include <vector>
 
 class PlayerData;
 class MapManager;
 
-enum MoveDirection {
-	Move_Up,
-	Move_Down,
-	Move_Left,
-	Move_Right
-};
-
-enum MoveCommandState {
-	MoveCommand_Back,
-	MoveCommand_Stay,
-	MoveCommand_Move,
-	MoveCommand_Confirmation,
-	MoveCommand_MoveEnd,
-};
 
 class MoveCommand {
 private:
 	MoveCommandState commandState;
 	// 繧ｳ繝槭Φ繝蛾∈謚槭↓謌ｻ繧後ｋ縺・
 	bool isBack = true;
+
+	bool isRouletteStop = false;
 
 	PlayerData* currentPlayerData = nullptr;
 	// 騾ｲ繧√ｋ繝槭せ
@@ -49,10 +38,14 @@ private:
 	// 騾ｲ繧薙□繝槭せ
 	std::vector<Vector2> movedTiles;
 
+	float rouletteAngle = 0;
+
 	MapManager* mapManager = nullptr;
 	// 遘ｻ蜍輔ｒ遒ｺ螳壹☆繧九°縺ｮ繧ｳ繝槭Φ繝迂D
 	int confirmationMove;
-	
+
+	bool dialogTextDelete = false;
+
 private:
 	/*
 	 * @brief 遘ｻ蜍・
@@ -80,6 +73,8 @@ private:
 	 */
 	bool ConfirmationMove();
 
+
+	int GetRouletteINdex(float _angle);
 public:
 	/*
 	 * @brief 繝ｫ繝ｼ繝ｬ繝・ヨ繧貞屓縺励※騾ｲ繧縺ｾ縺ｧ縺ｮ荳騾｣縺ｮ螳溯｡・
@@ -108,6 +103,16 @@ public:
 	int GetCanMoveCount() const { return canMoveCount; }
 
 	int GetcurrentMoveCount() const { return currentMoveCount; }
+
+	float GetRoletteAngle() const { return rouletteAngle; }
+
+	bool IsRouletteStop() const { return isRouletteStop; }
+
+	int GetCurrentMoveCount() const { return currentMoveCount; }
+
+	bool IsDialogTextDelete() const { return dialogTextDelete; }
+
+	int GetConfirmationMove() const { return confirmationMove; }
 };
 
 #endif

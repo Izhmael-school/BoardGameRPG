@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <string>
+#include <functional>
 #include "../Style/UITextStyle.h"
 #include "../UItext.h"
 
@@ -15,6 +16,8 @@ class UITextDialog : public UIText{
 private:
 	// 表示する文字列の待機場
 	std::vector<std::string> waitStrings;
+	// 次のを表示するフラグ
+	std::vector<std::function<bool()>> nextTextFlags;
 	// 次の文字が出るまでの時間
 	float nextCharTime;
 	// 経過時間
@@ -27,7 +30,7 @@ private:
 	bool isAllDraw;
 
 public:
-	UITextDialog(UITextStyle _style, const Vector2& _pos,int backImage = -1);
+	UITextDialog(UITextStyle _style, const Vector2& _pos,int backImage = -1,std::string _uiName = "");
 
 protected:
 	void OnUpdate(float _t, UIInput& _input) override;
@@ -35,7 +38,9 @@ protected:
 	void OnRender() override;
 
 public:
-	void AddText(const std::string& _text) { waitStrings.emplace_back(_text); }
+	void AddText(const std::string& _text, const std::function<bool()>& _flag) { waitStrings.emplace_back(_text); nextTextFlags.emplace_back(_flag); SetActive(true); }
+
+	void DeleteFrontText();
 }; 
 
 #endif // !_UITEXTDIALOG_H_

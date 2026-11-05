@@ -10,8 +10,11 @@
 class MapManager;
 class CharacterDataManager;
 class GameObject;
+class CharacterData;
 
 #include "Vector2.h"
+#include <vector>
+#include "Manager/Map/MapInfo.h"
 
 class SearchTileCommand {
 private:
@@ -33,6 +36,14 @@ public:
 	void Render();
 
 	Vector2 GetCurrentPosition() const { return Vector2(currentX, currentY); }
+
+	void Cleanup();
+
+	void SetCurrentPosition(int _x, int _y) { currentX = _x; currentY = _y; }
+
+	MapTileType GetCurrentTileType() const;
+
+	std::vector<CharacterData*> GetCurrentCharacters() const;
 private:
 };
 

@@ -27,7 +27,7 @@ private:
 
 	InputManager* inputManager;
 
-	int currentTurnPlayerPadIndex = -1;
+	int port = -1;
 
 	UIManager* uiManager;
 

@@ -80,6 +80,8 @@ EnemyData* CharacterDataManager::CreateEnemyData(int _enemyID, int _x, int _y, b
 
 	enemyData->SetBoss(_isBoss);
 
+	enemyData->SetCPU(true);
+
 	enemyDataArray.emplace_back(std::move(enemyData));
 	return enemyDataArray.back().get();
 }
@@ -120,21 +122,29 @@ void CharacterDataManager::DebugCreatePlayerData(Job _p1, Job _p2, Job _p3, Job 
 	p1->AddMagic(0);
 	p1->SetMoney(10000);
 	p1->SetPlayerNum(0);
+	p1->SetControllerNum(0);
+	p1->SetPlayerName("1P");
 	auto p2 = CreatePlayerData(_p2);
 	p2->SetColor(0xff0000);
 	p2->AddItem(0);
 	p2->AddMagic(0);
 	p2->SetPlayerNum(1);
+	p2->SetControllerNum(0);
+	p2->SetPlayerName("2P");
 	auto p3 = CreatePlayerData(_p3);
 	p3->SetColor(0xffff00);
 	p3->AddItem(0);
 	p3->AddMagic(0);
 	p3->SetPlayerNum(2);
+	p3->SetControllerNum(0);
+	p3->SetPlayerName("3P");
 	auto p4 = CreatePlayerData(_p4);
 	p4->SetColor(0x008000);
 	p4->AddItem(0);
 	p4->AddMagic(0);
 	p4->SetPlayerNum(3);
+	p4->SetControllerNum(0);
+	p4->SetPlayerName("4P");
 }
 
 #include "DxLib.h"

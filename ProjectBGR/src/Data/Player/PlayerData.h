@@ -62,7 +62,7 @@ public:
 	void SetColor(unsigned int v) { color = v; }
 
 	int GetControllerNum() const { return controllerNum; }
-	int SetControllerNum(int _controllerNum) { controllerNum = _controllerNum; }
+	void SetControllerNum(int _controllerNum) { controllerNum = _controllerNum; }
 
 	int GetMaxItems() const { return maxItems; }
 	void SetMaxItems(int v) { maxItems = v; }

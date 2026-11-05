@@ -10,18 +10,37 @@
 #include "Turn/Part/PlayerSetting/PlayerSettingInfo.h"
 #include "Turn/Part/PlayerSetting/PlayerNum/DecidePlayerNumPart.h"
 #include "Turn/Part/PlayerSetting/PlayerName/DecidePlayerNamePart.h"
+#include "Turn/Part/PlayerSetting/UsePortSet/DecideUsePortSetPart.h"
+#include "Turn/Part/PlayerSetting/JobSelect/DecideJobSelectPart.h"
+#include "Turn/Part/PlayerSetting/TurnOrder/DecideTurnOrderPart.h"
+#include <string>
+#include <vector>
+#include <functional>
+#include "../../SceneType.h"
 
 class UIManager;
+class CharacterDataManager;
 
 class PlayerSettingScene : public SceneBase {
 private:
 	PlayerSettingPart currentPart;
 	UIManager* uiManager;
+	CharacterDataManager* characterDataManager;
 	DecidePlayerNumPart playerNum;
 	DecidePlayerNamePart playerName;
+	DecideUsePortSetPart usePortSet;
+	DecideJobSelectPart jobSelect;
+	DecideTurnOrderPart turnOrder;
 
+	bool isGoNext;
+	std::vector<std::string> tempPlayerNameArray;
+
+	std::function<void(SceneType)>  changeSceneFunc;
+	std::function<void(std::vector<int>)> sendTurnOrderFunc;
+
+	bool isCreatePlayer;
 public:
-	PlayerSettingScene(UIManager* _uiManager);
+	PlayerSettingScene(UIManager* _uiManager, CharacterDataManager* _characterDataManager,std::function<void(SceneType)> _changeSceneFunc,std::function<void(std::vector<int>)> _sendTurnOrderFunc);
 	~PlayerSettingScene() override;
 
 private:
@@ -63,6 +82,10 @@ private:
 	void DecidePlayerJob();
 
 	void ChangeSettingPart(PlayerSettingPart _part);
+
+	inline void OnGoNext() { isGoNext = true; };
+
+	void CreateCharacterData();
 };
 
 #endif // !_PLAYERSETTINGSCENE_H_

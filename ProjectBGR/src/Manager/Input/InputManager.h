@@ -8,7 +8,9 @@
 #include "../ManagerBase.h"
 #include "Vector2.h"
 #include <array>
+#include <vector>
 #include <memory>
+
 
 class PadBase;
 struct UIInput;
@@ -34,7 +36,7 @@ private:
 	bool mouseMoveSkip;		// マウスの中央固定を1フレームスキップするためのフラグ
 
 	// コントローラ管理配列
-	std::array<std::unique_ptr<PadBase>, MAX_PORT_NUM> pads;
+	std::vector<std::unique_ptr<PadBase>> pads;
 
 private:
 	// 初期化処理
@@ -106,11 +108,15 @@ public:
 #pragma endregion
 
 	// コントローラの取得
-	PadBase* GetPad(int _index) const { if (_index < 0 || _index >= pads.size()) return nullptr; pads[_index].get(); }
+	PadBase* GetPad(int _index) const;
 
 	bool IsButton(int _padIndex, int _button) const;
 	bool IsButtonDown(int _padIndex, int _button) const;
 	bool IsButtonUp(int _padIndex, int _button) const;
+
+	bool IsButton(int _button) const;
+	bool IsButtonDown(int _button) const;
+	bool IsButtonUp(int _button) const;
 
 	// XINPUTのボタン番号をDirectInputのボタン番号に変換
 	int ExchangeXInputButton(int _XINPUT, int _padNum);

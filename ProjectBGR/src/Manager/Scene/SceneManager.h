@@ -7,15 +7,7 @@
 #include "../ManagerBase.h"
 #include "DesignPattern/Singleton/Singleton.h"
 #include "GameScene/SceneBase.h"
-
-enum SceneType {
-	Invalid = -1,
-	DebugSceneSelect,
-	Title,
-	PlayerSetting,
-	MainGame,
-	Max
-};
+#include "SceneType.h"
 
 class UIManager;
 

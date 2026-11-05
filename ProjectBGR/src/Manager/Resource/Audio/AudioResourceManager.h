@@ -30,7 +30,7 @@ public:
 	/*
 	 * @brief 螟夜Κ繝輔ぃ繧､繝ｫ縺九ｉ縺ｮ繧ｪ繝ｼ繝・ぅ繧ｪ隱ｭ縺ｿ霎ｼ縺ｿ
 	 */
-	void LoadAudioFromExternalFile();
+	void LoadAllAudio();
 
 	/*
 	 * @brief 繧ｪ繝ｼ繝・ぅ繧ｪ繝ｪ繧ｽ繝ｼ繧ｹ縺ｮ蜿門ｾ・

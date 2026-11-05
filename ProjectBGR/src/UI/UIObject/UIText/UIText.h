@@ -22,10 +22,11 @@ protected:
 	bool isSelect;
 	// 選択できるか
 	bool canSelect;
-
+	// 描画位置調節用
+	Vector2 basePos;
 public:
 	UIText();
-	UIText(const std::string _text, UITextStyle _style, const Vector2& _pos);
+	UIText(const std::string _text, UITextStyle _style, const Vector2& _pos,const std::string& _name = "");
 	virtual ~UIText() override = default;
 
 protected:
@@ -34,6 +35,10 @@ protected:
 	void OnRender() override;
 	void OnEnd() override;
 
+	/*
+	 * @brief スタイルの描画位置に合わせる
+	 */
+	void Reposition();
 public:
 	/*
 	 * @brief FontManagerからフォントハンドルを取得
@@ -53,12 +58,17 @@ public:
 	/*
 	 * @brief テキストの変更
 	 */
-	inline void SetText(const std::string& _text) { text = _text; }
+	inline void SetText(const std::string& _text) { text = _text; Reposition(); }
 
 	/*
 	 * @brief テキストの取得
 	 */
 	inline const std::string& GetText() const { return text; }
+
+	/*
+	 * @brief フォントハンドルの取得
+	 */
+	inline int GetFontHandle() const { return fontHandle; }
 };
 
 #endif // !_UITEXT_H_

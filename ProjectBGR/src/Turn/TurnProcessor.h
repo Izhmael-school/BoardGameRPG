@@ -60,7 +60,7 @@ public:
 	/*
 	 * @brief 繧ｿ繝ｼ繝ｳ縺ｮ鬆・分繧定ｨｭ螳壹☆繧・
 	 */
-	void OrderSet(const std::vector<int>& _orderList) { orderList = _orderList; }
+	void SetOrder(const std::vector<int>& _orderList) { orderList = _orderList; }
 
 	/*
 	 * @brief 繧ｿ繝ｼ繝ｳ縺ｮ髢句ｧ句・逅・

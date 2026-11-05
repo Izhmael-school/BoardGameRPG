@@ -2,8 +2,9 @@
 #include "Manager/Map/MapManager.h"
 #include "Data/Player/PlayerData.h"
 #include "Manager/Input/InputManager.h"
+#include "Manager/Time/TimeManager.h"
 #include "Definition/CommonModule/Json/MyJson.h"
-#include "DxLib.h"
+//#include "DxLib.h"
 #include <string>
 
 bool MoveCommand::Move() {
@@ -13,6 +14,7 @@ bool MoveCommand::Move() {
 	if (currentMoveCount >= canMoveCount) return true;
 
 	InputManager& inputManager = InputManager::GetInstance();
+	int port = currentPlayerData->GetControllerNum();
 
 	// 進めるマスを調べる
 	SearchCanMoveTiles();
@@ -24,19 +26,19 @@ bool MoveCommand::Move() {
 	Vector2 beforeMoveTile = Vector2(-1, -1);
 	Vector2 movedir = Vector2(0, 0);
 
-	if (canMoveTileList[Move_Down] && inputManager.IsKeyDown(KEY_INPUT_DOWN)) {
+	if (canMoveTileList[Move_Down] && inputManager.IsButtonDown(XINPUT_DPAD_DOWN)) {
 		movedir = Vector2(0, 1);
 		ismoved = true;
 	}
-	if (canMoveTileList[Move_Up] && inputManager.IsKeyDown(KEY_INPUT_UP)) {
+	if (canMoveTileList[Move_Up] && inputManager.IsButtonDown(XINPUT_DPAD_UP)) {
 		movedir = Vector2(0, -1);
 		ismoved = true;
 	}
-	if (canMoveTileList[Move_Left] && inputManager.IsKeyDown(KEY_INPUT_LEFT)) {
+	if (canMoveTileList[Move_Left] && inputManager.IsButtonDown(XINPUT_DPAD_LEFT)) {
 		movedir = Vector2(-1, 0);
 		ismoved = true;
 	}
-	if (canMoveTileList[Move_Right] && inputManager.IsKeyDown(KEY_INPUT_RIGHT)) {
+	if (canMoveTileList[Move_Right] && inputManager.IsButtonDown(XINPUT_DPAD_RIGHT)) {
 		movedir = Vector2(1, 0);
 		ismoved = true;
 	}
@@ -150,10 +152,34 @@ void MoveCommand::SearchCanMoveTiles() {
 
 
 bool MoveCommand::Roulette() {
+	static bool isStop = false;
+	static float rotateValue = 5000;
 
-	randCount = GetRand(6);
+	float d =  TimeManager::GetInstance().GetDeltaTime();
+	
+	float decelecation = 1500.0f;
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_RETURN)) {
+	// Aボタンを押したら徐々に止まるようにする
+	if (InputManager::GetInstance().IsButtonDown(currentPlayerData->GetControllerNum(), XINPUT_A) && !isStop)
+		isStop = true;
+
+	if (isStop) {
+		rotateValue -= decelecation * d;
+		rotateValue = std::max(rotateValue, 0.0f);
+	}
+
+	// 回転を加算
+	rouletteAngle += rotateValue * d;
+
+	// １回転したらangleを0にする
+	rouletteAngle = std::fmod(rouletteAngle, 360.0f);
+
+	// 一定数値以下なら止まったことにする
+	if (rotateValue <= 0.001 && isStop) {
+		rotateValue = 5000;
+		isStop = false;
+		isRouletteStop = true;
+		randCount = GetRouletteINdex(rouletteAngle);
 		canMoveCount = randCount;
 		return true;
 	}
@@ -163,31 +189,47 @@ bool MoveCommand::Roulette() {
 
 bool MoveCommand::ConfirmationMove() {
 	// 進める回数まで進み切っていなければ戻る
-	if (canMoveCount - currentMoveCount != 0) return false;
+	if (canMoveCount - currentMoveCount != 0) return dialogTextDelete = false;
 
 	// 戻る
-	if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_UP))
+	if (InputManager::GetInstance().IsButtonDown(XINPUT_DPAD_UP))
 		confirmationMove = 0;
 
 	// 止まる
-	if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_DOWN))
+	if (InputManager::GetInstance().IsButtonDown(XINPUT_DPAD_DOWN))
 		confirmationMove = 1;
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_RETURN)) {
+	if (InputManager::GetInstance().IsButtonDown(XINPUT_A)) {
 		if (confirmationMove == 1)
-			return true;
+			return dialogTextDelete = true;
 		else {
 			Back();
 			commandState = MoveCommand_Move;
+			dialogTextDelete = true;
 		}
 	}
 
 	return false;
 }
 
+int MoveCommand::GetRouletteINdex(float _angle) {
+
+	constexpr int CELL_COUNT = 7;
+
+	constexpr float CELL_ANGLE = 360.0f / CELL_COUNT;
+
+	_angle = std::fmod(_angle, 360.0f);
+	if(_angle < 0.0f)
+		_angle += 360.0f;
+
+	int index = static_cast<int>(std::floor(_angle / CELL_ANGLE));
+
+	return index % CELL_COUNT;
+}
+
 MoveCommandState MoveCommand::Execute() {
-	// ルーレットを回してなければ戻る
-	if (isBack && InputManager::GetInstance().IsKeyDown(KEY_INPUT_B))
+	// ルーレットを回してなければ戻れる
+	if (isBack && InputManager::GetInstance().IsButtonDown(currentPlayerData->GetControllerNum(),XINPUT_B))
 		return commandState = MoveCommand_Back;
 
 	// ルーレットを回す
@@ -199,13 +241,15 @@ MoveCommandState MoveCommand::Execute() {
 		return	commandState = MoveCommand_Move;
 	}
 
-	if (commandState == MoveCommand_Stay)
-		return commandState = MoveCommand_Stay;
+	if (commandState == MoveCommand_RouletteTime)
+		return commandState = MoveCommand_RouletteTime;
 
+	// 移動
 	if (Move()) {
 		commandState = MoveCommand_Confirmation;
 	}
 
+	// 移動確定の最終確認
 	if (ConfirmationMove())
 		return commandState = MoveCommand_MoveEnd;
 
@@ -214,45 +258,47 @@ MoveCommandState MoveCommand::Execute() {
 
 void MoveCommand::Setup() {
 	isBack = true;
-	canMoveCount = 0;
+	canMoveCount = -1;
 	currentMoveCount = 0;
 	movedTiles.clear();
-	commandState = MoveCommand_Stay;
+	commandState = MoveCommand_RouletteTime;
+	isRouletteStop = false;
+	dialogTextDelete = false;
 }
 
 void MoveCommand::Render() {
-	VECTOR offset = VGet(400, 200, 0);
-	VECTOR offset2 = VGet(440, 240, 0);
-	int stringSize = 40;
+	//VECTOR offset = VGet(400, 200, 0);
+	//VECTOR offset2 = VGet(440, 240, 0);
+	//int stringSize = 40;
 
-	// ウィンドウ
-	DrawFillBox(offset.x, offset.y, offset2.x, offset2.y, 0x000000);
-	DrawLineBox(offset.x, offset.y, offset2.x, offset2.y, 0xffffff);
+	//// ウィンドウ
+	//DrawFillBox(offset.x, offset.y, offset2.x, offset2.y, 0x000000);
+	//DrawLineBox(offset.x, offset.y, offset2.x, offset2.y, 0xffffff);
 
-	int extend = 2.0f;
-	int sx;
-	int sy;
-	GetDrawExtendStringSize(&sx, &sy, 0, extend * 2, extend, "1", 1);
-	int x = (offset2.x - (offset2.x - offset.x) / 2) - sx / 2;
-	int y = (offset2.y - (offset2.y - offset.y) / 2) - sy / 2;
+	//int extend = 2.0f;
+	//int sx;
+	//int sy;
+	//GetDrawExtendStringSize(&sx, &sy, 0, extend * 2, extend, "1", 1);
+	//int x = (offset2.x - (offset2.x - offset.x) / 2) - sx / 2;
+	//int y = (offset2.y - (offset2.y - offset.y) / 2) - sy / 2;
 
-	int correctionX = stringSize - sx;
-	int correctionY = stringSize - sy;
+	//int correctionX = stringSize - sx;
+	//int correctionY = stringSize - sy;
 
-	DrawExtendFormatString(x + correctionX, y + correctionY, extend * 2, extend, 0xffff00, "%d", isBack ? randCount : canMoveCount - currentMoveCount);
+	//DrawExtendFormatString(x + correctionX, y + correctionY, extend * 2, extend, 0xffff00, "%d", isBack ? randCount : canMoveCount - currentMoveCount);
 
-	// 移動を確定するかのウィンドウ
-	if (commandState != MoveCommand_Confirmation) return;
+	//// 移動を確定するかのウィンドウ
+	//if (commandState != MoveCommand_Confirmation) return;
 
-	stringSize = 18;
-	offset = VGet(400, 240, 0);
-	offset2 = VGet(454, 276, 0);
+	//stringSize = 18;
+	//offset = VGet(400, 240, 0);
+	//offset2 = VGet(454, 276, 0);
 
-	// ウィンドウ
-	DrawFillBox(offset.x, offset.y, offset2.x, offset2.y, 0x000000);
-	DrawLineBox(offset.x, offset.y, offset2.x, offset2.y, 0xffffff);
-	std::string back = "戻る";
-	std::string stop = "止まる";
-	DrawString(offset.x, offset.y, back.c_str(), confirmationMove == 0 ? 0xffff00 : 0xffffff);
-	DrawString(offset.x, offset.y + stringSize, stop.c_str(), confirmationMove == 1 ? 0xffff00 : 0xffffff);
+	//// ウィンドウ
+	//DrawFillBox(offset.x, offset.y, offset2.x, offset2.y, 0x000000);
+	//DrawLineBox(offset.x, offset.y, offset2.x, offset2.y, 0xffffff);
+	//std::string back = "戻る";
+	//std::string stop = "止まる";
+	//DrawString(offset.x, offset.y, back.c_str(), confirmationMove == 0 ? 0xffff00 : 0xffffff);
+	//DrawString(offset.x, offset.y + stringSize, stop.c_str(), confirmationMove == 1 ? 0xffff00 : 0xffffff);
 }

@@ -42,4 +42,14 @@ public:
 	/// <param name="exRateX"></param>
 	/// <returns></returns>
 	static int StringRightPos(const std::string& _str, int _fontHandle, int posX, float exRateX = 1);
+
+	/*
+	 * @brief UTF-8での1文字分のバイト数を取得する
+	 */
+	static int GetUTF8CharLenght(unsigned char c);
+
+	/*
+	 * @brief 文字列を１文字ずつ取り出す
+	 */
+	static std::string GetUTF8Char(const std::string& str, int& index);
 };

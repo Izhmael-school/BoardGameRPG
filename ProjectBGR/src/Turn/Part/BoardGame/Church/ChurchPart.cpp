@@ -19,7 +19,7 @@ void ChurchPart::Open(CharacterData* _currentTurnPlayer) {
 
 	auto player = static_cast<PlayerData*>(currentTurnPlayer);
 	if (player) {
-		currentTurnPlayerPadIndex = player->GetControllerNum();
+		port = player->GetControllerNum();
 	}
 
 	uiManager->PushCanvas(churchCanvas.get());
@@ -118,13 +118,13 @@ void ChurchPart::HPRecovery() {
 
 void ChurchPart::Update_Selection(float _t) {
 
-	if (inputManager->IsKeyDown(KEY_LEFT))
+	if (inputManager->IsButtonDown(port,XINPUT_DPAD_LEFT))
 		selection = std::max(0, selection - 1);
 
-	if (inputManager->IsKeyDown(KEY_RIGHT))
+	if (inputManager->IsButtonDown(port,XINPUT_DPAD_RIGHT))
 		selection = std::min(ChurchState_Max - 1, selection + 1);
 
-	if (inputManager->IsKeyDown(KEY_RETURN)) {
+	if (inputManager->IsButtonDown(port,XINPUT_A)) {
 		churchState = static_cast<ChurchState>(selection);
 		commandSelect = 0;
 	}
@@ -135,7 +135,7 @@ void ChurchPart::Update_SetRP(float _t) {
 	static DontReceiveServiceReason keepReason = DontReceiveServiceReason_Invalid;
 
 	// フラグが立ったら帰れるようにする
-	if (isBack && inputManager->IsKeyDown(KEY_RETURN)) {
+	if (isBack && inputManager->IsButtonDown(port,XINPUT_A)) {
 		churchState = ChurchState_Selection;
 		isBack = false;
 		keepReason = DontReceiveServiceReason_Invalid;
@@ -148,11 +148,11 @@ void ChurchPart::Update_SetRP(float _t) {
 		return;
 	}
 
-	if (inputManager->IsKeyDown(KEY_UP) || inputManager->IsKeyDown(KEY_DOWN))
+	if (inputManager->IsButtonDown(port,XINPUT_DPAD_UP) || inputManager->IsButtonDown(port,XINPUT_DPAD_DOWN))
 		commandSelect = commandSelect ^ 1;
 
 	// 0なら復活地点の変更。１なら戻る
-	if (inputManager->IsKeyDown(KEY_RETURN) || inputManager->IsButtonDown(currentTurnPlayerPadIndex, XINPUT_A)) {
+	if (inputManager->IsKeyDown(KEY_RETURN) || inputManager->IsButtonDown(port, XINPUT_A)) {
 		if (commandSelect == 0)
 			SetRespawnPoint();
 
@@ -164,18 +164,18 @@ void ChurchPart::Update_SetRP(float _t) {
 
 
 void ChurchPart::Update_Warp(float _t) {
-	if (inputManager->IsKeyDown(KEY_B)) {
+	if (inputManager->IsButtonDown(XINPUT_B)) {
 		// 戻る
 		churchState = ChurchState_Selection;
 	}
 
-	if (inputManager->IsKeyDown(KEY_DOWN) || inputManager->IsButtonDown(currentTurnPlayerPadIndex, XINPUT_DPAD_DOWN))
+	if (inputManager->IsKeyDown(KEY_DOWN) || inputManager->IsButtonDown(port, XINPUT_DPAD_DOWN))
 		commandSelect = std::max(0, commandSelect - 1);
 
-	if (inputManager->IsKeyDown(KEY_UP) || inputManager->IsButtonDown(currentTurnPlayerPadIndex, XINPUT_DPAD_UP))
+	if (inputManager->IsKeyDown(KEY_UP) || inputManager->IsButtonDown(port, XINPUT_DPAD_UP))
 		commandSelect = std::min(CHURCH_NUM - 1, commandSelect + 1);
 
-	if (inputManager->IsKeyDown(KEY_RETURN) || inputManager->IsButtonDown(currentTurnPlayerPadIndex, XINPUT_A)) {
+	if (inputManager->IsKeyDown(KEY_RETURN) || inputManager->IsButtonDown(port, XINPUT_A)) {
 		int wx = CAN_WARP_CHURCH_POS[commandSelect][0];
 		int wy = CAN_WARP_CHURCH_POS[commandSelect][1];
 		ChurchWarp(Vector2(wx, wy));
@@ -189,7 +189,7 @@ void ChurchPart::Update_Recovery(float _t) {
 	static DontReceiveServiceReason keepReason = DontReceiveServiceReason_Invalid;
 
 	// フラグが立ったら帰れるようにする
-	if (isBack && inputManager->IsKeyDown(KEY_RETURN)) {
+	if (isBack && inputManager->IsButtonDown(port,XINPUT_A)) {
 		churchState = ChurchState_Selection;
 		isBack = false;
 		keepReason = DontReceiveServiceReason_Invalid;
@@ -202,11 +202,11 @@ void ChurchPart::Update_Recovery(float _t) {
 		return;
 	}
 
-	if (inputManager->IsKeyDown(KEY_UP) || inputManager->IsKeyDown(KEY_DOWN))
+	if (inputManager->IsButtonDown(XINPUT_DPAD_UP) || inputManager->IsButtonDown(XINPUT_DPAD_DOWN))
 		commandSelect = commandSelect ^ 1;
 
 	// 0なら回復。１なら戻る
-	if (inputManager->IsKeyDown(KEY_RETURN) || inputManager->IsButtonDown(currentTurnPlayerPadIndex, XINPUT_A)) {
+	if (inputManager->IsKeyDown(KEY_RETURN) || inputManager->IsButtonDown(port, XINPUT_A)) {
 		if (commandSelect == 0)
 			HPRecovery();
 

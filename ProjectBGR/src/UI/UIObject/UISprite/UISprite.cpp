@@ -1,33 +1,21 @@
 #include "UISprite.h"
 #include "DxLib.h"
 #include "Definition/CommonModule/Math/MyMath.h"
+#include "Sprite/MySprite.h"
 
-namespace {
-	Vector2 GetCenterPos(int _handle, Vector2 _pos, int _ex, int _ey) {
-		int w = -1, h = -1;
-		GetGraphSize(_handle, &w, &h);
-
-		Vector2 pos;
-
-		pos.x = _pos.x - ((w * _ex) / 2);
-		pos.x = _pos.y - ((h * _ey) / 2);
-
-		return pos;
-	}
-}
-
-UISprite::UISprite(int _handle, Vector2 _pos, float _ex, float _ey, float _rot)
-	:graphHandle(_handle)
+UISprite::UISprite(int _handle, Vector2 _pos, float _ex, float _ey, float _rot, std::string _name)
+	:UIObject(_name)
+	, graphHandle(_handle)
 	, ex(_ex)
 	, ey(_ey)
-	, cx(_pos.x)
-	, cy(_pos.y) {
-	if (_handle != -1) {
-		position = GetCenterPos(_handle, _pos, _ex, _ey);
-	} else {
-		position = _pos;
-	}
+	, cx(-1)
+	, cy(-1) {
+	position = _pos;
+
 	angle = MyMath::Deg2Rad(_rot);
+	Vector2 c = MySprite::GetSpriteSize(graphHandle);
+	cx = c.x / 2;
+	cy = c.y / 2;
 }
 
 void UISprite::OnInit() {
@@ -44,7 +32,8 @@ void UISprite::OnRender() {
 		return;
 	}
 
-	DrawRotaGraph3F(wPos.x, wPos.y,cx,cy,ex,ey,angle, graphHandle, TRUE);
+	DrawRotaGraph3F(wPos.x, wPos.y, cx, cy, ex, ey, angle, graphHandle, TRUE);
+
 }
 
 void UISprite::OnEnd() {

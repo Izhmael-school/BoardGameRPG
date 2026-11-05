@@ -57,6 +57,7 @@ EquipData ElementDataManager::GetEquipData(int _id) {
 			ed.explanation = equip["explanation"];
 			ed.value = equip["value"];
 			ed.effectValue = equip["effectValue"];
+			ed.equipSection = equip["equipSection"];
 			return ed;
 
 		}

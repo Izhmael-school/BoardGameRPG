@@ -25,13 +25,15 @@ void SearchTileCommand::SearchTile() {
 	if (mapArrow && !mapArrow->IsActive())
 		mapArrow->SetActive(true);
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_UP))
+	InputManager& input = InputManager::GetInstance();
+
+	if (input.IsButtonDown(XINPUT_DPAD_UP))
 		currentY = max(0, currentY - 1);
-	if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_DOWN))
+	if (input.IsButtonDown(XINPUT_DPAD_DOWN))
 		currentY = min(mapMaxX, currentY + 1);
-	if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_LEFT))
+	if (input.IsButtonDown(XINPUT_DPAD_LEFT))
 		currentX = max(0, currentX - 1);
-	if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_RIGHT))
+	if (input.IsButtonDown(XINPUT_DPAD_RIGHT))
 		currentX = min(mapMaxY, currentX + 1);
 
 	if (mapArrow)
@@ -71,7 +73,15 @@ void SearchTileCommand::Render() {
 	ImGui::Text("x:%f02|y:%f02|z:%f02", p.x, p.y,p.z);
 	ImGui::End();
 
-	std::vector<CharacterData*> characters = character->GetCharacterDataToMapPos(currentX, currentY);
+	std::vector<CharacterData*> characters = GetCurrentCharacters();
 	// 指定のマスにキャラクターがいればキャラクターの情報を描画する
 	if (characters.empty()) return;
 }
+
+void SearchTileCommand::Cleanup() {
+	mapArrow->SetActive(false);
+}
+
+MapTileType SearchTileCommand::GetCurrentTileType() const { return map->GetMapTileType(currentX, currentY); }
+
+std::vector<CharacterData*> SearchTileCommand::GetCurrentCharacters() const { return character->GetCharacterDataToMapPos(currentX, currentY); }

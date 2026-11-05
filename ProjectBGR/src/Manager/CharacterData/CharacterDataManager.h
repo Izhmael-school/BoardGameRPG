@@ -2,6 +2,7 @@
 #include "../ManagerBase.h"
 #include <vector>
 #include <memory>
+#include "Job.h"
 
 class PlayerData;
 class EnemyData;
@@ -11,17 +12,6 @@ using PlayerDataPtr = std::unique_ptr<PlayerData>;
 using PlayerDataPtrArray = std::vector<PlayerDataPtr>;
 using EnemyDataPtr = std::unique_ptr<EnemyData>;
 using EnemyDataPtrArray = std::vector<EnemyDataPtr>;
-
-enum Job {
-	Job_Fighter,
-	Job_Wizard,
-	Job_Thief,
-	Job_HeavyFighter,
-	Job_Monk,
-	Job_MagicFencer,
-	Job_Assassin,
-	Job_OrdinaryPeople,
-};
 
 class CharacterDataManager : public ManagerBase {
 private:

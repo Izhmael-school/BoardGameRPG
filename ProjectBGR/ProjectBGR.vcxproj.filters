@@ -340,6 +340,33 @@
     <Filter Include="ソース ファイル\Turn\Part\PlayerSetting\PlayerName">
       <UniqueIdentifier>{aae96978-a7cb-4909-9503-88b36e938deb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\PlayerSetting\UsePortSet">
+      <UniqueIdentifier>{4136d3e5-6ea2-4a1d-bd05-5ce3f11a677d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\PlayerSetting\JobSelect">
+      <UniqueIdentifier>{516cb893-da51-498c-b8d8-a2d04a6fda22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\PlayerSetting\TurnOrder">
+      <UniqueIdentifier>{aae3581c-f004-4b5c-8644-2dfa21805b40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\Resource\Sprite">
+      <UniqueIdentifier>{4300ed78-6470-45d8-a142-eed1e15ce2ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Definition\CommonModule\File">
+      <UniqueIdentifier>{d086e2c5-1c10-4363-8d67-5135bfe90193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Definition\CommonModule\Assert">
+      <UniqueIdentifier>{0b12dd0e-fd18-49bc-bd35-b8d6a81849cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\UIObject\UISprite\UIRoulette">
+      <UniqueIdentifier>{2f7150a2-6469-4b48-9cb2-b18d1292c345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Definition\CommonModule\Sprite">
+      <UniqueIdentifier>{1dc6d73f-0982-4039-8393-4a9fdf16944c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\UIObject\UIWindow">
+      <UniqueIdentifier>{2a4d8bc2-6712-4483-950b-501de233d621}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -635,6 +662,36 @@
     </ClCompile>
     <ClCompile Include="src\Turn\Part\PlayerSetting\PlayerName\DecidePlayerNamePart.cpp">
       <Filter>ソース ファイル\Turn\Part\PlayerSetting\PlayerName</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\PlayerSetting\UsePortSet\DecideUsePortSetPart.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\PlayerSetting\JobSelect\DecideJobSelectPart.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\PlayerSetting\TurnOrder\DecideTurnOrderPart.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Manager\Input\InputData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Manager\Resource\Sprite\SpriteResourceManager.cpp">
+      <Filter>ソース ファイル\Manager\Resource\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Definition\CommonModule\File\MyFile.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Definition\CommonModule\Assert\MyAssert.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\UIObject\UISprite\UIRoulette\UIRoulette.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Definition\CommonModule\Sprite\MySprite.cpp">
+      <Filter>ソース ファイル\Definition\CommonModule\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\UIObject\UIWindow\UIWindow.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -964,6 +1021,45 @@
     </ClInclude>
     <ClInclude Include="src\Turn\Part\PlayerSetting\PlayerName\DecidePlayerNamePart.h">
       <Filter>ソース ファイル\Turn\Part\PlayerSetting\PlayerName</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\PlayerSetting\UsePortSet\DecideUsePortSetPart.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\PlayerSetting\JobSelect\DecideJobSelectPart.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Manager\CharacterData\Job.h">
+      <Filter>ソース ファイル\Turn</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\PlayerSetting\TurnOrder\DecideTurnOrderPart.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Manager\Scene\SceneType.h">
+      <Filter>ソース ファイル\Manager\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Manager\Input\InputData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Manager\Resource\Sprite\SpriteResourceManager.h">
+      <Filter>ソース ファイル\Manager\Resource\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Definition\CommonModule\File\MyFile.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Definition\CommonModule\Assert\MyAssert.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\UIObject\UISprite\UIRoulette\UIRoulette.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Definition\CommonModule\Sprite\MySprite.h">
+      <Filter>ソース ファイル\Definition\CommonModule\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\BoardGame\BoardGameInfo.h">
+      <Filter>ソース ファイル\Turn</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\UIObject\UIWindow\UIWindow.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

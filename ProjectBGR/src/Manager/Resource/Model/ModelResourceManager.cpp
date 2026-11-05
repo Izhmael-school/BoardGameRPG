@@ -1,30 +1,27 @@
 ﻿#include "ModelResourceManager.h"
 #include <DxLib.h>
-#include "Definition/CommonModule/Json/MyJson.h"
-#include "Definition/CommonModule/String/MyString.h"
+#include "File/MyFile.h"
+#include "Assert/MyAssert.h"
 #include <cassert>
 
 ModelResourceManager::ModelResourceManager() {
+	LoadAllModel();
 }
 
 ModelResourceManager::~ModelResourceManager() {
 }
 
 void ModelResourceManager::LoadModel(const std::string& _name, const std::string& _path){
-	// 縺吶〒縺ｫ繝ｭ繝ｼ繝画ｸ医∩縺ｪ繧牙・蛻ｩ逕ｨ
 	auto it = models.find(_name);
 
-	if (it != models.end()){
-#if _DEBUG
-		assert(false && "Model Loaded");
-#endif
+	// 重複チェック
+	if (it != models.end())
 		return;
-	}
 
-	// 繝｢繝・Ν繝ｭ繝ｼ繝・
+	// ハンドル取得
 	int handle = MV1LoadModel(_path.c_str());
 
-	// 菫晏ｭ・
+	// 代入
 	models[_name] = handle;
 
 	return;
@@ -34,23 +31,20 @@ int ModelResourceManager::GetDupModelHandle(const std::string& _name) {
 	auto itr = models.find(_name);
 
 	if (itr == models.end()) {
-#if _DEBUG
-		assert(false && "Nothing Model");
-#endif
+		
+		MyAssert::DebugAssert("Nothing Model : " + _name);
+
 		return -1;
 	}
 	return MV1DuplicateModel(itr->second);
 }
 
-void ModelResourceManager::LoadModelFromExternalFile() {
-	auto data = MyJson::LoadJsonFile(MODELDATA_FILEPATH);
+void ModelResourceManager::LoadAllModel() {
+	// ファイルの読み込み
+	auto data = MyFile::GetFileData(MODEL_FILEPATH, ".mv1");
 
 	for (auto& d : data) {
-		std::string name = d["name"];
-		std::string fileName = d["path"];
-		std::string path = MyString::MergeString(MODEL_FILEPATH, fileName);
-
-		LoadModel(name, path);
+		LoadModel(d.fileName, d.filePath);
 	}
 }
 

@@ -1,20 +1,18 @@
 ﻿#include "AudioResourceManager.h"
 #include "Definition/CommonModule/Json/MyJson.h"
-#include "Definition/CommonModule/String/MyString.h"
+#include "File/MyFile.h"
+#include "Assert/MyAssert.h"
 #include <cassert>
 
 AudioResourceManager::AudioResourceManager() {
+	LoadAllAudio();
 }
 
 bool AudioResourceManager::LoadAudio(const std::string& _name, const std::string& _path, bool _is3D) {
 	// 蜷悟錐縺ｮ逋ｻ骭ｲ遖∵ｭ｢
 	if (!resources.empty())
-		if (resources.contains(_name)) {
-#if _DEBUG
-			assert(false && "Audio Loaded");
-#endif
+		if (resources.contains(_name))
 			return false;
-		}
 	// 逕滓・
 	auto resource = std::make_shared<AudioResource>(_name, _path, _is3D);
 	// 螟ｱ謨励＠縺溘ｉ蟶ｰ繧・
@@ -24,16 +22,21 @@ bool AudioResourceManager::LoadAudio(const std::string& _name, const std::string
 	return true;
 }
 
-void AudioResourceManager::LoadAudioFromExternalFile() {
-	auto data = MyJson::LoadJsonFile(AUDIODATA_FILEPATH);
+void AudioResourceManager::LoadAllAudio() {
+	auto data = MyFile::GetFileData(AUDIO_FILEPATH, ".mp3");
 
 	for (auto& d : data) {
-		std::string name = d["name"];
-		std::string fileName = d["path"];
-		bool is3D = d["is3D"];
-		std::string path = MyString::MergeString(AUDIO_FILEPATH, fileName);
+		LoadAudio(d.fileName, d.filePath, false);
+	}
 
-		LoadAudio(name, path, is3D);
+	// 3dサウンドのものはJsonで別途指定
+	auto is3dResource = MyJson::LoadJsonFile(AUDIODATA_FILEPATH);
+	for (auto& n : is3dResource) {
+		std::string name = n["name"];
+
+		if (!resources[name]) continue;
+
+		resources[name]->Set3D(true);
 	}
 }
 
@@ -41,9 +44,7 @@ AudioResourcePtr AudioResourceManager::GetResource(const std::string& _name) con
 	auto itr = resources.find(_name);
 
 	if (itr == resources.end()) {
-#if _DEBUG
-		assert(false && "Nothing Audio");
-#endif
+		MyAssert::DebugAssert("No Audio : " + _name);
 		return nullptr;
 	}
 	return itr->second;

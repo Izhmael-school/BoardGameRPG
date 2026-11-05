@@ -23,12 +23,14 @@ void BoardGamePart::Init(UIManager* _uiManager, MapManager* _map, CharacterDataM
 	searchTileCommand.Init(_map, _characterDataManager,gameObjectManager->UseObject<GameObject>("MapArrow",VZero,VZero,VOne,"MapArrow"));
 	isFirstTurn = true;
 	TileEffect::SetChangeTurnStateFunc([this](TurnState _changeTurnState) {turnState = _changeTurnState; });
+	TileEffect::SetSetBoardGameUINeedInfoFunc([this](BoardGameUINeedInfo _info) {canvas->SetBoardGameUINeedInfo(_info); });
+
 	shopPart.Init(_uiManager, [this]() { ShopOut(); });
 	churchPart.Init(_uiManager, [this]() { ShopOut(); });
 	villagePart.Init(_uiManager, [this]() { ShopOut(); });
 
 	// 最初にすべての村に敵を配置する
-	//character->CreateEnemyDataToAllVillage();
+	character->CreateEnemyDataToAllVillage();
 }
 
 void BoardGamePart::Setup() {
@@ -132,37 +134,10 @@ void BoardGamePart::Update(float _t) {
 	default:
 		break;
 	}
-
-	if (InputManager::GetInstance().IsKeyDown(KEY_C)) {
-		turnState = TurnState_VillageIn;
-		villagePart.Enter(currentPlayerData);
-	}
 }
 
 void BoardGamePart::Render() {
 	switch (turnState) {
-	case TurnState_CommandSelect:
-	{
-		int i = 0;
-		unsigned int color = 0xffffff;
-		for (auto& command : commandList) {
-			color = (i == selectCommand) ? 0xffff00 : 0x000000;
-			DrawFormatString(400, 100 + i * 20, color, "%s: %s", command.name.c_str(), command.explanation.c_str());
-			i++;
-		}
-	}
-	break;
-	case TurnState_Move:
-		moveCommand.Render();
-		break;
-	case TurnState_Item:
-		canvas->SetSelectIndex(itemCommand.GetSelectItemIndex());
-		canvas->OpenItemListUI();
-		break;
-	case TurnState_Magic:
-		canvas->SetSelectIndex(magicCommand.GetSelectMagicIndex());
-		canvas->OpenMagicListUI();
-		break;
 	case TurnState_SearchTile:
 		searchTileCommand.Render();
 		break;
@@ -186,16 +161,29 @@ void BoardGamePart::Render() {
 }
 
 void BoardGamePart::CommandSelect() {
+	InputManager* input = &InputManager::GetInstance();
+	int port = currentPlayerData->GetControllerNum();
+
 	// 上
-	if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_UP))
+	if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(port,XINPUT_DPAD_UP))
 		selectCommand = max(0, selectCommand - 1);
 	// 下
-	if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_DOWN))
+	if (input->IsKeyDown(KEY_INPUT_DOWN) || input->IsButtonDown(port,XINPUT_DPAD_DOWN))
 		selectCommand = min(static_cast<int>(commandList.size()) - 1, selectCommand + 1);
 	// 選択
-	if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_RETURN)) {
+	if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonDown(port,XINPUT_A)) {
 		turnState = commandList[selectCommand].state;
 	}
+
+	CommandSelectUINeedInfo commandSelectInfo;
+	commandSelectInfo.commandList = commandList;
+	commandSelectInfo.selectIndex = selectCommand;
+
+	BoardGameUINeedInfo info;
+	info.state = turnState;
+	info.info = commandSelectInfo;
+
+	canvas->SetBoardGameUINeedInfo(info);
 }
 
 void BoardGamePart::MoveCommand() {
@@ -208,7 +196,7 @@ void BoardGamePart::MoveCommand() {
 		// 移動をやめた
 		turnState = TurnState_CommandSelect;
 		break;
-	case MoveCommand_Stay:
+	case MoveCommand_RouletteTime:
 		// 移動中
 		break;
 	case MoveCommand_MoveEnd:
@@ -217,6 +205,20 @@ void BoardGamePart::MoveCommand() {
 		turnState = TurnState_TileEffect;
 		break;
 	}
+
+	MoveCommandUINeedInfo rouletteinfo;
+	rouletteinfo.commandState = move;
+	rouletteinfo.angle = moveCommand.GetRoletteAngle();
+	rouletteinfo.isRouletteStop = moveCommand.IsRouletteStop();
+	rouletteinfo.canMoveCount = moveCommand.GetCanMoveCount() - moveCommand.GetCurrentMoveCount();
+	rouletteinfo.isDialogTextErase = moveCommand.IsDialogTextDelete();
+	rouletteinfo.confirmationMove = moveCommand.GetConfirmationMove();
+
+	BoardGameUINeedInfo info;
+	info.state = turnState;
+	info.info = rouletteinfo;
+
+	canvas->SetBoardGameUINeedInfo(info);
 }
 
 void BoardGamePart::ItemCommand() {
@@ -250,22 +252,57 @@ void BoardGamePart::BattleCommand() {
 		return;
 	}
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_UP))
+	InputManager* input = &InputManager::GetInstance();
+	int port = currentPlayerData->GetControllerNum();
+
+	if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(port, XINPUT_DPAD_UP))
 		battleTargetIndex = max(0, battleTargetIndex - 1);
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_DOWN))
+	if (input->IsKeyDown(KEY_INPUT_DOWN) || input->IsButtonDown(port, XINPUT_DPAD_DOWN))
 		battleTargetIndex = min(battleTargetNum - 1, battleTargetIndex + 1);
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_RETURN)) {
+	if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonDown(port, XINPUT_A)) {
 		battleStartFunc(currentPlayerData, canBattlePlayer[battleTargetIndex]);
 	}
+
+	BattleInUINeedInfo battleInInfo;
+	battleInInfo.battleTargets = canBattlePlayer;
+	battleInInfo.selectIndex = battleTargetIndex;
+
+	BoardGameUINeedInfo info;
+	info.state = turnState;
+	info.info = battleInInfo;
+
+	canvas->SetBoardGameUINeedInfo(info);
 }
 
 void BoardGamePart::SearchTileCommand() {
+	static bool isSetup = false;
+
+	if (!isSetup) {
+		searchTileCommand.SetCurrentPosition(currentPlayerData->GetMapPosition().x, currentPlayerData->GetMapPosition().y);
+		isSetup = true;
+	}
+
 	searchTileCommand.SearchTile();
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_INPUT_B))
+	InputManager* input = &InputManager::GetInstance();
+
+	if (input->IsButtonDown(currentPlayerData->GetControllerNum(), XINPUT_B)) {
+		searchTileCommand.Cleanup();
 		turnState = TurnState_CommandSelect;
+		isSetup = false;
+	}
+
+	SearchTileUINeedInfo searchTileInfo;
+	searchTileInfo.tileType = searchTileCommand.GetCurrentTileType();
+	searchTileInfo.characters = searchTileCommand.GetCurrentCharacters();
+
+	BoardGameUINeedInfo info;
+	info.state = turnState;
+	info.info = searchTileInfo;
+
+	canvas->SetBoardGameUINeedInfo(info);
 }
 
 void BoardGamePart::TurnEnd() {
@@ -309,6 +346,7 @@ void BoardGamePart::TileEffectExecute() {
 		// バトルに入ったら帰る
 		if (turnState == TurnState_BattleIn)
 			return;
+
 	case TileEffect_ItemShop:
 	case TileEffect_EquipShop:
 	case TileEffect_MagicShop:

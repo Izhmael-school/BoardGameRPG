@@ -15,7 +15,7 @@ AudioResource::~AudioResource() {
 bool AudioResource::Load() {
 	if (IsLoaded()) return false;
 
-	// 3D縺ｫ縺吶ｋ縺・
+	// 3D音源の設定
 	SetCreate3DSoundFlag(static_cast<int>(is3D));
 
 	// 隱ｭ縺ｿ霎ｼ縺ｿ
@@ -31,3 +31,5 @@ bool AudioResource::Load() {
 
 	return true;
 }
+
+void AudioResource::Set3D(bool _is3D) { SetCreate3DSoundFlag(static_cast<int>(is3D = _is3D)); }

@@ -38,8 +38,7 @@ void MainGameScene::Start() {
 	sceneCanvas = std::make_unique<MainGameCanvas>();
 	sceneCanvas->Init();
 
-	// キャンバスの登録
-	uiManager->PushCanvas(sceneCanvas.get());
+
 }
 
 /*
@@ -48,14 +47,10 @@ void MainGameScene::Start() {
 void MainGameScene::Setup() {
 	auto c = gameObjectManager->UseObject<FreeCamera>("", VZero, VZero, VOne, "Camera");
 
-	// プレイヤーの生成
-	characterDataManager->DebugCreatePlayerData(Job_Fighter, Job_Wizard, Job_Thief, Job_OrdinaryPeople);
-
 	unsigned int colorSet[4] = { 0x0000ff,0xff0000,0x00ff00,0xffff00 };
 
 	for (int i = 0; i < characterDataManager->GetPlayerNum(); i++) {
 		PlayerData* data = characterDataManager->GetPlayerData(i);
-		data->SetPlayerName("Player" + std::to_string(i + 1));
 		data->SetColor(colorSet[i]);
 		GameObject* p = gameObjectManager->UseObject<Character>("Player", VZero, VZero, VOne, data->GetPlayerName(), data);
 		int r, g, b;
@@ -73,6 +68,9 @@ void MainGameScene::Setup() {
 	gameObjectManager->UseObject<GameObject>("Stage", VZero, Vector3(0, -90, 0), VOne, "BoardGameStage");
 	// バトルステージの生成
 	gameObjectManager->UseObject<GameObject>("BattleStage", Vector3(10000, 0, 10000), VZero, VOne, "BattleStage");
+
+	// キャンバスの登録
+	//uiManager->PushCanvas(sceneCanvas.get());
 }
 
 /*
@@ -149,3 +147,5 @@ void MainGameScene::Render() {
 void MainGameScene::Cleanup() {
 	uiManager->PopCanvas(sceneCanvas.get());
 }
+
+void MainGameScene::SetTurnOrder(const std::vector<int>& _turnOrder) { turn->SetOrder(_turnOrder); }

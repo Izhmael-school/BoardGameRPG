@@ -10,6 +10,7 @@
 #include "Vector2.h"
 #include <vector>
 #include <memory>
+#include <string>
 
 struct UIInput;
 
@@ -23,9 +24,11 @@ protected:
 	UIObject* parent;
 	// 子オブジェクト
 	std::vector<std::unique_ptr<UIObject>> children;
+	// オブジェクトの名前
+	std::string name;
 
 public:
-	UIObject();
+	UIObject(std::string _uiName = "");
 	virtual ~UIObject();
 
 	/*
@@ -121,6 +124,26 @@ public:
 	 * @brief 親の取得
 	 */
 	inline UIObject* GetParent() const { return parent; }
+
+	/*
+	 * @brief 名前の取得
+	 */
+	inline std::string GetName()const { return name; }
+
+	/*
+	 * @brief 名前の変更
+	 */
+	inline void SetName(const std::string& _name) { name = _name; }
+
+	/*
+	 * @brief 名前を使った子オブジェクト探し
+	 */
+	UIObject* GetChild(const std::string& _name);
+
+	/*
+	 * @brief 子の数取得
+	 */
+	int GetChildrenCount() const { return children.size(); }
 };
 
 #endif // !_UIOBJECT_H_

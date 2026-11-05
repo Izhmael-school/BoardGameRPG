@@ -130,7 +130,7 @@ std::string MyJson::Utf8ToString(const std::string& utf8) {
     return out;
 }
 
-std::wstring MyJson::Utf8ToWString(const std::string& utf8) {
+const std::wstring MyJson::Utf8ToWString(const std::string& utf8) {
     if (utf8.empty()) return std::wstring();
     int size_needed = MultiByteToWideChar(CP_UTF8, 0, utf8.data(), (int)utf8.size(), nullptr, 0);
     if (size_needed == 0) return std::wstring();

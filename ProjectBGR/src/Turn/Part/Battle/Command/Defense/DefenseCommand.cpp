@@ -3,7 +3,7 @@
 #include "Manager/Input/InputManager.h"
 #include "DxLib.h"
 #include "Manager/Data/ElementDataManager.h"
-
+#include "Data/Player/PlayerData.h"
 
 void DefenseCommand::Render(int _attackSide) {
 	// バトルウィンドウの矩形
@@ -15,10 +15,10 @@ void DefenseCommand::Render(int _attackSide) {
 	const int lineHeight = 24;
 
 	const std::vector<std::pair<std::string, DefenseSelectCommand>> cmds = {
-		{"→Guard", DefenseCommand_Guard},
-		{"↑MagicGuard", DefenseCommand_MagicGuard},
-		{"←Counter", DefenseCommand_Counter},
-		{"↓Surrender", DefenseCommand_Surrender}
+		{"→ガード", DefenseCommand_Guard},
+		{"↑魔法ガード", DefenseCommand_MagicGuard},
+		{"←カウンター", DefenseCommand_Counter},
+		{"↓降参", DefenseCommand_Surrender}
 	};
 
 	int width = winRight - winLeft;
@@ -37,7 +37,7 @@ void DefenseCommand::Render(int _attackSide) {
 
 		int color = 0x808080; // 非選択: グレー
 		if (id >= 0 && (size_t)id < canSelectCommand.size() && canSelectCommand[(size_t)id]) color = 0xffffff;
-		if (selectCommand == id) color = 0xffcc00;
+		//if (selectCommand == id) color = 0xffcc00;
 
 		int w = GetDrawStringWidth(label.c_str(), (int)label.size());
 		int x = quadCenterX - w / 2;
@@ -86,16 +86,34 @@ void DefenseCommand::StartTurn(CharacterData* _currentDefenseCharacter) {
 void DefenseCommand::SelectCommand() {
 	// データがないか選択済みなら帰る
 	if (!currentDefenseCharacter || selectCommand != DefenseCommand_Invaild) return;
+
+	InputManager* input = &InputManager::GetInstance();
+	int port = -1;
+
+	if (currentDefenseCharacter->IsCPU()) {
+		// CPUには仮でガードだけを選択させる
+		selectCommand = DefenseCommand_Guard;
+		return;
+	}
+	else {
+		
+		PlayerData* p = static_cast<PlayerData*>(currentDefenseCharacter);
+		// プレイヤーであればコントローラーのポート番号をもらう
+		if (p)
+			port = p->GetControllerNum();
+	}
+
+
 	// 通常防御
-	if (canSelectCommand[DefenseCommand_Guard] && InputManager::GetInstance().IsKeyDown(KEY_INPUT_RIGHT))
+	if (canSelectCommand[DefenseCommand_Guard] && input->IsButtonDown(port,XINPUT_DPAD_RIGHT))
 		selectCommand = DefenseCommand_Guard;
 	// カウンター
-	if (canSelectCommand[DefenseCommand_Counter] && InputManager::GetInstance().IsKeyDown(KEY_INPUT_LEFT))
+	if (canSelectCommand[DefenseCommand_Counter] && input->IsButtonDown(port, XINPUT_DPAD_LEFT))
 		selectCommand = DefenseCommand_Counter;
 	// 魔法防御
-	if (canSelectCommand[DefenseCommand_MagicGuard] && InputManager::GetInstance().IsKeyDown(KEY_INPUT_UP))
+	if (canSelectCommand[DefenseCommand_MagicGuard] && input->IsButtonDown(port, XINPUT_DPAD_UP))
 		selectCommand = DefenseCommand_MagicGuard;
 	// 降参
-	if (canSelectCommand[DefenseCommand_Surrender] && InputManager::GetInstance().IsKeyDown(KEY_INPUT_DOWN))
+	if (canSelectCommand[DefenseCommand_Surrender] && input->IsButtonDown(port, XINPUT_DPAD_DOWN))
 		selectCommand = DefenseCommand_Surrender;
 }

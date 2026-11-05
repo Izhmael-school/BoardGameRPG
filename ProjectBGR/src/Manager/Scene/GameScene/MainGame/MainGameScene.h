@@ -9,6 +9,7 @@
 
 #include "../SceneBase.h"
 #include <memory>
+#include <vector>
 
 class FreeCamera;
 class GameObjectManager;
@@ -52,6 +53,9 @@ public:
 
 	void Cleanup() override;
 
+	inline CharacterDataManager* GetCharacterDataManager() const { return characterDataManager.get(); }
+
+	void SetTurnOrder(const std::vector<int>& _turnOrder);
 };
 
 

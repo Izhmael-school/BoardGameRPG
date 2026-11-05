@@ -22,7 +22,7 @@ public:
     /*
 	 * @brief UTF-8 縺ｮ繝舌う繝亥・繧・UTF-16 (std::wstring) 縺ｫ螟画鋤
 	 */ 
-	static std::wstring Utf8ToWString(const std::string& utf8);
+	static const std::wstring Utf8ToWString(const std::string& utf8);
 
 	/*
 	 * @brief UTF-8 縺ｮ繝舌う繝亥・繧堤樟蝨ｨ縺ｮ ANSI 繧ｳ繝ｼ繝峨・繝ｼ繧ｸ縺ｮ std::string 縺ｫ螟画鋤

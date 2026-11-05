@@ -26,6 +26,7 @@ InputManager::~InputManager()
 void InputManager::Start() {
 	memset(currentKeyState, 0, KEY_NUM);
 	memset(prevKeyState, 0, KEY_NUM);
+	pads.resize(MAX_PORT_NUM);
 }
 
 void InputManager::Update(float _t) {
@@ -138,6 +139,13 @@ Vector2 InputManager::GetMousePos() const {
 	return pos;
 }
 
+PadBase* InputManager::GetPad(int _index) const {
+	if (_index < 0 || _index >= pads.size() || pads.empty() || !pads[_index]) 
+		return nullptr;
+
+	return pads[_index].get(); 
+}
+
 bool InputManager::IsButton(int _padIndex, int _button) const {
 	auto pad = GetPad(_padIndex);
 	if (!pad) return false;
@@ -154,6 +162,54 @@ bool InputManager::IsButtonUp(int _padIndex, int _button) const {
 	auto pad = GetPad(_padIndex);
 	if (!pad) return false;
 	return pad->IsPadUp(_button);
+}
+
+bool InputManager::IsButton(int _button) const {
+
+	for (auto& pad : pads) {
+
+		if (!pad) continue;
+
+		bool fact = pad->IsPad(_button);
+
+		// 一つでもtrueが出ればtrueを返す
+		if (fact)
+			return true;
+	}
+
+	return false;
+}
+
+bool InputManager::IsButtonDown(int _button) const {
+
+	for (auto& pad : pads) {
+
+		if (!pad) continue;
+
+		bool fact = pad->IsPadDown(_button);
+
+		// 一つでもtrueが出ればtrueを返す
+		if (fact)
+			return true;
+	}
+
+	return false;
+}
+
+bool InputManager::IsButtonUp(int _button) const {
+
+	for (auto& pad : pads) {
+
+		if (!pad) continue;
+
+		bool fact = pad->IsPadUp(_button);
+
+		// 一つでもtrueが出ればtrueを返す
+		if (fact)
+			return true;
+	}
+
+	return false;
 }
 
 int InputManager::ExchangeXInputButton(int _XINPUT, int _padNum) {

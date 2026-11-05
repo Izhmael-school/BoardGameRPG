@@ -9,8 +9,7 @@
 #include <unordered_map>
 #include <string>
 
-const char* const MODEL_FILEPATH = "res/Model/";	// 繧ｪ繝ｼ繝・ぅ繧ｪ縺ｮ繝輔ぃ繧､繝ｫ繝代せ
-const char* const MODELDATA_FILEPATH = "res/ExternalFile/Resource/ModelData.json";	// 繧ｪ繝ｼ繝・ぅ繧ｪ繝・・繧ｿ縺ｮ繝輔ぃ繧､繝ｫ繝代せ
+const char* const MODEL_FILEPATH = "res/Model/";	// モデルが格納されてるフォルダ階層
 
 class ModelResourceManager {
 private:
@@ -22,22 +21,22 @@ public:
 	~ModelResourceManager();
 
 	/*
-	 * @brief 繝｢繝・Ν繝ｭ繝ｼ繝・
+	 * @brief モデルの読み込み
 	 */
 	void LoadModel(const std::string& _name, const std::string& _path);
 
 	/*
-	 * @brief 邂｡逅・＠縺ｦ縺・ｋ繝上Φ繝峨Ν繧定､・｣ｽ縺励◆繧ゅ・縺ｮ蜿門ｾ・
+	 * @brief 名前指定で複製したモデルハンドルを取得
 	 */
 	int GetDupModelHandle(const std::string& _name);
 
 	/*
-	 * @brief 螟夜Κ繝輔ぃ繧､繝ｫ縺九ｉ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ
+	 * @brief 指定のファイル階層以下にあるMV1ファイルをすべて読み込む
 	 */
-	void LoadModelFromExternalFile();
+	void LoadAllModel();
 
 	/*
-	 * @brief 蜈ｨ蜑企勁
+	 * @brief 全削除
 	 */
 	void Clear();
 

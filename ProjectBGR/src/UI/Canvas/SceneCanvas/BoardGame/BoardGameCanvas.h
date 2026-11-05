@@ -7,6 +7,7 @@
 #define _BOARDGAMECANVAS_H_
 
 #include "../../UICanvasBase.h"
+#include "Turn/Part/BoardGame/BoardGameInfo.h"
 #include <vector>
 #include <string>
 
@@ -14,23 +15,13 @@ class UIText;
 class UITextDialog;
 class PlayerData;
 
-struct PlayerUIInfo {
-	std::string playerName;
-	int atk;
-	int def;
-	int vit;
-	int mag;
-	int spd;
-	int luk;
-	int money;
-	std::vector<int> itemList;
-	std::vector<int> magicList;
-	std::vector<int> equipList;
-};
+
 
 class BoardGameCanvas  : public UICanvasBase{
 private:
 	PlayerUIInfo info;
+	BoardGameUINeedInfo binfo;
+	TurnState prevState;
 	int rouletteNum;
 	int selectIndex;
 	UIText* playerNameUI;
@@ -38,7 +29,12 @@ private:
 	UITextDialog* explanationUI;
 	UIObject* itemListUI;
 	UIObject* magicListUI;
-
+	UIObject* moveCommandUI;
+	UIObject* commandSelectUI;
+	UIObject* searchTileUI;
+	UIObject* inBattleUI;
+	UIObject* tileEffectUI;
+	bool isDialogTextSend;
 public:
 	void Init() override;
 
@@ -62,7 +58,39 @@ public:
 
 	void UpdateMagicListUI();
 
-	void OpenRouletteUI();
+	void OpenMoveCommandUI();
+
+	void UpdateMoveCommandUI();
+
+	void CloseMoveCommandUI();
+
+	void OpenCommandSelectUI();
+
+	void UpdateCommandSelectUI();
+
+	void CloseCommandSelectUI();
+
+	void OpenSearchTileUI();
+
+	void UpdateSearchTileUI();
+
+	void CloseSearchTileUI();
+
+	void OpenInBattleUI();
+
+	void UpdateInBattleUI();
+
+	void CloseInBattleUI();
+
+	void OpenTileEffectUI();
+
+	void UpdateTileEffectUI();
+
+	void CloseTileEffectUI();
+
+	void SetBoardGameUINeedInfo(BoardGameUINeedInfo _info) { binfo = _info; };
+
+	void UIClose();
 };
 
 #endif // !_BOARDGAMECANVAS_H_

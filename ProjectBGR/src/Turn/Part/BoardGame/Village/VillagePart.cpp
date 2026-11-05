@@ -39,13 +39,15 @@ void VillagePart::Update(float _t) {
 
 	reason = CantActReason_Invalid;
 
+	InputManager& input = InputManager::GetInstance();
+
 	switch (villageState) {
 	case VillageState_Select:
-		if (InputManager::GetInstance().IsKeyDown(KEY_LEFT))
+		if (input.IsButtonDown(XINPUT_DPAD_LEFT))
 			elementSelection = std::max(0, elementSelection - 1);
-		if (InputManager::GetInstance().IsKeyDown(KEY_RIGHT))
+		if (input.IsButtonDown(XINPUT_DPAD_RIGHT))
 			elementSelection = std::min(elementSelection + 1, static_cast<int>(VillageState_Max) - 1);
-		if (InputManager::GetInstance().IsKeyDown(KEY_RETURN)) {
+		if (input.IsButtonDown(XINPUT_A)) {
 			villageState = static_cast<VillageState>(elementSelection);
 			modeSelection = 0;
 		}
@@ -125,7 +127,10 @@ void VillagePart::Update_GetTax(float _t) {
 	static bool isBack = false;
 	static CantActReason keepReason = CantActReason_Invalid;
 
-	if (isBack && InputManager::GetInstance().IsKeyDown(KEY_RETURN)) {
+	InputManager& input = InputManager::GetInstance();
+	int port = currentTurnPlayer->GetControllerNum();
+
+	if (isBack && input.IsButtonDown(port,XINPUT_A)) {
 		villageState = VillageState_Select;
 		isBack = false;
 		keepReason = CantActReason_Invalid;
@@ -137,21 +142,21 @@ void VillagePart::Update_GetTax(float _t) {
 		return;
 	}
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_B)) {
+	if (input.IsButtonDown(port,XINPUT_B)) {
 		villageState = VillageState_Select;
 		return;
 	}
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_UP) || InputManager::GetInstance().IsKeyDown(KEY_DOWN))
+	if (input.IsButtonDown(port,XINPUT_DPAD_UP) || input.IsButtonDown(port,XINPUT_DPAD_DOWN))
 		modeSelection ^= 1;
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_RETURN) && modeSelection == 0) {
+	if (input.IsButtonDown(port,XINPUT_A) && modeSelection == 0) {
 		GetTax();
 		keepReason = reason;
 		isBack = true;
 	}
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_RETURN) && modeSelection == 1) {
+	if (input.IsButtonDown(port,XINPUT_A) && modeSelection == 1) {
 		villageState = VillageState_Select;
 	}
 }
@@ -161,7 +166,10 @@ void VillagePart::Update_Upgrade(float _t) {
 	static bool isBack = false;
 	static CantActReason keepReason = CantActReason_Invalid;
 
-	if (isBack && InputManager::GetInstance().IsKeyDown(KEY_RETURN)) {
+	InputManager& input = InputManager::GetInstance();
+	int port = currentTurnPlayer->GetControllerNum();
+
+	if (isBack && input.IsButtonDown(XINPUT_A)) {
 		villageState = VillageState_Select;
 		isBack = false;
 		keepReason = CantActReason_Invalid;
@@ -173,10 +181,10 @@ void VillagePart::Update_Upgrade(float _t) {
 		return;
 	}
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_UP) || InputManager::GetInstance().IsKeyDown(KEY_DOWN))
+	if (input.IsButtonDown(XINPUT_DPAD_UP) || input.IsButtonDown(XINPUT_DPAD_DOWN))
 		modeSelection ^= 1;
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_RETURN)) {
+	if (input.IsButtonDown(XINPUT_A)) {
 		if (modeSelection == 0) {
 			Upgrade();
 			isBack = true;
@@ -192,7 +200,10 @@ void VillagePart::Update_Acquisition(float _t) {
 	static bool isBack = false;
 	static CantActReason keepReason = CantActReason_Invalid;
 
-	if (isBack && InputManager::GetInstance().IsKeyDown(KEY_RETURN)) {
+	InputManager& input = InputManager::GetInstance();
+	int port = currentTurnPlayer->GetControllerNum();
+
+	if (isBack && input.IsButtonDown(XINPUT_A)) {
 		villageState = VillageState_Select;
 		isBack = false;
 		keepReason = CantActReason_Invalid;
@@ -204,10 +215,10 @@ void VillagePart::Update_Acquisition(float _t) {
 		return;
 	}
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_UP) || InputManager::GetInstance().IsKeyDown(KEY_DOWN))
+	if (input.IsButtonDown(XINPUT_DPAD_UP) || input.IsButtonDown(XINPUT_DPAD_DOWN))
 		modeSelection ^= 1;
 
-	if (InputManager::GetInstance().IsKeyDown(KEY_RETURN)) {
+	if (input.IsButtonDown(XINPUT_A)) {
 		if (modeSelection == 0) {
 			Acquisition();
 			isBack = true;

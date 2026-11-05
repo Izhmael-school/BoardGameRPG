@@ -1,10 +1,11 @@
 #include "UIObject.h"
 
-UIObject::UIObject()
+UIObject::UIObject(std::string _uiName)
     :position(VZero_2)
     ,isActive(true)
     ,parent(nullptr)
     ,children()
+    ,name(_uiName)
 {
 }
 
@@ -42,6 +43,8 @@ void UIObject::Update(float _t) {
 }
 
 void UIObject::Update(float _t, UIInput& _input) {
+    if (!isActive) return;
+
     // 固有の更新処理
     OnUpdate(_t,_input);
 
@@ -54,6 +57,8 @@ void UIObject::Update(float _t, UIInput& _input) {
 }
 
 void UIObject::Render() {
+    if (!isActive) return;
+
     // 固有の描画処理
     OnRender();
 
@@ -110,4 +115,12 @@ std::vector<UIObject*> UIObject::GetChildren() const {
     }
 
     return array;
+}
+
+UIObject* UIObject::GetChild(const std::string& _name) {
+    for (auto child : GetChildren()) {
+        if (child->name == _name)
+            return child;
+    }
+    return nullptr;
 }

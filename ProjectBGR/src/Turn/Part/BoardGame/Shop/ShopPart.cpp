@@ -73,41 +73,45 @@ void ShopPart::Update(float _t) {
 	ShopUINeedInfo info;
 
 	DontBuyReason reason = DontBuyReason_Invalid;
+
+	InputManager& input = InputManager::GetInstance();
+	int port = currentTurnPlayer->GetControllerNum();
+
 	switch (shopState) {
 	case ShopState_Selection:
-		if (InputManager::GetInstance().IsKeyDown(KEY_LEFT))
+		if (input.IsButtonDown(port,XINPUT_DPAD_LEFT))
 			modeSelection = std::max(0, modeSelection - 1);
-		if (InputManager::GetInstance().IsKeyDown(KEY_RIGHT))
+		if (input.IsButtonDown(port,XINPUT_DPAD_RIGHT))
 			modeSelection = std::min(modeSelection + 1, static_cast<int>(ShopState_Max) - 1);
-		if (InputManager::GetInstance().IsKeyDown(KEY_RETURN))
+		if (input.IsButtonDown(port,XINPUT_A))
 			shopState = static_cast<ShopState>(modeSelection);
 		break;
 	case ShopState_Buy:
-		if (InputManager::GetInstance().IsKeyDown(KEY_LEFT))
+		if (input.IsButtonDown(port,XINPUT_DPAD_LEFT))
 			elementSelection = std::max(0, elementSelection - 1);
-		if (InputManager::GetInstance().IsKeyDown(KEY_RIGHT))
+		if (input.IsButtonDown(port,XINPUT_DPAD_RIGHT))
 			elementSelection = std::min(elementSelection + 1, static_cast<int>(buyArray.size()) - 1);
-		if (InputManager::GetInstance().IsKeyDown(KEY_RETURN))
+		if (input.IsButtonDown(port,XINPUT_A))
 			reason = Buy(elementSelection);
-		if (InputManager::GetInstance().IsKeyDown(KEY_B))
+		if (input.IsButtonDown(port,XINPUT_B))
 			shopState = ShopState_Selection;
 
 		info.selectElement = buyArray[elementSelection];
 		break;
 	case ShopState_Sell:
-		if (InputManager::GetInstance().IsKeyDown(KEY_B))
+		if (input.IsButtonDown(port,XINPUT_B))
 			shopState = ShopState_Selection;
 
 		if (canSellArray.empty()) return;
 
-		if (InputManager::GetInstance().IsKeyDown(KEY_LEFT))
+		if (input.IsButtonDown(XINPUT_DPAD_LEFT))
 			elementSelection = std::max(0, elementSelection - 1);
-		if (InputManager::GetInstance().IsKeyDown(KEY_RIGHT))
+		if (input.IsButtonDown(XINPUT_DPAD_RIGHT))
 			elementSelection = std::min(elementSelection + 1, static_cast<int>(canSellArray.size()) - 1);
 
 			info.selectElement = canSellArray[elementSelection];
 
-		if (InputManager::GetInstance().IsKeyDown(KEY_RETURN)) {
+		if (input.IsButtonDown(XINPUT_A)) {
 			const SellElement& sell = canSellArray[elementSelection];
 
 			SellElement sold;

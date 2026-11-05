@@ -3,7 +3,7 @@
 #include "Manager/Input/InputManager.h"
 #include "Manager/Data/ElementDataManager.h"
 #include "DxLib.h"
-
+#include "Data/Player/PlayerData.h"
 
 void OffenseCommand::StartTurn(CharacterData* _currentOffenseCharacter) {
 	// 現在攻撃側のプレイヤーを取得
@@ -27,14 +27,31 @@ void OffenseCommand::StartTurn(CharacterData* _currentOffenseCharacter) {
 void OffenseCommand::SelectCommand() {
 	// データがないか選択済みなら帰る
 	if (!currentOffenseCharacter || selectCommand != OffenseCommand_Invaild) return;
+
+	InputManager* input = &InputManager::GetInstance();
+	int port = -1;
+
+	if (currentOffenseCharacter->IsCPU()) {
+		// CPUには仮で通常攻撃だけを選択させる
+		selectCommand = OffenseCommand_Attack;
+		return;
+	}
+	else {
+
+		PlayerData* p = static_cast<PlayerData*>(currentOffenseCharacter);
+		// プレイヤーであればコントローラーのポート番号をもらう
+		if (p)
+			port = p->GetControllerNum();
+	}
+
 	// 通常攻撃
-	if (canSelectCommand[OffenseCommand_Attack] && InputManager::GetInstance().IsKeyDown(KEY_INPUT_RIGHT))
+	if (canSelectCommand[OffenseCommand_Attack] && input->IsButton(port,XINPUT_DPAD_RIGHT))
 		selectCommand = OffenseCommand_Attack;
 	// 必殺技
-	if (canSelectCommand[OffenseCommand_FatalAttack] && InputManager::GetInstance().IsKeyDown(KEY_INPUT_LEFT))
+	if (canSelectCommand[OffenseCommand_FatalAttack] && input->IsButton(port,XINPUT_DPAD_LEFT))
 		selectCommand = OffenseCommand_FatalAttack;
 	// 魔法攻撃
-	if (canSelectCommand[OffenseCommand_Magic] && InputManager::GetInstance().IsKeyDown(KEY_INPUT_UP))
+	if (canSelectCommand[OffenseCommand_Magic] && input->IsButton(port,XINPUT_DPAD_UP))
 		selectCommand = OffenseCommand_Magic;
 }
 
@@ -49,9 +66,9 @@ void OffenseCommand::Render(int _attackSide) {
 
 	// 表示するコマンドの順序とラベル
 	const std::vector<std::pair<std::string, OffenseSelectCommand>> cmds = {
-		{"→Attack", OffenseCommand_Attack},
-		{"↑Magic", OffenseCommand_Magic},
-		{"←Fatal", OffenseCommand_FatalAttack}
+		{"→攻撃", OffenseCommand_Attack},
+		{"↑魔法攻撃", OffenseCommand_Magic},
+		{"←必殺技", OffenseCommand_FatalAttack}
 	};
 
 	// 四等分したときの下側中央（各下側クアドラントの中央）に配置
@@ -73,7 +90,7 @@ void OffenseCommand::Render(int _attackSide) {
 		// 選択可能か・選択済みかで色を変える
 		int color = 0x808080; // 非選択: グレー
 		if (id >= 0 && (size_t)id < canSelectCommand.size() && canSelectCommand[(size_t)id]) color = 0xffffff; // 選択可能: 白
-		if (selectCommand == id) color = 0xffcc00; // 選択中: 黄色
+		//if (selectCommand == id) color = 0xffcc00; // 選択中: 黄色
 
 		int w = GetDrawStringWidth(label.c_str(), (int)label.size());
 		int x = quadCenterX - w / 2; // 中央揃え

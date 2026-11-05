@@ -16,10 +16,12 @@ protected:
 	std::function<void(PlayerSettingPart)> changePartFunc;
 	// UIに情報渡す用
 	std::function<void(const PlayerSettingUINeedInfo&)> setUIInfoFunc;
+	// 次に行く用イベント
+	std::function<void()> onGoNextFunc;
 	InputManager* input;
 
 public:
-	virtual void Init(std::function<void(PlayerSettingPart)> _changePartFunc,std::function<void(const PlayerSettingUINeedInfo&)> _setUIInfoFunc);
+	virtual void Init(std::function<void(PlayerSettingPart)> _changePartFunc,std::function<void(const PlayerSettingUINeedInfo&)> _setUIInfoFunc, std::function<void()> _onGoNextFunc);
 
 	virtual void Setup();
 

@@ -32,7 +32,7 @@ public:
 	/*
 	 * @brief 螟夜Κ繝輔ぃ繧､繝ｫ縺九ｉ縺ｮ繧ｨ繝輔ぉ繧ｯ繝郁ｪｭ縺ｿ霎ｼ縺ｿ
 	 */
-	void LoadEffectFromExternalFile();
+	void LoadAllEffect();
 
 	/*
 	 * @brief 繧ｨ繝輔ぉ繧ｯ繝医Μ繧ｽ繝ｼ繧ｹ縺ｮ蜿門ｾ・

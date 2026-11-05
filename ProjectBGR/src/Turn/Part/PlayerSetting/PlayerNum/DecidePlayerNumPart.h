@@ -27,6 +27,11 @@ public:
 
 	void Setup() override;
 
+	int GetPlayerNum() const { return playerNum; }
+
+	int GetCPUNum() const { return cpuNum; }
+
+	int GetCharaterNum() const { return playerNum + cpuNum; }
 };
 
 #endif // !_DECIDEPLAYER_NUMPART_H_

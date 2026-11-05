@@ -2,7 +2,7 @@
   // 初期ステータスは合計30
   {
     "jobID": 0,
-    "jobName": "Fighter",
+    "jobName": "戦士",
     "level": 1,
     "atk": 8,
     "def": 6,
@@ -15,7 +15,7 @@
   },
   {
     "jobID": 1,
-    "jobName": "Wizard",
+    "jobName": "魔法使い",
     "level": 1,
     "atk": 1,
     "def": 2,
@@ -28,7 +28,7 @@
   },
   {
     "jobID": 2,
-    "jobName": "Thief",
+    "jobName": "盗賊",
     "level": 1,
     "atk": 5,
     "def": 2,
@@ -41,7 +41,7 @@
   },
   {
     "jobID": 3,
-    "jobName": "HeavyFighter",
+    "jobName": "重戦士",
     "level": 1,
     "atk": 6,
     "def": 10,
@@ -54,7 +54,7 @@
   },
   {
     "jobID": 4,
-    "jobName": "Monk",
+    "jobName": "僧侶",
     "level": 1,
     "atk": 2,
     "def": 4,
@@ -67,7 +67,7 @@
   },
   {
     "jobID": 5,
-    "jobName": "MagicFencer",
+    "jobName": "魔法剣士",
     "level": 1,
     "atk": 7,
     "def": 4,
@@ -80,7 +80,7 @@
   },
   {
     "jobID": 6,
-    "jobName": "Assassin",
+    "jobName": "忍者",
     "level": 1,
     "atk": 10,
     "def": 2,
@@ -93,7 +93,7 @@
   },
   {
     "jobID": 7,
-    "jobName": "OrdinaryPeople",
+    "jobName": "一般人",
     "level": 1,
     "atk": 6,
     "def": 6,

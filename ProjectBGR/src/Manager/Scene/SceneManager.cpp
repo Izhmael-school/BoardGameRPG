@@ -7,6 +7,7 @@
 #include "GameScene/PlayerSetting/PlayerSettingScene.h"
 #include "Manager/UI/UIManager.h"
 #include "UI/Input/UIInput.h"
+#include <functional>
 
 SceneManager::~SceneManager() = default;
 
@@ -24,8 +25,13 @@ void SceneManager::Start(){
 	// 繧ｷ繝ｼ繝ｳ縺ｮ逕滓・
 	scene[static_cast<int>(SceneType::DebugSceneSelect)] = std::make_unique<DebugSceneSelectScene>();
 	scene[static_cast<int>(SceneType::Title)] = std::make_unique<TitleScene>();
-	scene[static_cast<int>(SceneType::PlayerSetting)] = std::make_unique<PlayerSettingScene>(uiManager.get());
 	scene[static_cast<int>(SceneType::MainGame)] = std::make_unique<MainGameScene>(uiManager.get());
+	auto mainGameScene = static_cast<MainGameScene*>(scene[static_cast<int>(SceneType::MainGame)].get());
+
+
+	std::function<void(SceneType)> changeSceneFunc = [this](SceneType _type) {ChangeScene(_type); };
+	std::function<void(std::vector<int>)> sendTurnOrderFunc = [mainGameScene](const std::vector<int>& _turnOrder) {mainGameScene->SetTurnOrder(_turnOrder); };
+	scene[static_cast<int>(SceneType::PlayerSetting)] = std::make_unique<PlayerSettingScene>(uiManager.get(), mainGameScene->GetCharacterDataManager(), changeSceneFunc,sendTurnOrderFunc);
 
 	// 蛻晄悄繧ｷ繝ｼ繝ｳ縺ｮ貅門ｙ
 	scene[static_cast<int>(currentSceneType)]->Setup();

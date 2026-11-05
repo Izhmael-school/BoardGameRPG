@@ -16,6 +16,7 @@ constexpr double FRAME_TIME = 1.0 / FPS;
 class ModelResourceManager;
 class EffectResourceManager;
 class AudioResourceManager;
+class SpriteResourceManager;
 
 class Application : public Singleton<Application>  {
 private:
@@ -27,6 +28,7 @@ private:
 	std::unique_ptr<ModelResourceManager> modelResourceManager;
 	std::unique_ptr<EffectResourceManager> effectResourceManager;
 	std::unique_ptr<AudioResourceManager> audioResourceManager;
+	std::unique_ptr<SpriteResourceManager> spriteResourceManager;
 
 public:
 	Application();
@@ -88,6 +90,7 @@ public:
 	ModelResourceManager* GetModelResourceManager() const { return modelResourceManager.get(); }
 	EffectResourceManager* GetEffectResourceManager() const { return effectResourceManager.get(); }
 	AudioResourceManager* GetAudioResourceManager() const { return audioResourceManager.get(); }
+	SpriteResourceManager* GetSpriteResourceManager() const { return spriteResourceManager.get(); }
 };
 
 #endif // !_APPLICATION_H_
