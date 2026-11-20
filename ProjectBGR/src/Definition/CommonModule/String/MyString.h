@@ -52,4 +52,6 @@ public:
 	 * @brief 文字列を１文字ずつ取り出す
 	 */
 	static std::string GetUTF8Char(const std::string& str, int& index);
+
+	static std::string Zen2Han(const std::string& _str);
 };

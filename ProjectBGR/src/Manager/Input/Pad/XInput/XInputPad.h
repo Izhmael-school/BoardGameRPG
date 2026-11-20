@@ -35,6 +35,10 @@ public:
 	  MOUSE_BUTTON_##
 	*/
 	inline bool IsPadUp(int _pad) const override;
+
+	inline bool IsCurrentState(int _pad)const { return currentPadState.Buttons[_pad] == 0; }
+
+	inline bool IsPrevState(int _pad)const { return prevPadState.Buttons[_pad] == 0; }
 #pragma endregion
 };
 

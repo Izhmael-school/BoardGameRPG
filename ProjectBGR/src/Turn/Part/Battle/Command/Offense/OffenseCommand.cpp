@@ -20,8 +20,7 @@ void OffenseCommand::StartTurn(CharacterData* _currentOffenseCharacter) {
 	// 必殺技
 	canSelectCommand[OffenseCommand_FatalAttack] = true;
 	// 攻撃魔法を装備していれば攻撃魔法を使えるようにする
-	if (_currentOffenseCharacter->IsUseMagicAttack())
-		canSelectCommand[OffenseCommand_Magic] = true;
+	canSelectCommand[OffenseCommand_Magic] = _currentOffenseCharacter->IsUseMagicAttack();
 }
 
 void OffenseCommand::SelectCommand() {
@@ -100,15 +99,22 @@ void OffenseCommand::Render(int _attackSide) {
 }
 
 std::string OffenseCommand::GetSelectCommandName() {
-	switch (selectCommand) {
-	case OffenseCommand_Attack:
-		return "通常攻撃";
-	case OffenseCommand_Magic:
-		return ElementDataManager::GetInstance().GetMagicData(currentOffenseCharacter->GetEquipList()[EquipPosition_AttackMagic]).name;
-	case OffenseCommand_FatalAttack:
-		return "必殺技";
-	}
-	return "";
+	
+	if (selectCommand == OffenseCommand_Invaild) return "";
+
+	return GetCommandNameArray()[selectCommand];
+}
+
+std::vector<std::string> OffenseCommand::GetCommandNameArray() {
+
+	std::vector<std::string> array;
+
+	array.resize(OffenseCommand_Max);
+	array[OffenseCommand_Attack] = "通常攻撃";
+	array[OffenseCommand_Magic] = ElementDataManager::GetInstance().GetEquipData(currentOffenseCharacter->GetEquipList()[EquipPosition_AttackMagic]).name;
+	array[OffenseCommand_FatalAttack] = "必殺技";
+
+	return array;
 }
 
 void OffenseCommand::Reset() {

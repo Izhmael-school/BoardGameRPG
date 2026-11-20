@@ -274,4 +274,21 @@ void InputManager::UpdateUIInput(UIInput& _input) {
 
 	// マウスの座標
 	_input.mousePos = GetMousePos();
+
+	// コントローラの処理
+	int index = 0;
+
+	for (int i = 0, max = 16; i < max; i++) {
+
+		for (int j = 0, jMax = 4; j < jMax;j++) {
+			auto pair = _input.pad[j][i];
+			if (pair.first != i) continue;
+
+			auto xPad = static_cast<XInputPad*>(pads[j].get());
+
+			if (!xPad) continue;
+
+			pair.second.press = { xPad->IsCurrentState(i),xPad->IsPrevState(i) };
+		}
+	}
 }

@@ -23,6 +23,7 @@ private:
 	UIObject* select;
 	UIObject* buy;
 	UIObject* sell;
+	UIObject* bg;
 
 	std::vector<BuyElement> buyItems;
 
@@ -46,6 +47,10 @@ public:
 	void Init()override;
 
 	void Update(float _t, UIInput& _input) override;
+
+	void Setup() override;
+
+	void SetBG(ShopType _type);
 
 	/*
 	 * @brief 購入

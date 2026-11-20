@@ -367,6 +367,15 @@
     <Filter Include="ソース ファイル\UI\UIObject\UIWindow">
       <UniqueIdentifier>{2a4d8bc2-6712-4483-950b-501de233d621}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\UI\Canvas\SceneCanvas\Battle">
+      <UniqueIdentifier>{6e7a06ef-e489-4427-b132-c57d5c5371ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Turn\Part\BoardGame\Effect\Item">
+      <UniqueIdentifier>{661324c3-cb0c-4f55-83e5-264feabbcd49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\UIObject\UIBillboard">
+      <UniqueIdentifier>{f080fe11-5e96-46c5-ae8a-4dffba7666f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -691,6 +700,30 @@
       <Filter>ソース ファイル\Definition\CommonModule\Sprite</Filter>
     </ClCompile>
     <ClCompile Include="src\UI\UIObject\UIWindow\UIWindow.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\Canvas\SceneCanvas\Battle\BattleCanvas.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\UIObject\UIGauge\UIGauge.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\BoardGame\Effect\Item\ItemEffect.cpp">
+      <Filter>ソース ファイル\Turn\Part\BoardGame\Effect\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Data\CharacterStatus.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Definition\Enum\StatusChange.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Turn\Part\BoardGame\Command\Move\Roulette.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\UIContext.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\UIObject\UIBillboard\UIBillboard.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1061,6 +1094,33 @@
     <ClInclude Include="src\UI\UIObject\UIWindow\UIWindow.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="src\UI\Canvas\SceneCanvas\Battle\BattleCanvas.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\Battle\BattleInfo.h">
+      <Filter>ソース ファイル\Turn\Part\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\UIObject\UIGauge\UIGauge.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\BoardGame\Effect\Item\ItemEffect.h">
+      <Filter>ソース ファイル\Turn\Part\BoardGame\Effect\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Data\CharacterStatus.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Definition\Enum\StatusChange.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Turn\Part\BoardGame\Command\Move\Roulette.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\UIContext.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\UIObject\UIBillboard\UIBillboard.h">
+      <Filter>ソース ファイル\UI\UIObject\UIBillboard</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\ExternalFile\Resource\ModelData.json">
@@ -1106,6 +1166,9 @@
       <Filter>リソース ファイル</Filter>
     </None>
     <None Include="res\ExternalFile\Data\ShopData\ShopData_34_15.json">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="res\ExternalFile\Data\OriginPlayerData.json">
       <Filter>リソース ファイル</Filter>
     </None>
   </ItemGroup>

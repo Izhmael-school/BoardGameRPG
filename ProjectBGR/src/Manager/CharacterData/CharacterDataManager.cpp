@@ -113,13 +113,53 @@ void CharacterDataManager::DeleteEnemyData() {
 		});
 }
 
+std::vector<CharacterData*> CharacterDataManager::GetAllCharacterData() const {
+	std::vector<CharacterData*> array;
+
+	for (auto& p : playerDataArray) {
+		array.emplace_back(p.get());
+	}
+	for (auto& e : enemyDataArray) {
+		array.emplace_back(e.get());
+	}
+	return array;
+}
+
+std::vector<CharacterData*> CharacterDataManager::GetCharacterForOneSquareRadius(Vector2 _originPos, int _r) {
+
+	std::vector<CharacterData*> allChara = GetAllCharacterData();
+	std::vector<CharacterData*> array;
+	for (auto c : allChara) {
+		Vector2 cv = c->GetMapPosition();
+
+		if (cv.x >= _originPos.x - _r && cv.x <= _originPos.x + _r &&
+			cv.y >= _originPos.y - _r && cv.y <= _originPos.y + _r)
+			array.emplace_back(c);
+	}
+
+	return array;
+}
+
 void CharacterDataManager::DebugCreatePlayerData(Job _p1, Job _p2, Job _p3, Job _p4) {
 	auto p1 = CreatePlayerData(_p1);
 	p1->SetColor(0x0000ff);
 	p1->AddItem(0);
-	p1->AddItem(0);
-	p1->AddItem(0);
-	p1->AddMagic(0);
+	p1->AddItem(1);
+	p1->AddItem(2);
+	p1->AddItem(3);
+	p1->AddItem(4);
+	p1->AddItem(5);
+	p1->AddItem(6);
+	p1->AddItem(7);
+	p1->AddItem(8);
+	p1->AddItem(9);
+	p1->AddItem(10);
+	p1->AddMagic(3);
+	p1->AddMagic(12);
+	p1->AddMagic(13);
+	p1->AddMagic(14);
+	p1->AddMagic(15);
+	p1->AddMagic(16);
 	p1->SetMoney(10000);
 	p1->SetPlayerNum(0);
 	p1->SetControllerNum(0);
@@ -128,6 +168,11 @@ void CharacterDataManager::DebugCreatePlayerData(Job _p1, Job _p2, Job _p3, Job 
 	p2->SetColor(0xff0000);
 	p2->AddItem(0);
 	p2->AddMagic(0);
+	p2->AddMagic(12);
+	p2->AddMagic(13);
+	p2->AddMagic(14);
+	p2->AddMagic(15);
+	p2->AddMagic(16);
 	p2->SetPlayerNum(1);
 	p2->SetControllerNum(0);
 	p2->SetPlayerName("2P");

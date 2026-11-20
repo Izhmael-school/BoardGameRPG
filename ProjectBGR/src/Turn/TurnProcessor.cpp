@@ -5,6 +5,8 @@
 #include "Data/Player/PlayerData.h"
 #include "Manager/UI/UIManager.h"
 #include "UI/Canvas/SceneCanvas/BoardGame/BoardGameCanvas.h"
+#include "UI/Canvas/SceneCanvas/Battle/BattleCanvas.h"
+#include "Part/Battle/BattleInfo.h"
 
 TurnProcessor::TurnProcessor(MapManager* _mapManager, CharacterDataManager* _characterDataManager, GameObjectManager* _gameObjectManager, UIManager* _uiManager)
 	:currentTurn(0)
@@ -16,11 +18,13 @@ TurnProcessor::TurnProcessor(MapManager* _mapManager, CharacterDataManager* _cha
 {
 	// キャンバスの生成
 	boardGameCanvas = std::make_unique<BoardGameCanvas>();
+	battleCanvas = std::make_unique<BattleCanvas>();
 	boardGameCanvas->Init();
+	battleCanvas->Init();
 	// ボードゲームの初期化
 	boardGamePart.Init(uiManager,_mapManager,character, [this]() {this->TurnEndFunc(); }, [this](CharacterData* _p1, CharacterData* _p2) {StartBattle(_p1, _p2); },_gameObjectManager,boardGameCanvas.get());
 	// バトルの初期化
-	battlePart.Init([this]() {this->TurnEndFunc(); character->DeleteEnemyData(); }, _gameObjectManager);
+	battlePart.Init([this]() {this->TurnEndFunc(); character->DeleteEnemyData(); }, [this](BattleUINeedInfo _info) {battleCanvas->SetBattleUINeedInfo(_info); }, _gameObjectManager);
 	// テスト：ボスをスポーンさせる
 	character->CreateEnemyData(999, 8, 9);
 }
@@ -45,6 +49,8 @@ void TurnProcessor::Update(float _t) {
 		TurnStart();
 		break;
 	case GamePart_Board:
+		// ボードゲーム内でステータスが変わる可能性があるため渡し続ける
+		boardGameCanvas->SetCurrentTurnPlayerData(currentPlayerData);
 		boardGamePart.Update(_t);
 		break;
 	case GamePart_Battle:
@@ -63,7 +69,7 @@ void TurnProcessor::Render() {
 		character->DebugRender();
 		break;
 	case GamePart_Battle:
-		battlePart.Render();
+		//battlePart.Render();
 		break;
 	}
 }
@@ -71,6 +77,10 @@ void TurnProcessor::Render() {
 void TurnProcessor::TurnEnd() {
 	// いったんキャンバスを消す
 	uiManager->PopCanvas(boardGameCanvas.get());
+	uiManager->PopCanvas(battleCanvas.get());
+
+	// ボードゲームのキャンバス初期化
+	boardGameCanvas->Setup();
 
 	// 谺｡縺ｮ繧ｿ繝ｼ繝ｳ縺ｫ
 	currentTurn++;
@@ -86,7 +96,9 @@ void TurnProcessor::TurnEnd() {
 void TurnProcessor::StartBattle(CharacterData* _p1, CharacterData* _p2) {
 	// キャンバスの準備
 	uiManager->PopCanvas(boardGameCanvas.get());
-	//uiManager->PushCanvas(nullptr);
+	uiManager->PushCanvas(battleCanvas.get());
+	// プレイヤーの情報を渡す
+	battleCanvas->SetBattleCharacterData({ _p1,_p2 });
 
 	battlePart.BattleStart(_p1, _p2);
 	gamePart = GamePart_Battle;

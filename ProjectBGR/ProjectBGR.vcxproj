@@ -167,6 +167,7 @@
     <ClCompile Include="src\Component\Transform\RectTransform.cpp" />
     <ClCompile Include="src\Component\Transform\Transform.cpp" />
     <ClCompile Include="src\Data\CharacterData.cpp" />
+    <ClCompile Include="src\Data\CharacterStatus.cpp" />
     <ClCompile Include="src\Data\Enemy\EnemyData.cpp" />
     <ClCompile Include="src\Data\Player\PlayerData.cpp" />
     <ClCompile Include="src\Definition\CommonModule\Assert\MyAssert.cpp" />
@@ -175,6 +176,7 @@
     <ClCompile Include="src\Definition\CommonModule\Math\MyMath.cpp" />
     <ClCompile Include="src\Definition\CommonModule\Sprite\MySprite.cpp" />
     <ClCompile Include="src\Definition\CommonModule\String\MyString.cpp" />
+    <ClCompile Include="src\Definition\Enum\StatusChange.cpp" />
     <ClCompile Include="src\ExternalLibrary\ImGui\backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="src\ExternalLibrary\ImGui\backends\imgui_impl_win32.cpp" />
     <ClCompile Include="src\ExternalLibrary\ImGui\imgui.cpp" />
@@ -239,7 +241,9 @@
     <ClCompile Include="src\Turn\Part\BoardGame\Command\Item\ItemCommand.cpp" />
     <ClCompile Include="src\Turn\Part\BoardGame\Command\Magic\FieldMagicCommand.cpp" />
     <ClCompile Include="src\Turn\Part\BoardGame\Command\Move\MoveCommand.cpp" />
+    <ClCompile Include="src\Turn\Part\BoardGame\Command\Move\Roulette.cpp" />
     <ClCompile Include="src\Turn\Part\BoardGame\Command\SearchTile\SearchTileCommand.cpp" />
+    <ClCompile Include="src\Turn\Part\BoardGame\Effect\Item\ItemEffect.cpp" />
     <ClCompile Include="src\Turn\Part\BoardGame\Effect\Tile\TileEffect.cpp" />
     <ClCompile Include="src\Turn\Part\BoardGame\Shop\ShopElement.cpp" />
     <ClCompile Include="src\Turn\Part\BoardGame\Shop\ShopPart.cpp" />
@@ -251,6 +255,7 @@
     <ClCompile Include="src\Turn\Part\PlayerSetting\TurnOrder\DecideTurnOrderPart.cpp" />
     <ClCompile Include="src\Turn\Part\PlayerSetting\UsePortSet\DecideUsePortSetPart.cpp" />
     <ClCompile Include="src\Turn\TurnProcessor.cpp" />
+    <ClCompile Include="src\UI\Canvas\SceneCanvas\Battle\BattleCanvas.cpp" />
     <ClCompile Include="src\UI\Canvas\SceneCanvas\BoardGame\BoardGameCanvas.cpp" />
     <ClCompile Include="src\UI\Canvas\SceneCanvas\Church\ChurchCanvas.cpp" />
     <ClCompile Include="src\UI\Canvas\SceneCanvas\MainGame\MainGameCanvas.cpp" />
@@ -259,7 +264,10 @@
     <ClCompile Include="src\UI\Canvas\SceneCanvas\Village\VillageCanvas.cpp" />
     <ClCompile Include="src\UI\Canvas\UICanvasBase.cpp" />
     <ClCompile Include="src\UI\Input\UIInput.cpp" />
+    <ClCompile Include="src\UI\UIContext.cpp" />
+    <ClCompile Include="src\UI\UIObject\UIBillboard\UIBillboard.cpp" />
     <ClCompile Include="src\UI\UIObject\UIButton\UIButton.cpp" />
+    <ClCompile Include="src\UI\UIObject\UIGauge\UIGauge.cpp" />
     <ClCompile Include="src\UI\UIObject\UIObject.cpp" />
     <ClCompile Include="src\UI\UIObject\UISprite\UIRoulette\UIRoulette.cpp" />
     <ClCompile Include="src\UI\UIObject\UISprite\UISprite.cpp" />
@@ -278,6 +286,7 @@
     <ClInclude Include="src\Component\Transform\RectTransform.h" />
     <ClInclude Include="src\Component\Transform\Transform.h" />
     <ClInclude Include="src\Data\CharacterData.h" />
+    <ClInclude Include="src\Data\CharacterStatus.h" />
     <ClInclude Include="src\Data\Enemy\EnemyData.h" />
     <ClInclude Include="src\Data\Player\PlayerData.h" />
     <ClInclude Include="src\Definition\CommonModule\Assert\MyAssert.h" />
@@ -287,6 +296,7 @@
     <ClInclude Include="src\Definition\CommonModule\Sprite\MySprite.h" />
     <ClInclude Include="src\Definition\CommonModule\String\MyString.h" />
     <ClInclude Include="src\Definition\Const\KeyInputConst.h" />
+    <ClInclude Include="src\Definition\Enum\StatusChange.h" />
     <ClInclude Include="src\Definition\Enum\Tag.h" />
     <ClInclude Include="src\DesignPattern\Singleton\Singleton.h" />
     <ClInclude Include="src\ExternalLibrary\ImGui\backends\imgui_impl_dx11.h" />
@@ -348,6 +358,7 @@
     <ClInclude Include="src\Manager\Scene\SceneType.h" />
     <ClInclude Include="src\Manager\Time\TimeManager.h" />
     <ClInclude Include="src\Manager\UI\UIManager.h" />
+    <ClInclude Include="src\Turn\Part\Battle\BattleInfo.h" />
     <ClInclude Include="src\Turn\Part\Battle\BattlePart.h" />
     <ClInclude Include="src\Turn\Part\Battle\Command\Defense\DefenseCommand.h" />
     <ClInclude Include="src\Turn\Part\Battle\Command\Offense\OffenseCommand.h" />
@@ -360,7 +371,9 @@
     <ClInclude Include="src\Turn\Part\BoardGame\Command\Item\ItemCommand.h" />
     <ClInclude Include="src\Turn\Part\BoardGame\Command\Magic\FieldMagicCommand.h" />
     <ClInclude Include="src\Turn\Part\BoardGame\Command\Move\MoveCommand.h" />
+    <ClInclude Include="src\Turn\Part\BoardGame\Command\Move\Roulette.h" />
     <ClInclude Include="src\Turn\Part\BoardGame\Command\SearchTile\SearchTileCommand.h" />
+    <ClInclude Include="src\Turn\Part\BoardGame\Effect\Item\ItemEffect.h" />
     <ClInclude Include="src\Turn\Part\BoardGame\Effect\Tile\TileEffect.h" />
     <ClInclude Include="src\Turn\Part\BoardGame\Shop\ShopElement.h" />
     <ClInclude Include="src\Turn\Part\BoardGame\Shop\ShopPart.h" />
@@ -374,6 +387,7 @@
     <ClInclude Include="src\Turn\Part\PlayerSetting\TurnOrder\DecideTurnOrderPart.h" />
     <ClInclude Include="src\Turn\Part\PlayerSetting\UsePortSet\DecideUsePortSetPart.h" />
     <ClInclude Include="src\Turn\TurnProcessor.h" />
+    <ClInclude Include="src\UI\Canvas\SceneCanvas\Battle\BattleCanvas.h" />
     <ClInclude Include="src\UI\Canvas\SceneCanvas\BoardGame\BoardGameCanvas.h" />
     <ClInclude Include="src\UI\Canvas\SceneCanvas\Church\ChurchCanvas.h" />
     <ClInclude Include="src\UI\Canvas\SceneCanvas\MainGame\MainGameCanvas.h" />
@@ -382,8 +396,11 @@
     <ClInclude Include="src\UI\Canvas\SceneCanvas\Village\VillageCanvas.h" />
     <ClInclude Include="src\UI\Canvas\UICanvasBase.h" />
     <ClInclude Include="src\UI\Input\UIInput.h" />
+    <ClInclude Include="src\UI\UIContext.h" />
+    <ClInclude Include="src\UI\UIObject\UIBillboard\UIBillboard.h" />
     <ClInclude Include="src\UI\UIObject\UIButton\Style\UIButtonStyle.h" />
     <ClInclude Include="src\UI\UIObject\UIButton\UIButton.h" />
+    <ClInclude Include="src\UI\UIObject\UIGauge\UIGauge.h" />
     <ClInclude Include="src\UI\UIObject\UIObject.h" />
     <ClInclude Include="src\UI\UIObject\UISprite\UIRoulette\UIRoulette.h" />
     <ClInclude Include="src\UI\UIObject\UISprite\UISprite.h" />
@@ -393,6 +410,7 @@
     <ClInclude Include="src\UI\UIObject\UIWindow\UIWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\ExternalFile\Data\OriginPlayerData.json" />
     <None Include="res\ExternalFile\Data\ShopData\ShopData_10_12.json" />
     <None Include="res\ExternalFile\Data\ShopData\ShopData_14_8.json" />
     <None Include="res\ExternalFile\Data\ShopData\ShopData_15_16.json" />

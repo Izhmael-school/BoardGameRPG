@@ -5,16 +5,14 @@
 #include "Manager/CharacterData/CharacterDataManager.h"
 #include "Data/Player/PlayerData.h"
 
-MapManager::MapManager(){
+MapManager::MapManager() {
 	LoadMap();
 }
 
-MapManager::~MapManager()
-{
+MapManager::~MapManager() {
 }
 
-void MapManager::Update(float _t)
-{
+void MapManager::Update(float _t) {
 }
 
 void MapManager::Render() {
@@ -22,12 +20,12 @@ void MapManager::Render() {
 
 	for (int i = 0; i < mapList.size(); ++i) {
 		for (int j = 0; j < mapList[i].size(); ++j) {
-			switch (static_cast<MapTileType>(mapList[i][j])){
+			switch (static_cast<MapTileType>(mapList[i][j])) {
 			case MapTileType::Tile_Wall:
 				DrawBox(i * 32, j * 32, (i + 1) * 32, (j + 1) * 32, GetColor(0, 0, 255), TRUE);
 				break;
 			case MapTileType::Tile_Road:
-				DrawBox(i * 32, j * 32, (i + 1) * 32, (j + 1) * 32, GetColor(255,255, 0), TRUE);
+				DrawBox(i * 32, j * 32, (i + 1) * 32, (j + 1) * 32, GetColor(255, 255, 0), TRUE);
 				break;
 			case MapTileType::Tile_Empty:
 				DrawBox(i * 32, j * 32, (i + 1) * 32, (j + 1) * 32, GetColor(0, 255, 0), TRUE);
@@ -87,78 +85,94 @@ MapTileType MapManager::GetMapTileType(int x, int y) {
 #include <queue>
 #include <tuple>
 std::vector<Vector3> MapManager::GetCanMoveTile(int _x, int _y, int _canMoveCount) {
-    std::vector<Vector3> result;
+	std::vector<Vector3> result;
 
-    int width = static_cast<int>(mapList.size());
-    if (width == 0) return result;
-    int height = static_cast<int>(mapList[0].size());
+	int width = static_cast<int>(mapList.size());
+	if (width == 0) return result;
+	int height = static_cast<int>(mapList[0].size());
 
-    std::vector<std::vector<int>> visited(width, std::vector<int>(height, -1));
-    visited[_x][_y] = 0;
+	std::vector<std::vector<int>> visited(width, std::vector<int>(height, -1));
+	visited[_x][_y] = 0;
 
-    std::queue<std::tuple<int, int, int>> q; // x, y, cost
-    q.push({ _x, _y, 0 });
+	std::queue<std::tuple<int, int, int>> q; // x, y, cost
+	q.push({ _x, _y, 0 });
 
-    const int dx[4] = { 0, 0, -1, 1 };
-    const int dy[4] = { -1, 1, 0, 0 };
+	const int dx[4] = { 0, 0, -1, 1 };
+	const int dy[4] = { -1, 1, 0, 0 };
 
-    auto inBounds = [&](int x, int y) {
-        return x >= 0 && x < width && y >= 0 && y < height;
-        };
-    auto isWall = [&](int x, int y) {
-        return mapList[x][y] == static_cast<int>(MapTileType::Tile_Wall);
-        };
-    auto isRoad = [&](int x, int y) {
-        return mapList[x][y] == static_cast<int>(MapTileType::Tile_Road);
-        };
-    // 「止まれるマス」= 壁でもRoadでもないマス
-    auto isStoppable = [&](int x, int y) {
-        return !isWall(x, y) && !isRoad(x, y);
-        };
+	auto inBounds = [&](int x, int y) {
+		return x >= 0 && x < width && y >= 0 && y < height;
+		};
+	auto isWall = [&](int x, int y) {
+		return mapList[x][y] == static_cast<int>(MapTileType::Tile_Wall);
+		};
+	auto isRoad = [&](int x, int y) {
+		return mapList[x][y] == static_cast<int>(MapTileType::Tile_Road);
+		};
+	// 「止まれるマス」= 壁でもRoadでもないマス
+	auto isStoppable = [&](int x, int y) {
+		return !isWall(x, y) && !isRoad(x, y);
+		};
 
-    while (!q.empty()) {
-        auto [cx, cy, cost] = q.front();
-        q.pop();
+	while (!q.empty()) {
+		auto [cx, cy, cost] = q.front();
+		q.pop();
 
-        if (cost >= _canMoveCount) continue;
+		if (cost >= _canMoveCount) continue;
 
-        for (int dir = 0; dir < 4; dir++) {
-            int nx = cx + dx[dir];
-            int ny = cy + dy[dir];
+		for (int dir = 0; dir < 4; dir++) {
+			int nx = cx + dx[dir];
+			int ny = cy + dy[dir];
 
-            if (!inBounds(nx, ny) || isWall(nx, ny)) continue;
-            if (visited[nx][ny] != -1) continue;
+			if (!inBounds(nx, ny) || isWall(nx, ny)) continue;
+			if (visited[nx][ny] != -1) continue;
 
-            // Roadマスなら同方向にスライドし続ける
-            int fx = nx, fy = ny;
-            while (isRoad(fx, fy)) {
-                int sx = fx + dx[dir];
-                int sy = fy + dy[dir];
+			// Roadマスなら同方向にスライドし続ける
+			int fx = nx, fy = ny;
+			while (isRoad(fx, fy)) {
+				int sx = fx + dx[dir];
+				int sy = fy + dy[dir];
 
-                if (!inBounds(sx, sy) || isWall(sx, sy))
-                    break; // 壁で阻まれてRoad上で強制停止(この場合も止まれるマスではない)
+				if (!inBounds(sx, sy) || isWall(sx, sy))
+					break; // 壁で阻まれてRoad上で強制停止(この場合も止まれるマスではない)
 
-                if (visited[fx][fy] == -1) {
-                    visited[fx][fy] = cost + 1; // 探索は続けるが結果には入れない
-                }
+				if (visited[fx][fy] == -1) {
+					visited[fx][fy] = cost + 1; // 探索は続けるが結果には入れない
+				}
 
-                fx = sx;
-                fy = sy;
-            }
+				fx = sx;
+				fy = sy;
+			}
 
-            if (visited[fx][fy] != -1) continue;
+			if (visited[fx][fy] != -1) continue;
 
-            visited[fx][fy] = cost + 1;
-            q.push({ fx, fy, cost + 1 });
+			visited[fx][fy] = cost + 1;
+			q.push({ fx, fy, cost + 1 });
 
-            // 止まれるマスだけを結果に追加
-            if (isStoppable(fx, fy)) {
-                result.push_back(Vector3(static_cast<float>(fx), static_cast<float>(fy), 0.0f));
-            }
-        }
-    }
+			// 止まれるマスだけを結果に追加
+			if (isStoppable(fx, fy)) {
+				result.push_back(Vector3(static_cast<float>(fx), static_cast<float>(fy), 0.0f));
+			}
+		}
+	}
 
 	canMoveTile = result;
 
-    return result;
+	return result;
+}
+
+Vector2 MapManager::GetRandomPos(Vector2 _beforePos) {
+	int mx = mapList.size() - 1;
+	int my = mapList[0].size() - 1;
+
+	int x = 0, y = 0;
+	MapTileType tile;
+	do {
+
+		x = MyMath::Random(0, mx);
+		y = MyMath::Random(0, my);
+
+		tile = GetMapTileType(x, y);
+	} while ((_beforePos.x == x && _beforePos.y == y) || tile == Tile_Wall || tile == Tile_Road);
+	return Vector2(x,y);
 }

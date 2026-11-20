@@ -35,11 +35,16 @@ protected:
 	void OnRender() override;
 	void OnEnd() override;
 
+public:
 	/*
 	 * @brief スタイルの描画位置に合わせる
 	 */
 	void Reposition();
-public:
+
+	/*
+	 * @brief スタイルの描画位置に合わせる（X軸のみ）
+	 */
+	void RepositionX();
 	/*
 	 * @brief FontManagerからフォントハンドルを取得
 	 */
@@ -69,6 +74,8 @@ public:
 	 * @brief フォントハンドルの取得
 	 */
 	inline int GetFontHandle() const { return fontHandle; }
+
+	Vector2 GetEndPosition() const;
 };
 
 #endif // !_UITEXT_H_

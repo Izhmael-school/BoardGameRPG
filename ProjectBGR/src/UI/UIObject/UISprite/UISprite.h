@@ -15,7 +15,7 @@ protected:
 	// 回転
 	int angle;
 	// 拡縮
-	int ex, ey;
+	float ex, ey;
 
 public:
 	UISprite(int _handle, Vector2 _pos,float _ex = 1.0f,float _ey = 1.0f, float _rot = 0,std::string _name = "");
@@ -27,8 +27,12 @@ protected:
 	virtual void OnRender() override;
 	virtual void OnEnd() override;
 
+	void CalcCenter();
 public:
-	void SetGraphHandle(int _handle) { graphHandle = _handle; }
+	void SetGraphHandle(int _handle) {
+		graphHandle = _handle; 
+		CalcCenter();
+	}
 	int GetGraphHandle() const {return graphHandle;}
 };
 

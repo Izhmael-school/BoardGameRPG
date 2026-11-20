@@ -14,8 +14,7 @@
 class UIText;
 class UITextDialog;
 class PlayerData;
-
-
+class UIContext;
 
 class BoardGameCanvas  : public UICanvasBase{
 private:
@@ -34,6 +33,8 @@ private:
 	UIObject* searchTileUI;
 	UIObject* inBattleUI;
 	UIObject* tileEffectUI;
+	UIObject* alwaysUI;
+	std::vector<std::weak_ptr<UIContext>> contexts;
 	bool isDialogTextSend;
 public:
 	void Init() override;
@@ -45,6 +46,8 @@ public:
 	void SetRouletteNum(int _num) { rouletteNum = _num; }
 
 	void SetSelectIndex(int _selectIndex) { selectIndex = _selectIndex; }
+
+	void Setup();
 
 	void OpenItemListUI();
 
@@ -88,9 +91,19 @@ public:
 
 	void CloseTileEffectUI();
 
+	void OpenAlwaysUI();
+
+	void UpdateAlwaysUI();
+
+	void CloseAlwaysUI();
+
 	void SetBoardGameUINeedInfo(BoardGameUINeedInfo _info) { binfo = _info; };
 
 	void UIClose();
+
+	void SetTurnUIContext(TurnState _turnState,std::weak_ptr<UIContext> _context);
+
+	std::shared_ptr<UIContext> GetTurnUIContext(TurnState _turnState) const { return contexts[(size_t)_turnState].lock(); }
 };
 
 #endif // !_BOARDGAMECANVAS_H_

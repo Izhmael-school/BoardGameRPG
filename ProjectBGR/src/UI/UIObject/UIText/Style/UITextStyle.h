@@ -51,6 +51,10 @@ public:
 	TextDrawPosition textDrawPosition = TextDrawPosition_Left;
 	// フォントのタイプ
 	FontType fontType = FontType_Normal;
+	// 文字の拡縮
+	float exRateX = 1.0f;
+	float exRateY = 1.0f;
+
 
 public:
 	UITextStyle(unsigned int _nColor,unsigned int _oColor,unsigned int _sColor,unsigned int _cColor,std::string _fontName,int _fontSize,int _fontThick,int _edgeSize,int _italic,TextDrawPosition _textDrawPosition,FontType _fontType);

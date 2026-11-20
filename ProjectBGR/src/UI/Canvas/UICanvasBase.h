@@ -8,6 +8,7 @@
 
 #include <memory>
 #include <vector>
+#include "../UIContext.h"
 
 class UIObject;
 struct UIInput;
@@ -17,6 +18,7 @@ using UIPtr = std::unique_ptr<UIObject>;
 class UICanvasBase {
 protected:
 	std::vector<UIPtr> uiArray;
+	std::weak_ptr<UIContext> context;
 
 public:
 	UICanvasBase() = default;
@@ -25,6 +27,7 @@ public:
 	virtual void Init() {};
 	virtual void Update(float _t,UIInput& _input);
 	virtual void Render();
+	virtual void Setup() {};
 
 	void DeleteUI(UIObject*& _ui);
 
@@ -36,6 +39,10 @@ public:
 
 	template<class T, class... Args>
 	std::unique_ptr<T> UniqueInstantiate(Args&&... _args);
+
+	void SetUIContext(std::shared_ptr<UIContext> _context) { context = _context; }
+
+	std::shared_ptr<UIContext> GetUIContext() { return context.lock(); }
 };
 
 #endif // !_UICANVAS_H_

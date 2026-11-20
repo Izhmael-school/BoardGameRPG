@@ -6,6 +6,7 @@
 #include "UI/Canvas/UICanvasBase.h"
 #include "UI/Canvas/SceneCanvas/Shop/ShopCanvas.h"
 #include "Manager/UI/UIManager.h"
+#include "UI/UIContext.h"
 #include <format>
 #include <algorithm>
 
@@ -15,43 +16,57 @@ void ShopPart::Init(UIManager* _uiManager, std::function<void()> _leaveFunc) {
 	elementDataManager = &ElementDataManager::GetInstance();
 	shopCanvas = std::make_unique<ShopCanvas>();
 	shopCanvas->Init();
-	auto shopCanvasPtr =  static_cast<ShopCanvas*>(shopCanvas.get());
+	auto shopCanvasPtr = static_cast<ShopCanvas*>(shopCanvas.get());
 	shopCanvasPtr->SetGetPlayerSellArrayFunc([this]() { return this->canSellArray; });
-	sellUIResetFunc = [shopCanvasPtr]() {shopCanvasPtr->ResetSellUI();};
+	sellUIResetFunc = [shopCanvasPtr]() {shopCanvasPtr->ResetSellUI(); };
+	context->Register<>
 }
 
 void ShopPart::Open(int _x, int _y, PlayerData* _currentTurnPlayer) {
-	std::string path = std::format("res/ExternalFile/Data/ShopData/ShopData_{0}_{1}.json", _x, _y);
-	auto data = MyJson::LoadJsonFile(path);
+	std::string path = "res/ExternalFile/Data/ShopData.json";
+	auto shops = MyJson::LoadJsonFile(path);
 
 	// 買えるアイテムのデータを読み込む
-	for (auto& d : data) {
-		BuyElement elem;
+	for (auto& s : shops["sections"]) {
 
-		elem.id = d["id"];
-		elem.elementID = static_cast<ElementID>(d["elementID"]);
+		if (s["x"] != _x || s["y"] != _y) continue;
 
-		ElementDataBase ed;
-		switch (elem.elementID) {
-		case ElementID_Item:
-			ed = elementDataManager->GetItemData(elem.id);
-			break;
-		case ElementID_Magic:
-			ed = elementDataManager->GetMagicData(elem.id);
-			break;
-		case ElementID_Equip:
-			EquipData eq = elementDataManager->GetEquipData(elem.id);
-			ed = eq;
-			elem.upStateValue = ed.effectValue;
-			elem.equipSec = eq.equipSection;
-			break;
+		for (auto& d : s["data"]) {
+			BuyElement elem;
+
+			elem.id = d["id"];
+			elem.elementID = static_cast<ElementID>(d["elementID"]);
+
+			ElementDataBase ed;
+			switch (elem.elementID) {
+			case ElementID_Item:
+				ed = elementDataManager->GetItemData(elem.id);
+				break;
+			case ElementID_Magic:
+				ed = elementDataManager->GetMagicData(elem.id);
+				break;
+			case ElementID_Equip:
+				EquipData eq = elementDataManager->GetEquipData(elem.id);
+				ed = eq;
+				elem.upStateValue = ed.effectValue;
+				elem.equipSec = eq.equipSection;
+				break;
+			}
+
+			elem.elementExplanation = ed.explanation;
+			elem.elementName = ed.name;
+			elem.value = ed.value;
+
+			buyArray.emplace_back(elem);
 		}
 
-		elem.elementExplanation = ed.explanation;
-		elem.elementName = ed.name;
-		elem.value = ed.value;
+		// 背景を設定
+		auto sc = static_cast<ShopCanvas*>(shopCanvas.get());
 
-		buyArray.emplace_back(elem);
+		if (sc)
+			sc->SetBG(static_cast<ShopType>(s["shopType"]));
+
+		break;
 	}
 	shopState = ShopState_Selection;
 	modeSelection = 0;
@@ -79,37 +94,40 @@ void ShopPart::Update(float _t) {
 
 	switch (shopState) {
 	case ShopState_Selection:
-		if (input.IsButtonDown(port,XINPUT_DPAD_LEFT))
+		if (input.IsButtonDown(port, XINPUT_DPAD_LEFT))
 			modeSelection = std::max(0, modeSelection - 1);
-		if (input.IsButtonDown(port,XINPUT_DPAD_RIGHT))
+		if (input.IsButtonDown(port, XINPUT_DPAD_RIGHT))
 			modeSelection = std::min(modeSelection + 1, static_cast<int>(ShopState_Max) - 1);
-		if (input.IsButtonDown(port,XINPUT_A))
+		if (input.IsButtonDown(port, XINPUT_A))
 			shopState = static_cast<ShopState>(modeSelection);
 		break;
 	case ShopState_Buy:
-		if (input.IsButtonDown(port,XINPUT_DPAD_LEFT))
+		if (input.IsButtonDown(port, XINPUT_DPAD_UP))
 			elementSelection = std::max(0, elementSelection - 1);
-		if (input.IsButtonDown(port,XINPUT_DPAD_RIGHT))
+		if (input.IsButtonDown(port, XINPUT_DPAD_DOWN))
 			elementSelection = std::min(elementSelection + 1, static_cast<int>(buyArray.size()) - 1);
-		if (input.IsButtonDown(port,XINPUT_A))
+		if (input.IsButtonDown(port, XINPUT_A))
 			reason = Buy(elementSelection);
-		if (input.IsButtonDown(port,XINPUT_B))
+		if (input.IsButtonDown(port, XINPUT_B))
 			shopState = ShopState_Selection;
 
 		info.selectElement = buyArray[elementSelection];
 		break;
 	case ShopState_Sell:
-		if (input.IsButtonDown(port,XINPUT_B))
+		if (input.IsButtonDown(port, XINPUT_B))
 			shopState = ShopState_Selection;
 
 		if (canSellArray.empty()) return;
 
-		if (input.IsButtonDown(XINPUT_DPAD_LEFT))
+		if (input.IsButtonDown(XINPUT_DPAD_UP))
 			elementSelection = std::max(0, elementSelection - 1);
-		if (input.IsButtonDown(XINPUT_DPAD_RIGHT))
+		if (input.IsButtonDown(XINPUT_DPAD_DOWN))
 			elementSelection = std::min(elementSelection + 1, static_cast<int>(canSellArray.size()) - 1);
 
-			info.selectElement = canSellArray[elementSelection];
+		if (canSellArray.size() <= elementSelection)
+			elementSelection--;
+
+		info.selectElement = canSellArray[elementSelection];
 
 		if (input.IsButtonDown(XINPUT_A)) {
 			const SellElement& sell = canSellArray[elementSelection];
@@ -157,11 +175,11 @@ void ShopPart::Update(float _t) {
 		break;
 	}
 
-	
+
 	info.selection = shopState;
 	info.selectSectionIndex = modeSelection;
 	info.elementIndex = elementSelection;
-	
+
 	info.dontBuyReason = reason;
 	static_cast<ShopCanvas*>(shopCanvas.get())->SetNeedInfo(info);
 }
@@ -284,6 +302,8 @@ void ShopPart::SearchSellElement() {
 	index = 0;
 	// 装備
 	for (auto equip : sellEquipIDArray) {
+		if (equip == -1) continue;
+
 		ElementDataBase elem = elementDataManager->GetEquipData(equip);
 		SellElement sell;
 		sell.id = equip;

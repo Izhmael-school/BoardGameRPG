@@ -6,13 +6,15 @@
 #include "Data/Enemy/EnemyData.h"
 #include "Manager/Map/MapManager.h"
 #include "Effect/Tile/TileEffect.h"
+#include "Effect/Item/ItemEffect.h"
 #include "Manager/CharacterData/CharacterDataManager.h"
 #include "GameObject/GameObject.h" 
 #include "Manager/GameObject/GameObjectManager.h"
 #include "UI/Canvas/SceneCanvas/BoardGame/BoardGameCanvas.h"
+#include "Application.h"
+#include "Manager/Resource/Sprite/SpriteResourceManager.h"
 
-void BoardGamePart::Init(UIManager* _uiManager, MapManager* _map, CharacterDataManager* _characterDataManager, std::function<void()> _turnEndFunc, std::function<void(CharacterData*, CharacterData*)> _battleStartFunc, GameObjectManager* _gameObjectManager, BoardGameCanvas* _canvas)
-{
+void BoardGamePart::Init(UIManager* _uiManager, MapManager* _map, CharacterDataManager* _characterDataManager, std::function<void()> _turnEndFunc, std::function<void(CharacterData*, CharacterData*)> _battleStartFunc, GameObjectManager* _gameObjectManager, BoardGameCanvas* _canvas) {
 	canvas = _canvas;
 	moveCommand.SetMapManager(_map);
 	map = _map;
@@ -20,14 +22,22 @@ void BoardGamePart::Init(UIManager* _uiManager, MapManager* _map, CharacterDataM
 	battleStartFunc = _battleStartFunc;
 	character = _characterDataManager;
 	gameObjectManager = _gameObjectManager;
-	searchTileCommand.Init(_map, _characterDataManager,gameObjectManager->UseObject<GameObject>("MapArrow",VZero,VZero,VOne,"MapArrow"));
+	searchTileCommand.Init(_map, _characterDataManager, gameObjectManager->UseObject<GameObject>("MapArrow", VZero, VZero, VOne, "MapArrow"));
+	magicCommand.SetCharacterDataManager(character);
 	isFirstTurn = true;
+	magicCommand.Init();
 	TileEffect::SetChangeTurnStateFunc([this](TurnState _changeTurnState) {turnState = _changeTurnState; });
 	TileEffect::SetSetBoardGameUINeedInfoFunc([this](BoardGameUINeedInfo _info) {canvas->SetBoardGameUINeedInfo(_info); });
+	// アイテム効果実行クラスにイベントを渡す
+	ItemAndMagicEffect::SetFixedMoveFunc([this](int _moveNum) {moveCommand.FixedMove(_moveNum); turnState = TurnState_Move; });
+	ItemAndMagicEffect::SetRandomWarpFunc([this](Vector2 _beforePos) {return map->GetRandomPos(_beforePos); });
+	ItemAndMagicEffect::SetMoveEndFunc([this]() {MoveEndForItem(); });
 
 	shopPart.Init(_uiManager, [this]() { ShopOut(); });
 	churchPart.Init(_uiManager, [this]() { ShopOut(); });
 	villagePart.Init(_uiManager, [this]() { ShopOut(); });
+
+	canvas->SetTurnUIContext(TurnState_Magic, magicCommand.GetUIContext());
 
 	// 最初にすべての村に敵を配置する
 	character->CreateEnemyDataToAllVillage();
@@ -72,11 +82,13 @@ void BoardGamePart::Setup() {
 	// 最初のターンであればバトルは無視する
 	if (!isFirstTurn)
 		InBattle();
+
+	moveCommand.Setup();
 }
 
 MapTileType BoardGamePart::GetCurrentPlayerMapTileType() {
 	Vector2 pos = currentPlayerData->GetMapPosition();
-	return map->GetMapTileType(pos.x,pos.y);
+	return map->GetMapTileType(pos.x, pos.y);
 }
 
 
@@ -88,7 +100,7 @@ void BoardGamePart::Update(float _t) {
 
 		if (turnState == TurnState_SearchTile) {
 			Vector2 pos = searchTileCommand.GetCurrentPosition();
-			lookPos =Vector3(pos.x * 200,0,pos.y * -200 );
+			lookPos = Vector3(pos.x * 200, 0, pos.y * -200);
 			cameraPos = Vector3::VAdd(lookPos, Vector3::VScale(VUp, 1000));
 		}
 		cameraPos.z -= 500;
@@ -158,6 +170,8 @@ void BoardGamePart::Render() {
 	default:
 		break;
 	}
+	/*auto sprite = Application::GetInstance().GetSpriteResourceManager();
+	DrawGraph(0, 0, sprite->GetSprite("ItemShop"), TRUE);*/
 }
 
 void BoardGamePart::CommandSelect() {
@@ -165,13 +179,13 @@ void BoardGamePart::CommandSelect() {
 	int port = currentPlayerData->GetControllerNum();
 
 	// 上
-	if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(port,XINPUT_DPAD_UP))
+	if (input->IsKeyDown(KEY_INPUT_UP) || input->IsButtonDown(port, XINPUT_DPAD_UP))
 		selectCommand = max(0, selectCommand - 1);
 	// 下
-	if (input->IsKeyDown(KEY_INPUT_DOWN) || input->IsButtonDown(port,XINPUT_DPAD_DOWN))
+	if (input->IsKeyDown(KEY_INPUT_DOWN) || input->IsButtonDown(port, XINPUT_DPAD_DOWN))
 		selectCommand = min(static_cast<int>(commandList.size()) - 1, selectCommand + 1);
 	// 選択
-	if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonDown(port,XINPUT_A)) {
+	if (input->IsKeyDown(KEY_INPUT_RETURN) || input->IsButtonDown(port, XINPUT_A)) {
 		turnState = commandList[selectCommand].state;
 	}
 
@@ -213,6 +227,7 @@ void BoardGamePart::MoveCommand() {
 	rouletteinfo.canMoveCount = moveCommand.GetCanMoveCount() - moveCommand.GetCurrentMoveCount();
 	rouletteinfo.isDialogTextErase = moveCommand.IsDialogTextDelete();
 	rouletteinfo.confirmationMove = moveCommand.GetConfirmationMove();
+	rouletteinfo.rouletteNum = moveCommand.GetRouletteNum();
 
 	BoardGameUINeedInfo info;
 	info.state = turnState;
@@ -223,20 +238,84 @@ void BoardGamePart::MoveCommand() {
 
 void BoardGamePart::ItemCommand() {
 	if (itemCommand.SelectItem()) {
-		turnState = TurnState_CommandSelect;
-		canvas->CloseItemListUI();
+
+		static int i = -1;
+
+		if (InputManager::GetInstance().IsButtonDown(currentPlayerData->GetControllerNum(), XINPUT_A))
+			i++;
+
+		if (itemCommand.IsCancel())
+			i = 2;
+
+		switch (i) {
+		case 1:
+			if (!itemCommand.IsUsed())
+				// アイテムを使う
+				itemCommand.UseItem();
+			break;
+		case 2:
+			// 使ったアイテムを消す
+			if (!itemCommand.IsCancel())
+				itemCommand.RemoveUsedItem();
+			// 戻る
+			// アイテムの効果で状態が変わってなければ
+			if (turnState == TurnState_Item)
+				turnState = TurnState_CommandSelect;
+			canvas->CloseItemListUI();
+			PickUpCommand();
+			itemCommand.SetCancel(false);
+			break;
+		}
 	}
 
-	PickUpCommand();
+	ItemCommandUINeedInfo itemInfo;
+	itemInfo.items = currentPlayerData->GetItemList();
+	itemInfo.currentSelect = itemCommand.GetSelectItemIndex();
+	itemInfo.isSelect = itemCommand.IsSelect();
+	itemInfo.isUsed = itemCommand.IsUsed();
+	itemInfo.usedItemAnyInfo = itemCommand.GetUsedItemAnyInfo();
+
+	BoardGameUINeedInfo info;
+	info.state = turnState;
+	info.info = itemInfo;
+
+	canvas->SetBoardGameUINeedInfo(info);
 }
 
 void BoardGamePart::MagicCommand() {
 	if (magicCommand.SelectMagic()) {
-		turnState = TurnState_CommandSelect;
-		canvas->CloseMagicListUI();
+		static int i = 0;
+
+		if (InputManager::GetInstance().IsButtonDown(currentPlayerData->GetControllerNum(), XINPUT_A))
+			i++;
+
+		if (magicCommand.IsCancel())
+			i = 2;
+
+		switch (i) {
+		case 1:
+			if (!magicCommand.IsUsed())
+				// アイテムを使う
+				magicCommand.UseMagic();
+			break;
+		case 2:
+			// 使ったアイテムを消す
+			if (!magicCommand.IsCancel())
+				magicCommand.RemoveUsedMagic();
+			// 戻る
+			turnState = TurnState_CommandSelect;
+			PickUpCommand();
+			magicCommand.SetCancel(false);
+			i = 0;
+			break;
+		}
 	}
 
-	PickUpCommand();
+	MagicCommandUINeedInfo magicInfo;
+	magicInfo.magics = currentPlayerData->GetMagicList();
+	magicInfo.currentSelect = magicCommand.GetSelectMagicIndex();
+	magicInfo.currentSelectTarget = magicCommand.GetSelectTargetIndex();
+	//magicInfo.isSelect = 
 }
 
 void BoardGamePart::BattleCommand() {
@@ -311,6 +390,11 @@ void BoardGamePart::TurnEnd() {
 	if (turnCount == 3)
 		isFirstTurn = false;
 
+	BoardGameUINeedInfo info;
+	info.state = TurnState_End;
+
+	canvas->SetBoardGameUINeedInfo(info);
+
 	turnEndFunc();
 }
 
@@ -347,6 +431,9 @@ void BoardGamePart::TileEffectExecute() {
 		if (turnState == TurnState_BattleIn)
 			return;
 
+		// バトルに入らなければそのままターンエンド
+		turnState = TurnState_End;
+		return;
 	case TileEffect_ItemShop:
 	case TileEffect_EquipShop:
 	case TileEffect_MagicShop:
@@ -372,7 +459,7 @@ void BoardGamePart::InBattle() {
 	MapTileType tileEffect = map->GetMapTileType(pos.x, pos.y);
 
 	// バトルできる場所であればバトルする
-	if ( tileEffect != Tile_Empty && tileEffect != Tile_Village)
+	if (tileEffect != Tile_Empty && tileEffect != Tile_Village)
 		return;
 
 	// 同じマスにプレイヤーがいれば戦闘に入る
@@ -402,10 +489,10 @@ void BoardGamePart::InBattle() {
 void BoardGamePart::PickUpCommand() {
 	commandList.clear();
 	commandList.push_back(Command(TurnState::TurnState_Move, "移動", "ルーレットを回して移動する"));
-	moveCommand.Setup();
+
 	// アイテムを持っていて使える回数が残っていれば選択できる
 	if (currentPlayerData->IsUseItem()) {
-		commandList.push_back(Command(TurnState::TurnState_Item, "アイテム", "持っているアイテムを確認、使用できる"));
+		commandList.push_back(Command(TurnState::TurnState_Item, "道具", "持っている道具を確認、使用できる"));
 	}
 	if (currentPlayerData->IsUseMagic()) {
 		commandList.push_back(Command(TurnState::TurnState_Magic, "魔法", "持っている魔法を確認、使用できる"));
@@ -423,4 +510,8 @@ void BoardGamePart::ShopIn() {
 void BoardGamePart::ShopOut() {
 	// ショップを出たらそのままターンエンド 
 	turnState = TurnState_End;
+}
+
+void BoardGamePart::MoveEndForItem() {
+	turnState = TurnState_TileEffect;
 }

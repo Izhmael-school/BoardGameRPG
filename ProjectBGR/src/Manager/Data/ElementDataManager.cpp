@@ -24,6 +24,9 @@ ItemData ElementDataManager::GetItemData(int _id) {
 			id.value = item["value"];
 			id.effectValue = item["effectValue"];
 			id.effectID = item["effectID"];
+			id.useExplanation = item["useExplanation"];
+			if (item.contains("subEffectValue"))
+				id.subEffectValue = item["subEffectValue"];
 			return id;
 		}
 	}
@@ -41,6 +44,7 @@ MagicData ElementDataManager::GetMagicData(int _id) {
 			md.value = magic["value"];
 			md.effectValue = magic["effectValue"];
 			md.effectID = magic["effectID"];
+			md.target = magic["target"];
 			return md;
 		}
 	}
@@ -48,6 +52,8 @@ MagicData ElementDataManager::GetMagicData(int _id) {
 }
 
 EquipData ElementDataManager::GetEquipData(int _id) {
+	if (_id == -1) return EquipData(-1, "-----", "データがない", 0, 0, -1);
+
 	for (const auto& equip : equipData) {
 		if (equip["id"] == _id) {
 			EquipData ed;

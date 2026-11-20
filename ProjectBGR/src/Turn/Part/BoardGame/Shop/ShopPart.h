@@ -17,6 +17,7 @@ class ElementDataManager;
 class PlayerData;
 class UICanvasBase;
 class UIManager;
+class UIContext;
 
 class ShopPart {
 private:
@@ -27,6 +28,8 @@ private:
 	std::vector<SellElement> canSellArray;
 
 	ShopState shopState;
+
+
 
 	int modeSelection;
 
@@ -41,6 +44,8 @@ private:
 	std::function<void()> leaveFunc;
 
 	std::function<void()> sellUIResetFunc;
+
+	std::shared_ptr<UIContext> context;
 
 public:
 	// デストラクタは実体を.cppに定義しておく（不完全型をメンバに持つため）

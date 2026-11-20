@@ -3,12 +3,17 @@
 #include "Manager/Input/InputManager.h"
 #include "Definition/CommonModule/String/MyString.h"
 #include <format>
+#include <algorithm>
 #include "DxLib.h"
 
 PlayerData* LevelUpPhase::levelUpPlayer = nullptr;
 int LevelUpPhase::currentSelectStatus = 0;
-int LevelUpPhase::upStatus[canUpStatus] = {0,0,0,0,0,0};
+std::vector<int> LevelUpPhase::upStatus = { 0,0,0,0,0,0 };
 int LevelUpPhase::remainingStatusPoint = -1;
+int LevelUpPhase::upLevelIndex = 0;
+bool LevelUpPhase::start = false;
+int LevelUpPhase::confirmIndex = 0;
+bool LevelUpPhase::isConfirm = false;
 
 void LevelUpPhase::Render() {
 	std::vector<std::string> statusText = { "ATK {} + {}","DEF {} + {}","Vit {} + {}","MAG {} + {}","SPD {} + {}","LUK {} + {}" };
@@ -36,32 +41,76 @@ void LevelUpPhase::Render() {
 bool LevelUpPhase::LevelUp() {
 	if (!levelUpPlayer) return false;
 
+	// レベルアップできるならする
+	if (levelUpPlayer->IsLevelUp()) {
+		// レベルアップの前に上がる前のレベルを代入
+		int before = levelUpPlayer->GetLevel();
+		// レベルアップ処理
+		levelUpPlayer->LevelUp();
+		// レベルアップ後のレベルを代入
+		int after = levelUpPlayer->GetLevel();
+		// 上がったレベル数を代入
+		upLevelIndex = after - before;
+	}
+
 	if (remainingStatusPoint == -1)
 		remainingStatusPoint = levelUpPlayer->GetStatusPoint();
 
-	int port = levelUpPlayer->GetControllerNum();
+	InputManager* input = &InputManager::GetInstance();
 
-	if (InputManager::GetInstance().IsButtonDown(port,XINPUT_DPAD_UP))
-		currentSelectStatus = max(0, currentSelectStatus - 1);
-	if (InputManager::GetInstance().IsButtonDown(port,XINPUT_DPAD_DOWN))
-		currentSelectStatus = min(canUpStatus - 1, currentSelectStatus + 1);
-
-	// ステータスを増やす
-	if (remainingStatusPoint > 0 && InputManager::GetInstance().IsButtonDown(port,XINPUT_DPAD_RIGHT)) {
-		upStatus[currentSelectStatus]++;
-		remainingStatusPoint--;
+	if (input->IsButtonDown(XINPUT_A) && !start) {
+		start = true;
+		// 入力をリセットするために一回帰る
+		return false;
 	}
 
-	// ステータスを減らす
-	if (InputManager::GetInstance().IsButtonDown(port,XINPUT_DPAD_LEFT)) {
-		if (upStatus[currentSelectStatus] > 0) {
-			upStatus[currentSelectStatus]--;
-			remainingStatusPoint++;
+	// 一度Aボタンを押すまでは操作させない
+	if (!start) return false;
+
+	int port = levelUpPlayer->GetControllerNum();
+
+	// 確認に入ってなければ
+	if (!isConfirm) {
+
+
+		if (input->IsButtonDown(port, XINPUT_DPAD_UP))
+			currentSelectStatus = max(0, currentSelectStatus - 1);
+		if (input->IsButtonDown(port, XINPUT_DPAD_DOWN))
+			currentSelectStatus = min(canUpStatus - 1, currentSelectStatus + 1);
+
+		// ステータスを増やす
+		if (remainingStatusPoint > 0 && input->IsButtonDown(port, XINPUT_DPAD_RIGHT)) {
+			upStatus[currentSelectStatus]++;
+			remainingStatusPoint--;
+		}
+
+		// ステータスを減らす
+		if (input->IsButtonDown(port, XINPUT_DPAD_LEFT)) {
+			if (upStatus[currentSelectStatus] > 0) {
+				upStatus[currentSelectStatus]--;
+				remainingStatusPoint++;
+			}
+		}
+
+		// 確認に入る
+		if (input->IsButtonDown(port, XINPUT_A)) {
+			isConfirm = true;
+			// 入力をリセットするためにreturn
+			return false;
 		}
 	}
 
+	if (!isConfirm)return false;
+
+	if (input->IsButtonDown(port, XINPUT_DPAD_DOWN) || input->IsButtonDown(port, XINPUT_DPAD_UP))
+		confirmIndex = std::clamp(confirmIndex ^ 1, 0, 1);
+
+	// 戻る
+	if (input->IsButtonDown(port, XINPUT_A) && confirmIndex == 0)
+		isConfirm = false;
+
 	// 確定
-	if (InputManager::GetInstance().IsButtonDown(port,XINPUT_A)) {
+	if (input->IsButtonDown(port, XINPUT_A) && confirmIndex == 1) {
 
 		levelUpPlayer->AddAtk(upStatus[0]);
 		levelUpPlayer->AddDef(upStatus[1]);
@@ -76,6 +125,9 @@ bool LevelUpPhase::LevelUp() {
 		}
 		remainingStatusPoint = -1;
 		levelUpPlayer = nullptr;
+		start = false;
+		isConfirm = false;
+		confirmIndex = 0;
 
 		return true;
 	}

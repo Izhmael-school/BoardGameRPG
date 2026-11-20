@@ -37,6 +37,11 @@ public:
 	 * @brief 現在のマスと動けるマスを使ってどのマスまで行けるのかを探す
 	 */
 	std::vector<Vector3> GetCanMoveTile(int _x, int _y, int _canMoveCount);
+
+	/*
+	 * @brief プレイヤーがいけるランダムな場所に移動する
+	 */
+	Vector2 GetRandomPos(Vector2 _beforePos);
 };
 
 #endif // !_MAPMANAGER_H_

@@ -16,7 +16,7 @@ bool PlayerData::LevelUp() {
 		// 次のレベルアップに必要な経験値を決める
 		levelUpNeedExp *= 1.2f;
 		// レベルを上げる
-		level++;
+		status->AddLevel();
 		// ステータスポイントを増やす
 		statusPoint += 4;
 	} while (IsLevelUp());

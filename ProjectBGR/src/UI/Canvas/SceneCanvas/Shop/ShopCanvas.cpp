@@ -3,9 +3,17 @@
 #include "UI/UIObject/UIText/UIText.h"
 #include "UI/UIObject/UIButton/UIButton.h"
 #include "UI/UIObject/UISprite/UISprite.h"
+#include "UI/UIObject/UIBillboard/UIBillboard.h"
 #include "UI/Input/UIInput.h"
+#include "Manager/Resource/Sprite/SpriteResourceManager.h"
+#include "Application.h"
+#include <format>
 
 void ShopCanvas::Init() {
+	// 背景
+	auto sprites = Application::GetInstance().GetSpriteResourceManager();
+	int bgHandle = sprites->GetSprite("");
+	bg = Instantiate<UISprite>(bgHandle, Vector2(1920 / 2, 1080 / 2), 1, 1, 0, "BackGround");
 	UITextStyle explanation;
 	explanation.normalColor = 0xffffff;
 	explanation.fontSize = 50;
@@ -20,7 +28,6 @@ void ShopCanvas::Init() {
 
 	int posX = 384;
 	int posY = 800;
-
 	auto buyButton = UniqueInstantiate<UIText>("買う", textStyle, Vector2(posX, posY));
 	select->AddChild(std::move(buyButton));
 	auto sellButton = UniqueInstantiate<UIText>("売る", textStyle, Vector2(posX * 2, posY));
@@ -117,6 +124,34 @@ void ShopCanvas::Update(float _t, UIInput& _input) {
 	UICanvasBase::Update(_t, _input);
 }
 
+void ShopCanvas::Setup() {
+
+}
+
+void ShopCanvas::SetBG(ShopType _type) {
+	if (!bg) return;
+
+	auto spriteUI = static_cast<UISprite*>(bg);
+
+	int handle = -1;
+
+	auto sprite = Application::GetInstance().GetSpriteResourceManager();
+
+	switch (_type) {
+	case ShopType_Item:
+		handle = sprite->GetSprite("ItemShop");
+		break;
+	case ShopType_Magic:
+		handle = sprite->GetSprite("MagicShop");
+		break;
+	case ShopType_Equip:
+		handle = sprite->GetSprite("EquipShop");
+		break;
+	}
+
+	spriteUI->SetGraphHandle(handle);
+}
+
 void ShopCanvas::OpenBuyUI() {
 	// 既に開かれていたら帰る
 	if (buy) return;
@@ -160,7 +195,8 @@ void ShopCanvas::CloseBuyUI() {
 }
 
 void ShopCanvas::UpdateBuyUI(float _t, UIInput& _input) {
-	if (!buy) return;
+	if (!buy) 
+		OpenBuyUI();
 
 	std::vector<UIObject*> children = buy->GetChildren();
 
@@ -224,6 +260,7 @@ void ShopCanvas::OpenSellUI() {
 
 	// アイテムを表示
 	int startX = 650;
+	int endX = startX + 630;
 	int startY = 60;
 	int spacingY = 60;
 	UITextStyle itemStyle;
@@ -232,15 +269,26 @@ void ShopCanvas::OpenSellUI() {
 
 	const auto& sellItems = getPlayerSellArrayFunc();
 
+	auto billboard = UniqueInstantiate<UIBillboard>(Vector2(640, 150), 1, 0, 30, true, 0, 30, "NameBillboard");
+	auto pbillboard = UniqueInstantiate<UIBillboard>(Vector2(640*2, 150), 1, 0, 30, true, 0, 30, "PriseBillboard");
+
 	for (size_t i = 0; i < sellItems.size(); ++i) {
 		const SellElement& item = sellItems[i];
-		std::string txt = item.elementName + " ";
-		txt += std::to_string(item.value);
+		std::string name = item.elementName;
+		std::string prise = std::format("{0}Ｇ",item.value);
 
-		auto textUi = UniqueInstantiate<UIText>(txt, itemStyle, Vector2(startX, startY + static_cast<int>(i) * spacingY));
+		itemStyle.textDrawPosition = TextDrawPosition_Left;
+		auto textUi = UniqueInstantiate<UIText>(name, itemStyle, Vector2(startX, startY + static_cast<int>(i) * spacingY));
+		itemStyle.textDrawPosition = TextDrawPosition_Right;
+		auto priseUi = UniqueInstantiate<UIText>(prise, itemStyle, Vector2(endX, startY + static_cast<int>(i) * spacingY));
 		// 子に追加
-		sell->AddChild(std::move(textUi));
+		billboard->AddChild(std::move(textUi));
+		pbillboard->AddChild(std::move(priseUi));
 	}
+
+	billboard->SetDrawRange(0, 9);
+	sell->AddChild(std::move(billboard));
+	sell->AddChild(std::move(pbillboard));
 
 	// ダイアログを表示
 	SetSelectVisible(false);
@@ -258,26 +306,20 @@ void ShopCanvas::CloseSellUI() {
 }
 
 void ShopCanvas::UpdateSellUI(float _t, UIInput& _input) {
-	if (!sell) return;
+	if (!sell)
+		OpenSellUI();
 
-	std::vector<UIObject*> children = sell->GetChildren();
-
-	static int prevElementIndex = -1;
-
-	for (size_t i = 0, max = children.size(); i < max; ++i) {
-		UIObject* select = children[i];
-		auto textUi = static_cast<UIText*>(select);
-		if (!textUi) return;
-		if (elementIndex != i - 1) {
-			textUi->SetSelect(false);
-			continue;
-		}
-
-		prevElementIndex = elementIndex;
-		textUi->SetSelect(true);
-
-		dialog->SetText(selectElementExplanation);
+	auto nBill = static_cast<UIBillboard*>(sell->GetChild("NameBillboard"));
+	if (nBill) {
+		nBill->SetSelect(elementIndex);
+		nBill->SelectIndexCenterDrawRange(elementIndex, 7);
 	}
+	auto pBill = static_cast<UIBillboard*>(sell->GetChild("PriseBillboard"));
+	if (pBill) {
+		pBill->SetSelect(elementIndex);
+		pBill->SelectIndexCenterDrawRange(elementIndex, 7);
+	}
+	dialog->SetText(selectElementExplanation);
 }
 
 void ShopCanvas::ResetSellUI() {

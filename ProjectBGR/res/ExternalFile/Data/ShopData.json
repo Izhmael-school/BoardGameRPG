@@ -1,0 +1,474 @@
+{
+    "sections": [
+        {
+            "shopType": 0,
+            "data": [
+                {
+                    "id": 3,
+                    "elementID": 0
+                },
+                {
+                    "id": 2,
+                    "elementID": 0
+                },
+                {
+                    "id": 7,
+                    "elementID": 0
+                },
+                {
+                    "id": 6,
+                    "elementID": 0
+                },
+                {
+                    "id": 19,
+                    "elementID": 0
+                }
+            ],
+            "x": 2,
+            "y": 6
+        },
+        {
+            "shopType": 0,
+            "data": [
+                {
+                    "id": 4,
+                    "elementID": 2
+                },
+                {
+                    "id": 5,
+                    "elementID": 2
+                },
+                {
+                    "id": 6,
+                    "elementID": 2
+                },
+                {
+                    "id": 7,
+                    "elementID": 2
+                },
+                {
+                    "id": 15,
+                    "elementID": 2
+                },
+                {
+                    "id": 16,
+                    "elementID": 2
+                },
+                {
+                    "id": 17,
+                    "elementID": 2
+                },
+                {
+                    "id": 24,
+                    "elementID": 2
+                },
+                {
+                    "id": 25,
+                    "elementID": 2
+                },
+                {
+                    "id": 26,
+                    "elementID": 2
+                }
+            ],
+            "x": 4,
+            "y": 4
+        },
+        {
+            "shopType": 0,
+            "data": [
+                {
+                    "id": 8,
+                    "elementID": 0
+                },
+                {
+                    "id": 9,
+                    "elementID": 0
+                },
+                {
+                    "id": 16,
+                    "elementID": 0
+                },
+                {
+                    "id": 17,
+                    "elementID": 0
+                },
+                {
+                    "id": 18,
+                    "elementID": 0
+                }
+            ],
+            "x": 7,
+            "y": 13
+        },
+        {
+            "shopType": 0,
+            "data": [
+                {
+                    "id": 31,
+                    "elementID": 2
+                },
+                {
+                    "id": 33,
+                    "elementID": 2
+                },
+                {
+                    "id": 44,
+                    "elementID": 2
+                },
+                {
+                    "id": 16,
+                    "elementID": 1
+                },
+                {
+                    "id": 17,
+                    "elementID": 1
+                },
+                {
+                    "id": 10,
+                    "elementID": 1
+                }
+            ],
+            "x": 9,
+            "y": 2
+        },
+        {
+            "shopType": 0,
+            "data": [
+                {
+                    "id": 34,
+                    "elementID": 2
+                },
+                {
+                    "id": 35,
+                    "elementID": 2
+                },
+                {
+                    "id": 43,
+                    "elementID": 2
+                },
+                {
+                    "id": 1,
+                    "elementID": 1
+                },
+                {
+                    "id": 4,
+                    "elementID": 1
+                },
+                {
+                    "id": 12,
+                    "elementID": 1
+                },
+                {
+                    "id": 13,
+                    "elementID": 1
+                }
+            ],
+            "x": 10,
+            "y": 12
+        },
+        {
+            "shopType": 0,
+            "data": [
+                {
+                    "id": 3,
+                    "elementID": 0
+                },
+                {
+                    "id": 1,
+                    "elementID": 0
+                },
+                {
+                    "id": 12,
+                    "elementID": 0
+                },
+                {
+                    "id": 13,
+                    "elementID": 0
+                },
+                {
+                    "id": 18,
+                    "elementID": 0
+                }
+            ],
+            "x": 14,
+            "y": 8
+        },
+        {
+            "shopType": 0,
+            "data": [
+                {
+                    "id": 0,
+                    "elementID": 2
+                },
+                {
+                    "id": 1,
+                    "elementID": 2
+                },
+                {
+                    "id": 2,
+                    "elementID": 2
+                },
+                {
+                    "id": 3,
+                    "elementID": 2
+                },
+                {
+                    "id": 12,
+                    "elementID": 2
+                },
+                {
+                    "id": 13,
+                    "elementID": 2
+                },
+                {
+                    "id": 14,
+                    "elementID": 2
+                },
+                {
+                    "id": 21,
+                    "elementID": 2
+                },
+                {
+                    "id": 22,
+                    "elementID": 2
+                },
+                {
+                    "id": 23,
+                    "elementID": 2
+                }
+            ],
+            "x": 15,
+            "y": 16
+        },
+        {
+            "shopType": 0,
+            "data": [
+                {
+                    "id": 32,
+                    "elementID": 2
+                },
+                {
+                    "id": 30,
+                    "elementID": 2
+                },
+                {
+                    "id": 40,
+                    "elementID": 2
+                },
+                {
+                    "id": 0,
+                    "elementID": 1
+                },
+                {
+                    "id": 3,
+                    "elementID": 1
+                },
+                {
+                    "id": 6,
+                    "elementID": 1
+                },
+                {
+                    "id": 7,
+                    "elementID": 1
+                }
+            ],
+            "x": 18,
+            "y": 5
+        },
+        {
+            "shopType": 0,
+            "data": [
+                {
+                    "id": 36,
+                    "elementID": 2
+                },
+                {
+                    "id": 37,
+                    "elementID": 2
+                },
+                {
+                    "id": 42,
+                    "elementID": 2
+                },
+                {
+                    "id": 8,
+                    "elementID": 1
+                },
+                {
+                    "id": 9,
+                    "elementID": 1
+                },
+                {
+                    "id": 14,
+                    "elementID": 1
+                },
+                {
+                    "id": 15,
+                    "elementID": 1
+                }
+            ],
+            "x": 25,
+            "y": 1
+        },
+        {
+            "shopType": 0,
+            "data": [
+                {
+                    "id": 5,
+                    "elementID": 0
+                },
+                {
+                    "id": 6,
+                    "elementID": 0
+                },
+                {
+                    "id": 14,
+                    "elementID": 0
+                },
+                {
+                    "id": 15,
+                    "elementID": 0
+                },
+                {
+                    "id": 16,
+                    "elementID": 0
+                }
+            ],
+            "x": 25,
+            "y": 10
+        },
+        {
+            "shopType": 0,
+            "data": [
+                {
+                    "id": 8,
+                    "elementID": 0
+                },
+                {
+                    "id": 9,
+                    "elementID": 0
+                },
+                {
+                    "id": 19,
+                    "elementID": 0
+                },
+                {
+                    "id": 17,
+                    "elementID": 0
+                },
+                {
+                    "id": 20,
+                    "elementID": 0
+                }
+            ],
+            "x": 30,
+            "y": 5
+        },
+        {
+            "shopType": 0,
+            "data": [
+                {
+                    "id": 38,
+                    "elementID": 2
+                },
+                {
+                    "id": 39,
+                    "elementID": 2
+                },
+                {
+                    "id": 41,
+                    "elementID": 2
+                },
+                {
+                    "id": 11,
+                    "elementID": 1
+                },
+                {
+                    "id": 2,
+                    "elementID": 1
+                },
+                {
+                    "id": 5,
+                    "elementID": 1
+                }
+            ],
+            "x": 31,
+            "y": 13
+        },
+        {
+            "shopType": 0,
+            "data": [
+                {
+                    "id": 8,
+                    "elementID": 2
+                },
+                {
+                    "id": 9,
+                    "elementID": 2
+                },
+                {
+                    "id": 10,
+                    "elementID": 2
+                },
+                {
+                    "id": 11,
+                    "elementID": 2
+                },
+                {
+                    "id": 18,
+                    "elementID": 2
+                },
+                {
+                    "id": 19,
+                    "elementID": 2
+                },
+                {
+                    "id": 20,
+                    "elementID": 2
+                },
+                {
+                    "id": 27,
+                    "elementID": 2
+                },
+                {
+                    "id": 28,
+                    "elementID": 2
+                },
+                {
+                    "id": 29,
+                    "elementID": 2
+                }
+            ],
+            "x": 33,
+            "y": 8
+        },
+        {
+            "shopType": 0,
+            "data": [
+                {
+                    "id": 4,
+                    "elementID": 0
+                },
+                {
+                    "id": 2,
+                    "elementID": 0
+                },
+                {
+                    "id": 9,
+                    "elementID": 0
+                },
+                {
+                    "id": 10,
+                    "elementID": 0
+                },
+                {
+                    "id": 11,
+                    "elementID": 0
+                }
+            ],
+            "x": 34,
+            "y": 15
+        }
+    ]
+}

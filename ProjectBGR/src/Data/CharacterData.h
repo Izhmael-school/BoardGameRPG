@@ -10,7 +10,10 @@
 #include <vector>
 #include "Vector3.h"
 #include "Vector2.h"
-#include "Definition/CommonModule/Math/MyMath.h"
+#include "CharacterStatus.h"
+#include <memory>
+
+class UIContext;
 
 enum EquipPosition {
 	EquipPosition_Weapon,
@@ -24,50 +27,72 @@ enum EquipPosition {
 class CharacterData {
 protected:
 	// 名前
-	std::string playerName;
-	// レベル
-	int level = 1;
-	// 攻撃力
-	int atk = 5;
-	// 防御力
-	int def = 5;
-	// 素早さ
-	int spd = 5;
-	// 魔法攻撃力
-	int mag = 5;
-	// 運
-	int luk = 5;
-	// 生命力
-	int vit = 5;
+	std::string playerName = "NONAME";
+	// ステータス
+	std::unique_ptr<CharacterStatus> status;
 	// お金
 	int money = 0;
-	// 最大HP
-	int maxHp = 10 * vit;
-	// 現在のHP
-	int currentHp = maxHp;
 	// 経験値
 	int currentExp;
 	// マップ上の位置
 	Vector2 mapPosition;
-	// 状態異常のリスト
-	std::vector<int> statusList;
-	// 戦い途中の相手
-	CharacterData* battlePlayer = nullptr;
-	// 戦っているか
-	bool isBattling = false;
 	// 人かCPUか
 	bool isCpu = false;
 	// 装備のリスト
-	std::vector<int> equipList;
+	std::vector<int> equipList = { -1,-1,-1,-1,-1 };
 	// 復活地点
-	Vector2 respawnPoint = Vector2(18,8);
-
+	Vector2 respawnPoint = Vector2(18, 8);
+	// UIに情報を渡すコンテキスト
+	std::shared_ptr<UIContext> context;
+	// 戦闘中
+	bool isBattling = false;
 public:
 	CharacterData();
 	virtual ~CharacterData();
 
 public:
 	// --- getter / setter ---
+	CharacterStatus* GetStatus() const { return status.get(); }
+
+	int GetLevel() const { return status->GetLevel(); }
+	void SetLevel(int v) { status->SetLevel(v); }
+	void AddLevel(int _v = 1) { status->AddLevel(_v); }
+
+	int GetMaxHp() const { return status->GetMaxHp(); }
+	void SetMaxHp() { status->SetMaxHp(); }
+
+	int GetCurrentHp() const { return status->GetCurrentHp(); }
+	void SetCurrentHp(int v) { status->SetCurrentHp(v); }
+	void Damage(int _v) { status->Damage(_v); }
+	void Heal(int _v) { status->Heal(_v); }
+	bool IsDead() const { return status->IsDead(); }
+
+	int GetAtk() const { return status->GetAtk(); }
+	void SetAtk(int v) { status->SetAtk(v); }
+	void AddAtk(int v) { status->AddAtk(v); }
+
+	int GetDef() const { return  status->GetDef(); }
+	void SetDef(int v) { status->SetDef(v); }
+	void AddDef(int v) { status->AddDef(v); }
+
+	int GetSpd() const { return  status->GetSpd(); }
+	void SetSpd(int v) { status->SetSpd(v); }
+	void AddSpd(int v) { status->AddSpd(v); }
+
+	int GetMag() const { return  status->GetMag(); }
+	void SetMag(int v) { status->SetMag(v); }
+	void AddMag(int v) { status->AddMag(v); }
+
+	int GetLuk() const { return  status->GetLuk(); }
+	void SetLuk(int v) { status->SetLuk(v); }
+	void AddLuk(int v) { status->AddLuk(v); }
+
+	int GetVit() const { return  status->GetVit(); }
+	void SetVit(int v) { status->SetVit(v); }
+	void AddVit(int v) { status->AddVit(v); }
+
+	std::vector<int> GetAllStatus() const { return status->GetAllStatus(); };
+
 	int GetCurrentExp() const { return currentExp; }
 	void SetCurrentExp(int v) { currentExp = v; }
 	void AddCurrentExp(int _v) { currentExp += _v; }
@@ -75,51 +100,15 @@ public:
 	const std::string& GetPlayerName() const { return playerName; }
 	void SetPlayerName(const std::string& name) { playerName = name; }
 
-	int GetLevel() const { return level; }
-	void SetLevel(int v) { level = v; }
-
-	int GetMaxHp() const { return vit * 10; }
-	void SetMaxHp() { maxHp = vit * 10; }
-
-	int GetCurrentHp() const { return currentHp; }
-	void SetCurrentHp(int v) { currentHp = v; }
-	void Damage(int _v) { currentHp = MyMath::Max(0, currentHp - _v); }
-	void Heal(int _v) { currentHp = MyMath::Min(currentHp + _v, GetMaxHp()); }
-	bool IsDead() const { return currentHp <= 0; }
-
-	int GetAtk() const { return atk; }
-	void SetAtk(int v) { atk = v; }
-	void AddAtk(int v) { atk += v; }
-
-	int GetDef() const { return def; }
-	void SetDef(int v) { def = v; }
-	void AddDef(int v) { def += v; }
-
-	int GetSpd() const { return spd; }
-	void SetSpd(int v) { spd = v; }
-	void AddSpd(int v) { spd += v; }
-
-	int GetMag() const { return mag; }
-	void SetMag(int v) { mag = v; }
-	void AddMag(int v) { mag += v; }
-
-	int GetLuk() const { return luk; }
-	void SetLuk(int v) { luk = v; }
-	void AddLuk(int v) { luk += v; }
-
-	int GetVit() const { return vit; }
-	void SetVit(int v) { vit = v; }
-	void AddVit(int v) { vit += v; }
-
 	int GetMoney() const { return money; }
 	void SetMoney(int v) { money = v; }
 	void AddMoney(int _v) { money += _v; }
 
-	bool IsCPU() const { return isCpu; }
-	void SetCPU(bool _isCpu) { isCpu = _isCpu; }
-
 	bool IsBattling() const { return isBattling; }
 	void SetBattling(bool _isBattling) { isBattling = _isBattling; }
+
+	bool IsCPU() const { return isCpu; }
+	void SetCPU(bool _isCpu) { isCpu = _isCpu; }
 
 	const Vector2& GetMapPosition() const { return mapPosition; }
 	void SetMapPosition(const Vector2& v) { mapPosition = v; }
@@ -127,23 +116,25 @@ public:
 	void AddMapPosition(const Vector2& v) { mapPosition = Vector2::VAdd(mapPosition, v); }
 	void AddMapPosition(int _x, int _y) { mapPosition.x += _x; mapPosition.y += _y; }
 
-	const std::vector<int>& GetStatusList() const { return statusList; }
-
-	CharacterData* GetBattlePlayer() const { return battlePlayer; }
-	void SetBattlePlayer(CharacterData* _battlePlayer) { battlePlayer = _battlePlayer; }
-	void ResetBattlePlayer() { battlePlayer = nullptr; }
+	const std::vector<std::pair<StatusChange,int>>& GetStatusChangeList() const { return status->GetStatusChangeList(); }
 
 	bool IsUseMagicAttack() { return equipList[EquipPosition_AttackMagic] != -1; }
 	bool IsUseMagicDefense() { return equipList[EquipPosition_DefenseMagic] != -1; }
 	const std::vector<int>& GetEquipList() const { return equipList; }
-	void SetEquip(int _equipID, int _equipSection) { equipList[_equipSection] = _equipID; }
-	void AddEquip(int equipId) { equipList.push_back(equipId); }
-	void RemoveEquip(int arrayIndex) { equipList.erase(equipList.begin() + arrayIndex); }
-	void ClearEquipList() { equipList.clear(); }
+	void SetEquip(int _equipID, int _equipSection) { equipList[_equipSection] = _equipID; status->UpdateStatusForEquip(equipList); }
+	void AddEquip(int equipId) { equipList.push_back(equipId);status->UpdateStatusForEquip(equipList); }
+	void RemoveEquip(int arrayIndex) { equipList.erase(equipList.begin() + arrayIndex);status->UpdateStatusForEquip(equipList); }
+	void ClearEquipList() { equipList.clear(); status->UpdateStatusForEquip(equipList);}
 
 	const Vector2& GetRespawnPoint() const { return respawnPoint; }
 	void SetRespawnPoint(const Vector2& _point) { respawnPoint = _point; }
 
+	/*
+	 * @brief UIに渡す情報を作る
+	 */
+	virtual void MakeContext();
+
+	std::shared_ptr<UIContext> GetUIContext() const { return context; }
 };
 
 #endif // !_CHARACTERDATA_H_

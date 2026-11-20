@@ -3,6 +3,7 @@
 #include "UI/UIObject/UIText/UITextDialog/UITextDialog.h"
 #include "UI/UIObject/UIButton/UIButton.h"
 #include "UI/UIObject/UISprite/UISprite.h"
+#include "UI/UIObject/UIGauge/UIGauge.h"
 #include "UI/UIObject/UIWindow/UIWindow.h"
 #include "UI/UIObject/UISprite/UIRoulette/UIRoulette.h"
 #include "Data/Player/PlayerData.h"
@@ -14,6 +15,8 @@
 #include <format>
 #include <algorithm>
 #include "ExternalLibrary/ImGui/imgui.h"
+#include <string_view>
+#include "UI/UIContext.h"
 
 void BoardGameCanvas::Init() {
 	UITextStyle explanation;
@@ -25,6 +28,7 @@ void BoardGameCanvas::Init() {
 	playerNameUI = Instantiate<UIText>("PlayerName", playerName, Vector2(50, 100));
 	moneyUI = Instantiate<UIText>("money", playerName, Vector2(50, 150));
 	isDialogTextSend = false;
+	contexts.resize(TurnState_Max);
 }
 
 void BoardGameCanvas::Update(float _t, UIInput& _input) {
@@ -69,6 +73,8 @@ void BoardGameCanvas::Update(float _t, UIInput& _input) {
 	playerNameUI->SetText(info.playerName);
 	moneyUI->SetText(std::format("所持金  {0}Ｇ", info.money));
 
+	UpdateAlwaysUI();
+
 	UICanvasBase::Update(_t, _input);
 
 }
@@ -82,68 +88,128 @@ void BoardGameCanvas::SetCurrentTurnPlayerData(PlayerData* _currentTurnPlayer) {
 	info.mag = p->GetMag();
 	info.spd = p->GetSpd();
 	info.luk = p->GetLuk();
+	info.lv = p->GetLevel();
+	info.maxHP = p->GetMaxHp();
+	info.money = p->GetMoney();
+	info.currentHP = p->GetCurrentHp();
 	info.itemList = p->GetItemList();
 	info.magicList = p->GetMagicList();
 	info.equipList = p->GetEquipList();
 }
 
+void BoardGameCanvas::Setup() {
+	CloseAlwaysUI();
+}
+
 void BoardGameCanvas::OpenItemListUI() {
 	if (itemListUI) return;
 
-	Vector2 offset = Vector2(400, 200);
-	Vector2 offset2 = Vector2(700, 400);
-	itemListUI = Instantiate<UISprite>(-1, offset, offset2.x - offset.x, offset2.y - offset.y);
+	auto itemInfo = std::get_if<ItemCommandUINeedInfo>(&binfo.info);
+
+	if (!itemInfo) return;
+
+	int x = 400, y = 200, w = 1120, h = 480;
+	itemListUI = Instantiate<UIObject>();
+	auto window = UniqueInstantiate<UIWindow>(0x0000ff8d, 0xffff00, x, y, w, h, false, 10, "Window");
+	itemListUI->AddChild(std::move(window));
+	// Dialogの設定
+	UITextStyle explanation;
+	explanation.normalColor = 0xffffff;
+	explanation.fontSize = 50;
+	auto dialog = UniqueInstantiate<UITextDialog>(explanation, Vector2(250, 700), -1, "Dialog");
+	itemListUI->AddChild(std::move(dialog));
 	int i = 0;
 	unsigned int color = 0xffffff;
 	UITextStyle itemUIStyle;
 	itemUIStyle.normalColor = 0x000000;
-	itemUIStyle.fontSize = 20;
+	itemUIStyle.fontSize = 50;
+	auto text = UniqueInstantiate<UIObject>("Text");
 	for (auto& item : info.itemList) {
 		ItemData itemData = ElementDataManager::GetInstance().GetItemData(item);
 		// 隱ｬ譏取枚縺縺代ｂ繧峨≧
-		int x = (offset.x + (itemUIStyle.fontSize * ((i + 1) % 2))) + (((offset2.x - offset.x) / 2) * (i % 2));
-		int y = (offset.y + itemUIStyle.fontSize) + (itemUIStyle.fontSize * (i / 2));
+		int cx = (x + (itemUIStyle.fontSize * ((i + 1) % 2))) + ((((x + w) - x) / 2) * (i % 2));
+		int cy = (y + itemUIStyle.fontSize) + (itemUIStyle.fontSize * (i / 2));
 
 		Vector2 pPos = itemListUI->GetPosition();
 
-		itemListUI->AddChild(UniqueInstantiate<UIText>(itemData.name, itemUIStyle, Vector2(x - pPos.x, y - pPos.y)));
+		text->AddChild(UniqueInstantiate<UIText>(itemData.name, itemUIStyle, Vector2(cx - pPos.x, cy - pPos.y)));
+
 		i++;
 	}
+
+	itemListUI->AddChild(std::move(text));
 }
 
 void BoardGameCanvas::CloseItemListUI() {
-	if (!itemListUI) return;
-
-	// 生ポインタとコンテナ要素を比較するため find_if を使う
-	auto itr = std::find_if(uiArray.begin(), uiArray.end(),
-		[&](const auto& p) { return p.get() == itemListUI; });
-
-	if (itr == uiArray.end()) return;
-
-	// 所有権を解放してからコンテナから削除
-	(*itr).reset();
-	uiArray.erase(itr);
-	itemListUI = nullptr;
+	DeleteUI(itemListUI);
+	isDialogTextSend = false;
 }
 
 void BoardGameCanvas::UpdateItemListUI() {
 	if (!itemListUI)
 		OpenItemListUI();
 
-	auto children = itemListUI->GetChildren();
+	if (!itemListUI) return;
+
+	auto itemInfo = std::get_if<ItemCommandUINeedInfo>(&binfo.info);
+
 	int i = 0;
-	for (auto& child : children) {
-		UIText* text = static_cast<UIText*>(child);
+	static int prevSelect = -1;
+	auto dialog = static_cast<UITextDialog*>(itemListUI->GetChild("Dialog"));
+	int currentSelect = itemInfo->currentSelect;
+	auto children = itemListUI->GetChild("Text")->GetChildren();
 
-		if (i != selectIndex)
-			text->SetSelect(false);
-		else {
-			text->SetSelect(true);
-			std::string itemExplanation = ElementDataManager::GetInstance().GetItemData(info.itemList[i]).explanation;
-			explanationUI->SetText(itemExplanation);
+	bool isSelect = itemInfo->isSelect;
+	bool isUsed = itemInfo->isUsed;
+	static bool isSendSelectText = false;
+	static bool isSendUseText = false;
+	if (!isSelect && !isUsed) {
+
+		for (auto& child : children) {
+			UIText* text = static_cast<UIText*>(child);
+
+			bool isSelect = i == currentSelect;
+			text->SetSelect(isSelect);
+
+			if (prevSelect != currentSelect) {
+				prevSelect = currentSelect;
+				isDialogTextSend = false;
+				dialog->DeleteFrontText();
+			}
+
+			if (itemInfo->items.size() <= i) continue;
+
+			std::string itemExplanation = ElementDataManager::GetInstance().GetItemData(itemInfo->items[currentSelect]).explanation;
+			if (dialog && !isDialogTextSend) {
+				dialog->AddText(itemExplanation, []() {return false; });
+				isDialogTextSend = true;
+			}
+			i++;
 		}
-
-		i++;
+	}
+	else if (isSelect && !isUsed) {
+		if (!isSendSelectText) {
+			dialog->DeleteFrontText();
+			std::string itemName = ElementDataManager::GetInstance().GetItemData(itemInfo->items[currentSelect]).name;
+			std::string drawText = std::format("{0}は{1}を使った！", info.playerName, itemName);
+			dialog->AddText(drawText, [this]() { return false; });
+			isSendSelectText = true;
+			auto window = itemListUI->GetChild("Window");
+			if (window)
+				window->SetActive(false);
+			auto text = itemListUI->GetChild("Text");
+			if (text)
+				text->SetActive(false);
+		}
+	}
+	else if (isUsed) {
+		if (!isSendUseText) {
+			dialog->DeleteFrontText();
+			std::string useExplanation = ElementDataManager::GetInstance().GetItemData(itemInfo->items[currentSelect]).useExplanation;
+			std::string drawText = std::vformat(useExplanation, std::make_format_args(info.playerName, itemInfo->usedItemAnyInfo));
+			dialog->AddText(drawText, [this]() { return false; });
+			isSendUseText = true;
+		}
 	}
 
 }
@@ -151,66 +217,170 @@ void BoardGameCanvas::UpdateItemListUI() {
 void BoardGameCanvas::OpenMagicListUI() {
 	if (magicListUI) return;
 
-	Vector2 offset = Vector2(400, 200);
-	Vector2 offset2 = Vector2(700, 400);
-	magicListUI = Instantiate<UISprite>(-1, offset, offset2.x - offset.x, offset2.y - offset.y);
+	auto context = GetTurnUIContext(TurnState_Magic);
+	auto player = *context->Get<PlayerData*>("currentTurnPlayer");
+	auto& targets = *context->Get<std::vector<CharacterData*>>("targets");
+
+
+	if (!player || targets.size() == 0) return;
+	int x = 400, y = 200, w = 1120, h = 480;
+	magicListUI = Instantiate<UIObject>();
+	auto window = UniqueInstantiate<UIWindow>(0x0000ff8d, 0xffff00, x, y, w, h, false, 10, "WindowMagic");
+	magicListUI->AddChild(std::move(window));
+	// Dialogの設定
+	UITextStyle explanation;
+	explanation.normalColor = 0xffffff;
+	explanation.fontSize = 50;
+	auto dialog = UniqueInstantiate<UITextDialog>(explanation, Vector2(250, 700), -1, "Dialog");
+	magicListUI->AddChild(std::move(dialog));
 	int i = 0;
 	unsigned int color = 0xffffff;
 	UITextStyle magicUIStyle;
 	magicUIStyle.normalColor = 0x000000;
-	magicUIStyle.fontSize = 20;
-	for (auto& magic : info.magicList) {
+	magicUIStyle.fontSize = 50;
+	auto text = UniqueInstantiate<UIObject>("Text");
+
+	auto& magics = player->GetMagicList();
+
+	for (auto& magic : magics) {
 		MagicData magicData = ElementDataManager::GetInstance().GetMagicData(magic);
 		// 隱ｬ譏取枚縺縺代ｂ繧峨≧
-		int x = (offset.x + (magicUIStyle.fontSize * ((i + 1) % 2))) + (((offset2.x - offset.x) / 2) * (i % 2));
-		int y = (offset.y + magicUIStyle.fontSize) + (magicUIStyle.fontSize * (i / 2));
+		int cx = (x + (magicUIStyle.fontSize * ((i + 1) % 2))) + ((((x + w) - x) / 2) * (i % 2));
+		int cy = (y + magicUIStyle.fontSize) + (magicUIStyle.fontSize * (i / 2));
 
 		Vector2 pPos = magicListUI->GetPosition();
 
-		magicListUI->AddChild(UniqueInstantiate<UIText>(magicData.name, magicUIStyle, Vector2(x - pPos.x, y - pPos.y)));
+		text->AddChild(UniqueInstantiate<UIText>(magicData.name, magicUIStyle, Vector2(cx - pPos.x, cy - pPos.y)));
+
 		i++;
 	}
+
+	magicListUI->AddChild(std::move(text));
+
+
+	constexpr int FONT_SIZE = 50;
+	constexpr int MAX_CHAR_COUNT = 8;
+	constexpr int MAX_COLUMN = 3;
+
+	constexpr int CELL_WIDTH = FONT_SIZE * MAX_CHAR_COUNT;
+	constexpr int CELL_HEIGHT = FONT_SIZE;
+
+	// 横方向の間隔
+	constexpr int INTERVAL_X = 50;
+
+	// 縦方向の間隔
+	constexpr int INTERVAL_Y = 30;
+
+	// 1行分の幅
+	constexpr int ROW_WIDTH =
+		CELL_WIDTH * MAX_COLUMN + INTERVAL_X * (MAX_COLUMN - 1);
+	magicUIStyle.textDrawPosition = TextDrawPosition_Center;
+	auto targetUI = UniqueInstantiate<UIObject>("Targets");
+	for (int i = 0; i < targets.size(); ++i) {
+
+		// 列・行を計算
+		int column = i % MAX_COLUMN;
+		int row = i / MAX_COLUMN;
+
+		// 中心座標を計算
+		int centerX =
+			1920 / 2
+			+ column * (CELL_WIDTH + INTERVAL_X)
+			- ROW_WIDTH / 2
+			+ CELL_WIDTH / 2;
+
+		int centerY =
+			1080 / 5
+			+ row * (CELL_HEIGHT + INTERVAL_Y)
+			- CELL_HEIGHT / 2;
+
+		// 文字を生成
+		auto text = UniqueInstantiate<UIText>(targets[i]->GetPlayerName(), magicUIStyle, Vector2(centerX, centerY));
+		targetUI->AddChild(std::move(text));
+	}
+	targetUI->SetActive(false);
+	magicListUI->AddChild(std::move(targetUI));
 }
 
 void BoardGameCanvas::CloseMagicListUI() {
 	if (!magicListUI) return;
 
-	// 生ポインタとコンテナ要素を比較するため find_if を使う
-	auto itr = std::find_if(uiArray.begin(), uiArray.end(),
-		[&](const auto& p) { return p.get() == magicListUI; });
+	DeleteUI(magicListUI);
 
-	if (itr == uiArray.end()) return;
-
-	// 所有権を解放してからコンテナから削除
-	(*itr).reset();
-	uiArray.erase(itr);
-	magicListUI = nullptr;
+	isDialogTextSend = false;
 }
 
 void BoardGameCanvas::UpdateMagicListUI() {
 	if (!magicListUI)
 		OpenMagicListUI();
 
-	auto children = magicListUI->GetChildren();
+	if (!magicListUI) return;
+
+	auto context = GetTurnUIContext(TurnState_Magic);
+
+	auto children = magicListUI->GetChild("Text")->GetChildren();
 	int i = 0;
+	static int prev = -1;
+	int selectMagicIndex = *context->Get<int>("selectMagicIndex");
+	auto dialog = static_cast<UITextDialog*>(magicListUI->GetChild("Dialog"));
+	static bool sendText = false;
 	for (auto& child : children) {
 		UIText* text = static_cast<UIText*>(child);
 
-		if (i != selectIndex)
-			text->SetSelect(false);
-		else {
-			text->SetSelect(true);
+		bool isSelect = i == selectMagicIndex;
+
+		text->SetSelect(isSelect);
+
+		if (prev != selectMagicIndex) {
+			sendText = false;
+			dialog->DeleteFrontText();
+			prev = selectMagicIndex;
+		}
+
+		if (isSelect && !sendText) {
+			sendText = true;
 			std::string magicExplanation = ElementDataManager::GetInstance().GetMagicData(info.magicList[i]).explanation;
-			explanationUI->SetText(magicExplanation);
+			dialog->AddText(magicExplanation, []() {return false; });
 		}
 
 		i++;
 	}
 
+	auto targetUI = magicListUI->GetChild("Targets");
+	auto magicUI = magicListUI->GetChild("Text");
+	auto windowMagic = magicListUI->GetChild("WindowMagic");
+	bool isTargetUIActive = *context->Get<bool>("IsSelectTarget");
+	bool isMagicUIActive = *context->Get<bool>("IsSelectMagic");
+
+	if (targetUI)
+		targetUI->SetActive(isTargetUIActive);
+	if (magicUI)
+		magicUI->SetActive(isMagicUIActive);
+	if (windowMagic)
+		windowMagic->SetActive(isMagicUIActive);
+
+	bool isUsed = *context->Get<bool>("IsUsed");
+	auto player = *context->Get<PlayerData*>("currentTurnPlayer");
+	if (isUsed && !isDialogTextSend) {
+		isDialogTextSend = true;
+		dialog->DeleteFrontText();
+		std::string drawString = std::format("{0}は{1}を使った!", player->GetPlayerName(), *context->Get<std::string>("MagicName"));
+		dialog->AddText(drawString, []() {return false; });
+	}
 }
+
+const Vector2 ROULETTE_POS_3[] = {
+	{ 960, 268 },
+	{ 672, 812 },
+	{ 1248, 812 }
+};
 
 void BoardGameCanvas::OpenMoveCommandUI() {
 	if (moveCommandUI) return;
+
+	auto rouletteInfo = std::get_if<MoveCommandUINeedInfo>(&binfo.info);
+
+	if (!rouletteInfo) return;
 
 	moveCommandUI = Instantiate<UIObject>();
 
@@ -221,7 +391,17 @@ void BoardGameCanvas::OpenMoveCommandUI() {
 	int w = 1920;
 	int h = 1080;
 	// ルーレットの生成
-	auto roulette = UniqueInstantiate<UIRoulette>(rouletteHandle, arrowHandle, Vector2(w / 2, (h / 3) * 2), 1, 1, "Roulette");
+	int rouletteNum = rouletteInfo->rouletteNum;
+	auto roulette = UniqueInstantiate<UIObject>("Roulette");
+	for (int i = 0; i < rouletteNum; i++) {
+		auto r = UniqueInstantiate<UIRoulette>(rouletteHandle, arrowHandle, Vector2(w / 2, (h / 3) * 2), 1, 1, std::to_string(rouletteNum));
+		if (rouletteNum == 2)
+			r->SetPosition(ROULETTE_POS_3[i + 1]);
+		else if (rouletteNum == 3)
+			r->SetPosition(ROULETTE_POS_3[i]);
+		roulette->AddChild(std::move(r));
+	}
+
 	moveCommandUI->AddChild(std::move(roulette));
 
 	// 左角に進めるマスを表示
@@ -256,11 +436,13 @@ void BoardGameCanvas::UpdateMoveCommandUI() {
 	if (!moveCommandUI)
 		OpenMoveCommandUI();
 
+	if (!moveCommandUI)return;
+
 	auto rouletteInfo = std::get_if<MoveCommandUINeedInfo>(&binfo.info);
 
 	if (!rouletteInfo) return;
 
-	auto roulette = static_cast<UIRoulette*>(moveCommandUI->GetChild("Roulette"));
+	auto roulette = moveCommandUI->GetChild("Roulette");
 	auto canMoveText = static_cast<UIWindow*>(moveCommandUI->GetChild("CanMoveText"));
 	auto options = moveCommandUI->GetChild("Options");
 	auto dialogUI = static_cast<UITextDialog*>(moveCommandUI->GetChild("Dialog"));
@@ -306,8 +488,17 @@ void BoardGameCanvas::UpdateMoveCommandUI() {
 	// ルーレットが回ってる状態
 	else {
 		if (roulette) {
+			auto roulettes = roulette->GetChildren();
+
+			int index = 0;
+			for (auto robj : roulettes) {
+				auto r = static_cast<UIRoulette*>(robj);
+				if (r)
+					r->SetArrowAngle(rouletteInfo->angle[index]);
+
+				index++;
+			}
 			roulette->SetActive(true);
-			roulette->SetArrowAngle(rouletteInfo->angle);
 		}
 
 		if (options)
@@ -329,6 +520,10 @@ void BoardGameCanvas::CloseMoveCommandUI() {
 void BoardGameCanvas::OpenCommandSelectUI() {
 	if (commandSelectUI) return;
 
+	auto commandSelectInfo = std::get_if<CommandSelectUINeedInfo>(&binfo.info);
+
+	if (!commandSelectInfo)return;
+
 	commandSelectUI = Instantiate<UIObject>();
 
 	// Dialogの設定
@@ -339,14 +534,19 @@ void BoardGameCanvas::OpenCommandSelectUI() {
 	commandSelectUI->AddChild(std::move(dialog));
 
 	auto options = UniqueInstantiate<UIObject>("Options");
-	auto& commandList = std::get_if<CommandSelectUINeedInfo>(&binfo.info)->commandList;
 
 	// コマンドの設定
+
+	int fontSize = explanation.fontSize;
+	int x = 250;
+	int y = 350;
+	auto& commandList = commandSelectInfo->commandList;
+	auto window = UniqueInstantiate<UIWindow>(0x0000ff8d, 0xffff00, x + fontSize, y + (fontSize * 1.5f), fontSize * 2, fontSize * commandList.size());
+	commandSelectUI->AddChild(std::move(window));
+
 	int index = 0;
 	for (auto& command : commandList) {
-		int x = 250;
-		int y = 200 + explanation.fontSize * index;
-		auto option = UniqueInstantiate<UIText>(command.name, explanation, Vector2(x, y));
+		auto option = UniqueInstantiate<UIText>(command.name, explanation, Vector2(x, y + (fontSize * index)));
 		options->AddChild(std::move(option));
 		index++;
 	}
@@ -367,8 +567,6 @@ void BoardGameCanvas::UpdateCommandSelectUI() {
 
 	auto children = options->GetChildren();
 
-	// ダイアログにテキストを送ったか
-	static bool isSendText = false;
 	// １フレーム前に選択していたコマンドの値
 	static int prevSelectIndex = -1;
 	// 今選択しているコマンドの値
@@ -376,7 +574,7 @@ void BoardGameCanvas::UpdateCommandSelectUI() {
 
 	auto dialogUI = static_cast<UITextDialog*>(commandSelectUI->GetChild("Dialog"));
 	if (currentSelectIndex != prevSelectIndex) {
-		isSendText = false;
+		isDialogTextSend = false;
 		if (dialogUI)
 			dialogUI->DeleteFrontText();
 	}
@@ -392,13 +590,13 @@ void BoardGameCanvas::UpdateCommandSelectUI() {
 
 		// 選択されているコマンドの説明を表示
 
-		if (!dialogUI || isSendText) return;
+		if (!dialogUI || isDialogTextSend) return;
 
 		dialogUI->SetActive(true);
 
 		dialogUI->AddText(commandSelectInfo->commandList[i].explanation, []() { return  false; });
 
-		isSendText = true;
+		isDialogTextSend = true;
 	}
 
 	prevSelectIndex = currentSelectIndex;
@@ -406,6 +604,7 @@ void BoardGameCanvas::UpdateCommandSelectUI() {
 
 void BoardGameCanvas::CloseCommandSelectUI() {
 	DeleteUI(commandSelectUI);
+	isDialogTextSend = false;
 }
 
 void BoardGameCanvas::OpenSearchTileUI() {
@@ -617,9 +816,9 @@ void BoardGameCanvas::UpdateTileEffectUI() {
 
 	auto dialogUI = static_cast<UITextDialog*>(tileEffectUI->GetChild("Dialog"));
 
-	if(dialogUI && !isDialogTextSend) {
+	if (dialogUI && !isDialogTextSend) {
 		dialogUI->SetActive(true);
-		dialogUI->AddText(MyString::MergeString(tileEffectInfo->elementNameList[tileEffectInfo->currentSelect] ,"を手に入れた！"), []() { return false; });
+		dialogUI->AddText(MyString::MergeString(tileEffectInfo->elementNameList[tileEffectInfo->currentSelect], "を手に入れた！"), []() { return false; });
 		isDialogTextSend = true;
 	}
 }
@@ -627,6 +826,114 @@ void BoardGameCanvas::UpdateTileEffectUI() {
 void BoardGameCanvas::CloseTileEffectUI() {
 	DeleteUI(tileEffectUI);
 	isDialogTextSend = false;
+}
+
+const std::vector<std::string> ICON_NAME = { "ATK","DEF", "MAG","SPD", "LUK" };
+constexpr std::string_view ICON_FORMAT = "Icon_{0}";
+
+void BoardGameCanvas::OpenAlwaysUI() {
+	if (alwaysUI) return;
+
+	alwaysUI = Instantiate<UIObject>();
+
+	int statusBannerHandle = Application::GetInstance().GetSpriteResourceManager()->GetSprite("StatusBanner");
+	auto statusBanner = UniqueInstantiate<UISprite>(statusBannerHandle, Vector2(1920 / 2, 175), 0.8f, 0.7f, 0, "Status");
+
+	UITextStyle statusTextStyle;
+	statusTextStyle.fontSize = 70;
+
+	int x = 800;
+	int y = -45;
+
+	auto levelText = UniqueInstantiate<UIText>(std::format("LV {0}", info.lv), statusTextStyle, Vector2(-x + 70, y), "Level");
+	statusBanner->AddChild(std::move(levelText));
+	auto playerNameText = UniqueInstantiate<UIText>(info.playerName, statusTextStyle, Vector2(-x + 370, y));
+	statusBanner->AddChild(std::move(playerNameText));
+	statusTextStyle.textDrawPosition = TextDrawPosition_Right;
+	auto moneyText = UniqueInstantiate<UIText>(std::format("{0}Ｇ", info.money), statusTextStyle, Vector2(x - 70, y), "Money");
+	statusTextStyle.textDrawPosition = TextDrawPosition_Left;
+	statusBanner->AddChild(std::move(moneyText));
+	SpriteResourceManager* spriteManager = Application::GetInstance().GetSpriteResourceManager();
+
+	x = -700;
+	y = 30;
+
+	std::vector<int> status = { info.atk, info.def, info.mag, info.spd, info.luk };
+	statusTextStyle.textDrawPosition = TextDrawPosition_Right;
+	// ステータス
+	for (int i = 0, max = 5; i < max; i++) {
+		std::string fileName = std::format(ICON_FORMAT, ICON_NAME[i]);
+		int graphHandle = spriteManager->GetSprite(fileName);
+		if (graphHandle == -1) continue;
+		auto icon = UniqueInstantiate<UISprite>(graphHandle, Vector2(x + (200 * i), y), 1.1f, 1.1f);
+		statusBanner->AddChild(std::move(icon));
+		auto text = UniqueInstantiate<UIText>(std::to_string(status[i]), statusTextStyle, Vector2(x + (200 * i) + 100, y), ICON_NAME[i]);
+		statusBanner->AddChild(std::move(text));
+	}
+
+	x = 300;
+
+	float value = info.currentHP / info.maxHP;
+	std::string fileName = std::format(ICON_FORMAT, "HP");
+	int graphHandle = spriteManager->GetSprite(fileName);
+	auto hpIcon = UniqueInstantiate<UISprite>(graphHandle, Vector2(x, y), 1.1f, 1.1f);
+	statusBanner->AddChild(std::move(hpIcon));
+	x = 530;
+	statusTextStyle.fontSize = 30;
+	auto hpBar = UniqueInstantiate<UIGauge>(Vector2(x, y), 350, 20, value, DD_Right, "HPGauge");
+	statusBanner->AddChild(std::move(hpBar));
+	x = 700;
+	y = 60;
+	auto hpText = UniqueInstantiate<UIText>(std::format("{0} / {1}", info.currentHP, info.maxHP), statusTextStyle, Vector2(x, y), "HP");
+	statusBanner->AddChild(std::move(hpText));
+
+	alwaysUI->AddChild(std::move(statusBanner));
+}
+
+void BoardGameCanvas::UpdateAlwaysUI() {
+	if (!alwaysUI)
+		OpenAlwaysUI();
+
+	// ステータスの更新
+	auto status = alwaysUI->GetChild("Status");
+
+	if (!status) return;
+
+	auto level = static_cast<UIText*>(status->GetChild("Level"));
+	if (level)
+		level->SetText(std::format("LV {0}", info.lv));
+
+	auto money = static_cast<UIText*>(status->GetChild("Money"));
+	if (money)
+		money->SetText(std::format("{0}Ｇ", info.money));
+
+	auto atk = static_cast<UIText*>(status->GetChild("ATK"));
+	if (atk)
+		atk->SetText(std::to_string(info.atk));
+
+	auto def = static_cast<UIText*>(status->GetChild("DEF"));
+	if (def)
+		def->SetText(std::to_string(info.def));
+
+	auto mag = static_cast<UIText*>(status->GetChild("MAG"));
+	if (mag)
+		mag->SetText(std::to_string(info.mag));
+
+	auto spd = static_cast<UIText*>(status->GetChild("SPD"));
+	if (spd)
+		spd->SetText(std::to_string(info.spd));
+
+	auto luk = static_cast<UIText*>(status->GetChild("LUK"));
+	if (luk)
+		luk->SetText(std::to_string(info.luk));
+
+	auto hp = static_cast<UIText*>(status->GetChild("HP"));
+	if (hp)
+		hp->SetText(std::format("{0} / {1}", info.currentHP, info.maxHP));
+}
+
+void BoardGameCanvas::CloseAlwaysUI() {
+	DeleteUI(alwaysUI);
 }
 
 void BoardGameCanvas::UIClose() {
@@ -655,8 +962,17 @@ void BoardGameCanvas::UIClose() {
 		CloseInBattleUI();
 		break;
 	case TurnState_End:
+		CloseAlwaysUI();
 		break;
 	default:
 		break;
 	}
+}
+
+void BoardGameCanvas::SetTurnUIContext(TurnState _turnState, std::weak_ptr<UIContext> _context) {
+	int index = (int)_turnState;
+	if (contexts.size() < index)
+		contexts.resize(index);
+
+	contexts[index] = _context;
 }

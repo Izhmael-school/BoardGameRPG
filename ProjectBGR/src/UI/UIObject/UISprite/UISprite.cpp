@@ -13,9 +13,7 @@ UISprite::UISprite(int _handle, Vector2 _pos, float _ex, float _ey, float _rot, 
 	position = _pos;
 
 	angle = MyMath::Deg2Rad(_rot);
-	Vector2 c = MySprite::GetSpriteSize(graphHandle);
-	cx = c.x / 2;
-	cy = c.y / 2;
+	CalcCenter();
 }
 
 void UISprite::OnInit() {
@@ -37,4 +35,10 @@ void UISprite::OnRender() {
 }
 
 void UISprite::OnEnd() {
+}
+
+void UISprite::CalcCenter() {
+	Vector2 c = MySprite::GetSpriteSize(graphHandle);
+	cx = c.x / 2;
+	cy = c.y / 2;
 }

@@ -23,10 +23,12 @@ int FontManager::CreateFontData(const std::string& _fontName, int _size, int _th
 
 	data.fontID = GetFontID(_size, _thick, _fontType, _edgeSize, _italic);
 
+	int fontHandle = data.fontHandle;
+
 	// 配列に登録
 	fontDataArray.push_back(data);
 
-	return fontDataArray.back().fontHandle;
+	return fontHandle;
 }
 
 int FontManager::GetFontHandle(const std::string& _fontName, int _size, int _thick, int _fontType, int _edgeSize, int _italic) {
@@ -56,10 +58,10 @@ uint32_t FontManager::GetFontID(int _size, int _thick, int _fontType, int _edgeS
 	uint32_t id = 0;
 
 	id |= (uint32_t)(_size & 0x3ff);	// 10ビット分
-	id |= (uint32_t)(_edgeSize & 0x3ff) >> 10;	// 10ビット分
-	id |= (uint32_t)(_fontType & 0x3f) >> 20;	// 6ビット分
-	id |= (uint32_t)(_fontType & 0xf) >> 26;	// 4ビット分
-	id |= (uint32_t)(_fontType & 0x1) >> 30;	// 1ビット分
+	id |= (uint32_t)(_edgeSize & 0x3ff) << 10;	// 10ビット分
+	id |= (uint32_t)(_fontType & 0x3f) << 20;	// 6ビット分
+	id |= (uint32_t)(_thick & 0xf) << 26;	// 4ビット分
+	id |= (uint32_t)(_italic & 0x1) << 30;	// 1ビット分
 
 	return id;
 }

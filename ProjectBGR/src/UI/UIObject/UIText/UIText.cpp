@@ -2,6 +2,8 @@
 #include "DxLib.h"
 #include "Definition/CommonModule/String/MyString.h"
 #include "Manager/Font/FontManager.h"
+#include "Library/Vector/ConversionVECTOR.h"
+#include <string.h> 
 
 UIText::UIText()
 	:text("テストテキスト")
@@ -45,7 +47,7 @@ void UIText::OnRender() {
 
 	Vector2 pos = GetWorldPosition();
 
-	DrawStringToHandle(pos.x, pos.y, text.c_str(), color, fontHandle, style.outlineColor);
+	DrawExtendStringToHandle(pos.x, pos.y,style.exRateX,style.exRateY, text.c_str(), color, fontHandle, style.outlineColor);
 }
 
 void UIText::OnEnd() {
@@ -55,24 +57,46 @@ void UIText::Reposition() {
 	// テキストスタイルからテキストの位置をもらう
 	TextDrawPosition drawPos = style.textDrawPosition;
 	int x = basePos.x, y = basePos.y;
-	float extend = 1.0f;//(float)style.fontSize / (float)D_FONT_SIZE;
+	float exRateX = style.exRateX;
+	float exRateY = style.exRateY;
 	switch (drawPos) {
 	case TextDrawPosition_Left:
-		MyString::StringCenterPos(text, fontHandle, &x, &y, extend, extend);
+		MyString::StringCenterPos(text, fontHandle, &x, &y, exRateX, exRateY);
 		position.y = y;
 		// 左端揃え
 		break;
 	case TextDrawPosition_Center:
 		// 中央揃え
-		MyString::StringCenterPos(text, fontHandle, &x, &y, extend, extend);
+		MyString::StringCenterPos(text, fontHandle, &x, &y, exRateX, exRateY);
 		position = Vector2(x, y);
 		break;
 	case TextDrawPosition_Right:
 		// 右端揃え
 		int sx;
-		MyString::StringCenterPos(text, fontHandle, &sx, &y, extend, extend);
-		x = MyString::StringRightPos(text, fontHandle, x, extend);
+		MyString::StringCenterPos(text, fontHandle, &sx, &y, exRateX, exRateY);
+		x = MyString::StringRightPos(text, fontHandle, x, exRateX);
 		position = Vector2(x, y);
+		break;
+	}
+}
+
+void UIText::RepositionX() {
+	// テキストスタイルからテキストの位置をもらう
+	TextDrawPosition drawPos = style.textDrawPosition;
+	int x = position.x, y = position.y;
+	float exRateX = style.exRateX;
+	float exRateY = style.exRateY;
+	int sy;
+	switch (drawPos) {
+	case TextDrawPosition_Center:
+		// 中央揃え
+		MyString::StringCenterPos(text, fontHandle, &x, &sy, exRateX, exRateY);
+		position = Vector2(x, basePos.y);
+		break;
+	case TextDrawPosition_Right:
+		// 右端揃え
+		x = MyString::StringRightPos(text, fontHandle, x, exRateX);
+		position = Vector2(x,y);
 		break;
 	}
 }
@@ -86,4 +110,14 @@ void UIText::Build() {
 		style.edgeSize,
 		style.italic
 	);
+}
+
+Vector2 UIText::GetEndPosition() const {
+	int sx = 0, sy = 0, line = 0;
+
+	int len = strlen(text.c_str());
+
+	GetDrawStringSizeToHandle(&sx, &sy, &line, text.c_str(), len, fontHandle);
+
+	return Vector2(sx + position.x,sy + position.y);
 }

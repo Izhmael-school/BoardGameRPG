@@ -4,7 +4,7 @@
 #include "Manager/Input/InputManager.h"
 #include "Manager/Time/TimeManager.h"
 #include "Definition/CommonModule/Json/MyJson.h"
-//#include "DxLib.h"
+
 #include <string>
 
 bool MoveCommand::Move() {
@@ -151,36 +151,43 @@ void MoveCommand::SearchCanMoveTiles() {
 }
 
 
-bool MoveCommand::Roulette() {
-	static bool isStop = false;
-	static float rotateValue = 5000;
+bool MoveCommand::SpinRoulette() {
+	static bool isStart = false;
 
-	float d =  TimeManager::GetInstance().GetDeltaTime();
-	
-	float decelecation = 1500.0f;
+	rouletteNum = currentPlayerData->GetRouletteNum();
 
-	// Aボタンを押したら徐々に止まるようにする
-	if (InputManager::GetInstance().IsButtonDown(currentPlayerData->GetControllerNum(), XINPUT_A) && !isStop)
-		isStop = true;
-
-	if (isStop) {
-		rotateValue -= decelecation * d;
-		rotateValue = std::max(rotateValue, 0.0f);
+	// ルーレットを作る
+	int size = rouletteArray.size();
+	if (size < rouletteNum) {
+		for (int i = 0; i < rouletteNum - size; i++) {
+			auto roulette = std::make_unique<Roulette>();
+			roulette->RouletteStart(currentPlayerData->GetControllerNum());
+			rouletteArray.emplace_back(std::move(roulette));
+		}
 	}
 
-	// 回転を加算
-	rouletteAngle += rotateValue * d;
+	// ルーレット更新
+	float t = TimeManager::GetInstance().GetDeltaTime();
+	int stopCount = 0;
+	randCount = 0;
+	for (auto& r : rouletteArray) {
+		if (!isStart)
+			r->RouletteStart(currentPlayerData->GetControllerNum());
+		r->Update(t);
+		bool isStop = r->IsStop();
+		if (!isStop)continue;
 
-	// １回転したらangleを0にする
-	rouletteAngle = std::fmod(rouletteAngle, 360.0f);
+		stopCount++;
+		randCount += r->GetRouletteNum(7);
+	}
 
-	// 一定数値以下なら止まったことにする
-	if (rotateValue <= 0.001 && isStop) {
-		rotateValue = 5000;
-		isStop = false;
+	isStart = true;
+
+	// ルーレット停止処理 
+	if (stopCount >= rouletteNum) {
 		isRouletteStop = true;
-		randCount = GetRouletteINdex(rouletteAngle);
 		canMoveCount = randCount;
+		isStart = false;
 		return true;
 	}
 
@@ -212,14 +219,14 @@ bool MoveCommand::ConfirmationMove() {
 	return false;
 }
 
-int MoveCommand::GetRouletteINdex(float _angle) {
+int MoveCommand::GetRouletteIndex(float _angle) {
 
 	constexpr int CELL_COUNT = 7;
 
 	constexpr float CELL_ANGLE = 360.0f / CELL_COUNT;
 
 	_angle = std::fmod(_angle, 360.0f);
-	if(_angle < 0.0f)
+	if (_angle < 0.0f)
 		_angle += 360.0f;
 
 	int index = static_cast<int>(std::floor(_angle / CELL_ANGLE));
@@ -229,12 +236,15 @@ int MoveCommand::GetRouletteINdex(float _angle) {
 
 MoveCommandState MoveCommand::Execute() {
 	// ルーレットを回してなければ戻れる
-	if (isBack && InputManager::GetInstance().IsButtonDown(currentPlayerData->GetControllerNum(),XINPUT_B))
+	if (isBack && InputManager::GetInstance().IsButtonDown(currentPlayerData->GetControllerNum(), XINPUT_B))
 		return commandState = MoveCommand_Back;
 
 	// ルーレットを回す
+	if (!isRouletteStop)
+		SpinRoulette();
+
 	// 確定したらコマンド選択に戻れないようにする
-	if (isBack && Roulette()) {
+	if (isBack && isRouletteStop) {
 		isBack = false;
 		Vector2 pos = currentPlayerData->GetMapPosition();
 		mapManager->GetCanMoveTile(pos.x, pos.y, canMoveCount);
@@ -264,6 +274,7 @@ void MoveCommand::Setup() {
 	commandState = MoveCommand_RouletteTime;
 	isRouletteStop = false;
 	dialogTextDelete = false;
+	ResetRouletteNum();
 }
 
 void MoveCommand::Render() {
@@ -301,4 +312,24 @@ void MoveCommand::Render() {
 	//std::string stop = "止まる";
 	//DrawString(offset.x, offset.y, back.c_str(), confirmationMove == 0 ? 0xffff00 : 0xffffff);
 	//DrawString(offset.x, offset.y + stringSize, stop.c_str(), confirmationMove == 1 ? 0xffff00 : 0xffffff);
+}
+
+void MoveCommand::FixedMove(int _moveNum) {
+	// ルーレットを回したことにする
+	isBack = false;
+	isRouletteStop = true;
+	canMoveCount = _moveNum;
+	Vector2 pos = currentPlayerData->GetMapPosition();
+	mapManager->GetCanMoveTile(pos.x, pos.y, canMoveCount);
+	commandState = MoveCommand_Move;
+}
+
+std::vector<float> MoveCommand::GetRoletteAngle() const {
+	std::vector<float> angleArray;
+
+	for (auto& r : rouletteArray) {
+		angleArray.emplace_back(r->GetAngle());
+	}
+
+	return angleArray;
 }

@@ -35,6 +35,8 @@ void SpriteResourceManager::LoadAllSprite() {
 }
 
 int SpriteResourceManager::GetSprite(const std::string& _name) {
+	if (_name == "") return -1;
+
 	auto itr = sprites.find(_name);
 
 	if (itr == sprites.end()) {

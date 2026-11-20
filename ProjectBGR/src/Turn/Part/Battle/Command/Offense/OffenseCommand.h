@@ -7,14 +7,8 @@
 
 class CharacterData;
 
-enum OffenseSelectCommand {
-	OffenseCommand_Invaild = -1,
-	OffenseCommand_Attack,
-	OffenseCommand_Magic,
-	OffenseCommand_FatalAttack,
-	OffenseCommand_Max
-};
 
+#include "../../BattleInfo.h"
 #include <vector>
 #include <string>
 
@@ -53,6 +47,9 @@ public:
 	 * @brief コマンドの名前を取得
 	 */
 	std::string GetSelectCommandName();
+	std::vector<std::string> GetCommandNameArray();
+
+	std::vector<bool> GetCanSelectCommand()const { return canSelectCommand; };
 
 	void Reset();
 };

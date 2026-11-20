@@ -2,10 +2,15 @@
 #include "Manager/Input/InputManager.h"
 #include "Data/Player/PlayerData.h"
 #include "Manager/Data/ElementDataManager.h"
+#include "../../Effect/Item/ItemEffect.h"
 
 bool ItemCommand::SelectItem() {
 	// データがないかこのターンすでにアイテムを使っていたら帰る
 	if (!currentSelectPlayer || !currentSelectPlayer->IsUseItem()) return Return();
+
+	// 決めていたらtrueで返す
+	if (isSelect)
+		return true;
 
 	int itemNum = static_cast<int>(currentSelectPlayer->GetItemList().size()) - 1;
 
@@ -13,32 +18,38 @@ bool ItemCommand::SelectItem() {
 	int port = currentSelectPlayer->GetControllerNum();
 
 
-	if (input.IsButtonDown(port,XINPUT_DPAD_UP))
+	if (input.IsButtonDown(port, XINPUT_DPAD_UP))
 		selectItemIndex = std::max(0, selectItemIndex - 2);
-	if (input.IsButtonDown(port,XINPUT_DPAD_DOWN))
+	if (input.IsButtonDown(port, XINPUT_DPAD_DOWN))
 		selectItemIndex = std::min(itemNum, selectItemIndex + 2);
-	if (input.IsButtonDown(port,XINPUT_DPAD_RIGHT))
-		selectItemIndex = std::min(itemNum,(selectItemIndex % 2 == 0) ? selectItemIndex + 1 : selectItemIndex);
-	if (input.IsButtonDown(port,XINPUT_DPAD_LEFT))
+	if (input.IsButtonDown(port, XINPUT_DPAD_RIGHT))
+		selectItemIndex = std::min(itemNum, (selectItemIndex % 2 == 0) ? selectItemIndex + 1 : selectItemIndex);
+	if (input.IsButtonDown(port, XINPUT_DPAD_LEFT))
 		selectItemIndex = (selectItemIndex % 2 == 1) ? selectItemIndex - 1 : selectItemIndex;
 
 	if (input.IsButtonDown(port, XINPUT_B))
 		return Return();
 
 	if (input.IsButtonDown(port, XINPUT_A)) {
-		// アイテムを使う
-		UseItem(currentSelectPlayer->GetItemList()[selectItemIndex]);
-		return Return();
+
+		isSelect = true;
+		isUsed = false;
+		return true;
 	}
 	return false;
 }
 
-void ItemCommand::UseItem(int _effectID) {
+void ItemCommand::UseItem() {
+	int itemID = currentSelectPlayer->GetItemList()[selectItemIndex];
+	// アイテムを使う
+	ItemData item = ElementDataManager::GetInstance().GetItemData(itemID);
 	// 繧｢繧､繝・Β繧剃ｽｿ縺｣縺溷屓謨ｰ繧貞｢励ｄ縺・
 	currentSelectPlayer->AddUsedItemCount();
-
-	// 繧｢繧､繝・Β繧呈ｶ医☆
-	currentSelectPlayer->RemoveItem(selectItemIndex);
+	// アイテムの効果
+	ItemAndMagicEffect::EffectExecute(item.effectID, item.effectValue, item.subEffectValue,currentSelectPlayer);
+	// 使ったフラグをオンにする
+	isUsed = true;
+	isSelect = false;
 }
 
 void ItemCommand::Render() {
@@ -83,8 +94,16 @@ void ItemCommand::Render() {
 }
 
 bool ItemCommand::Return() {
-
+	// 選んでる番号を初期化
 	selectItemIndex = 0;
-
+	isCancel = true;
 	return true;
+}
+
+int ItemCommand::GetUsedItemAnyInfo() const { return ItemAndMagicEffect::GetUsedItemAnyInfo(); }
+
+void ItemCommand::RemoveUsedItem() {
+	// 使ったアイテムを消す
+	currentSelectPlayer->RemoveItem(selectItemIndex);
+	selectItemIndex = 0;
 }

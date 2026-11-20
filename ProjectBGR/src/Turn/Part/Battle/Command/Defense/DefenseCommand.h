@@ -7,15 +7,7 @@
 
 class CharacterData;
 
-enum DefenseSelectCommand {
-	DefenseCommand_Invaild = -1,
-	DefenseCommand_Guard,
-	DefenseCommand_MagicGuard,
-	DefenseCommand_Counter,
-	DefenseCommand_Surrender,
-	DefenseCommand_Max
-};
-
+#include "../../BattleInfo.h"
 #include <vector>
 #include <string>
 
@@ -54,6 +46,10 @@ public:
  * @brief コマンドの名前を取得
  */
 	std::string GetSelectCommandName();
+
+	std::vector<std::string>GetCommandNameArray() const;
+
+	std::vector<bool> GetCanSelectCommand()const { return canSelectCommand; };
 
 	void Reset();
 };

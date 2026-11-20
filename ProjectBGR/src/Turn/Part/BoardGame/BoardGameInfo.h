@@ -4,6 +4,8 @@
 #pragma once
 #include <variant>
 #include <vector>
+#include <memory>
+#include "UI/UIContext.h"
 
 enum CommandType {
 	Command_Move,
@@ -23,7 +25,8 @@ enum TurnState {
 	TurnState_ShopIn,
 	TurnState_ChurchIn,
 	TurnState_VillageIn,
-	TurnState_End
+	TurnState_End,
+	TurnState_Max
 };
 
 enum MoveDirection {
@@ -57,6 +60,9 @@ struct PlayerUIInfo {
 	int spd;
 	int luk;
 	int money;
+	int lv;
+	int maxHP;
+	int currentHP;
 	std::vector<int> itemList;
 	std::vector<int> magicList;
 	std::vector<int> equipList;
@@ -81,11 +87,12 @@ struct TileEffectUINeedInfo {
 };
 
 struct MoveCommandUINeedInfo {
-	float angle = 0.0f;
+	std::vector<float> angle = {0.0f,0.0f,0.0f};
 	MoveCommandState commandState = MoveCommand_Back;
 	bool isRouletteStop = false;
 	int canMoveCount = -1;
 	bool isDialogTextErase = false;
+	int rouletteNum = -1;
 	int confirmationMove = -1;
 };
 
@@ -94,13 +101,36 @@ struct CommandSelectUINeedInfo {
 	int selectIndex = 0;
 };
 
+struct ItemCommandUINeedInfo {
+	std::vector<int> items = {-1};
+	int currentSelect = -1;
+	bool isSelect = false;
+	bool isUsed = false;
+	int usedItemAnyInfo = -1;
+};
+
+struct MagicCommandUINeedInfo {
+	std::vector<int> magics = { -1 };
+	int currentSelect = -1;
+	int currentSelectTarget = -1;
+	bool isSelect = false;
+	bool isUsed = false;
+	std::vector<std::string> targets;
+	std::string target;
+	int damage = -1;
+	int usedItemAnyInfo = -1;
+
+	std::weak_ptr<UIContext*> context;
+};
+
 struct BoardGameUINeedInfo {
 	std::variant<
 		MoveCommandUINeedInfo,
 		CommandSelectUINeedInfo,
 		SearchTileUINeedInfo,
 		BattleInUINeedInfo,
-		TileEffectUINeedInfo
+		TileEffectUINeedInfo,
+		ItemCommandUINeedInfo
 	> info;
 
 	TurnState state;

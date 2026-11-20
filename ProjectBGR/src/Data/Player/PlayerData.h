@@ -39,6 +39,8 @@ private:
 	int statusPoint = 0;
 	// 動けないターン数
 	int dontMoveTurnNum = 0;
+	// ルーレットの数
+	int rouletteNum = 1;
 
 public:
 	PlayerData();
@@ -106,5 +108,9 @@ public:
 	bool IsMove() const { return dontMoveTurnNum <= 0; }
 
 	bool CanBattling() const { return dontMoveTurnNum <= 0; }
+
+	void ResetRouletteNum() { rouletteNum = 1; }
+	void SetRouletteNum(int _rouletteNum) { rouletteNum = _rouletteNum; }
+	int GetRouletteNum() const { return rouletteNum; }
 };
 #endif // !_PLAYERDATA_H_

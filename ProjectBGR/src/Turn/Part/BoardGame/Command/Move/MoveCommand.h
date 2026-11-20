@@ -10,11 +10,12 @@
 #include "Vector2.h"
 #include "Vector3.h"
 #include "../../BoardGameInfo.h"
+#include "Roulette.h"
 #include <vector>
+#include <memory>
 
 class PlayerData;
 class MapManager;
-
 
 class MoveCommand {
 private:
@@ -38,13 +39,14 @@ private:
 	// 騾ｲ繧薙□繝槭せ
 	std::vector<Vector2> movedTiles;
 
-	float rouletteAngle = 0;
-
 	MapManager* mapManager = nullptr;
 	// 遘ｻ蜍輔ｒ遒ｺ螳壹☆繧九°縺ｮ繧ｳ繝槭Φ繝迂D
 	int confirmationMove;
 
 	bool dialogTextDelete = false;
+	// ルーレットの数
+	int rouletteNum = 1;
+	std::vector<std::unique_ptr<Roulette>> rouletteArray;
 
 private:
 	/*
@@ -66,7 +68,7 @@ private:
 	/*
 	 * @brief 騾ｲ繧√ｋ蝗樊焚繧呈ｱｺ繧√ｋ
 	 */
-	bool Roulette();
+	bool SpinRoulette();
 
 	/*
 	 * @brief 遘ｻ蜍輔ｒ遒ｺ螳壹☆繧・
@@ -74,7 +76,7 @@ private:
 	bool ConfirmationMove();
 
 
-	int GetRouletteINdex(float _angle);
+	int GetRouletteIndex(float _angle);
 public:
 	/*
 	 * @brief 繝ｫ繝ｼ繝ｬ繝・ヨ繧貞屓縺励※騾ｲ繧縺ｾ縺ｧ縺ｮ荳騾｣縺ｮ螳溯｡・
@@ -92,6 +94,11 @@ public:
 	void Render();
 
 	/*
+	 * @brief アイテムの効果による固定マス分の移動
+	 */
+	void FixedMove(int _moveNum);
+
+	/*
  * @brief 繧ｿ繝ｼ繝ｳ縺ｮ髢句ｧ区凾縺ｫ迴ｾ蝨ｨ縺ｮ繝励Ξ繧､繝､繝ｼ繧呈ｸ｡縺励※繧ゅｉ縺・
  */
 	void SetCurrentTurnPlayer(PlayerData* _playerData) { currentPlayerData = _playerData; };
@@ -104,7 +111,7 @@ public:
 
 	int GetcurrentMoveCount() const { return currentMoveCount; }
 
-	float GetRoletteAngle() const { return rouletteAngle; }
+	std::vector<float> GetRoletteAngle() const;
 
 	bool IsRouletteStop() const { return isRouletteStop; }
 
@@ -113,6 +120,12 @@ public:
 	bool IsDialogTextDelete() const { return dialogTextDelete; }
 
 	int GetConfirmationMove() const { return confirmationMove; }
+
+	int GetRouletteNum() const { return rouletteNum; }
+
+	void SetRouletteNum(int _v) { rouletteNum = _v; }
+
+	void ResetRouletteNum() { rouletteNum = 1; }
 };
 
 #endif

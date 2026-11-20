@@ -21,3 +21,30 @@ bool UIInput::IsMouseDown(int _mouse) {
     }
     return false;
 }
+
+bool UIInput::IsPadDown(int _pad) {
+    for (auto& p : pad) {
+        for (auto& input : p) {
+            if (input.first != _pad) continue;
+
+            UIInputPress p = input.second;
+
+            return p.press.first && !p.press.second;
+        }
+    }
+    return false;
+}
+
+bool UIInput::IsPadDown(int _padNum, int _pad) {
+    
+    if (_padNum < 0 || _padNum > pad.size()) return false;
+
+    for (auto& input : pad[_padNum]) {
+        if (input.first != _pad) continue;
+
+        UIInputPress p = input.second;
+
+        return p.press.first && !p.press.second;
+    }
+    return false;
+}

@@ -1,5 +1,6 @@
 #pragma once
 #include "../ManagerBase.h"
+#include "Vector2.h"
 #include <vector>
 #include <memory>
 #include "Job.h"
@@ -70,10 +71,16 @@ public:
 	 */
 	void DeleteEnemyData();
 
+	std::vector<CharacterData*> GetAllCharacterData() const;
+
 	/*
 	 * @brief 指定座標のエリアでスポーンする敵を探す
 	 */
 
+	/*
+	 * @brief 指定のマスの半径Nマス周辺にいるキャラクター取得
+	 */
+	std::vector<CharacterData*> GetCharacterForOneSquareRadius(Vector2 _originPos, int _r);
 
 	/*
 	 * @brief デバッグ機能：プレイヤーを4体生成する

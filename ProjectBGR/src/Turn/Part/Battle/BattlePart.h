@@ -7,15 +7,6 @@
 #ifndef _BATTLEPART_H_
 #define _BATTLEPART_H_
 
-enum BattleState {
-	BattleState_AttackOrder,
-	BattleState_SelectCommand,
-	BattleState_Battle,
-	BattleState_TurnChange,
-	BattleState_Result,
-	BattleState_LevelUp,
-	BattleState_TurnEnd,
-};
 
 class CharacterData;
 class GameObjectManager;
@@ -25,6 +16,7 @@ class GameObject;
 #include <functional>
 #include "Command/Offense/OffenseCommand.h"
 #include "Command/Defense/DefenseCommand.h"
+#include "BattleInfo.h"
 
 constexpr int chara1 = 0;
 constexpr int chara2 = 1;
@@ -40,7 +32,7 @@ private:
 	// 攻撃コマンド
 	OffenseCommand offense;
 	// 防御コマンド
-	DefenseCommand defence;
+	DefenseCommand defense;
 	// 攻撃を食らったほう
 	int damagePlayer;
 	// 攻守交代したか
@@ -65,6 +57,12 @@ private:
 	GameObject* player2Object;
 	// 降参したか
 	bool isSurrender = false;
+	// UICanvasに情報を送るイベント
+	std::function<void(BattleUINeedInfo)> setBattleUINeedInfoFunc;
+	// 勝ったプレイヤーが貰った経験値
+	int getExp = 0;
+	// 勝ったプレイヤーが貰ったお金
+	int getMoney = 0;
 
 public:
 	/*
@@ -80,7 +78,7 @@ public:
 	/*
 	 * @brief 生成時に初期化
 	 */
-	void Init(std::function<void()> _turnEndFunc,GameObjectManager* _gameObjectManager);
+	void Init(std::function<void()> _turnEndFunc, std::function<void(BattleUINeedInfo)> _setBattleUINeedInfoFunc,GameObjectManager* _gameObjectManager);
 
 	/*
 	 * @brief バトル前初期化

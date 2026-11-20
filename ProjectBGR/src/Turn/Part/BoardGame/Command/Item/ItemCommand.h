@@ -8,11 +8,15 @@
 #define _ITEMCOMMAND_H_
 
 class PlayerData;
+class ItemData;
 
 class ItemCommand {
 private:
 	int selectItemIndex;
 	PlayerData* currentSelectPlayer;
+	bool isSelect = false;
+	bool isUsed = false;
+	bool isCancel = false;
 public:
 	/*
 	 * @brief 繧｢繧､繝・Β繧帝∈謚槭☆繧・
@@ -23,7 +27,7 @@ public:
 	/*
 	 * @brief 繧｢繧､繝・Β繧剃ｽｿ縺・
 	 */
-	void UseItem(int _effectID);
+	void UseItem();
 
 	/*
 	 * @brief 謠冗判
@@ -41,6 +45,18 @@ public:
 	bool Return();
 
 	int GetSelectItemIndex() const { return selectItemIndex; }
+
+	bool IsSelect() const { return isSelect; }
+
+	bool IsUsed() const { return isUsed; }
+
+	int GetUsedItemAnyInfo() const;
+
+	void RemoveUsedItem();
+
+	bool IsCancel() const { return isCancel; }
+
+	void SetCancel(bool _isCancel) { isCancel = _isCancel; }
 };
 
 #endif

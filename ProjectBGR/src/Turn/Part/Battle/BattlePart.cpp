@@ -9,16 +9,35 @@
 #include "SpecialPhase/LevelUp/LevelUpPhase.h"
 
 void BattlePart::Update(float _t) {
+	BattleUINeedInfo info;
 	switch (currentState) {
 	case BattleState_AttackOrder:
 		AttackOrder();
 		MovePhase(BattleState_SelectCommand);
+		{
+			AttackOrderUINeedInfo attackOrderInfo = { attackPlayer };
+			info.info = attackOrderInfo;
+		}
 		break;
 	case BattleState_SelectCommand:
 		SelectCommand();
-		MovePhase(BattleState_Battle);
+
+		// 両方がコマンドを選択したら次に行く
+		if (canPhaseMove) {
+			canPhaseMove = false;
+			currentState = BattleState_AttackConfirm;
+		}
+		{
+			SelectCommandUINeedInfo selectCommandInfo;
+			selectCommandInfo.offenseCommandName = offense.GetCommandNameArray();
+			selectCommandInfo.defenseCommandName = defense.GetCommandNameArray();
+			selectCommandInfo.offenseCanCommandSelect = offense.GetCanSelectCommand();
+			selectCommandInfo.defenseCanCommandSelect = defense.GetCanSelectCommand();
+			selectCommandInfo.isSelectedCommandArray = { offense.IsSelect(),defense.IsSelect() };
+			info.info = selectCommandInfo;
+		}
 		break;
-	case BattleState_Battle:
+	case BattleState_AttackConfirm:
 	{
 
 		static bool isBattle = false;
@@ -38,12 +57,32 @@ void BattlePart::Update(float _t) {
 
 		if (MovePhase(nextState))
 			isBattle = false;
+
+		AttackConfirmUINeedInfo attackConfirmInfo;
+		attackConfirmInfo.offenseActionName = offense.GetSelectCommandName();
+		attackConfirmInfo.defenseActionName = defense.GetSelectCommandName();
+		attackConfirmInfo.damageValue = damage;
+		info.info = attackConfirmInfo;
 	}
 	break;
 	case BattleState_TurnChange:
-		TurnChange();
-		currentState = BattleState_SelectCommand;
-		break;
+	{
+		static bool isChange = false;
+
+		if (!isChange) {
+			TurnChange();
+			isChange = true;
+			canPhaseMove = true;
+			TurnChangeUINeedInfo turnChangeInfo;
+			turnChangeInfo.newAttackCharacterIndex = attackPlayer;
+			info.info = turnChangeInfo;
+		}
+
+		if (MovePhase(BattleState_SelectCommand))
+			isChange = false;
+
+	}
+	break;
 	case BattleState_Result:
 	{
 		static bool isResult = false;
@@ -52,6 +91,18 @@ void BattlePart::Update(float _t) {
 		if (!isResult) {
 			nextState = Result();
 			isResult = true;
+			ResultUINeedInfo resultInfo;
+			resultInfo.getExp = getExp;
+			resultInfo.getMoney = getMoney;
+			resultInfo.winPlayer = winPlayer;
+			resultInfo.isSurrender = isSurrender;
+			if (isSurrender) {
+				auto loser = players[winPlayer ^ 1];
+				resultInfo.removeExp = loser->GetCurrentExp() * 0.5f;
+				resultInfo.removeMoney = loser->GetMoney() * 0.5f;
+			}
+
+			info.info = resultInfo;
 		}
 		if (MovePhase(nextState))
 			isResult = false;
@@ -66,18 +117,34 @@ void BattlePart::Update(float _t) {
 		if (!isLevelUp) {
 			if (LevelUpPhase::LevelUp()) {
 				isLevelUp = true;
+				canPhaseMove = true;
 			}
-			canPhaseMove = true;
+
+			LevelUpUINeedInfo levelUpInfo;
+			levelUpInfo.levelUpPlayer = static_cast<PlayerData*>(players[winPlayer]);
+			levelUpInfo.upLevelIndex = LevelUpPhase::GetUpLevelIndex();
+			levelUpInfo.isPressA = LevelUpPhase::IsStartSortStatus();
+			levelUpInfo.upStatus = LevelUpPhase::GetUpStatus();
+			levelUpInfo.remainingPoint = LevelUpPhase::GetRemainingPoint();
+			levelUpInfo.currentSelectIndex = LevelUpPhase::GetCurrentSelectIndex();
+			levelUpInfo.isConfirm = LevelUpPhase::IsConfirm();
+			levelUpInfo.confirmIndex = LevelUpPhase::GetConfirmIndex();
+
+			info.info = levelUpInfo;
 		}
 
 		if (MovePhase(BattleState_TurnEnd))
 			isLevelUp = false;
+
 	}
 	break;
 	case BattleState_TurnEnd:
 		BattleEnd();
 		break;
 	}
+
+	info.state = currentState;
+	setBattleUINeedInfoFunc(info);
 }
 
 #include "Definition/CommonModule/String/MyString.h"
@@ -155,14 +222,14 @@ void BattlePart::Render() {
 	case BattleState_SelectCommand:
 		DrawString(offset.x, offset.y, "コマンド選択", 0xffffff);
 		offense.Render(attackPlayer);
-		defence.Render(attackPlayer ^ 1);
+		defense.Render(attackPlayer ^ 1);
 		break;
-	case BattleState_Battle:
+	case BattleState_AttackConfirm:
 	{
 		DrawString(offset.x, offset.y, "ダメージ判定", 0xffffff);
 		int x = xCenter;
 		int y = yCenter + 300;
-		std::string s = std::format("{0}は{1}をした。\n{2}の{3}！\n{0}に{4}ダメージ！", players[attackPlayer ^ 1]->GetPlayerName(), defence.GetSelectCommandName(), players[attackPlayer]->GetPlayerName(), offense.GetSelectCommandName(), damage);
+		std::string s = std::format("{0}は{1}をした。\n{2}の{3}！\n{0}に{4}ダメージ！", players[attackPlayer ^ 1]->GetPlayerName(), defense.GetSelectCommandName(), players[attackPlayer]->GetPlayerName(), offense.GetSelectCommandName(), damage);
 		MyString::StringCenterPos(s.c_str(), -1, &x, &y);
 		DrawString(x, y, s.c_str(), 0xffffff);
 	}
@@ -185,10 +252,11 @@ void BattlePart::Render() {
 	}
 }
 
-void BattlePart::Init(std::function<void()> _turnEndFunc, GameObjectManager* _gameObjectManager) {
+void BattlePart::Init(std::function<void()> _turnEndFunc, std::function<void(BattleUINeedInfo)> _setBattleUINeedInfoFunc, GameObjectManager* _gameObjectManager) {
 	turnEnd = _turnEndFunc;
 	players.resize(2);
 	gameObjectManager = _gameObjectManager;
+	setBattleUINeedInfoFunc = _setBattleUINeedInfoFunc;
 }
 
 void BattlePart::BattleStart(CharacterData* _p1, CharacterData* _p2) {
@@ -246,7 +314,7 @@ void BattlePart::AttackOrder() {
 	attackPlayer = rand >= GetRand(100) ? 0 : 1;
 	// コマンドにプレイヤー情報を渡す
 	offense.StartTurn(players[attackPlayer]);
-	defence.StartTurn(players[attackPlayer ^ 1]);
+	defense.StartTurn(players[attackPlayer ^ 1]);
 	// コマンド選択に移る
 	canPhaseMove = true;
 }
@@ -284,18 +352,18 @@ void BattlePart::SelectCommand() {
 		}
 
 		if (isSkipedOneFrame)
-			defence.SelectCommand();
+			defense.SelectCommand();
 
-		if (defence.IsSelect())
+		if (defense.IsSelect())
 			isSkipedOneFrame = false;
 	}
 	else {
 		offense.SelectCommand();
-		defence.SelectCommand();
+		defense.SelectCommand();
 	}
 
 	// 両者コマンドを選択したらバトルに移る
-	if (offense.IsSelect() && defence.IsSelect()) {
+	if (offense.IsSelect() && defense.IsSelect()) {
 		canPhaseMove = true;
 		isPortCheck = false;
 	}
@@ -304,7 +372,7 @@ void BattlePart::SelectCommand() {
 BattleState BattlePart::Battle() {
 	canPhaseMove = true;
 	// ダメージの計算と適応
-	ResolveAction(offense.GetSelectCommand(), defence.GetSelectCommand());
+	ResolveAction(offense.GetSelectCommand(), defense.GetSelectCommand());
 
 	// 降参しているか確認
 	if (isSurrender)
@@ -332,9 +400,9 @@ void BattlePart::TurnChange() {
 	isTurnChange = true;
 	// 選択をリセット
 	offense.Reset();
-	defence.Reset();
+	defense.Reset();
 	offense.StartTurn(players[attackPlayer]);
-	defence.StartTurn(players[attackPlayer ^ 1]);
+	defense.StartTurn(players[attackPlayer ^ 1]);
 }
 
 BattleState BattlePart::Result() {
@@ -356,18 +424,21 @@ BattleState BattlePart::Result() {
 	if (pLoser && pWinner && !isSurrender) {
 		// 敗者がためてる経験値とレベルアップに必要な経験値の三割がもらえる
 		int loserCurrentExp = loser->GetCurrentExp();
-		winner->AddCurrentExp(pWinner->GetLevelUpNeedExp() * 0.3f + loserCurrentExp * 1.2f);
+		getExp = pWinner->GetLevelUpNeedExp() * 0.3f + loserCurrentExp * 1.2f;
+		winner->AddCurrentExp(getExp);
 		// 経験値を半分減らす
 		loser->SetCurrentExp(loserCurrentExp * 0.5f);
 		// 所持金も半分渡す
-		int loserMoney = loser->GetMoney() * 0.5f;
-		winner->AddMoney(loserMoney);
-		loser->SetMoney(loserMoney);
+		getMoney = loser->GetMoney() * 0.5f;
+		winner->AddMoney(getMoney);
+		loser->SetMoney(getMoney);
 	}
 	// 勝者がプレイヤーで敗者が敵モブ
 	else if (pWinner && eLoser) {
-		winner->AddCurrentExp(eLoser->GetCurrentExp() + 10000);
-		winner->AddMoney(eLoser->GetMoney());
+		getExp = eLoser->GetCurrentExp();
+		winner->AddCurrentExp(getExp + 100);
+		getMoney = eLoser->GetMoney();
+		winner->AddMoney(getMoney);
 	}
 	// 敗者のプレイヤーは初期地点に戻って１～３ターンランダムで動けなくなる
 	if (pLoser && !isSurrender) {
@@ -385,15 +456,13 @@ BattleState BattlePart::Result() {
 		eLoser->SetDelete(true);
 
 	// 勝者がプレイヤーならレベルアップ処理に入る
-	if (pWinner && pWinner->LevelUp()) {
+	if (pWinner && pWinner->IsLevelUp()) {
 		LevelUpPhase::SetLevelUpPlayer(pWinner);
 		return BattleState_LevelUp;
 	}
 
 	return BattleState_TurnEnd;
 }
-
-
 
 void BattlePart::BattleEnd() {
 	players[chara1]->SetBattling(false);

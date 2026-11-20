@@ -20,19 +20,26 @@ struct ElementDataBase {
 };
 
 struct ItemData :public ElementDataBase {
-	ItemData(int _id, std::string _name, std::string _explanation, int _value, int _effectValue, int _effectID){
+	int subEffectValue = -1;
+	std::string useExplanation = "NOTEXT";
+
+	ItemData(int _id, std::string _name, std::string _explanation, int _value, int _effectValue, int _effectID,std::string _useExplanation,int _subEffectValue = -1){
 		id = _id;
 		name = _name;
 		explanation = _explanation;
 		value = _value;
 		effectValue = _effectValue;
 		effectID = _effectID;
+		useExplanation = _useExplanation;
+		subEffectValue = _subEffectValue;
 	}
 
 	ItemData() = default;
 };
 
 struct MagicData :public ElementDataBase {
+	std::string target;
+
 	MagicData(int _id, std::string _name, std::string _explanation, int _value, int _effectValue, int _effectID) {
 		id = _id;
 		name = _name;
@@ -47,6 +54,7 @@ struct MagicData :public ElementDataBase {
 
 struct EquipData :public ElementDataBase {
 	int equipSection = -1;
+	int increaseStatus = -1;
 
 	EquipData(int _id, std::string _name, std::string _explanation, int _value, int _effectValue, int _equipSection) {
 		id = _id;

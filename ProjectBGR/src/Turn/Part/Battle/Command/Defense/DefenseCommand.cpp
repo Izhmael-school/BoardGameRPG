@@ -47,15 +47,21 @@ void DefenseCommand::Render(int _attackSide) {
 }
 
 std::string DefenseCommand::GetSelectCommandName() {
-	switch (selectCommand) {
-	case DefenseCommand_Guard:
-		return "防御";
-	case DefenseCommand_MagicGuard:
-		return ElementDataManager::GetInstance().GetMagicData(currentDefenseCharacter->GetEquipList()[EquipPosition_DefenseMagic]).name;
-	case DefenseCommand_Counter:
-		return "カウンター";
-	}
-	return "";
+	
+	if (selectCommand == DefenseCommand_Invaild) return "";
+
+	return GetCommandNameArray()[selectCommand];
+}
+
+std::vector<std::string> DefenseCommand::GetCommandNameArray() const {
+	std::vector<std::string> array;
+	array.resize(DefenseCommand_Max);
+	array[DefenseCommand_Guard] = "防御";
+	array[DefenseCommand_MagicGuard] = ElementDataManager::GetInstance().GetEquipData(currentDefenseCharacter->GetEquipList()[EquipPosition_DefenseMagic]).name;
+	array[DefenseCommand_Counter] = "カウンター";
+	array[DefenseCommand_Surrender] = "降参";
+
+	return array;
 }
 
 void DefenseCommand::Reset() {
@@ -77,8 +83,7 @@ void DefenseCommand::StartTurn(CharacterData* _currentDefenseCharacter) {
 	// カウンター
 	canSelectCommand[DefenseCommand_Counter] = true;
 	// 防御魔法を装備していれば防御魔法を使えるようにする
-	if (_currentDefenseCharacter->IsUseMagicDefense() != -1)
-		canSelectCommand[DefenseCommand_MagicGuard] = true;
+		canSelectCommand[DefenseCommand_MagicGuard] = _currentDefenseCharacter->IsUseMagicDefense();
 	// 降参
 	canSelectCommand[DefenseCommand_Surrender] = true;
 }

@@ -14,6 +14,12 @@ enum ElementID {
 	ElementID_Equip
 };
 
+enum ShopType {
+	ShopType_Item,
+	ShopType_Magic,
+	ShopType_Equip,
+};
+
 struct ShopElement {
 	int id = -1;
 	int value = -1;

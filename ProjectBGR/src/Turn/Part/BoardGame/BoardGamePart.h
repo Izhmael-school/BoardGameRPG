@@ -176,6 +176,11 @@ private:
 	 * @brief ショップから出る
 	 */
 	void ShopOut();
+
+	/*
+	 * @brief アイテムによる移動終了
+	 */
+	void MoveEndForItem();
 };
 
 #endif

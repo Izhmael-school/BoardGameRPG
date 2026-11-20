@@ -1,6 +1,14 @@
 #include "UIManager.h"
 #include "UI/Canvas/UICanvasBase.h"
 #include "UI/Input/UIInput.h"
+#include "UI/UIContext.h"
+
+UIManager::UIManager() 
+	:canvases()
+	,context(std::make_shared<UIContext>())
+{
+	
+}
 
 void UIManager::Update(float _t,UIInput& _input) {
 	if (canvases.empty() || !canvases.back()) return;
@@ -21,6 +29,7 @@ void UIManager::Render() {
 
 void UIManager::PushCanvas(UICanvasBase* _pScreen) {
 	canvases.emplace_back(_pScreen);
+	_pScreen->SetUIContext(GetContext());
 }
 
 void UIManager::PopCanvas() {
