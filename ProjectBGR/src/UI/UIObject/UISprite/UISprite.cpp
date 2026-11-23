@@ -1,7 +1,7 @@
 #include "UISprite.h"
 #include "DxLib.h"
-#include "Definition/CommonModule/Math/MyMath.h"
 #include "Sprite/MySprite.h"
+#include "Definition/CommonModule/Math/MyMath.h"
 
 UISprite::UISprite(int _handle, Vector2 _pos, float _ex, float _ey, float _rot, std::string _name)
 	:UIObject(_name)
@@ -12,10 +12,21 @@ UISprite::UISprite(int _handle, Vector2 _pos, float _ex, float _ey, float _rot, 
 	, cy(-1) {
 	position = _pos;
 
-	angle = MyMath::Deg2Rad(_rot);
+	SetAngle(_rot);
 	CalcCenter();
 }
 
+UISprite::UISprite(std::string _name)
+	:UIObject(_name)
+	, graphHandle(-1)
+	, ex(1.0f)
+	, ey(1.0f)
+	, cx(-1)
+	, cy(-1) {
+	position = VZero_2;
+
+	SetAngle(0);
+}
 void UISprite::OnInit() {
 }
 
@@ -42,3 +53,5 @@ void UISprite::CalcCenter() {
 	cx = c.x / 2;
 	cy = c.y / 2;
 }
+
+void UISprite::SetAngle(float _rot) { angle = MyMath::Deg2Rad(_rot); }

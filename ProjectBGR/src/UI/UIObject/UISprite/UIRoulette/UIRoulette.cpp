@@ -11,10 +11,24 @@ UIRoulette::UIRoulette(int _rouletteHandle, int _arrowHandle, Vector2 _pos, floa
 	, aAngle(0)
 	, acx(0)
 	, acy(0) {
+
+}
+
+UIRoulette::UIRoulette(std::string _name)
+	:UISprite(-1, VZero_2, 1.0f, 1.0f, 0, _name)
+	, arrowHandle(-1)
+	, aex(1.0f)
+	, aey(1.0f)
+	, aAngle(0)
+	, acx(0)
+	, acy(0) {
+
+}
+
+void UIRoulette::OnInit() {
 	Vector2 ac = MySprite::GetSpriteSize(arrowHandle);
 	acx = ac.x / 2;
 	acy = ac.y / 2;
-
 }
 
 void UIRoulette::OnRender() {

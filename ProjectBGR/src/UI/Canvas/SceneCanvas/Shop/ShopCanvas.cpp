@@ -269,8 +269,8 @@ void ShopCanvas::OpenSellUI() {
 
 	const auto& sellItems = getPlayerSellArrayFunc();
 
-	auto billboard = UniqueInstantiate<UIBillboard>(Vector2(640, 150), 1, 0, 30, true, 0, 30, "NameBillboard");
-	auto pbillboard = UniqueInstantiate<UIBillboard>(Vector2(640*2, 150), 1, 0, 30, true, 0, 30, "PriseBillboard");
+	auto billboard = UniqueInstantiate<UIBillboard>(Vector2(640, 150), 1, 0, 30, true ,"NameBillboard");
+	auto pbillboard = UniqueInstantiate<UIBillboard>(Vector2(640*2, 150), 1, 0, 30, true,"PriseBillboard");
 
 	for (size_t i = 0; i < sellItems.size(); ++i) {
 		const SellElement& item = sellItems[i];

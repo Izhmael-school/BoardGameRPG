@@ -267,3 +267,23 @@ json MyJson::LoadBinary(const std::string& inputPath) {
         return json::array(); // 失敗時は空配列を返す
     }
 }
+
+#include <limits>
+unsigned int MyJson::ParseColorCode(const std::string& _colorCode){
+    if (_colorCode.size() < 3 || _colorCode.substr(0, 2) != "0x")
+        return 0;
+
+    try {
+        size_t pos = 0;
+        unsigned long value = std::stoul(_colorCode, &pos, 16);
+
+        if (pos != _colorCode.size() ||
+            value > (std::numeric_limits<unsigned int>::max)())
+            return 0;
+
+        return static_cast<unsigned int>(value);
+    }
+    catch (...) {
+        return 0;
+    }
+}

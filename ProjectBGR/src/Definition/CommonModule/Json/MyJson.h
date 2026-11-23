@@ -43,6 +43,8 @@ public:
 	 * @brief inputPath縺九ｉMessagePack繝舌う繝翫Μ繧定ｪｭ縺ｿ霎ｼ縺ｿ縲）son繧ｪ繝悶ず繧ｧ繧ｯ繝医→縺励※霑斐☆
 	 */
 	static json LoadBinary(const std::string& inputPath);
+
+	static unsigned int ParseColorCode(const std::string& _colorCode);
 private:
 	/*
 	 * @breif 繝舌う繝医ヰ繝・ヵ繧｡繧・UTF-8 縺ｮ std::string 縺ｫ螟画鋤縺吶ｋ

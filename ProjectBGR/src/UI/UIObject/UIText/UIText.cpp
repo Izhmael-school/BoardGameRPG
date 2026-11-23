@@ -14,6 +14,16 @@ UIText::UIText()
 	SetPosition(0, 0);
 }
 
+UIText::UIText(std::string _name) 
+	:UIObject(_name)
+	,text("テストテキスト")
+	, style(UITextStyle())
+	, fontHandle(-1)
+	, isSelect(false)
+	, canSelect(true)
+{
+}
+
 UIText::UIText(const std::string _text, UITextStyle _style, const Vector2& _pos, const std::string& _name)
 	:UIObject(_name)
 	,text(_text)
@@ -29,6 +39,7 @@ UIText::UIText(const std::string _text, UITextStyle _style, const Vector2& _pos,
 
 constexpr int D_FONT_SIZE = 18;
 void UIText::OnInit() {
+	basePos = position;
 	Build();
 	Reposition();
 }

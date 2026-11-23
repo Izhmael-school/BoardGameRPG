@@ -1,5 +1,6 @@
 #include "MainGameCanvas.h"
 #include "UI/UIObject/UIText/UIText.h"
+#include "UI/UIObject/UIText/UITextDialog/UITextDialog.h"
 #include "UI/UIObject/UIButton/UIButton.h"
 #include "UI/UIObject/UIGauge/UIGauge.h"
 #include "UI/UIObject/UIWindow/UIWindow.h"
@@ -8,22 +9,14 @@
 #include "String/MyString.h"
 
 void MainGameCanvas::Init() {
-	auto bill = Instantiate<UIBillboard>(Vector2(400, 200),1, 30, 30, true);
-	auto text = UniqueInstantiate<UIText>("a", UITextStyle(), VZero_2);
-	bill->AddChild(std::move(text));
-	text = UniqueInstantiate<UIText>("a", UITextStyle(), VZero_2);
-	bill->AddChild(std::move(text));
-	text = UniqueInstantiate<UIText>("aaa", UITextStyle(), VZero_2);
-	bill->AddChild(std::move(text));
-	text = UniqueInstantiate<UIText>("aa", UITextStyle(), VZero_2);
-	bill->AddChild(std::move(text));
-	text = UniqueInstantiate<UIText>("aaaaaa", UITextStyle(), VZero_2);
-	bill->AddChild(std::move(text));
-	text = UniqueInstantiate<UIText>("aaa", UITextStyle(), VZero_2);
-	bill->AddChild(std::move(text));
+	LoadCanvasForJson("res/ExternalFile/UI/Text.json");
 
-	bill->SetSelect(2);
-	bill->SetDrawRange(2, 4);
+	auto dialog = Find<UITextDialog>("dialog");
+	if (dialog)
+		dialog->AddText("テストテキストだお", []() {return false; });
+	auto billboard = Find<UIBillboard>("billboard");
+	if (billboard)
+		billboard->SetDrawRange(0, 3);
 }
 
 void MainGameCanvas::Update(float _t, UIInput& _input) {

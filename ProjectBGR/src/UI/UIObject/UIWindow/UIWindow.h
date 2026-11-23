@@ -26,7 +26,7 @@ private:
 public:
 	UIWindow(int _backColor, int _frameColor, int _x, int _y, int _w, int _h, bool _isCenter = true, int _frameSize = 10, std::string _uiName = "");
 	UIWindow(std::string _text, UITextStyle _textStyle, int _backColor, int _frameColor, int _x, int _y, int _frameSize = 10, std::string _uiName = "");
-
+	UIWindow(std::string _name);
 protected:
 	void OnInit() override;
 
@@ -41,8 +41,12 @@ public:
 
 	UIText* GetTextUI() const { return textUI.get(); }
 
-	void ChangeBackColor(int _color) { backColor = _color; }
-	void ChangeFrameColor(int _color) { frameColor = _color; }
+	void SetBackColor(int _color) { backColor = _color; }
+	void SetFrameColor(int _color) { frameColor = _color; }
+	void SetWidth(int _w) { w = _w; }
+	void SetHeight(int _h) { h = _h; }
+	void SetIsCenter(bool _isCenter) { isCenter = _isCenter; }
+	void SetFrameSize(int _frameSize) { frameSize = _frameSize; }
 };
 
 #endif // !_UIWINDOW_H_

@@ -36,6 +36,23 @@ UIWindow::UIWindow(std::string _text, UITextStyle _textStyle, int _backColor, in
 	position = Vector2(_x, _y);
 }
 
+UIWindow::UIWindow(std::string _name)
+	:UIObject(_name)
+	, text()
+	, textStyle()
+	, backColor(0xffffff)
+	, frameColor(0x000000)
+	, frameSize(5)
+	, w(0)
+	, h(0)
+	, dx(0)
+	, dy(0)
+	, isFit(false)
+	, isCenter(false)
+{
+	position = VZero_2;
+}
+
 void UIWindow::OnInit() {
 	if (!isCenter) return;
 

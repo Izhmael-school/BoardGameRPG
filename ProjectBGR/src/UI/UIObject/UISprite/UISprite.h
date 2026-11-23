@@ -19,6 +19,7 @@ protected:
 
 public:
 	UISprite(int _handle, Vector2 _pos,float _ex = 1.0f,float _ey = 1.0f, float _rot = 0,std::string _name = "");
+	UISprite(std::string _name = "");
 	virtual ~UISprite() override = default;
 
 protected:
@@ -34,6 +35,10 @@ public:
 		CalcCenter();
 	}
 	int GetGraphHandle() const {return graphHandle;}
+
+	void SetAngle(float _rot);
+
+	void SetExtend(float _ex, float _ey) { ex = _ex, ey = _ey; }
 };
 
 #endif // !_UISPRITE_H_

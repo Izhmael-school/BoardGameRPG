@@ -23,13 +23,18 @@ private:
 
 public:
 	UIRoulette(int _rouletteHandle, int _arrowHandle, Vector2 _pos = VZero_2, float _ex = 1.0f, float _ey = 1.0f, std::string _name = "");
+	UIRoulette(std::string _name);
+
 	~UIRoulette() override = default;
 
 protected:
+	void OnInit() override;
 	void OnRender() override;
 
 public:
 	void SetArrowAngle(float _angle);
+
+	void SetArrowGraphHandle(int _handle) { arrowHandle = _handle; }
 };
 
 #endif // !_UIROULETTE_H_

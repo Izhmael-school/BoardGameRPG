@@ -1,15 +1,22 @@
 #include "UIBillboard.h"
 #include "UI/UIObject/UIText/UIText.h"
 
-UIBillboard::UIBillboard(Vector2 _pos, int _col, int _spaceX, int _spaceY, bool _isFitStringEnd, int _anySpaceX, int _anySpaceY, std::string _name)
+UIBillboard::UIBillboard(Vector2 _pos, int _col, int _spaceX, int _spaceY, bool _isFitStringEnd, std::string _name)
 	:UIObject(_name)
 	, col(_col)
 	, spaceX(_spaceX)
 	, spaceY(_spaceY)
-	, isFitStringEnd(_isFitStringEnd)
-	, anySpaceX(_anySpaceX)
-	, anySpaceY(_anySpaceY) {
+	, isFitStringEnd(_isFitStringEnd) {
 	position = _pos;
+}
+
+UIBillboard::UIBillboard(std::string _name)
+	:UIObject(_name)
+	, col(0)
+	, spaceX(0)
+	, spaceY(0)
+	, isFitStringEnd(false) {
+	position = VZero_2;
 }
 
 void UIBillboard::OnUpdate(float _t, UIInput& _input) {
@@ -50,8 +57,8 @@ void UIBillboard::OnUpdate(float _t, UIInput& _input) {
 			}
 		}
 		else {
-			pos.x = c * anySpaceX;
-			pos.y = (r - firstVisibleRow) * anySpaceY;
+			pos.x = c * spaceX;
+			pos.y = (r - firstVisibleRow) * spaceY;
 		}
 
 		txts[i]->SetPosition(pos);

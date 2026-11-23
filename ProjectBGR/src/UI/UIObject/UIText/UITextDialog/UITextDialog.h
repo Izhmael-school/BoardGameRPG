@@ -31,6 +31,7 @@ private:
 
 public:
 	UITextDialog(UITextStyle _style, const Vector2& _pos,int backImage = -1,std::string _uiName = "");
+	UITextDialog(std::string _uiName = "");
 
 protected:
 	void OnUpdate(float _t, UIInput& _input) override;

@@ -12,12 +12,11 @@ private:
 	int spaceX;
 	int spaceY;
 	bool isFitStringEnd;
-	int anySpaceX;
-	int anySpaceY;
 	int minCol;
 	int maxCol;
 public:
-	UIBillboard(Vector2 _pos, int _col, int _spaceX, int _spaceY, bool _isFitStringEnd = true, int _anySpaceX = 0, int _anySpaceY = 0,std::string _name = "");
+	UIBillboard(Vector2 _pos, int _col, int _spaceX, int _spaceY, bool _isFitStringEnd = true, std::string _name = "");
+	UIBillboard(std::string _name);
 
 	void OnUpdate(float _t, UIInput& _input) override;
 
@@ -27,6 +26,9 @@ public:
 
 	void SelectIndexCenterDrawRange(int _selectIndex,int _maxCol);
 
+	void SetFitStringEnd(bool _isFitStringEnd) { isFitStringEnd = _isFitStringEnd; }
+	void SetColumn(int _col) { col = _col; }
+	void SetSpace(int _x, int _y) { spaceX = _x; spaceY = _y; }
 private:
 	int GetUITextChildCount();
 };

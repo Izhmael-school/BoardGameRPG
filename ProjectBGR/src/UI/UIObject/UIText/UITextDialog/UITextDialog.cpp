@@ -12,6 +12,16 @@ UITextDialog::UITextDialog(UITextStyle _style, const Vector2& _pos, int backImag
 	, isAllDraw(false) {
 }
 
+UITextDialog::UITextDialog(std::string _uiName)
+	:UIText("", UITextStyle(), VZero_2, _uiName)
+	, nextCharTime(0.05f)
+	, currentTime(nextCharTime)
+	, currentCharIndex(0)
+	, drawString("")
+	, isAllDraw(false)
+{
+}
+
 void UITextDialog::OnUpdate(float _t, UIInput& _input) {
 	if (waitStrings.empty() && text.empty()) {
 		SetActive(false);

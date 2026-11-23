@@ -26,6 +26,7 @@ protected:
 	Vector2 basePos;
 public:
 	UIText();
+	UIText(std::string _name);
 	UIText(const std::string _text, UITextStyle _style, const Vector2& _pos,const std::string& _name = "");
 	virtual ~UIText() override = default;
 
@@ -69,6 +70,11 @@ public:
 	 * @brief テキストの取得
 	 */
 	inline const std::string& GetText() const { return text; }
+
+	/*
+	 * @brief スタイルの変更
+	 */
+	inline const void SetTextStyle(UITextStyle _style) { style = _style; OnInit(); }
 
 	/*
 	 * @brief フォントハンドルの取得

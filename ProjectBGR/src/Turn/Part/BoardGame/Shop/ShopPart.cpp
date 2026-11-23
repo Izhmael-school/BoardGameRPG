@@ -19,7 +19,7 @@ void ShopPart::Init(UIManager* _uiManager, std::function<void()> _leaveFunc) {
 	auto shopCanvasPtr = static_cast<ShopCanvas*>(shopCanvas.get());
 	shopCanvasPtr->SetGetPlayerSellArrayFunc([this]() { return this->canSellArray; });
 	sellUIResetFunc = [shopCanvasPtr]() {shopCanvasPtr->ResetSellUI(); };
-	context->Register<>
+	//context->Register<>
 }
 
 void ShopPart::Open(int _x, int _y, PlayerData* _currentTurnPlayer) {

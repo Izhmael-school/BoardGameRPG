@@ -119,8 +119,16 @@ std::vector<UIObject*> UIObject::GetChildren() const {
 
 UIObject* UIObject::GetChild(const std::string& _name) {
     for (auto child : GetChildren()) {
+        // 直下の子どもを見る
         if (child->name == _name)
             return child;
+
+        // その子どもを見る
+        UIObject* get = child->GetChild(_name);
+
+        if (!get) continue;
+
+        return get;
     }
     return nullptr;
 }

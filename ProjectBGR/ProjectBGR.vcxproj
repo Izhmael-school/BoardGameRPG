@@ -263,6 +263,7 @@
     <ClCompile Include="src\UI\Canvas\SceneCanvas\Shop\ShopCanvas.cpp" />
     <ClCompile Include="src\UI\Canvas\SceneCanvas\Village\VillageCanvas.cpp" />
     <ClCompile Include="src\UI\Canvas\UICanvasBase.cpp" />
+    <ClCompile Include="src\UI\Canvas\UICreateNeedInfo.cpp" />
     <ClCompile Include="src\UI\Input\UIInput.cpp" />
     <ClCompile Include="src\UI\UIContext.cpp" />
     <ClCompile Include="src\UI\UIObject\UIBillboard\UIBillboard.cpp" />
@@ -395,6 +396,7 @@
     <ClInclude Include="src\UI\Canvas\SceneCanvas\Shop\ShopCanvas.h" />
     <ClInclude Include="src\UI\Canvas\SceneCanvas\Village\VillageCanvas.h" />
     <ClInclude Include="src\UI\Canvas\UICanvasBase.h" />
+    <ClInclude Include="src\UI\Canvas\UICreateNeedInfo.h" />
     <ClInclude Include="src\UI\Input\UIInput.h" />
     <ClInclude Include="src\UI\UIContext.h" />
     <ClInclude Include="src\UI\UIObject\UIBillboard\UIBillboard.h" />
