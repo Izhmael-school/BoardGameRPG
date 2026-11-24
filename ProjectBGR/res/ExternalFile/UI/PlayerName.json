@@ -1,0 +1,37 @@
+{
+  "canvas": [
+    {
+      "name": "playerName",
+      "uiType": 0,
+      "position": [ 0, 0 ],
+      "parentName": "",
+      "isActive": true
+    },
+    {
+      "name": "TitleText",
+      "uiType": 1,
+      "position": [ 960, 200 ],
+      "parentName": "playerName",
+      "isActive": true,
+      "text": "プレイヤーの名前は？",
+      "normalColor": "0x000000",
+      "fontName": "HG創英角ﾎﾟｯﾌﾟ体",
+      "fontSize": 70,
+      "textDrawPosition": 1,
+      "fontType": 2
+    },
+    {
+      "name": "NameDraw",
+      "uiType": 1,
+      "position": [ 960, 300 ],
+      "parentName": "playerName",
+      "isActive": true,
+      "text": "プレイヤーの名前は？",
+      "normalColor": "0x000000",
+      "fontName": "HG創英角ﾎﾟｯﾌﾟ体",
+      "fontSize": 70,
+      "textDrawPosition": 1,
+      "fontType": 2
+    }
+  ]
+}

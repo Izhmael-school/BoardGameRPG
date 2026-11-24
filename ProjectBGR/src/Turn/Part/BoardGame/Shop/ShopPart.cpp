@@ -169,6 +169,7 @@ void ShopPart::Update(float _t) {
 		break;
 	case ShopState_Steal:
 		// いったん後回し
+		shopState = ShopState_Selection;
 		break;
 	case ShopState_Back:
 		Leave();

@@ -1,0 +1,45 @@
+{
+  "canvas": [
+    {
+      "name": "bg",
+      "uiType": 2,
+      "position": [ 960, 540 ],
+      "parentName": "",
+      "isActive": true,
+      "spriteName": "TitleBG",
+      "ex": 1.0,
+      "ey": 1.0,
+      "rot": 0.0
+    },
+    {
+      "name": "bg",
+      "uiType": 2,
+      "position": [ 960, 300 ],
+      "parentName": "",
+      "isActive": true,
+      "spriteName": "logo",
+      "ex": 1.0,
+      "ey": 1.0,
+      "rot": 0.0
+    },
+    {
+      "name": "text",
+      "uiType": 1,
+      "position": [ 960, 800 ],
+      "parentName": "",
+      "isActive": true,
+      "text": "Aボタンでスタート！",
+      "normalColor": "0x000000",
+      "outlineColor": "0x000000",
+      "selectedColor": "0x000000",
+      "cantSelectColor": "0x000000",
+      "fontName": "HG創英角ﾎﾟｯﾌﾟ体",
+      "fontSize": 70,
+      "fontThickness": 5,
+      "edgeSize": 0,
+      "italic": 0,
+      "textDrawPosition": 1,
+      "fontType": 2
+    }
+  ]
+}

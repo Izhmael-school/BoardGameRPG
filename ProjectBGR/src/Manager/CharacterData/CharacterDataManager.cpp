@@ -30,6 +30,8 @@ PlayerData* CharacterDataManager::CreatePlayerData(Job _job) {
 	newPlayerData->Heal(newPlayerData->GetMaxHp());
 	// 初期スタート地点にセット
 	newPlayerData->SetMapPosition(18, 8);
+	// ボーナス
+	newPlayerData->SetMoney(50000);
 
 	playerDataArray.emplace_back(std::move(newPlayerData));
 	return playerDataArray.back().get();

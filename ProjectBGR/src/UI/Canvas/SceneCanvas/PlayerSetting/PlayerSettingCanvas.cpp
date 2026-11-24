@@ -1,7 +1,10 @@
 #include "PlayerSettingCanvas.h"
 #include "UI/UIObject/UItext/UItext.h"
 #include "UI/UIObject/UISprite/UISprite.h"
+#include "UI/UIObject/UIBillboard/UIBillboard.h"
 #include "Definition/CommonModule/Json/MyJson.h"
+#include "Manager/Input/InputManager.h"
+#include "../../../Input/UIInput.h"
 #include <algorithm>
 
 void PlayerSettingCanvas::Init() {
@@ -47,37 +50,26 @@ void PlayerSettingCanvas::Update(float _t, UIInput& _input) {
 		break;
 	}
 	prevPart = part;
+
+	auto itemBB = Find<UIBillboard>("itemBB");
+	if (itemBB)
+		itemBB->SetSelect(static_cast<int>(part));
+
+	UICanvasBase::Update(_t, _input);
+}
+
+void PlayerSettingCanvas::Setup() {
+	AllDelete();
+	LoadCanvasForJson("res/ExternalFile/UI/CharacterCreateUI.json");
 }
 
 void PlayerSettingCanvas::OpenPlayerNum() {
 	// 既に開いていれば戻る
 	if (playerNum) return;
 
-	playerNum = Instantiate<UIObject>();
 
-	UITextStyle titleStyle;
-	titleStyle.textDrawPosition = TextDrawPosition_Center;
-	titleStyle.fontSize = 50;
-
-	int cw = 1920 / 2;
-
-	auto titleText = UniqueInstantiate<UIText>("参加人数", titleStyle, Vector2(cw, 150));
-
-	UITextStyle numStyle;
-	numStyle.fontSize = 30;
-	numStyle.textDrawPosition = TextDrawPosition_Center;
-	auto playerText = UniqueInstantiate<UIText>("プレイヤーの数", numStyle, Vector2(cw, 400));
-	auto playerNumText = UniqueInstantiate<UIText>("0", numStyle, Vector2(cw, 450));
-	auto cpuText = UniqueInstantiate<UIText>("CPUの数", numStyle, Vector2(cw, 500));
-	auto cpuNumText = UniqueInstantiate<UIText>("0", numStyle, Vector2(cw, 550));
-	auto nextText = UniqueInstantiate<UIText>("決定", numStyle, Vector2(cw, 700));
-
-	playerNum->AddChild(std::move(titleText));
-	playerNum->AddChild(std::move(playerText));
-	playerNum->AddChild(std::move(playerNumText));
-	playerNum->AddChild(std::move(cpuText));
-	playerNum->AddChild(std::move(cpuNumText));
-	playerNum->AddChild(std::move(nextText));
+	LoadCanvasForJson(MyString::MergeString(UI_FOLDER_PATH, "PlayerNum", JSON_EXTENSION));
+	playerNum = Find<UIObject>("playerNum");
 }
 
 void PlayerSettingCanvas::ClosePlayerNum() {
@@ -112,30 +104,18 @@ void PlayerSettingCanvas::UpdatePlayerNum() {
 void PlayerSettingCanvas::OpenPlayerName() {
 	if (playerName) return;
 
-	playerName = Instantiate<UIObject>();
+	LoadCanvasForJson(MyString::MergeString(UI_FOLDER_PATH, "PlayerName", JSON_EXTENSION));
 
-	UITextStyle titleStyle;
-	titleStyle.textDrawPosition = TextDrawPosition_Center;
-	titleStyle.fontSize = 50;
-
-	int cw = 1920 / 2;
-
-	auto titleText = UniqueInstantiate<UIText>("名前", titleStyle, Vector2(cw, 150), "TitleText");
-	playerName->AddChild(std::move(titleText));
-
-	UITextStyle nameStyle;
-	nameStyle.textDrawPosition = TextDrawPosition_Center;
-	nameStyle.fontSize = 35;
-
-	auto dialog = UniqueInstantiate<UIText>("", nameStyle, Vector2(cw, 300), "NameDraw");
-	playerName->AddChild(std::move(dialog));
+	playerName = Find<UIObject>("playerName");
 
 	auto selectStringArray = UniqueInstantiate<UIObject>();
 
 	// 文字の描画設定
 	UITextStyle style;
-	style.fontSize = 30;
+	style.fontSize = 50;
 	style.textDrawPosition = TextDrawPosition_Center;
+	style.fontName = "HG創英角ﾎﾟｯﾌﾟ体";
+	style.normalColor = 0x000000;
 
 	// 配置設定
 	const int CELL_WIDTH = 80;
@@ -150,7 +130,7 @@ void PlayerSettingCanvas::OpenPlayerName() {
 		1920 / 2 - (COL_COUNT - 1) * CELL_WIDTH / 2;
 
 	const int START_Y =
-		1080 / 1.7f - (ROW_COUNT - 1) * CELL_HEIGHT / 2;
+		1080 / 1.6f - (ROW_COUNT - 1) * CELL_HEIGHT / 2;
 
 	// ひらがなを順番に配置
 	for (int row = 0; row < HIRAGANA.size(); row++) {
@@ -184,10 +164,8 @@ void PlayerSettingCanvas::UpdatePlayerName() {
 
 	// タイトル
 	auto title = static_cast<UIText*>(playerName->GetChild("TitleText"));
-	if (title) {
-		std::string drawText = "プレイヤー" + std::to_string(playerNameInfo.playerNum + 1) + "の名前は？";
-		title->SetText(drawText);
-	}
+	if (title)
+		title->SetText(std::format("プレイヤー{0}の名前は？", playerNameInfo.playerNum + 1));
 
 	// 入力文字種に応じて一覧を選択
 	const std::vector<std::vector<std::string>>* stringTable = nullptr;
@@ -261,22 +239,17 @@ void PlayerSettingCanvas::OpenUsePortSet() {
 
 	if (usePortSetInfo.playerNum == -1) return;
 
-	usePortSet = Instantiate<UIObject>();
+	LoadCanvasForJson(MyString::MergeString(UI_FOLDER_PATH, "UsePortSet", JSON_EXTENSION));
 
-	UITextStyle titleStyle;
-	titleStyle.textDrawPosition = TextDrawPosition_Center;
-	titleStyle.fontSize = 50;
-
-	int cw = 1920 / 2;
-
-	auto titleText = UniqueInstantiate<UIText>("コントローラ設定", titleStyle, Vector2(cw, 150));
-	usePortSet->AddChild(std::move(titleText));
+	usePortSet = Find<UIObject>("usePortSet");
 
 	int x = 384;
 
 	UITextStyle playerNameStyle;
-	playerNameStyle.fontSize = 30;
+	playerNameStyle.fontSize = 50;
 	playerNameStyle.textDrawPosition = TextDrawPosition_Center;
+	playerNameStyle.fontName = "HG創英角ﾎﾟｯﾌﾟ体";
+	playerNameStyle.normalColor = 0x000000;
 
 	const auto& playerNameArray = usePortSetInfo.playerName;
 	int size = playerNameArray.size();
@@ -316,12 +289,15 @@ void PlayerSettingCanvas::UpdateUsePortSet() {
 			auto text = static_cast<UIText*>(children[i]);
 
 			std::string drawText = "";
+			bool isSelect = i == index;
 			// 現在入力待機中のプレイヤーのUIの下に待機中と出す 
-			if (i == index)
+			if (isSelect)
 				drawText = "入力待機中";
 			// 入力が終わったプレイヤーのUIの下にはコントローラのポート番号を出す
 			else if (i < index)
 				drawText = "コントローラ" + std::to_string(usePortSetInfo.playerUsePortArray[i] + 1);
+
+			text->SetSelect(isSelect);
 
 			text->SetText(drawText);
 		}
@@ -339,86 +315,26 @@ void PlayerSettingCanvas::OpenJobSelectSet() {
 	if (!jobData.is_array() || jobData.empty())
 		return;
 
-	playerJob = Instantiate<UIObject>();
+	LoadCanvasForJson(MyString::MergeString(UI_FOLDER_PATH, "JobSelect", JSON_EXTENSION));
 
-	UITextStyle titleStyle;
-	titleStyle.textDrawPosition = TextDrawPosition_Center;
-	titleStyle.fontSize = 50;
-	int cw = 1920 / 2;
-	auto titleText = UniqueInstantiate<UIText>("名前", titleStyle, Vector2(cw, 150), "TitleText");
-	playerJob->AddChild(std::move(titleText));
+	playerJob = Find<UIObject>("jobSelect");
 
 	UITextStyle style;
 	style.fontSize = 30;
 	style.textDrawPosition = TextDrawPosition_Center;
 
-	// 左側：ジョブ一覧
-	const int LIST_X = 400;
-	const int LIST_Y = 220;
-	const int LIST_HEIGHT = 85;
-
-	auto jobNameTexts = UniqueInstantiate<UIObject>("JobNameTexts");
+	// ジョブの名前を入れる
+	auto jobNameBB = Find<UIBillboard>("jobBB");
+	auto jobs = jobNameBB->GetChildren();
+	int index = 0;
 	for (const auto& data : jobData) {
 		std::string name = data["jobName"].get<std::string>();
 
-		int y = jobNameTexts->GetChildrenCount() * LIST_HEIGHT;
-		auto text = UniqueInstantiate<UIText>(name, style, Vector2(LIST_X, LIST_Y + y));
-
-		jobNameTexts->AddChild(std::move(text));
+		auto text = static_cast<UIText*>(jobs[index]);
+		text->SetText(name);
+		index++;
 	}
-	playerJob->AddChild(std::move(jobNameTexts));
 
-	// 右上：選択中のジョブ名
-	auto selectJob = UniqueInstantiate<UIText>("", style, Vector2(1300, 150), "JobTitleText");
-
-	playerJob->AddChild(std::move(selectJob));
-
-	// 右側：ステータス
-	const std::vector<std::string> statusNames = {
-		"ATK", "DEF", "VIT", "MAG", "SPD", "LUK"
-	};
-
-	const int STATUS_X = 1050;
-	const int STATUS_Y = 250;
-	const int STATUS_HEIGHT = 55;
-
-	auto jobStatusTexts = UniqueInstantiate<UIObject>("JobStatusTexts");
-	for (int i = 0; i < statusNames.size(); ++i) {
-		auto text = UniqueInstantiate<UIText>(
-			statusNames[i] + ": 0",
-			style,
-			Vector2(STATUS_X, STATUS_Y + i * STATUS_HEIGHT)
-		);
-
-		jobStatusTexts->AddChild(std::move(text));
-	}
-	playerJob->AddChild(std::move(jobStatusTexts));
-
-	// 下側：説明文
-	auto description = UniqueInstantiate<UIText>("", style, Vector2(1250, 800), "JobDescriptionText");
-
-	playerJob->AddChild(std::move(description));
-
-	// CPUの選択
-	int x = 320;
-	int y = 270;
-
-	auto cpuSelect = UniqueInstantiate<UIObject>("CPUSelect");
-	auto bg = UniqueInstantiate<UISprite>(-1, Vector2(x, y), x * 4, y * 2);
-	cpuSelect->AddChild(std::move(bg));
-	UITextStyle cpuText;
-	cpuText.textDrawPosition = TextDrawPosition_Center;
-	cpuText.normalColor = 0x000000;
-	auto text = UniqueInstantiate<UIText>("CPU0のジョブは", cpuText, Vector2(x * 3, y * 1.5f), "CPUName");
-	auto options = UniqueInstantiate<UIObject>("Options");
-	auto option1 = UniqueInstantiate<UIText>("ランダムで選ぶ", cpuText, Vector2(x * 2, y * 2.5f));
-	auto option2 = UniqueInstantiate<UIText>("自分で選ぶ", cpuText, Vector2(x * 4, y * 2.5f));
-	options->AddChild(std::move(option1));
-	options->AddChild(std::move(option2));
-	cpuSelect->AddChild(std::move(text));
-	cpuSelect->AddChild(std::move(options));
-	cpuSelect->SetActive(false);
-	playerJob->AddChild(std::move(cpuSelect));
 }
 
 void PlayerSettingCanvas::CloseJobSelectSet() {
@@ -476,7 +392,7 @@ void PlayerSettingCanvas::UpdateJobSelectSet() {
 			cpuSelect->SetActive(false);
 	}
 
-	auto jobNameTexts = playerJob->GetChild("JobNameTexts");
+	auto jobNameTexts = playerJob->GetChild("jobBB");
 	auto jobNameTextChildren = jobNameTexts->GetChildren();
 	int jobNameTextCount = jobNameTextChildren.size();
 	// 左側：選択状態
@@ -487,7 +403,7 @@ void PlayerSettingCanvas::UpdateJobSelectSet() {
 			text->SetSelect(i == currentJobIndex);
 	}
 
-	auto jobTitleText = static_cast<UIText*>(playerJob->GetChild("JobTitleText"));
+	auto jobTitleText = static_cast<UIText*>(playerJob->GetChild("JobNameTexts"));
 
 	// 右上：ジョブ名
 	if (jobTitleText) {
@@ -505,7 +421,7 @@ void PlayerSettingCanvas::UpdateJobSelectSet() {
 		"atk", "def", "vit", "mag", "spd", "luk"
 	};
 
-	auto jobStatusTexts = playerJob->GetChild("JobStatusTexts");
+	auto jobStatusTexts = playerJob->GetChild("statusBB");
 	auto jobStatusTextChildren = jobStatusTexts->GetChildren();
 	int jobStatusTextCount = jobStatusTextChildren.size();
 
@@ -525,18 +441,11 @@ void PlayerSettingCanvas::UpdateJobSelectSet() {
 void PlayerSettingCanvas::OpenTurnOrderSet() {
 	if (turnOrder) return;
 
-	turnOrder = Instantiate<UIObject>();
-
-	// タイトル
-	UITextStyle titleStyle;
-	titleStyle.textDrawPosition = TextDrawPosition_Center;
-	titleStyle.fontSize = 50;
-	int cw = 1920 / 2;
-	auto titleText = UniqueInstantiate<UIText>("ターンの順番", titleStyle, Vector2(cw, 150), "TitleText");
-	turnOrder->AddChild(std::move(titleText));
-
-
 	auto& turnOrderInfo = std::get<TurnOrderUINeedInfo>(info.info);
+
+	LoadCanvasForJson(MyString::MergeString(UI_FOLDER_PATH, "TurnOrder", JSON_EXTENSION));
+
+	turnOrder = Find<UIObject>("turnOrder");
 
 	// 名前の描画
 	auto name = UniqueInstantiate<UIObject>("CharacterName");
@@ -544,7 +453,9 @@ void PlayerSettingCanvas::OpenTurnOrderSet() {
 	float py = 300;
 	UITextStyle nameStyle;
 	nameStyle.textDrawPosition = TextDrawPosition_Center;
-	nameStyle.fontSize = 30;
+	nameStyle.fontSize = 50;
+	nameStyle.normalColor = 0x000000;
+	nameStyle.fontName = "HG創英角ﾎﾟｯﾌﾟ体";
 	for (int i = 0, max = turnOrderInfo.characterNum; i < max; i++) {
 		auto text = UniqueInstantiate<UIText>(turnOrderInfo.characterNameArray[i], nameStyle, Vector2(px * (i + 1), py));
 		name->AddChild(std::move(text));
@@ -560,47 +471,6 @@ void PlayerSettingCanvas::OpenTurnOrderSet() {
 	}
 	turnOrder->AddChild(std::move(order));
 
-	// 順番の決め方の描画
-	{
-		auto select = UniqueInstantiate<UIObject>("Select");
-		int x = 320, y = 270;
-		auto bg = UniqueInstantiate<UISprite>(-1, Vector2(x, y), x * 4, y * 2);
-		select->AddChild(std::move(bg));
-		UITextStyle cpuText;
-		cpuText.textDrawPosition = TextDrawPosition_Center;
-		cpuText.normalColor = 0x000000;
-		auto text = UniqueInstantiate<UIText>("順番の決め方は", cpuText, Vector2(x * 3, y * 1.5f));
-		auto options = UniqueInstantiate<UIObject>("Options");
-		auto option1 = UniqueInstantiate<UIText>("ランダムで決める", cpuText, Vector2(x * 2, y * 2.5f));
-		auto option2 = UniqueInstantiate<UIText>("自分で決める", cpuText, Vector2(x * 4, y * 2.5f));
-		options->AddChild(std::move(option1));
-		options->AddChild(std::move(option2));
-		select->AddChild(std::move(text));
-		select->AddChild(std::move(options));
-		select->SetActive(false);
-		turnOrder->AddChild(std::move(select));
-	}
-
-	// 確認の描画
-	{
-		auto confirm = UniqueInstantiate<UIObject>("Confirm");
-		int x = 320, y = 400;
-		auto bg = UniqueInstantiate<UISprite>(-1, Vector2(x, y), x * 4, y * 2);
-		confirm->AddChild(std::move(bg));
-		UITextStyle cpuText;
-		cpuText.textDrawPosition = TextDrawPosition_Center;
-		cpuText.normalColor = 0x000000;
-		auto text = UniqueInstantiate<UIText>("これでいいですか？", cpuText, Vector2(x * 3, y * 1.5f));
-		auto options = UniqueInstantiate<UIObject>("Options");
-		auto option1 = UniqueInstantiate<UIText>("いいえ", cpuText, Vector2(x * 2, y * 2.5f));
-		auto option2 = UniqueInstantiate<UIText>("はい", cpuText, Vector2(x * 4, y * 2.5f));
-		options->AddChild(std::move(option1));
-		options->AddChild(std::move(option2));
-		confirm->AddChild(std::move(text));
-		confirm->AddChild(std::move(options));
-		confirm->SetActive(false);
-		turnOrder->AddChild(std::move(confirm));
-	}
 }
 
 void PlayerSettingCanvas::CloseTurnOrderSet() {
@@ -618,7 +488,7 @@ void PlayerSettingCanvas::UpdateTurnOrderSet() {
 		bool isConfirm = turnOrderInfo.currentSection == TurnOrderSection_Confirm;
 		confirm->SetActive(isConfirm);
 
-		auto children = confirm->GetChild("Options")->GetChildren();
+		auto children = confirm->GetChild("cOptions")->GetChildren();
 		if (isConfirm) {
 			for (int i = 0, max = 2; i < max; i++) {
 				auto text = static_cast<UIText*>(children[i]);
@@ -630,7 +500,7 @@ void PlayerSettingCanvas::UpdateTurnOrderSet() {
 	}
 
 	auto select = turnOrder->GetChild("Select");
-	if (select){
+	if (select) {
 		bool isSelect = turnOrderInfo.currentSection == TurnOrderSection_ModeSelect;
 		select->SetActive(isSelect);
 
@@ -669,4 +539,13 @@ void PlayerSettingCanvas::UpdateTurnOrderSet() {
 				text->SetText("");
 		}
 	}
+}
+
+void PlayerSettingCanvas::AllDelete() {
+	playerName = nullptr;
+	playerNum = nullptr;
+	playerJob = nullptr;
+	turnOrder = nullptr;
+	usePortSet = nullptr;
+	UICanvasBase::AllDelete();
 }

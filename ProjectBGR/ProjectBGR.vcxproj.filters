@@ -376,6 +376,9 @@
     <Filter Include="ソース ファイル\UI\UIObject\UIBillboard">
       <UniqueIdentifier>{f080fe11-5e96-46c5-ae8a-4dffba7666f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\UI\Canvas\SceneCanvas\Title">
+      <UniqueIdentifier>{73bcd6be-36e5-4be0-91c0-216be6197d5c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -727,6 +730,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="src\UI\Canvas\UICreateNeedInfo.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\Canvas\SceneCanvas\Title\TitleCanvas.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1125,6 +1131,9 @@
       <Filter>ソース ファイル\UI\UIObject\UIBillboard</Filter>
     </ClInclude>
     <ClInclude Include="src\UI\Canvas\UICreateNeedInfo.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\Canvas\SceneCanvas\Title\TitleCanvas.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

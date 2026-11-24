@@ -7,18 +7,24 @@
 #define _TITLE_SCENE_H_
 
 #include "../SceneBase.h"
+#include "../../SceneType.h"
+#include <functional>
+
+class UIManager;
 
 /*
  *	繧ｿ繧､繝医Ν繧ｷ繝ｼ繝ｳ
  */
 class TitleScene : public SceneBase {
 private:
+	UIManager* uiManager;
+	std::function<void(SceneType)> changeSceneFunc;
 
 public:
 	/*
 	 *	繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
 	 */
-	TitleScene();
+	TitleScene(UIManager* _uiManager, std::function<void(SceneType)> _changeSceneFunc);
 	/*
 	 *	繝・せ繝医Λ繧ｯ繧ｿ
 	 */

@@ -12,6 +12,7 @@
 #include <type_traits>
 #include "../UIContext.h"
 #include "../UIObject/UIText/Style/UITextStyle.h"
+#include "String/MyString.h"
 #include "UICreateNeedInfo.h"
 #include "Vector2.h"
 
@@ -25,6 +26,9 @@ class UIRoulette;
 struct UIInput;
 
 using UIPtr = std::unique_ptr<UIObject>;
+
+const char* const UI_FOLDER_PATH = "res/ExternalFile/UI/";
+const char* const JSON_EXTENSION = ".json";
 
 class UICanvasBase {
 protected:
@@ -42,6 +46,8 @@ public:
 
 	void DeleteUI(UIObject*& _ui);
 
+	virtual void AllDelete();
+
 	/*
 	 * @brief UIオブジェクトの生成
 	 */
@@ -58,6 +64,7 @@ public:
 public:
 	void LoadCanvasForJson(const std::string& _filePath);
 
+	void ReLoadCanvasForJson(const std::string& _filePath);
 	template<class T>
 	T* Find(const std::string& _uiName);
 
@@ -75,7 +82,7 @@ private:
 
 	UIWindow* CreateUIWindow(UICreateMinimumNeedInfo _info, int _backColor, int _frameColor, int _w, int _h, bool _isCenter, int _frameSize);
 
-	UIBillboard* CreateUIBillboard(UICreateMinimumNeedInfo _info, int _col, int _spaceX, int _spaceY, bool _isFitStringEnd);
+	UIBillboard* CreateUIBillboard(UICreateMinimumNeedInfo _info, int _col, int _minCol,int maxCol,int _spaceX, int _spaceY, bool _isFitStringEnd);
 
 	UIRoulette* CreateUIRoulette(UICreateMinimumNeedInfo _info, std::string _rouletteName, std::string _arrowName, float _ex, float _ey);
 };

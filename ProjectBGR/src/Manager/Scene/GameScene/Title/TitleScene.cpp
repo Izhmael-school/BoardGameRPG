@@ -1,7 +1,13 @@
 ﻿#include "TitleScene.h"
+#include "UI/Canvas/SceneCanvas/Title/TitleCanvas.h"
+#include "Manager/UI/UIManager.h"
+#include "Manager/Input/InputManager.h"
 #include <DxLib.h>
 
-TitleScene::TitleScene(){
+TitleScene::TitleScene(UIManager* _uiManager, std::function<void(SceneType)> _changeSceneFunc)
+	:uiManager(_uiManager)
+	,changeSceneFunc(_changeSceneFunc)
+{
 	Start();
 }
 
@@ -9,14 +15,18 @@ TitleScene::~TitleScene() {
 }
 
 void TitleScene::Start() {
+	sceneCanvas = std::make_unique<TitleCanvas>();
 }
 
 void TitleScene::Setup() {
-	
+	uiManager->PushCanvas(sceneCanvas.get());
+	sceneCanvas->Setup();
 }
 
 void TitleScene::Update(float _t) {
-
+	if (InputManager::GetInstance().IsButtonDown(XINPUT_A))
+		if (changeSceneFunc)
+			changeSceneFunc(PlayerSetting);
 }
 
 void TitleScene::Render() {
@@ -74,5 +84,5 @@ void TitleScene::Render() {
 }
 
 void TitleScene::Cleanup() {
-
+	uiManager->PopCanvas(sceneCanvas.get());
 }

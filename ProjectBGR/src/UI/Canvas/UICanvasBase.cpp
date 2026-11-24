@@ -32,6 +32,15 @@ void UICanvasBase::DeleteUI(UIObject*& _ui) {
 	_ui = nullptr;
 }
 
+void UICanvasBase::AllDelete() {
+	//std::erase_if(uiArray, [&](const UIPtr& p) {return true; });
+	for (auto& ui : uiArray) {
+		auto p = ui.get();
+
+		DeleteUI(p);
+	}
+}
+
 enum UIType {
 	UIType_Object,
 	UIType_Text,
@@ -183,11 +192,17 @@ void UICanvasBase::LoadCanvasForJson(const std::string& _filePath) {
 			int col = 1;
 			if (ui.contains("col"))
 				col = ui["col"];
+			int minCol = 0;
+			if (ui.contains("minCol"))
+				minCol = ui["minCol"];
+			int maxCol = 9;
+			if (ui.contains("maxCol"))
+				maxCol = ui["maxCol"];
 			bool isFitStringEnd = true;
 			if (ui.contains("isFitStringEnd"))
 				isFitStringEnd = ui["isFitStringEnd"];
 
-			CreateUIBillboard(info, col, spaceX, spaceY, isFitStringEnd);
+			CreateUIBillboard(info, col, minCol, maxCol, spaceX, spaceY, isFitStringEnd);
 		}
 			break;
 		case UIType_Roulette:
@@ -212,6 +227,11 @@ void UICanvasBase::LoadCanvasForJson(const std::string& _filePath) {
 			break;
 		}
 	}
+}
+
+void UICanvasBase::ReLoadCanvasForJson(const std::string& _filePath) {
+	AllDelete();
+	LoadCanvasForJson(_filePath);
 }
 
 UIObject* UICanvasBase::CreateUIObject(UICreateMinimumNeedInfo _info) {
@@ -267,13 +287,14 @@ UIWindow* UICanvasBase::CreateUIWindow(UICreateMinimumNeedInfo _info, int _backC
 	return ui;
 }
 
-UIBillboard* UICanvasBase::CreateUIBillboard(UICreateMinimumNeedInfo _info, int _col, int _spaceX, int _spaceY, bool _isFitStringEnd) {
+UIBillboard* UICanvasBase::CreateUIBillboard(UICreateMinimumNeedInfo _info, int _col, int _minCol, int maxCol, int _spaceX, int _spaceY, bool _isFitStringEnd) {
 	UIBillboard* ui = CreateUI<UIBillboard>(_info);
 
 	if (!ui) return nullptr;
 	ui->SetFitStringEnd(_isFitStringEnd);
 	ui->SetColumn(_col);
 	ui->SetSpace(_spaceX, _spaceY);
+	ui->SetDrawRange(_minCol, maxCol);
 	return ui;
 }
 

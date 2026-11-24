@@ -70,7 +70,7 @@ void MainGameScene::Setup() {
 	gameObjectManager->UseObject<GameObject>("BattleStage", Vector3(10000, 0, 10000), VZero, VOne, "BattleStage");
 
 	// キャンバスの登録
-	uiManager->PushCanvas(sceneCanvas.get());
+	//uiManager->PushCanvas(sceneCanvas.get());
 }
 
 /*

@@ -21,11 +21,11 @@ void DecidePlayerNumPart::Update(float _t) {
 		break;
 	case CanSelect_NPC:
 
-		if (input->IsButtonDown(XINPUT_DPAD_LEFT))
-			cpuNum = std::max(0, cpuNum - 1);
-		// プレイヤーの数に応じて上限を下げる
-		if (input->IsButtonDown(XINPUT_DPAD_RIGHT))
-			cpuNum = std::min(cpuNum + 1, PLAYER_MAX - playerNum);
+		//if (input->IsButtonDown(XINPUT_DPAD_LEFT))
+		//	cpuNum = std::max(0, cpuNum - 1);
+		//// プレイヤーの数に応じて上限を下げる
+		//if (input->IsButtonDown(XINPUT_DPAD_RIGHT))
+		//	cpuNum = std::min(cpuNum + 1, PLAYER_MAX - playerNum);
 
 		break;
 	case CanSelect_Next:
@@ -49,7 +49,7 @@ void DecidePlayerNumPart::Update(float _t) {
 }
 
 void DecidePlayerNumPart::Setup() {
-	playerNum = 1;
-	cpuNum = 1;
+	playerNum = 2;
+	cpuNum = 0;
 	currentSelect = 0;
 }

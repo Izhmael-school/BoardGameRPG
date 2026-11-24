@@ -12,7 +12,7 @@
 SceneManager::~SceneManager() = default;
 
 SceneManager::SceneManager() 
-	: currentSceneType(SceneType::PlayerSetting)
+	: currentSceneType(SceneType::Title)
 	, nextSceneType(SceneType::Invalid)
 	,isFade(false)
 { Start(); }
@@ -22,14 +22,14 @@ void SceneManager::Start(){
 	// UIManagerを先に生成
 	uiManager = std::make_unique<UIManager>();
 
+	std::function<void(SceneType)> changeSceneFunc = [this](SceneType _type) {ChangeScene(_type); };
 	// 繧ｷ繝ｼ繝ｳ縺ｮ逕滓・
 	scene[static_cast<int>(SceneType::DebugSceneSelect)] = std::make_unique<DebugSceneSelectScene>();
-	scene[static_cast<int>(SceneType::Title)] = std::make_unique<TitleScene>();
+	scene[static_cast<int>(SceneType::Title)] = std::make_unique<TitleScene>(uiManager.get(),changeSceneFunc);
 	scene[static_cast<int>(SceneType::MainGame)] = std::make_unique<MainGameScene>(uiManager.get());
 	auto mainGameScene = static_cast<MainGameScene*>(scene[static_cast<int>(SceneType::MainGame)].get());
 
 
-	std::function<void(SceneType)> changeSceneFunc = [this](SceneType _type) {ChangeScene(_type); };
 	std::function<void(std::vector<int>)> sendTurnOrderFunc = [mainGameScene](const std::vector<int>& _turnOrder) {mainGameScene->SetTurnOrder(_turnOrder); };
 	scene[static_cast<int>(SceneType::PlayerSetting)] = std::make_unique<PlayerSettingScene>(uiManager.get(), mainGameScene->GetCharacterDataManager(), changeSceneFunc,sendTurnOrderFunc);
 

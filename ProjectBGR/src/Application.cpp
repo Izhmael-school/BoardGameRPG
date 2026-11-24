@@ -133,16 +133,18 @@ bool Application::Update() {
 }
 
 void Application::Render() {
-	printfDx("%f\n", GetFPS());
 	SceneManager::GetInstance().Render();
 	FadeManager::GetInstance().Render();
-
+	
+#if _DEBUG
+	printfDx("%f\n", GetFPS());
 	ImGui::Begin("ResourceCounter");
 	ImGui::Text("Model:%d\n", modelResourceManager->GetModelNum());
 	ImGui::Text("Effect:%d\n", effectResourceManager->GetEffectResourceCount());
 	ImGui::Text("Audio:%d\n", audioResourceManager->GetAudioResourceCount());
 	ImGui::Text("Sprite:%d\n", spriteResourceManager->GetLoadedSpriteNum());
 	ImGui::End();
+#endif
 }
 
 void Application::ResourceLoad() {

@@ -102,7 +102,7 @@ void UIText::RepositionX() {
 	case TextDrawPosition_Center:
 		// 中央揃え
 		MyString::StringCenterPos(text, fontHandle, &x, &sy, exRateX, exRateY);
-		position = Vector2(x, basePos.y);
+		position = Vector2(x, y);
 		break;
 	case TextDrawPosition_Right:
 		// 右端揃え

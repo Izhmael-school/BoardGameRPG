@@ -103,6 +103,7 @@ void PlayerSettingScene::Render() {
 
 void PlayerSettingScene::Setup() {
 	uiManager->PushCanvas(sceneCanvas.get());
+	sceneCanvas->Setup();
 	currentPart = PlayerSettingPart_PlayerNum;
 	isCreatePlayer = false;
 }

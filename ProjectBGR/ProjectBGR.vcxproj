@@ -261,6 +261,7 @@
     <ClCompile Include="src\UI\Canvas\SceneCanvas\MainGame\MainGameCanvas.cpp" />
     <ClCompile Include="src\UI\Canvas\SceneCanvas\PlayerSetting\PlayerSettingCanvas.cpp" />
     <ClCompile Include="src\UI\Canvas\SceneCanvas\Shop\ShopCanvas.cpp" />
+    <ClCompile Include="src\UI\Canvas\SceneCanvas\Title\TitleCanvas.cpp" />
     <ClCompile Include="src\UI\Canvas\SceneCanvas\Village\VillageCanvas.cpp" />
     <ClCompile Include="src\UI\Canvas\UICanvasBase.cpp" />
     <ClCompile Include="src\UI\Canvas\UICreateNeedInfo.cpp" />
@@ -394,6 +395,7 @@
     <ClInclude Include="src\UI\Canvas\SceneCanvas\MainGame\MainGameCanvas.h" />
     <ClInclude Include="src\UI\Canvas\SceneCanvas\PlayerSetting\PlayerSettingCanvas.h" />
     <ClInclude Include="src\UI\Canvas\SceneCanvas\Shop\ShopCanvas.h" />
+    <ClInclude Include="src\UI\Canvas\SceneCanvas\Title\TitleCanvas.h" />
     <ClInclude Include="src\UI\Canvas\SceneCanvas\Village\VillageCanvas.h" />
     <ClInclude Include="src\UI\Canvas\UICanvasBase.h" />
     <ClInclude Include="src\UI\Canvas\UICreateNeedInfo.h" />

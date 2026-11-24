@@ -34,6 +34,8 @@ public:
 	void Update(float _t, UIInput& _input) override;
 
 	inline void SetNeedInfo(const PlayerSettingUINeedInfo& _info) { info = _info; };
+
+	void Setup() override;
 private:
 	void OpenPlayerNum();
 
@@ -64,6 +66,8 @@ private:
 	void CloseTurnOrderSet();
 
 	void UpdateTurnOrderSet();
+
+	void AllDelete() override;
 };
 
 #endif

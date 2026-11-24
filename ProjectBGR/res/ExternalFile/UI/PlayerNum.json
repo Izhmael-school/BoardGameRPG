@@ -1,0 +1,92 @@
+{
+  "canvas": [
+    {
+      "name": "playerNum",
+      "uiType": 0,
+      "position": [ 0, 0 ],
+      "parentName": "",
+      "isActive": true
+    },
+    {
+      "name": "text",
+      "uiType": 1,
+      "position": [ 960, 200 ],
+      "parentName": "playerNum",
+      "isActive": true,
+      "text": "参加人数",
+      "normalColor": "0x000000",
+      "fontName": "HG創英角ﾎﾟｯﾌﾟ体",
+      "fontSize": 70,
+      "textDrawPosition": 1,
+      "fontType": 2
+    },
+    {
+      "name": "text",
+      "uiType": 1,
+      "position": [ 960, 400 ],
+      "parentName": "playerNum",
+      "isActive": true,
+      "text": "プレイヤーの数",
+      "normalColor": "0x000000",
+      "selectColor": "0xffff00",
+      "fontName": "HG創英角ﾎﾟｯﾌﾟ体",
+      "fontSize": 50,
+      "textDrawPosition": 1,
+      "fontType": 2
+    },
+    {
+      "name": "playerCount",
+      "uiType": 1,
+      "position": [ 960, 500 ],
+      "parentName": "playerNum",
+      "isActive": true,
+      "text": "{0}",
+      "normalColor": "0x000000",
+      "fontName": "HG創英角ﾎﾟｯﾌﾟ体",
+      "fontSize": 50,
+      "textDrawPosition": 1,
+      "fontType": 2
+    },
+    {
+      "name": "text",
+      "uiType": 1,
+      "position": [ 960, 600 ],
+      "parentName": "playerNum",
+      "isActive": true,
+      "text": "CPUの数",
+      "normalColor": "0x000000",
+      "selectColor": "0xffff00",
+      "fontName": "HG創英角ﾎﾟｯﾌﾟ体",
+      "fontSize": 50,
+      "textDrawPosition": 1,
+      "fontType": 2
+    },
+    {
+      "name": "cpuCount",
+      "uiType": 1,
+      "position": [ 960, 700 ],
+      "parentName": "playerNum",
+      "isActive": true,
+      "text": "{0}",
+      "normalColor": "0x000000",
+      "fontName": "HG創英角ﾎﾟｯﾌﾟ体",
+      "fontSize": 50,
+      "textDrawPosition": 1,
+      "fontType": 2
+    },
+    {
+      "name": "confirm",
+      "uiType": 1,
+      "position": [ 960, 900 ],
+      "parentName": "playerNum",
+      "isActive": true,
+      "text": "決定",
+      "normalColor": "0x000000",
+      "selectColor": "0xffff00",
+      "fontName": "HG創英角ﾎﾟｯﾌﾟ体",
+      "fontSize": 70,
+      "textDrawPosition": 1,
+      "fontType": 2
+    }
+  ]
+}

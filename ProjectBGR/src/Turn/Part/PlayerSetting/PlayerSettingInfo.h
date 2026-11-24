@@ -7,10 +7,10 @@ enum PlayerSettingPart {
 	PlayerSettingPart_Back = -2,
 	PlayerSettingPart_Invalid = -1,
 	PlayerSettingPart_PlayerNum,
-	PlayerSettingPart_UsePortSet,
 	PlayerSettingPart_PlayerName,
-	PlayerSettingPart_TurnOrder,
+	PlayerSettingPart_UsePortSet,
 	PlayerSettingPart_PlayerJob,
+	PlayerSettingPart_TurnOrder,
 	PlayerSettingPart_Confirm,
 	PlayerSettingPart_Max
 };
