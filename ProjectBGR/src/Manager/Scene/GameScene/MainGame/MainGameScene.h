@@ -18,6 +18,7 @@ class MapManager;
 class TurnProcessor;
 class CharacterDataManager;
 class ModelResourceManager;
+class CameraManager;
 class UIManager;
 
 class MainGameScene :public SceneBase {
@@ -33,6 +34,8 @@ private:
 	std::unique_ptr<TurnProcessor> turn;
 
 	std::unique_ptr<CharacterDataManager> characterDataManager;
+
+	std::unique_ptr<CameraManager> cameraManager;
 
 	ModelResourceManager* resource;
 

@@ -1,6 +1,8 @@
 ﻿#include "MainGameScene.h"
 #include "DxLib.h"
-#include "GameObject/Camera/FreeCamera.h"
+#include "GameObject/Camera/Free/FreeCamera.h"
+#include "Manager/Camera/CameraManager.h"
+#include "GameObject/Camera/Follow/FollowCamera.h"
 #include "Component/Collider/Collider.h"
 #include "Manager/GameObject/GameObjectManager.h"
 #include "Manager/Resource/Model/ModelResourceManager.h" 
@@ -34,11 +36,10 @@ void MainGameScene::Start() {
 	collisionManager = std::make_unique<CollisionManager>(aabb);
 	mapManager = std::make_unique<MapManager>();
 	characterDataManager = std::make_unique<CharacterDataManager>();
+	cameraManager = std::make_unique<CameraManager>();
 	turn = std::make_unique<TurnProcessor>(mapManager.get(), characterDataManager.get(), gameObjectManager.get(),uiManager);
 	sceneCanvas = std::make_unique<MainGameCanvas>();
 	sceneCanvas->Init();
-
-
 }
 
 /*
@@ -46,6 +47,9 @@ void MainGameScene::Start() {
  */
 void MainGameScene::Setup() {
 	auto c = gameObjectManager->UseObject<FreeCamera>("", VZero, VZero, VOne, "Camera");
+	cameraManager->AddCamera(c);
+	auto fc = gameObjectManager->UseObject<FollowCamera>("", VZero, VZero, VOne, "FollowCamera");
+	cameraManager->AddCamera(fc);
 
 	unsigned int colorSet[4] = { 0x0000ff,0xff0000,0x00ff00,0xffff00 };
 

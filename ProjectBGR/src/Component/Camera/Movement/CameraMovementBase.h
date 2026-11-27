@@ -10,7 +10,9 @@ class Transform;
 
 class CameraMovementBase {
 public:
-	virtual void Move(Transform* _attachObjectTransform,float _t) = 0;
+	virtual void Move(Transform* _attachObjectTransform, float _t) {};
+
+	virtual void Reset() {};
 };
 
 #endif

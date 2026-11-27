@@ -25,6 +25,7 @@ class GameObject;
 class GameObjectManager;
 class BoardGameCanvas;
 class UIManager;
+class CameraManager;
 
 class BoardGamePart {
 private:
@@ -50,6 +51,8 @@ private:
 	MapManager* map;
 
 	CharacterDataManager* character;
+
+	CameraManager* cameraManager;
 
 	// 繧ｿ繝ｼ繝ｳ縺ｮ邨ゆｺ・・逅・
 	std::function<void()> turnEndFunc;
@@ -84,7 +87,7 @@ public:
 	/*
 	 * @brief 生成時に初期化
 	 */
-	void Init(UIManager* _uiManager,MapManager* _map,CharacterDataManager* _characterDataManager,std::function<void()> _turnEndFunc,std::function<void(CharacterData*, CharacterData*)> _battleStartFunc, GameObjectManager* _gameObjectManager,BoardGameCanvas* _canvas);
+	void Init(BoardGameInitInfo _info);
 
 	/*
 	 * @brief 更新

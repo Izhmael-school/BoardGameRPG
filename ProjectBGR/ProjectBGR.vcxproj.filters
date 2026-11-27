@@ -379,6 +379,15 @@
     <Filter Include="ソース ファイル\UI\Canvas\SceneCanvas\Title">
       <UniqueIdentifier>{73bcd6be-36e5-4be0-91c0-216be6197d5c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\GameObject\Camera\Follow">
+      <UniqueIdentifier>{47389e32-f5f3-466a-a37d-e6490df8b2ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\Camera">
+      <UniqueIdentifier>{9df1b0c0-7e57-4694-ae19-708e29993050}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\Camera\Free">
+      <UniqueIdentifier>{e0a41940-29fb-4c55-88ca-8ae650a61e2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -410,9 +419,6 @@
     </ClCompile>
     <ClCompile Include="src\Definition\CommonModule\String\MyString.cpp">
       <Filter>ソース ファイル\Definition\CommonModule\String</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObject\Camera\FreeCamera.cpp">
-      <Filter>ソース ファイル\GameObject\Camera</Filter>
     </ClCompile>
     <ClCompile Include="src\GameObject\GameObject.cpp">
       <Filter>ソース ファイル\GameObject</Filter>
@@ -735,6 +741,21 @@
     <ClCompile Include="src\UI\Canvas\SceneCanvas\Title\TitleCanvas.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="src\Component\Camera\Movement\Linear\CameraFollowMovement.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Manager\Camera\CameraManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Camera\Follow\FollowCamera.cpp">
+      <Filter>ソース ファイル\GameObject\Camera\Follow</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Camera\Free\FreeCamera.cpp">
+      <Filter>ソース ファイル\GameObject\Camera\Free</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Camera\NormalCamera.cpp">
+      <Filter>ソース ファイル\GameObject\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -775,9 +796,6 @@
     </ClInclude>
     <ClInclude Include="src\DesignPattern\Singleton\Singleton.h">
       <Filter>ソース ファイル\DesignPattern\Singleton</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameObject\Camera\FreeCamera.h">
-      <Filter>ソース ファイル\GameObject\Camera</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObject\GameObject.h">
       <Filter>ソース ファイル\GameObject</Filter>
@@ -1135,6 +1153,21 @@
     </ClInclude>
     <ClInclude Include="src\UI\Canvas\SceneCanvas\Title\TitleCanvas.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Component\Camera\Movement\Linear\CameraFollowMovement.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Manager\Camera\CameraManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Camera\Follow\FollowCamera.h">
+      <Filter>ソース ファイル\GameObject\Camera\Follow</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Camera\Free\FreeCamera.h">
+      <Filter>ソース ファイル\GameObject\Camera\Free</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Camera\NormalCamera.h">
+      <Filter>ソース ファイル\GameObject\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

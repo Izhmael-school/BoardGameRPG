@@ -17,6 +17,7 @@ class CharacterDataManager;
 class MapManager;
 class BoardGameCanvas;
 class BattleCanvas;
+class CameraManager;
 class UIManager;
 
 enum GamePart {
@@ -50,12 +51,14 @@ private:
 
 	UIManager* uiManager;
 
+	CameraManager* cameraManager;
+
 	// キャンバス
 	std::unique_ptr<BoardGameCanvas> boardGameCanvas;
 	std::unique_ptr<BattleCanvas> battleCanvas;
 
 public:
-	TurnProcessor(MapManager* _mapManager,CharacterDataManager* _characterDataManager,GameObjectManager* _gameObjectManager,UIManager* _uiManager);
+	TurnProcessor(MapManager* _mapManager,CharacterDataManager* _characterDataManager,GameObjectManager* _gameObjectManager,UIManager* _uiManager, CameraManager* _cameraManager);
 	~TurnProcessor();
 
 public:

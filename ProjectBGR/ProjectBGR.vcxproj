@@ -162,6 +162,7 @@
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Component\Camera\Camera.cpp" />
     <ClCompile Include="src\Component\Camera\Movement\Free\CameraFreeMovement.cpp" />
+    <ClCompile Include="src\Component\Camera\Movement\Linear\CameraFollowMovement.cpp" />
     <ClCompile Include="src\Component\Collider\Collider.cpp" />
     <ClCompile Include="src\Component\ComponentBase.cpp" />
     <ClCompile Include="src\Component\Transform\RectTransform.cpp" />
@@ -185,7 +186,9 @@
     <ClCompile Include="src\ExternalLibrary\ImGui\imgui_draw.cpp" />
     <ClCompile Include="src\ExternalLibrary\ImGui\imgui_tables.cpp" />
     <ClCompile Include="src\ExternalLibrary\ImGui\imgui_widgets.cpp" />
-    <ClCompile Include="src\GameObject\Camera\FreeCamera.cpp" />
+    <ClCompile Include="src\GameObject\Camera\Follow\FollowCamera.cpp" />
+    <ClCompile Include="src\GameObject\Camera\Free\FreeCamera.cpp" />
+    <ClCompile Include="src\GameObject\Camera\NormalCamera.cpp" />
     <ClCompile Include="src\GameObject\Character\Character.cpp" />
     <ClCompile Include="src\GameObject\GameObject.cpp" />
     <ClCompile Include="src\GameObject\MapArrow\MapArrow.cpp" />
@@ -195,6 +198,7 @@
     <ClCompile Include="src\Library\Vector\Vector2.cpp" />
     <ClCompile Include="src\Library\Vector\Vector3.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Manager\Camera\CameraManager.cpp" />
     <ClCompile Include="src\Manager\CharacterData\CharacterDataManager.cpp" />
     <ClCompile Include="src\Manager\Collision\CollisionManager.cpp" />
     <ClCompile Include="src\Manager\Collision\NarrowPhase\NarrowPhase.cpp" />
@@ -283,6 +287,7 @@
     <ClInclude Include="src\Component\Camera\Camera.h" />
     <ClInclude Include="src\Component\Camera\Movement\CameraMovementBase.h" />
     <ClInclude Include="src\Component\Camera\Movement\Free\CameraFreeMovement.h" />
+    <ClInclude Include="src\Component\Camera\Movement\Linear\CameraFollowMovement.h" />
     <ClInclude Include="src\Component\Collider\Collider.h" />
     <ClInclude Include="src\Component\ComponentBase.h" />
     <ClInclude Include="src\Component\Transform\RectTransform.h" />
@@ -310,7 +315,9 @@
     <ClInclude Include="src\ExternalLibrary\ImGui\imstb_rectpack.h" />
     <ClInclude Include="src\ExternalLibrary\ImGui\imstb_textedit.h" />
     <ClInclude Include="src\ExternalLibrary\ImGui\imstb_truetype.h" />
-    <ClInclude Include="src\GameObject\Camera\FreeCamera.h" />
+    <ClInclude Include="src\GameObject\Camera\Follow\FollowCamera.h" />
+    <ClInclude Include="src\GameObject\Camera\Free\FreeCamera.h" />
+    <ClInclude Include="src\GameObject\Camera\NormalCamera.h" />
     <ClInclude Include="src\GameObject\Character\Character.h" />
     <ClInclude Include="src\GameObject\GameObject.h" />
     <ClInclude Include="src\GameObject\MapArrow\MapArrow.h" />
@@ -319,6 +326,7 @@
     <ClInclude Include="src\Library\Vector\ConversionVECTOR.h" />
     <ClInclude Include="src\Library\Vector\Vector2.h" />
     <ClInclude Include="src\Library\Vector\Vector3.h" />
+    <ClInclude Include="src\Manager\Camera\CameraManager.h" />
     <ClInclude Include="src\Manager\CharacterData\CharacterDataManager.h" />
     <ClInclude Include="src\Manager\CharacterData\Job.h" />
     <ClInclude Include="src\Manager\Collision\Collider\ColliderData.h" />

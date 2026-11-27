@@ -4,6 +4,7 @@
 #include "Definition/CommonModule/Math/MyMath.h"
 #include "Movement/CameraMovementBase.h"
 #include "Movement/Free/CameraFreeMovement.h"
+#include "Movement/Linear/CameraFollowMovement.h"
 #include "GameObject/GameObject.h"
 #include "DxLib.h"
 
@@ -23,7 +24,6 @@ Camera::Camera(GameObject* _attachObject, CameraMovementMode _mode, Projection _
 	// 繧ｫ繝｡繝ｩ縺ｮ遘ｻ蜍輔ｒ逕滓・
 	SetMovement(_mode);
 }
-
 
 Camera::~Camera() {
 	movement.reset();
@@ -49,8 +49,14 @@ void Camera::Render() {
 
 void Camera::SetMovement(CameraMovementMode _mode) {
 	switch (_mode) {
+	case FixedPoint:
+		movement = std::make_unique<CameraMovementBase>();
+		break;
 	case Free:
 		movement = std::make_unique<CameraFreeMovement>();
+		break;
+	case Follow:
+		movement = std::make_unique<CameraFollowMovement>();
 		break;
 	default:
 		break;

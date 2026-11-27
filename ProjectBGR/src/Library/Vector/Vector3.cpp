@@ -36,6 +36,15 @@ Vector3 Vector3::Normalized() const {
 	return Vector3(nx, ny, nz);
 }
 
+bool Vector3::Equal(Vector3 _another) {
+	
+	if (x != _another.x) return false;
+	if (y != _another.y) return false;
+	if (z != _another.z) return false;
+
+	return true;
+}
+
 float Vector3::SqrMagnitude(Vector3 _vec) {
 	return (_vec.x * _vec.x) + (_vec.y * _vec.y) + (_vec.z * _vec.z);
 }
@@ -73,9 +82,13 @@ float Vector3::Distance(Vector3 _vec1, Vector3 _vec2) {
 }
 
 Vector3 Vector3::Lerp(Vector3 _vec1, Vector3 _vec2, float _t) {
+	// ある程度進んだら1として扱う
+	if (_t >= 0.999f)
+		_t = 1.0f;
 	_t = std::clamp(_t, 0.0f, 1.0f);
 	if (_t == 0.0f) return _vec1;
 	if (_t == 1.0f) return _vec2;
+
 
 	float lx = _vec1.x + (_vec2.x - _vec1.x) * _t;
 	float ly = _vec1.y + (_vec2.y - _vec1.y) * _t;

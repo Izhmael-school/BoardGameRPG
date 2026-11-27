@@ -13,16 +13,18 @@
 #include "UI/Canvas/SceneCanvas/BoardGame/BoardGameCanvas.h"
 #include "Application.h"
 #include "Manager/Resource/Sprite/SpriteResourceManager.h"
+#include "../../../GameObject/Camera/Follow/FollowCamera.h"
 
-void BoardGamePart::Init(UIManager* _uiManager, MapManager* _map, CharacterDataManager* _characterDataManager, std::function<void()> _turnEndFunc, std::function<void(CharacterData*, CharacterData*)> _battleStartFunc, GameObjectManager* _gameObjectManager, BoardGameCanvas* _canvas) {
-	canvas = _canvas;
-	moveCommand.SetMapManager(_map);
-	map = _map;
-	turnEndFunc = _turnEndFunc;
-	battleStartFunc = _battleStartFunc;
-	character = _characterDataManager;
-	gameObjectManager = _gameObjectManager;
-	searchTileCommand.Init(_map, _characterDataManager, gameObjectManager->UseObject<GameObject>("MapArrow", VZero, VZero, VOne, "MapArrow"));
+void BoardGamePart::Init(BoardGameInitInfo _info) {
+	canvas = _info.canvas;
+	moveCommand.SetMapManager(_info.map);
+	map = _info.map;
+	turnEndFunc = _info.turnEndFunc;
+	battleStartFunc = _info.battleStartFunc;
+	character = _info.characterDataManager;
+	gameObjectManager = _info.gameObjectManager;
+	cameraManager = _info.cameraManager;
+	searchTileCommand.Init(map, character, gameObjectManager->UseObject<GameObject>("MapArrow", VZero, VZero, VOne, "MapArrow"));
 	magicCommand.SetCharacterDataManager(character);
 	isFirstTurn = true;
 	magicCommand.Init();
@@ -32,10 +34,10 @@ void BoardGamePart::Init(UIManager* _uiManager, MapManager* _map, CharacterDataM
 	ItemAndMagicEffect::SetFixedMoveFunc([this](int _moveNum) {moveCommand.FixedMove(_moveNum); turnState = TurnState_Move; });
 	ItemAndMagicEffect::SetRandomWarpFunc([this](Vector2 _beforePos) {return map->GetRandomPos(_beforePos); });
 	ItemAndMagicEffect::SetMoveEndFunc([this]() {MoveEndForItem(); });
-
-	shopPart.Init(_uiManager, [this]() { ShopOut(); });
-	churchPart.Init(_uiManager, [this]() { ShopOut(); });
-	villagePart.Init(_uiManager, [this]() { ShopOut(); });
+	auto uiManager = _info.uiManager;
+	shopPart.Init(uiManager, [this]() { ShopOut(); });
+	churchPart.Init(uiManager, [this]() { ShopOut(); });
+	villagePart.Init(uiManager, [this]() { ShopOut(); });
 
 	canvas->SetTurnUIContext(TurnState_Magic, magicCommand.GetUIContext());
 
@@ -43,17 +45,26 @@ void BoardGamePart::Init(UIManager* _uiManager, MapManager* _map, CharacterDataM
 	character->CreateEnemyDataToAllVillage();
 }
 
+
 void BoardGamePart::Setup() {
 	if (!stage)
 		stage = gameObjectManager->Find("Stage");
 
 	if (!camera)
-		camera = gameObjectManager->Find("Camera");
+		camera = gameObjectManager->Find("FollowCamera");
 
 	auto a = gameObjectManager->Find("MapArrow");
 
 	// 現在のターンのプレイヤーを取得
 	currentTurnPlayerObject = gameObjectManager->Find(currentPlayerData->GetPlayerName());
+
+	auto follow = static_cast<FollowCamera*>(camera);
+	follow->SetFollowTarget(currentTurnPlayerObject);
+	Vector3 distance = Vector3(0, 1000, -500);
+	follow->SetDistance(distance);
+	Vector3 objPos = currentTurnPlayerObject->GetTransform()->GetPosition();
+	camera->GetTransform()->LookAt(objPos);
+	camera->GetTransform()->SetPosition(Vector3::VAdd(objPos, distance));
 
 	// このターン動けるかを確認
 	if (!currentPlayerData->IsMove()) {
@@ -91,7 +102,6 @@ MapTileType BoardGamePart::GetCurrentPlayerMapTileType() {
 	return map->GetMapTileType(pos.x, pos.y);
 }
 
-
 void BoardGamePart::Update(float _t) {
 	// カメラの更新
 	if (camera) {
@@ -105,8 +115,7 @@ void BoardGamePart::Update(float _t) {
 		}
 		cameraPos.z -= 500;
 
-		camera->GetTransform()->SetPosition(cameraPos);
-		camera->GetTransform()->LookAt(lookPos);
+		//camera->GetTransform()->LookAt(lookPos);
 	}
 
 	switch (turnState) {

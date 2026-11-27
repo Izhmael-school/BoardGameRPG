@@ -141,3 +141,23 @@ struct BoardGameUINeedInfo {
 	{
 	}
 };
+
+#include <functional>
+class UIMananger;
+class MapManager;
+class CharacterDataManager;
+class GameObjectManager;
+class BoardGameManager;
+class CameraManager;
+class CharacterData;
+
+struct BoardGameInitInfo {
+	UIManager* uiManager;
+	MapManager* map;
+	CharacterDataManager* characterDataManager;
+	GameObjectManager* gameObjectManager;
+	CameraManager* cameraManager;
+	BoardGameCanvas* canvas;
+	std::function<void()> turnEndFunc; 
+	std::function<void(CharacterData*, CharacterData*)> battleStartFunc;
+};

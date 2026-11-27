@@ -7,14 +7,16 @@
 #include "UI/Canvas/SceneCanvas/BoardGame/BoardGameCanvas.h"
 #include "UI/Canvas/SceneCanvas/Battle/BattleCanvas.h"
 #include "Part/Battle/BattleInfo.h"
+#include "Part/BoardGame/BoardGameInfo.h"
 
-TurnProcessor::TurnProcessor(MapManager* _mapManager, CharacterDataManager* _characterDataManager, GameObjectManager* _gameObjectManager, UIManager* _uiManager)
+TurnProcessor::TurnProcessor(MapManager* _mapManager, CharacterDataManager* _characterDataManager, GameObjectManager* _gameObjectManager, UIManager* _uiManager, CameraManager* _cameraManager)
 	:currentTurn(0)
 	, currentPlayerData(nullptr)
 	, mapManager(_mapManager) 
 	,character(_characterDataManager)
 	,gameObjectManager(_gameObjectManager)
 	,uiManager(_uiManager)
+	,cameraManager(_cameraManager)
 {
 	// キャンバスの生成
 	boardGameCanvas = std::make_unique<BoardGameCanvas>();
@@ -22,7 +24,16 @@ TurnProcessor::TurnProcessor(MapManager* _mapManager, CharacterDataManager* _cha
 	boardGameCanvas->Init();
 	battleCanvas->Init();
 	// ボードゲームの初期化
-	boardGamePart.Init(uiManager,_mapManager,character, [this]() {this->TurnEndFunc(); }, [this](CharacterData* _p1, CharacterData* _p2) {StartBattle(_p1, _p2); },_gameObjectManager,boardGameCanvas.get());
+	BoardGameInitInfo boardInfo;
+	boardInfo.uiManager = uiManager;
+	boardInfo.map = _mapManager;
+	boardInfo.characterDataManager = character;
+	boardInfo.turnEndFunc = [this]() {this->TurnEndFunc(); };
+	boardInfo.battleStartFunc = [this](CharacterData* _p1, CharacterData* _p2) {StartBattle(_p1, _p2); };
+	boardInfo.gameObjectManager = _gameObjectManager;
+	boardInfo.canvas = boardGameCanvas.get();
+	boardInfo.cameraManager = cameraManager;
+	boardGamePart.Init(boardInfo);
 	// バトルの初期化
 	battlePart.Init([this]() {this->TurnEndFunc(); character->DeleteEnemyData(); }, [this](BattleUINeedInfo _info) {battleCanvas->SetBattleUINeedInfo(_info); }, _gameObjectManager);
 	// テスト：ボスをスポーンさせる

@@ -7,25 +7,28 @@
 #define _CAMERA_H_
 
 #include "../ComponentBase.h"
+#include "Vector3.h"
 #include <memory>
 
 class CameraMovementBase;
 
 enum Projection {
-	Perspective,	// 遶倶ｽ薙↓蜀吶☆
-	Orthographic	// 蟷ｳ髱｢縺ｫ蜀吶☆
+	Perspective,	// 立体
+	Orthographic	// 平面
 };
 
 enum CameraMovementMode {
+	FixedPoint,
 	Free,
+	Follow
 };
 
 class Camera : public ComponentBase {
 private:
-	Projection projection;	// 謠冗判譁ｹ豕・
-	float fov;				// 隕夜㍽隗・
-	float near;				// 謇句燕繧ｯ繝ｪ繝・・縺ｮ霍晞屬
-	float far;				// 螂･繧ｰ繝ｪ繝・・縺ｮ霍晞屬
+	Projection projection;	// 描画方法
+	float fov;				// 視野角
+	float near;				// 手前グリッチの距離
+	float far;				// 奥グリッチの距離
 
 	std::unique_ptr<CameraMovementBase> movement;
 
@@ -52,5 +55,7 @@ public:
 	inline float GetFar() const { return far; }
 
 	void DrawGizmo(int _color);
+
+	CameraMovementBase* GetCameraMovement() const { return movement.get(); }
 };
 #endif

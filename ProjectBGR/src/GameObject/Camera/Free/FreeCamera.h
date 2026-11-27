@@ -6,9 +6,9 @@
 #ifndef _FREECAMERA_H_
 #define _FREECAMERA_H_
 
-#include "../GameObject.h"
+#include "../NormalCamera.h"
 
-class FreeCamera : public GameObject {
+class FreeCamera : public NormalCamera {
 public:
 	FreeCamera(int _modelHandle = -1,const std::string& _name = "FreeCamera", Vector3 _pos = VZero, Vector3 _rot = VZero, Tag _tag = Camera);
 	~FreeCamera() = default;

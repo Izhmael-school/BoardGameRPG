@@ -6,6 +6,8 @@
 #ifndef _MYMATH_H_
 #define _MYMATH_H_
 
+#include "Vector3.h"
+
 class MyMath {
 public:
 	/*
@@ -32,5 +34,10 @@ public:
 	 * @brief 小さいほうをとる
 	 */
 	static int Min(int _v1, int _v2);
+
+	/*
+	 * @brief ベクトル型の線形補間
+	 */
+	static Vector3 Lerp(Vector3 _before, Vector3 _after,float _t);
 };
 #endif

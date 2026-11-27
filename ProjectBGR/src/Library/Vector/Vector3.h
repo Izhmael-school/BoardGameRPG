@@ -35,6 +35,8 @@ public:
 	 */
 	Vector3 Normalized() const;
 
+	bool Equal(Vector3 _another);
+
 	/*
 	 * @brief 繝吶け繝医Ν縺ｮ髟ｷ縺輔・2荵励ｒ霑斐☆
 	 */
