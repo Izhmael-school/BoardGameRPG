@@ -21,13 +21,13 @@ using GameObjectPtrArray = std::vector<GameObjectPtr>;
 using GameObjectPool = std::unordered_map<std::type_index, GameObjectPtrArray>;
 
 class GameObjectManager : public ManagerBase {
-	std::unique_ptr<GameObjectGenerator> generator;	// 逕滓・
+	std::unique_ptr<GameObjectGenerator> generator;	// 生成
 
-	ModelResourceManager* modelResourceManager;		// 繝｢繝・Ν邂｡逅・
+	ModelResourceManager* modelResourceManager;		// モデル管理
 
-	GameObjectPtrArray useObject;
+	std::vector<std::unique_ptr<GameObject>> useObject;
 
-	GameObjectPool objectPool;
+	std::unordered_map<std::type_index, std::vector<std::unique_ptr<GameObject>>> objectPool;	// プーリング
 public:
 	GameObjectManager(ModelResourceManager* _modelResourceManager);
 
@@ -59,16 +59,16 @@ inline std::unique_ptr<T> GameObjectManager::Instantiate( std::string _modelName
 
 template<typename T, typename ...Args>
 inline T* GameObjectManager::UseObject(std::string _modelName, Vector3 _pos, Vector3 _rot, Vector3 _scale, Args && ...args) {
-	// GameObject繧堤ｶ呎価縺励※縺ｪ縺代ｌ縺ｰ蟶ｰ繧・
+	// GameObjectを継承してなければ帰る
 	if (!std::is_base_of<GameObject, T>::value)
 		return nullptr;
-	// 繧ｯ繝ｩ繧ｹ縺ｮ逡ｪ蜿ｷ繧貞叙蠕・
+	// クラスの番号を取得
 	std::type_index classID = typeid(T);
 
 	GameObjectPtrArray* pool = &objectPool[classID];
 	GameObjectPtr object;
 
-	// 縺ｪ縺代ｌ縺ｰ逕滓・縺ゅｌ縺ｰ蜀堺ｽｿ逕ｨ
+	// なければ生成あれば再使用
 	if (pool->empty())
 		object = Instantiate<T>(_modelName, std::forward<Args>(args)...);
 	else {

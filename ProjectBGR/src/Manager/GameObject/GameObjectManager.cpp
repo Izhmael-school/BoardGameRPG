@@ -8,12 +8,13 @@ GameObjectManager::GameObjectManager(ModelResourceManager* _modelResourceManager
 }
 
 void GameObjectManager::UnuseObject(GameObjectPtr _gameObject) {
-	// 蝙九°繧迂D繧剃ｽ懊ｋ
+	if (!_gameObject) return;
+	// クラスの番号を取得
 	std::type_index classID = _gameObject->GetClassID();
-	// 蠕悟・逅・
+	// 使用後処理
 	_gameObject->Cleanup();
-	// 驟榊・縺ｫ蜈･繧後ｋ
-	objectPool[classID].push_back(std::move(_gameObject));
+	// クラス番号の配列に入れる
+	objectPool[classID].emplace_back(std::move(_gameObject));
 }
 
 GameObject* GameObjectManager::Find(const std::string& _name) {

@@ -30,7 +30,7 @@ private:
 	float near;				// 手前グリッチの距離
 	float far;				// 奥グリッチの距離
 
-	std::unique_ptr<CameraMovementBase> movement;
+	std::unique_ptr<CameraMovementBase> movement;	// カメラの動き方
 
 public:
 	Camera(GameObject* _attachObject, CameraMovementMode _mode,Projection _projection = Perspective,float _fov = 60.0f,float _near = 0.01f,float _far = 15000.0f);

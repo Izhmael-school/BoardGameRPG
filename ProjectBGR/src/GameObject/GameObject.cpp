@@ -12,8 +12,6 @@ GameObject::GameObject(int _modelHandle, const std::string& _name, Vector3 _pos,
 	, pTransform(nullptr)
 	, components()
 	, classID(typeid(this)) {
-	// 繝医Λ繝ｳ繧ｹ繝輔か繝ｼ繝縺縺代・邨ｶ蟇ｾ縺ｫ縺､縺代ｋ
-	pTransform = AddComponent<Transform>();
 	Start();
 	size_t id = classID.hash_code();
 }
@@ -24,6 +22,8 @@ GameObject::~GameObject() {
 }
 
 void GameObject::Start() {
+	// Transformは必須だから最初に追加する
+	pTransform = AddComponent<Transform>();
 }
 
 void GameObject::Update(float _t) {

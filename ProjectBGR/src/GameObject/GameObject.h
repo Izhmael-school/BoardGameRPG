@@ -191,11 +191,11 @@ public:
 
 template<typename T, typename ...Args>
 inline T* GameObject::AddComponent(Args&&... args) {
-	// 繧ｳ繝ｳ繝昴・繝阪Φ繝医〒辟｡縺代ｌ縺ｰ蟶ｰ繧・
+	// コンポーネントか確認
 	if (!std::is_base_of<ComponentBase, T>::value) return nullptr;
-	// 逕滓・
+	// 追加
 	std::unique_ptr<T> component = std::make_unique<T>(this, std::forward<Args>(args)...);
-	components.push_back(std::move(component));
+	components.emplace_back(std::move(component));
 	return dynamic_cast<T*>(components.back().get());
 }
 
