@@ -17,10 +17,17 @@ enum Projection {
 	Orthographic	// 平面
 };
 
+// カメラの動かし方
 enum CameraMovementMode {
+<<<<<<< Updated upstream
 	FixedPoint,
 	Free,
 	Follow
+=======
+	FixedPoint, // 定点
+	Free,		// デバッグ用操作
+	Follow		// 追従
+>>>>>>> Stashed changes
 };
 
 class Camera : public ComponentBase {

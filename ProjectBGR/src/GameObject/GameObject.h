@@ -194,7 +194,12 @@ inline T* GameObject::AddComponent(Args&&... args) {
 	// コンポーネントか確認
 	if (!std::is_base_of<ComponentBase, T>::value) return nullptr;
 	// 追加
+<<<<<<< Updated upstream
 	std::unique_ptr<T> component = std::make_unique<T>(this, std::forward<Args>(args)...);
+=======
+	std::unique_ptr<T> component = 
+		std::make_unique<T>(this, std::forward<Args>(args)...);
+>>>>>>> Stashed changes
 	components.emplace_back(std::move(component));
 	return dynamic_cast<T*>(components.back().get());
 }
